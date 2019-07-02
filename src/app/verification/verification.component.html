@@ -1,0 +1,26 @@
+ <div class="register-page" [@routerTransition]>
+	<div class="container">
+		<div class="logo-centered">
+			<img src="../../assets/images/logo.png" alt="logo" />
+			<span class="verification-title">{{ 'Enter Verification Code' | translate }}<span>{{countryCode}} {{phoneNumber}}</span></span>
+		</div>
+		<div class="signing-form verification-form">
+			<form (ngSubmit)="verifyOtp();"  [formGroup]="otpForm">
+				<div class="form-group">
+					<span><input type="text" class="form-control" id="start"  formControlName="otp1"  pattern="[0-9]" maxlength="1" size="1" (keyup)="next($event)" autocomplete="off" required /></span>
+					<span><input type="text" class="form-control" formControlName="otp2"   pattern="[0-9]" maxlength="1" size="1" (keyup)="next($event)" autocomplete="off"  required/></span>
+					<span><input type="text" class="form-control" formControlName="otp3"  pattern="[0-9]" maxlength="1" size="1" (keyup)="next($event)" autocomplete="off"  required/></span>
+					<span><input type="text" class="form-control" id="end" formControlName="otp4"  pattern="[0-9]" maxlength="1" size="1" (keyup)="next($event)" autocomplete="off" required /></span>
+				</div>
+				<div class="veriy-bt">
+					<button type="submit" class="btn btn-primary" >{{ 'Verify' | translate }}</button>
+						<p>{{ 'Did not receive the Code?' | translate }} <a href="javascript:" (click) ="ResendVerification();">{{ 'Resend SMS' | translate }}</a></p>
+				</div>
+				<div class="Already-sing">
+					<p>{{ 'Already have account?' | translate }} <a href="javascript:" [routerLink]="['/login']">{{ 'Sign In' | translate }}</a></p>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>

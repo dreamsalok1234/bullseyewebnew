@@ -1,0 +1,24 @@
+// shared css for the login and signup page
+@import "../login/login.component.scss";
+
+.intl-tel-input.allow-dropdown {
+	display: block;
+}
+
+.form-group .btn_info {
+    color: #fff;
+    background-color: #00b050;
+    font-family: 'SFProDisplay-Medium';
+    font-size: 20px;
+}
+.form-group .btn_info+p {
+    border-radius: 5px;
+    background: #00b050;
+    font-family: 'SFProDisplay-Regular';
+    
+}
+.alert.alert-dange.termscondition {
+    color: #ff2400;
+    font-size: 13px;
+	padding: 10px 0;
+}

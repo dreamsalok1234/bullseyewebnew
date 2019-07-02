@@ -1,0 +1,39 @@
+<div class="top-title enquiry">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>{{ 'Enquiry' | translate }}
+				<a href="javascript:" onclick="history.go(-1); return false;" title="{{ 'Back' | translate }}" class="back_arrow">
+					<span><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>
+				</a>
+			</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<form [formGroup]="enquiryForm" class="portfolio-heading" (ngSubmit)="AddEnquiry()">
+				<div class="form-group">
+					<label for="post_title">{{ 'Subject' | translate }}</label>
+					<input type="text" class="form-control" formControlName="subject" id="post_title" [ngClass]="{ 'is-invalid': submitted && e.subject.errors }" placeholder="{{ 'Subject' | translate }}">
+					 <div *ngIf="submitted && e.subject.errors" class="alert alert-dange">
+                        <div *ngIf="e.subject.errors.required">{{ 'Subjectisrequired' | translate }}</div>
+                    </div>
+				</div>
+				<div class="form-group">
+					<label for="msg">{{ 'Message' | translate }}</label>
+					<textarea class="form-control" formControlName="message" id="msg" [ngClass]="{ 'is-invalid': submitted && e.message.errors }" placeholder="{{ 'Message' | translate }}"></textarea>
+				   <div *ngIf="submitted && e.message.errors" class="alert alert-dange">
+                        <div *ngIf="e.message.errors.required">{{ 'Messageisrequired' | translate }}</div>
+                   </div>
+				</div>					
+				<div class="form-group">
+					<button type="submit" class="btn btn-success custom-btn add-portfolio" [disabled]="loading">{{showBtnText}}</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-lg-6">
+			<div class="advr_big">
+				<img src="assets/images/advr_s.png" class="img-fluid">
+			</div>
+		</div>
+	</div>
+</div>

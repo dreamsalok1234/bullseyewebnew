@@ -1,0 +1,55 @@
+<div class="top-title">
+	<div class="row">
+		<div class="col-md-12">
+			<form (ngSubmit)="AddInvestment()"  [formGroup]="investmentForm" class="portfolio-heading">
+				<h2>{{ 'AddInvestment' | translate }} 
+					<a class="back_arrow" href="javascript:" onclick="history.go(-1); return false;" title="{{ 'Back' | translate }}">
+						<span>
+						<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+					</span>
+				</a></h2>
+				<div class="form-group">
+					<label for="Portfolio">{{ 'Ticker' | translate }}</label>	
+					<input type="text" formControlName="ticker" (click)="resetTickerTxt()" [formControl]="ticker" class="form-control" placeholder="{{ 'Ticker' | translate }}" [matAutocomplete]="auto" />
+					<div [ngClass]="(tickerError=='')?'':'alert alert-dange'" class="">
+						<div>{{tickerError}}</div>
+					</div>
+					<!-- CREATE AUTO COMPLETE PANEL WITH OPTIONS. -->
+					<mat-autocomplete #auto="matAutocomplete">
+						<mat-option (click)="selectTicker(tic.id,tic.price,tic.symbol+(tic.tickerName),tic.currency)" *ngFor="let tic of tickerList" [value]="tic.tickerName +' ('+tic.symbol+')' ">
+							{{tic.tickerName}} ({{tic.symbol}})
+						</mat-option>
+					</mat-autocomplete>
+				</div>
+				<div class="form-group">
+					<label for="Portfolio">{{ 'Holding(units)' | translate }}</label>	
+					<input type="text" formControlName="holding" class="form-control" placeholder="{{ 'Holding(units)' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Stock')" [ngClass]="{ 'is-invalid': submitted && i.holding.errors }" (keypress)="numberOnlyForHold($event)" (blur)="setHoldingValue('Stock')" value="{{holdingUnit | number:'1.0-0'}}" *ngIf="portfolioType.toLowerCase()=='stock'"/>
+					<input type="text" formControlName="holding" class="form-control" placeholder="{{ 'Holding(units)' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Cryptocurrency')" [ngClass]="{ 'is-invalid': submitted && i.holding.errors }" (keypress)="numberOnly($event)" *ngIf="portfolioType.toLowerCase()=='cryptocurrency' || portfolioType=='CryptoCurrency'" (blur)="setHoldingValue('Cryptocurrency')" />
+                    <div *ngIf="submitted && i.holding.errors" class="alert alert-dange">
+                        <div *ngIf="i.holding.errors.required">{{ 'Holding(units)isrequired' | translate }}</div>
+                    </div>
+				</div>
+				<div class="form-group" [ngClass]="showBookingSymbol ? 'BookingCost':''">
+					<label for="Portfolio">{{ 'BookingCost' | translate }}</label>
+					<div class="span_input">
+					<span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span>
+					<input type="text"  formControlName="bookingCost" maxlength="35" class="form-control" autocomplete="off" placeholder="{{ 'BookingCost' | translate }}" [ngClass]="{ 'is-invalid': submitted && i.bookingCost.errors }" (keyup)="checkBookValue();" (blur)="calculateBookingCost()" (keypress)="numberOnly($event)" />
+					</div>
+					<div *ngIf="submitted && i.bookingCost.errors" class="alert alert-dange">
+                        <div *ngIf="i.bookingCost.required">{{ 'BookingCostisrequired' | translate }}</div>
+                    </div>
+				</div>
+				<div class="form-group " [ngClass]="showMarketSymbol ? 'MarketValue':''">
+					<label for="Portfolio">{{ 'MarketValue' | translate }}</label>
+					<div class="span_input">
+					<span class="symbol" *ngIf="showMarketSymbol">{{symbol}}</span>					
+					<input type="text" formControlName="marketValue" class="form-control" placeholder="{{ 'MarketValue' | translate }}" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && i.marketValue.errors }" (keypress)="numberOnly($event)" readonly />
+					</div>
+					<div *ngIf="submitted && i.marketValue.errors" class="alert alert-dange">
+                        <div *ngIf="i.marketValue.required">{{ 'MarketValueisrequired' | translate }}</div>
+                    </div>
+				</div>
+				<button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio"><i class="fa fa-plus"></i>{{ 'AddInvestment' | translate }}</button>
+			</form>
+		</div>
+	</div>

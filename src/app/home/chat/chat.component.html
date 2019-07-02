@@ -1,0 +1,107 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="chat-title">
+			<h2>{{ 'Chat' | translate }}</h2>	
+		</div>		
+	</div>					
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<div class="stock_list">						
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:"
+						(click)="toggle(1)" [ngClass]="activeTab ? '' : 'active'">{{ 'NewStocks' | translate }}</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:" (click)="toggle(2)" [ngClass]="activeTab ? 'active' : ''">{{ 'Cryptocurrency' | translate }}</a>
+				</li>
+			</ul>
+			<form class="form-inline bullseya-searchform" (ngSubmit)="searchChat()" [formGroup]="chatForm">
+				<input class="form-control" type="text" placeholder="{{ 'Search' | translate }}" formControlName="chatSearchTxt" (keyup)="setChatData()">
+				<button class="btn btn-success" type="submit" (click)="searchChat();">
+					<i class="fa fa-search"></i>
+				</button>
+			</form>
+			<!-- Tab panes -->
+			<div class="stock_news favourites">
+				<div>
+					<h2>{{ 'Favourites' | translate }}</h2>
+					<ul>
+						<li *ngFor="let chat of chatList;let i=index">
+							<div class="icon_name">
+								<img src="{{placeholderImageUrl}}" style="width: 45px;" *ngIf="chat.tickerUrl == undefined || chat.tickerUrl.length == 0">
+								<img  src="{{chat.tickerUrl}}" style="width: 45px;" *ngIf="chat.tickerUrl != undefined && chat.tickerUrl.length > 0">	
+								<h3>{{chat.name}}</h3>
+							</div>
+							<div class="price">
+								<b>{{getCurrencyValue(chat) | currency : returnCurrSymbol(chatCurrency):'symbol':'1.3-3' }}</b>
+							</div>
+							<div class="rate_arrow">
+								<span (click)="open(content,chat.chatBoardId,chat.favouriteId,'deletefavourite',i)" ><i class="fa fa-star" aria-hidden="true"></i></span>
+								<span (click)="goToChatDetails(chat.chatBoardId,chat.name,chat.symbol,chat.tickerUrl,getCurrencyValue(chat),chat.currency,chat.favouriteId,chat.change_pct,chat.volume);"><img src="../assets/images/stock_tog.png" alt="" class="img-fluid"></span>
+							</div>
+						</li>	
+						<li *ngIf="chatList.length==0 && searchChatFav" class="processing">
+								<h4>{{ searchFavText | translate }}</h4>							
+						</li>
+					</ul>
+				</div>						
+			</div>			
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<h2 class="search_result">{{ 'SearchResult' | translate }}</h2>
+		<div class="stock_news">
+			<div *ngIf="searchResultCnt">				
+				<ul class="searchResult">
+					<li *ngFor="let chat of chatSearchList;">
+						<div class="icon_name">
+						    <img src="{{placeholderImageUrl}}" style="width: 45px;" *ngIf="chat.tickerUrl == undefined || chat.tickerUrl.length == 0">
+							<img  src="{{chat.tickerUrl}}" style="width: 45px;" *ngIf="chat.tickerUrl != undefined && chat.tickerUrl.length > 0">	
+							<h3>{{chat.name}}</h3>
+						</div>
+						<div class="price">
+							<b>{{getCurrencyValue(chat) | currency : returnCurrSymbol(chatCurrency):'symbol':'1.3-3' }}</b>
+						</div>
+						<div class="rate_arrow" (click)="goToChatDetails(chat.chatBoardId,chat.name,chat.symbol,chat.tickerUrl,getCurrencyValue(chat),chat.currency,chat.favouriteId,chat.change_pct,chat.volume);">
+							<div *ngIf="chat.favouriteId==null">
+									<span>
+										<i class="fa fa-star nofav" aria-hidden="true"></i>
+									</span>
+									<span>
+										<img src="../assets/images/stock_tog.png" alt="" class="img-fluid">
+									</span>
+							</div>
+							
+							<div *ngIf="chat.favouriteId>0">
+								<span>
+									<i class="fa fa-star nofav" aria-hidden="true"></i>
+								</span>
+								<span>
+									<img src="../assets/images/stock_tog.png" alt="" class="img-fluid">
+								</span>
+							</div>
+						</div>
+					</li>	
+					<li *ngIf="chatSearchList.length==0 && searchChatSearch" class="processing">
+						<h4>{{ searchSearchText | translate }}</h4>
+					</li>
+				</ul>	
+			</div>			
+		</div>		
+	</div>
+	<!-- The Modal -->
+	<div class="card-body">
+		<ng-template #content let-c="close" let-d="dismiss">
+			<div class="modal-body">
+				<p>{{modelText}}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-danger" (click)="c('Close click')">{{ 'No' | translate }}</button>
+				<button type="button" class="btn btn-secondary btn-success" (click)="updateFavouriteTicker('Close click');">{{btnText}}</button>
+			</div>
+		</ng-template>
+	</div>
+</div>

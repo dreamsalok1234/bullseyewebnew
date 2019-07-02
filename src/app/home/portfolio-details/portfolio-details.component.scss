@@ -1,0 +1,620 @@
+.head_div {
+  height: 80px !important;
+}
+.head_div.one {
+    height: 60px !important;
+}
+.riskmidium {
+  display: flex;
+}
+.top-title {
+  h2 {
+    display: inline-block!important;
+    width: auto;
+  }
+}
+.buttons_grp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  float: right;
+  margin-bottom: 20px;
+  button {
+    background: #00b050;
+    border: 0;
+    padding: 5px 20px;
+    margin-left: 15px;
+    font-size: 18px;
+    font-family: 'SFProDisplay-Regular';
+    color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 25px;
+    }
+    i {
+      font-size: 25px;
+    }
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+  select {
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+    width: 100px;
+    padding: 5px 20px;
+    height: auto;
+    border: 0;
+    background: #00b050;
+    margin-left: 15px;
+    font-size: 18px;
+    font-family: 'SFProDisplay-Regular';
+    color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    line-height: normal;
+  }
+}
+ul.stats_body {
+    cursor: pointer;
+}
+.box_v_chg {
+  display: flex;
+  justify-content: space-between;
+}
+
+.value_change ul {
+  display: flex;
+  li {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 0 0 50%;
+    background-color: #01172c;
+    cursor: pointer;
+    &.active {
+      background-color: #00b050;
+    }
+    &.inactive {
+      background-color: #ff0000;
+    }
+    &.zeroactive {
+      background-color: #ffffff;
+      h3 {
+        color: #01172c;
+      }
+      span {
+        color: #01172c;
+        i {
+          margin-right: 5px;
+        }
+      }
+    }
+    h3 {
+      font-size: 18px;
+      color: #fff;
+      font-family: 'SFProDisplay-Medium';
+      text-align: center;
+      margin: 0;
+    }
+    span {
+      font-size: 18px;
+      color: #fff;
+      font-family: 'SFProDisplay-Medium';
+      text-align: center;
+      margin: 0;
+    }
+  }
+}
+
+.tabs_pills .nav-pills {
+  .nav-link {
+    background-color: #3b5a76;
+    border-radius: 0;
+    text-align: center;
+    font-size: 18px;
+    font-family: 'SFProDisplay-Regular';
+    text-transform: capitalize;
+    color: #fff;
+    cursor: pointer;
+    height: 40px;
+    &.active {
+      background-color: #00b050;
+      border-radius: 0;
+    }
+  }
+  .show > .nav-link {
+    background-color: #00b050;
+    border-radius: 0;
+  }
+  display: flex;
+  justify-content: space-between;
+  .nav-item {
+    flex-grow: 1;
+    flex-basis: 0;
+    &:first-child .nav-link {
+      border-radius: 25px 0px 0px 25px;
+    }
+    &:last-child .nav-link {
+      border-radius: 0px 25px 25px 0px;
+    }
+  }
+}
+a.back_arrow {
+  background-color: #00b050;
+  margin-left: 20px;
+  padding: 0px 7.5px;
+  border-radius: 50%;
+  font-size: 25px;
+  span {
+    color: #fff;
+  }
+}
+
+.advr_hori {
+  margin-top: 20px;
+}
+
+.main-checkbox {
+  margin: 20px 0;
+}
+
+.checkbox-custom {
+  opacity: 0;
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.checkbox-custom-label {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+  font-size: 18px;
+  color: #fff;
+  font-family: 'SFProDisplay-Regular';
+  margin: 0;
+}
+
+.checkbox-custom {
+  + .checkbox-custom-label:before {
+    content: '';
+    /*background: #fff;*/
+    border: 1.5px solid #e4e4e4;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+    margin-right: 20px;
+    text-align: center;
+  }
+  &:checked + .checkbox-custom-label:before {
+    box-shadow: inset 0px 0px 0px 0px #fff;
+    background: url(../../../assets/images/tick.png);
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.stats_list li img {
+  width: 75px;
+}
+
+// .ticker_detail h2 {
+//   display: inline-block;
+// }
+.stats_table {
+  .active {
+    background: #00b050;
+    width: 115px;
+  }
+  .zeroactive {
+    background: #fff;
+    color: #000 !important;
+  }
+  .inactive {
+    background: #f03939;
+    width: 105px;
+  }
+  .nactive {
+    background: #fff;
+    color: #000 !important;
+  }
+}
+.riskmidium,.potenmidium{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  padding: 2px;
+  width: 100%;
+  max-width: 60px;
+ span {
+  background-color: #ffc000;
+  width: 20px !important;
+  height: 20px;
+   display: inline-block !important;
+}
+}
+.riskhigh,.potenlow{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  padding: 2px;
+  width: 100%;
+  max-width: 60px;
+  span {
+  background-color: red;
+  width: 20px !important;
+  height: 20px;
+  // border-radius: 4px;
+  display: inline-block;
+  // margin: 0 5px;
+}
+}
+
+.potenhigh,.risklow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  padding: 2px;
+  width: 100%;
+  max-width: 60px;
+  span {
+    background-color: #00b050;
+    width: 20px !important;
+    height: 20px;
+    // border-radius: 4px;
+  display: inline-block;
+    // margin: 0 5px;
+  }
+}
+.tabs_pills li.nav-item.active a {
+  background-color: #00b050 !important;
+}
+.ticker {
+  display: flex;
+  border-right: 1px solid #1b2e40;
+  width: 35%;
+}
+.ticker-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.ticker2 {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #1b2e40;
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+li.toggle_actions {
+  flex-direction: column;
+  ul.submenus {
+    width: 100%;
+    display: flex;
+    padding: 5px 0px;
+    border-radius: 3px;
+    li {
+      width: 25%;
+      float: left;
+      padding: 0 !important;
+      clear: right;
+      background: transparent;
+      a {
+        color: #fff;
+      }
+    }
+  }
+}
+
+a.tog_cog {
+  display: block;
+  color: #fff;
+  font-size: 25px;
+}
+div#chartdiv,
+div#bookchart {
+  background-color: #0e243b;
+  border: 1px solid #1b3e5c;
+  position: relative;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffff;
+}
+
+.candle_stick ul {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  li {
+    width: 100%;
+    height: 40px;
+    background-color: #3b5a76;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    margin: 0px;
+    flex: 0 0 15%;
+    cursor: pointer;
+    input {
+      background-color: transparent;
+      border: transparent;
+      color: #fff;
+      font-size: 18px;
+      font-family: 'SFProDisplay-Regular';
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}
+.candle_stick ul li.active {
+  background-color: #00b050 !important;
+}
+.tabs_value_chg {
+  position: relative;
+  height: 100%;
+}
+.tabs_value_chg .value_change {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.tabs_pills {
+  margin-bottom: 75px;
+}
+@import '../search-market/search-market.component.scss';
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .buttons_grp button {
+    padding: 5px 10px;
+    font-size: 12px;
+    img {
+      height: auto;
+      max-width: 15px;
+    }
+  }
+  .processing li h4 {
+    font-size: 12px;
+    margin: 10px 0;
+  }
+  a.back_arrow {
+    margin-left: 10px;
+    padding: 0px 5px;
+    font-size: 15px;
+  }
+
+  div#chartdiv,
+  div#bookchart,
+  div#candlechart {
+    height: 200px;
+    margin-top: 20px;
+  }
+
+  .tabs_pills {
+    margin: 0px 0 50px;
+    .nav-pills .nav-link {
+      font-size: 12px;
+      padding: 5px 3px;
+      height: auto;
+    }
+  }
+
+  .buttons_grp,
+  .candle_stick ul {
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    margin: 0px 0 5px;
+  }
+
+  .candle_stick {
+    margin-top: 10px;
+    ul li {
+      height: auto;
+      padding: 3px;
+      width: 45px;
+      margin: 0 3px;
+      input {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .checkbox-custom-label {
+    font-size: 15px;
+  }
+
+  .main-checkbox {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .checkbox-custom + .checkbox-custom-label:before {
+    content: '';
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    padding: 0px;
+    margin-right: 10px;
+    text-align: center;
+    background-size: 10px;
+  }
+
+  .value_change ul li {
+    padding: 5px;
+    h3 {
+      font-size: 10px;
+    }
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .top-title.ticker_detail .row [class*='col-'] {
+    padding: 0;
+  }
+
+  ul.stats_body li .tog_cog {
+    font-size: 12px;
+  }
+  .card-body {
+    padding: 0;
+  }
+  .advr_hori {
+    padding: 20px 0 0px;
+    margin: 0;
+  }
+  .stats_table {
+    overflow: hidden;
+  }
+  .stats_table .body_div {
+    overflow: visible;
+  }
+  li.toggle_actions {
+    position: relative;
+  }
+  li.toggle_actions ul.submenus {
+    padding: 0px 0px;
+    border-radius: 0;
+    position: absolute;
+    width: 100%;
+    transition: all 1s;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+  }
+  li.toggle_actions ul.submenus li {
+    font-size: 12px;
+  }
+
+  li.toggle_actions ul.submenus.collapse {
+    right: -200px;
+  }
+  li.toggle_actions ul.submenus.collapse.show {
+    right: 55%;
+  }
+  .riskhigh,.riskmidium, .potenmidium,.potenhigh,.riskhigh, .potenlow{
+    max-width: 45px;
+    span{
+      width: 15px !important;
+      height: 15px;
+    }
+  }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .buttons_grp button img {
+    height: 20px;
+  }
+  .candle_stick ul li {
+    height: auto;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
+  .candle_stick ul li input {
+    font-size: 15px;
+  }
+  .tabs_pills .nav-pills .nav-link {
+    height: auto;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
+  .buttons_grp button {
+    height: auto;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
+  .buttons_grp button i {
+    font-size: 20px;
+  }
+  .checkbox-custom-label {
+    font-size: 15px;
+  }
+  .value_change ul li {
+    padding: 5px;
+  }
+  .value_change ul li h3 {
+    font-size: 15px;
+  }
+  div#chartdiv,
+  div#bookchart,
+  div#candlechart {
+    height: 300px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .stats_list li {
+    min-height: 175px;
+  }
+  .buttons_grp button img {
+    height: 20px;
+  }
+  .candle_stick ul li {
+    height: auto;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
+  .candle_stick ul li input {
+    font-size: 15px;
+  }
+  .tabs_pills .nav-pills .nav-link {
+    height: auto;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
+  .buttons_grp button {
+    height: auto;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
+  .buttons_grp button i {
+    font-size: 20px;
+  }
+  .checkbox-custom-label {
+    font-size: 15px;
+  }
+  .value_change ul li {
+    padding: 5px;
+  }
+  .value_change ul li h3 {
+    font-size: 15px;
+  }
+  div#chartdiv,
+  div#bookchart {
+    height: 320px;
+  }
+}
+.form-group.target_price span {
+    position: absolute;
+    bottom: 5px;
+    left: 15px;
+}
+.form-group.target_price .form-control {
+    padding-left: 35px;
+}

@@ -1,0 +1,699 @@
+$color_1: #fff;
+$color_2: #64baf1;
+$color_3: rgb(255, 255, 255);
+$color_4: #00b050;
+$background_color_1: rgb(0, 176, 80);
+$background_color_2: rgba(250, 170, 15, 0);
+$background_color_3: #00b050;
+$border_color_1: rgb(255, 255, 255);
+$border_color_2: #00b050;
+@import '../search-market/search-market.component.scss';
+.top-title h2 {
+  margin-bottom: 0;
+}
+.left-arrow {
+  margin-right: 1px !important;
+}
+.portfolio-heading {
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3 {
+    font-size: 20px;
+    color: $color_3;
+    line-height: 1.154;
+    text-align: center;
+    font-family: 'SFProDisplay-Medium';
+  }
+
+  .custom-btn {
+    border-radius: 22px;
+    background-color: rgb(0, 176, 80);
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .add-portfolio {
+    .fa {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      padding-top: 0;
+      font-size: 12px;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+.advr_hori {
+  margin-top: 20px;
+}
+.watchlist-heading {
+  h3 {
+    font-size: 20px;
+    color: $color_3;
+    line-height: 1.154;
+    text-align: center;
+    font-family: 'SFProDisplay-Medium';
+    margin: 0;
+  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  .custom-btn {
+    border-radius: 22px;
+    background-color: rgb(0, 176, 80);
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      padding-right: 10px;
+      height: 20px;
+    }
+  }
+  select.custom-btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('../../../assets/images/togg.png');
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position: 85% center;
+    padding-right: 20px;
+    padding-left: 10px;
+    min-width: 80px;
+    option{
+      background-color: #fff;
+      color:#000;
+    }
+  }
+     select.custom-btn::-ms-expand {
+    display: none;
+}
+}
+.left-section {
+  display: flex;
+  align-items: center;
+  h3 {
+    padding-right: 17px;
+    margin: 0;
+  }
+}
+
+.accuracy-section {
+  padding: 85px 0;
+  p {
+    font-size: 30px;
+    line-height: 1;
+    color: $color_3;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 65px;
+    color: $color_3;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 30px;
+  }
+  .trail-button {
+    border-style: solid;
+    border-width: 2px;
+    border-color: $border_color_1;
+    border-radius: 5px;
+    background-color: $background_color_2;
+    font-size: 16px;
+    color: $color_3;
+    line-height: 1.875;
+    padding: 20px 35px;
+  }
+}
+.acc-body {
+  background-image: url(../../../assets/images/accuracy.jpg);
+  background-size: cover;
+  padding: 81px 0;
+}
+.processing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(#0e243b, #234b6f, #0e243b);
+  h4 {
+    color: #fff;
+    font-size: 15px;
+    margin: 20px 0;
+    background: transparent;
+  }
+}
+.top-title h2 b {
+  font-weight: normal;
+  margin-right: auto;
+}
+ul.stats_body li {
+  text-transform: unset;
+}
+.body_div {
+  max-height: 390px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+}
+// .app_stores.one h2 {
+//   font-size: 32px;
+//   padding-left: 28px;
+//   text-align: center !important;
+// }
+.app_stores {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 15px;
+  h2 {
+    flex-basis: 0;
+    flex-grow: 1;
+    color: #fff;
+    font-size: 32px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    font-family: 'SFProDisplay-Bold';
+    &.social_title {
+    }
+  }
+  ul {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 60px;
+    padding: 10px 0;
+    li {
+      margin: 5px;
+      a {
+        display: block;
+        img {
+          max-width: 130px;
+          width: 100%;
+        }
+      }
+      &.social-link {
+        width: 38px;
+        height: 38px;
+        align-items: center;
+        justify-content: center;
+        margin: 5px;
+        a {
+          background-color: #64baf1;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          border-radius: 5px;
+          color: #fff;
+          font-size: 20px;
+          padding: 10px;
+          text-decoration: none;
+        }
+      }
+      &.social-link:last-child a {
+        background-color: #3b5998;
+      }
+    }
+
+    &.social_icos {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &.one{
+    ul{
+      margin-right: 0 !important
+    }
+  }
+}
+
+.wachlist_index {
+	display: flex;
+	justify-content: space-between;
+	.stats_table {
+		flex-basis: 0;
+		flex-grow: 1;
+		/*flex: 0 0 48.5%;*/
+	}
+}
+@media only screen and (min-width: 1400px) and (max-width: 1580px) {
+  .acc-body {
+    padding: 60px 0;
+  }
+  .accuracy-section {
+    p {
+      font-size: 24px;
+    }
+    h3 {
+      font-size: 55px;
+      margin-bottom: 25px;
+    }
+    .trail-button {
+      padding: 12px 35px;
+    }
+  }
+  .body_div {
+    max-height: 258px;
+  }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .app_stores {
+    h2{
+      font-size: 30px;
+    }
+    ul {
+      justify-content: center;
+      // flex-direction: row;
+      margin-right: 60px;
+      align-items: center;
+      li {
+        margin: 5px;
+        &.social-link {
+          width: 35px;
+          height: 35px;
+
+        }
+        a{
+        img{
+          max-width: 100px;
+
+        }
+      }
+      }
+    }
+  }
+  .top-title {
+    padding: 15px 0 0;
+    h2 {
+      font-size: 25px;
+    }
+  }
+  .table-section {
+    .col-md-6 {
+      &:nth-child(1) {
+        padding-right: 25px;
+      }
+      &:nth-child(2) {
+        padding-left: 25px;
+      }
+    }
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 23px;
+      margin: 0;
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 23px;
+      margin: 0;
+    }
+  }
+  .accuracy-section {
+    padding: 60px 0;
+    p {
+      font-size: 23px;
+    }
+    h3 {
+      font-size: 48px;
+      margin-bottom: 25px;
+    }
+    .trail-button {
+      font-size: 15px;
+      padding: 10px 25px;
+    }
+  }
+  .acc-body {
+    padding: 55px 0;
+  }
+  .body_div {
+    max-height: 310px;
+  }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .app_stores.one[_ngcontent-c5] h2[_ngcontent-c5] {
+    font-size: 18px;
+  }
+  .app_stores {
+    h2 {
+      font-size: 18px;
+    }
+    ul {
+      flex-direction: row;
+      align-items: center;
+      margin-right: 20px;
+      padding: 0;
+      li {
+        a {
+          img {
+            max-width: 90px;
+          }
+        }
+        &.social-link {
+          width: 35px;
+          height: 35px;
+        }
+      }
+    }
+    &.one {
+      h2 {
+        font-size: 18px;
+      }
+    }
+  }
+  .top-title {
+    padding: 20px 0 0;
+    h2 {
+      font-size: 25px;
+      margin-bottom: 15px;
+    }
+  }
+  .inner-body {
+    padding: 0 15px;
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+    .add-portfolio {
+      .fa {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+      }
+    }
+    .custom-btn {
+      font-size: 12px;
+      padding: 3px 15px;
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 18px;
+      margin: 0;
+    }
+    .custom-btn {
+      font-size: 12px;
+      padding: 3px 15px;
+      img {
+        height: 14px;
+        padding-right: 5px;
+      }
+    }
+    select.custom-btn {
+      background-size: 10px;
+    }
+  }
+  .table-section {
+    .col-md-6 {
+      &:nth-child(1) {
+        padding-right: 20px;
+      }
+      &:nth-child(2) {
+        padding-left: 20px;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .inner-body {
+    padding: 0 10px;
+  }
+  .top-title {
+    padding: 35px 0;
+    h2 {
+      font-size: 25px;
+      margin: 0;
+    }
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .add-portfolio {
+      .fa {
+        width: 20px;
+        height: 20px;
+        padding-top: 4px;
+        font-size: 10px;
+      }
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+  }
+  .table-section {
+    .col-md-6 {
+      width: 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding-bottom: 15px;
+      &:nth-child(1) {
+        padding-right: 15px;
+      }
+      &:nth-child(2) {
+        padding-left: 15px;
+      }
+    }
+  }
+  .details-table {
+    .table {
+      thead {
+        th {
+          font-size: 18px;
+          padding: 15px 0;
+        }
+      }
+      tbody {
+        td {
+          font-size: 16px;
+          padding: 15px 0;
+        }
+      }
+    }
+  }
+  .accuracy-section {
+    padding: 30px 0 50px;
+    p {
+      font-size: 19px;
+    }
+    h3 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+    .trail-button {
+      font-size: 14px;
+      padding: 10px 25px;
+    }
+  }
+  .acc-body {
+    padding: 45px 0;
+    background-size: 100% 100%;
+    .col-md-5 {
+      max-width: 60%;
+      width: 60%;
+      flex: 0 0 60%;
+    }
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+  .form-inline.form_price .form-group {
+    flex: 0 0 100%;
+  }
+  .modal-body h3 {
+    font-size: 14px;
+  }
+  .app_stores {
+    padding: 5px;
+    h2 {
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 0.5px;
+      &.social_title {
+        text-align: center;
+      }
+    }
+    ul {
+      margin-right: 35px;
+      padding: 0;
+      li {
+        margin: 0;
+        a {
+          img {
+            max-width: 75px;
+          }
+        }
+        &.social-link {
+          width: 20px;
+          height: 20px;
+          margin: 2px;
+          a {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    // &.one {
+    //   h2 {
+    //     font-size: 12px;
+    //     text-align: center;
+    //   }
+    // }
+  }
+}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .form-inline.form_price .form-group {
+    flex: 0 0 100%;
+  }
+  .modal-body h3 {
+    font-size: 14px;
+  }
+  .app_stores {
+    padding: 5px;
+    h2 {
+      font-size: 18px;
+      text-align: center;
+      &.social_title {
+        text-align: center;
+      }
+    }
+    ul {
+      margin-right: 35px;
+      padding: 0;
+      flex-direction: row;
+      align-items: center;
+      li {
+        a {
+          img {
+            max-width: 90px;
+          }
+        }
+        &.social-link {
+          width: 25px;
+          height: 25px;
+          margin: 2px;
+          a {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+    &.one {
+      h2 {
+        font-size: 18px;
+        text-align: center;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .app_stores[_ngcontent-c5] {
+    padding: 7px;
+  }
+  .body_div::-webkit-scrollbar {
+    width: 3px;
+  }
+  .top-title {
+    padding: 30px 0 10px;
+    text-align: center;
+    h2 {
+      font-size: 25px;
+      margin-bottom: 0;
+      b {
+        color: #fff;
+        text-transform: capitalize;
+        //font-size: 20px;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 14px;
+      margin: 0;
+    }
+    .add-portfolio {
+      padding: 5px 10px;
+      font-size: 10px;
+      .fa {
+        font-size: 8px;
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 14px;
+      margin: 0;
+    }
+    .custom-btn {
+      font-size: 10px;
+      padding: 5px 15px;
+      background-size: 8px;
+      img {
+        height: 14px;
+      }
+    }
+  }
+
+  .inner-body {
+    padding: 0 0px;
+  }
+
+  .acc-body {
+    padding: 35px 0;
+  }
+  .accuracy-section {
+    h3 {
+      font-size: 35px;
+      margin-bottom: 17px;
+    }
+    p {
+      font-size: 16px;
+    }
+    padding: 45px 0;
+    .trail-button {
+      font-size: 13px;
+      padding: 7px 25px;
+    }
+  }
+  .table-section.port-table {
+    width: 100%;
+    overflow: scroll;
+  }
+  ul.stats_head {
+    li {
+      border: 0;
+    }
+  }
+  .body_div {
+    max-height: 228px;
+  }
+}

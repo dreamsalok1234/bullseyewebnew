@@ -1,0 +1,359 @@
+<div class="top-title" >
+	<div class="row">
+		<div class="col-md-12">
+			<h2>{{ 'Welcome' | translate }} &nbsp;<b>{{(profileInfo.firstname.length>0 && profileInfo.firstname != null)? profileInfo.firstname:''}}</b></h2>
+		</div>
+	</div>
+</div>
+<!--================= Table Section ================-->	
+<div class="table-section">
+	<div class="row">
+		<div class="col-md-6 col-lg-6">
+			<div class="portfolio-heading">
+				<h3>{{ 'Portfolios' | translate }}</h3>
+				<button type="button" class="btn custom-btn add-portfolio" (click)="addPortfolio();"><i class="fa fa-plus"></i> {{ 'AddPortfolio' | translate }}</button>
+			</div>
+				<div class="stats_table">
+					<!-- <div class="head_div">
+						<ul class="stats_head">
+							<li>{{ 'Portfolio' | translate }}</li>
+							<li>{{ 'BookCost' | translate }}</li>
+							<li>{{ 'MarketValue' | translate }}<br>{{ 'BookCost' | translate }}</li>
+							<li>{{ 'Change' | translate }}</li>
+							<li>{{ 'Actions' | translate }}</li>
+						</ul>
+					</div> -->
+					<div class="body_div">
+						<ul class="stats_body" *ngFor="let portfolioItem of portfolioList; let i= index;">
+							<li>{{portfolioItem.name}}</li>
+							<li>{{(portfolioItem.investmentbookcost=='' || portfolioItem.investmentbookcost==0 || portfolioItem.investmentbookcost==null)? 'N/A' : (portfolioItem.investmentbookcost | currency : returnCurrSymbol(portfolioItem.currency):'symbol':'1.0-0')}}<br>{{(portfolioItem.investmentmarketcalcost=='' || portfolioItem.investmentmarketcalcost==0 || portfolioItem.investmentmarketcalcost==null)? 'N/A' : (portfolioItem.investmentmarketcalcost | currency : returnCurrSymbol(portfolioItem.currency):'symbol':'1.0-0')}}</li>	<li class=""
+								[ngClass]="((portfolioItem.performance==0)?'zeroactive':(portfolioItem.performance>0)?'active':'inactive')">
+								<span>
+									<i class="fa fa-caret-up" aria-hidden="true" *ngIf="portfolioItem.performance>0"></i>
+									<i class="fa fa-caret-down" aria-hidden="true" *ngIf="portfolioItem.performance<0"></i>
+									<i class="fa fa-caret-left left-arrow" aria-hidden="true" *ngIf="portfolioItem.performance==0"></i>
+									<i class="fa fa-caret-right" aria-hidden="true" *ngIf="portfolioItem.performance==0"></i>
+									{{math.round(portfolioItem.performance)}}%
+								</span>
+							</li>
+							<li>
+								<div class="action">
+									<button title="{{ 'Edit' | translate }}" type="button" class="btn edit-button" (click)="editPortfolio(editportfolio, i, 'portfolio')"><i class="fa fa-pencil"></i></button>
+									<button title="{{ 'Remove' | translate }}" type="button" class="btn delete-button" (click)="open(content, i, 'portfolio')"><i
+											class="fa fa-trash"></i></button>
+									<button title="{{ 'View' | translate }}" type="button" class="btn edit-button"
+										(click)="goToPortfolioDetails(portfolioItem.portfolioId,portfolioItem.currency,portfolioItem.type,portfolioItem.name)"><i
+											class="fa fa-eye"></i></button>
+								</div>
+							</li>
+						</ul>
+						<ul class="processing" *ngIf="portfolioList.length==0 && !processing">
+							<li>
+								<h4>{{ 'NoRecord' | translate }}</h4>
+							</li>
+						</ul>
+						<ul class="processing" *ngIf="processing">
+							<li>
+								<h4>{{ 'Processing...' | translate }}</h4>
+							</li>
+						</ul>
+					</div>
+				</div>
+		</div>
+		<div class="col-md-6 col-lg-6">
+			<div class="watchlist-heading">
+				<div class="left-section">
+					<h3>{{ 'Watchlist' | translate }}</h3>
+					<select class="btn custom-btn" (change) = "ChangeWatchListCurrency()" name="currentCurrency" [(ngModel)]="model.currentCurrency"  #currentCurrency="ngModel">
+						<option value="{{currency.name}}" *ngFor="let currency of currencyList; let i = index;"  >{{currency.name}}</option>							
+					</select>
+				</div>
+				<div class="right-section">
+					<button type="button" class="btn custom-btn" [routerLink]="['/market-search']"><img src="../../assets/images/search-market-icon.png"> {{ 'SearchMarkets' | translate }}</button>
+				</div>
+			</div>
+			<div class="wachlist_index">
+				<div class="stats_table">
+					<!-- <div class="head_div">
+						<ul class="stats_head">
+							<li>{{ 'Ticker' | translate }}</li>
+							<li>{{ 'MarketPrice' | translate }}</li>
+							<li>{{ 'MarketCap' | translate }}</li>
+							<li>{{ '24HChange' | translate }}</li>
+							<li>{{ 'Actions' | translate }}</li>
+						</ul>
+					</div> -->
+					<div class="body_div">
+						<ul class="stats_body" *ngFor="let watchlistitem of watchlist; let i= index;">
+							<li>{{watchlistitem.symbol}}</li>
+							
+							<li>{{(getCurrencyValue(watchlistitem)=='' || getCurrencyValue(watchlistitem)==0 || getCurrencyValue(watchlistitem)==null)? 'N/A' : (getCurrencyValue(watchlistitem) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}<br>
+							{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li>
+							{{getCurrencyMarketValue(watchlistitem,'marketCap')}}						
+							<!-- <li>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li> -->
+							<li class=""
+								[ngClass]="((watchlistitem.changePct==0)?'zeroactive':(watchlistitem.changePct>0)?'active':'inactive')"><span>
+									<i class="fa fa-caret-up" aria-hidden="true" *ngIf="watchlistitem.changePct>0"></i>
+									<i class="fa fa-caret-down" aria-hidden="true" *ngIf="watchlistitem.changePct<0"></i>
+									<i class="fa fa-caret-left left-arrow" aria-hidden="true" *ngIf="watchlistitem.changePct==0"></i>
+									<i class="fa fa-caret-right" aria-hidden="true" *ngIf="watchlistitem.changePct==0"></i>
+									{{ watchlistitem.changePct | number:'1.2-2'}}%
+								</span>
+							</li>
+							<li>
+								<div class="action">
+									<button title="{{ 'PriceAlert' | translate }}" type="button" class="btn edit-button" (click)="openAlert(pricealert, i)" title="Setup Price Alert"><i class="fa fa-bell-o"></i></button>
+									<button title="{{ 'Remove' | translate }}" type="button" class="btn delete-button" (click)="open(content, i, 'watchlist')"><i
+											class="fa fa-trash"></i>
+									</button>
+									<button title="{{ 'View' | translate }}" type="button" class="btn edit-button" (click)="goToTickerDetails(watchlistitem.id,watchlistitem.currency,watchlistitem.type,watchlistitem.tickerName,watchlistitem.symbol,watchlistitem.watchlistId)"><i
+											class="fa fa-eye"></i>
+									</button>
+								</div>
+							</li>
+						</ul>
+						<ul class="processing" *ngIf="watchlist.length==0 && !processing">
+							<li>
+								<h4>{{ 'NoRecord' | translate }}</h4>
+							</li>
+						</ul>
+						<ul class="processing" *ngIf="processing">
+							<li>
+								<h4>{{ processingTxt }}</h4>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- <div class="stats_table">
+					<div class="head_div">
+											<ul class="stats_head">
+												<li>{{ 'Ticker' | translate }}</li>
+												<li>{{ 'MarketPrice' | translate }}</li>
+												<li>{{ 'MarketCap' | translate }}</li>
+												<li>{{ '24HChange' | translate }}</li>
+												<li>{{ 'Actions' | translate }}</li>
+											</ul>
+										</div> 
+					<div class="body_div">
+						<ul class="stats_body" *ngFor="let watchlistitem of watchlist; let i= index;">
+							<li>{{watchlistitem.symbol}}</li>
+				
+							<li>{{(getCurrencyValue(watchlistitem)=='' || getCurrencyValue(watchlistitem)==0 || getCurrencyValue(watchlistitem)==null)? 'N/A' : (getCurrencyValue(watchlistitem) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}<br>
+								{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}
+							</li>
+							{{getCurrencyMarketValue(watchlistitem,'marketCap')}}
+							
+							<li class=""
+								[ngClass]="((watchlistitem.changePct==0)?'zeroactive':(watchlistitem.changePct>0)?'active':'inactive')">
+								<span>
+									<i class="fa fa-caret-up" aria-hidden="true" *ngIf="watchlistitem.changePct>0"></i>
+									<i class="fa fa-caret-down" aria-hidden="true" *ngIf="watchlistitem.changePct<0"></i>
+									<i class="fa fa-caret-left left-arrow" aria-hidden="true" *ngIf="watchlistitem.changePct==0"></i>
+									<i class="fa fa-caret-right" aria-hidden="true" *ngIf="watchlistitem.changePct==0"></i>
+									{{ watchlistitem.changePct | number:'1.2-2'}}%
+								</span>
+							</li>
+							<li>
+								<div class="action">
+									<button title="{{ 'PriceAlert' | translate }}" type="button" class="btn edit-button"
+										(click)="openAlert(pricealert, i)" title="Setup Price Alert"><i
+											class="fa fa-bell-o"></i></button>
+									<button title="{{ 'Remove' | translate }}" type="button" class="btn delete-button"
+										(click)="open(content, i, 'watchlist')"><i class="fa fa-trash"></i>
+									</button>
+									<button title="{{ 'View' | translate }}" type="button" class="btn edit-button"
+										(click)="goToTickerDetails(watchlistitem.id,watchlistitem.currency,watchlistitem.type,watchlistitem.tickerName,watchlistitem.symbol,watchlistitem.watchlistId)"><i
+											class="fa fa-eye"></i>
+									</button>
+								</div>
+							</li>
+						</ul>
+						<ul class="processing" *ngIf="watchlist.length==0 && !processing">
+							<li>
+								<h4>{{ 'NoRecord' | translate }}</h4>
+							</li>
+						</ul>
+						<ul class="processing" *ngIf="processing">
+							<li>
+								<h4>{{ processingTxt }}</h4>
+							</li>
+						</ul>
+					</div>
+				</div>-->
+			</div>
+		</div>
+		<div class="col-md-6" *ngIf="showBannerIcon">
+		<div class="advr_hori">
+			<img src="assets/images/mobile_app.png" class="img-fluid">
+			<div class="app_stores one">
+				<h2>Get Bullseye on your<br>phone and tablet</h2>
+			<ul>
+				<li class="stores-link">
+					<a href="https://play.google.com/store/apps/details?id=com.mr.bullseye" target="_blank">
+						<img src="assets/images/play-store.png">
+					</a>
+				</li>
+				<li class="stores-link">
+					<a href="https://itunes.apple.com/gb/app/bullseye-investors/id1382571013?mt=8" target="_blank">
+					<img src="assets/images/play-store-white.png">
+				</a>
+			</li>
+			</ul>
+			</div>
+		</div>
+		</div>
+		<div class="col-md-6" *ngIf="showBannerIcon">
+		<div class="advr_hori">
+			<img src="assets/images/Social-Media-Advert.png" class="img-fluid">
+			<div class="app_stores">
+				<h2 class="social_title">Join the Bullseye Community<br>Follow us on social media</h2>
+			<ul class="social_icos">
+				<li class="social-link"><a href="https://twitter.com/bullseye_app" target="_blank">
+						<i class="fa fa-twitter"></i></a></li>
+				<li class="social-link"><a href="https://www.facebook.com/bullseyeinvestors" target="_blank">
+						<i class="fa fa-facebook"></i></a></li>
+			</ul>
+			</div>
+		</div>
+		</div>
+		
+	</div>
+</div>
+<!-- The Modal -->
+<div class="card-body">
+	<ng-template #content let-c="close" let-d="dismiss">		
+		<div class="modal-body">
+			<p>{{modelText}}</p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-success" (click)="deleteItems('Close click',ind,deleteType)">{{btnText}}</button>
+			<button type="button" class="btn btn-danger" (click)="c('Close click')">{{ 'No' | translate }}</button>
+		</div>
+	</ng-template>
+</div>
+
+<!-- add_assets modal-->
+<div class="card-body">
+  <ng-template #pricealert let-c="close" let-d="dismiss">
+    <div class="modal-header alert_header">
+      <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h3>
+	    <span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}"  class="img-fluid"/></span>
+		{{ priceAlert.tickerName }}
+	  </h3>
+      <form class="form-inline form_price" (submit)="setPriceAlert()">
+		 <div class="form-group">
+          <label>{{ 'Condition' | translate }}</label>
+          <select class="form-control" name="compare" [(ngModel)]="priceAlert.compare" #compare="ngModel">
+            <option value=">">{{ 'GreaterThan' | translate }}</option>
+            <option value="<">{{ 'LessThan' | translate }}</option>
+          </select>
+        </div>
+		<div class="form-group">
+          <label>{{ 'Currency' | translate }}</label>
+          <select
+            class="form-control"            
+            name="currentCurrency"
+            [(ngModel)]="priceAlert.currentCurrency"
+            #currentCurrency="ngModel"
+          >
+            <option value="{{ currency.name }}" *ngFor="let currency of currencyItemList; let i = index">{{ currency.name }} </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>{{ 'TargetPrice' | translate }}</label>
+          <input
+            class="form-control amount"
+            type="text"
+            name="amount"
+            [(ngModel)]="priceAlert.amount"
+            #amount="ngModel"
+            autocomplete="off"
+            (keypress)="numberOnly($event)"
+			maxlength="10"
+			(keyup)="checkTargetValidation()"
+			(blur)="setTagetValueWith3Digit()"
+          />
+          <div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
+        </div>
+        <div class="form-group">
+          <label>{{ 'ExpiryDate' | translate }}</label>
+          <div class="input-group datepicker-input">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              [(ngModel)]="priceAlert.expiryDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              readonly
+            />
+            <button class="input-group-addon" (click)="d.toggle()" type="button">
+              <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+              <span class="fa fa-calendar"></span>
+            </button>
+            <div class="error danger" *ngIf="priceAlertError.expiryDate">{{ 'ExpiryDateRequired!' | translate }}</div>
+          </div>
+        </div>
+       
+        
+        <div class="form-group">         
+          <button class="btn btn-success" type="submit">
+            {{ 'Submit' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>
+
+<!-- add_assets modal-->
+<div class="card-body">
+  <ng-template #editportfolio let-c="close" let-d="dismiss">
+    <div class="modal-header alert_header">
+      <h4 class="modal-title">{{ 'UpdatePortfolio' | translate }}</h4>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline form_price" (submit)="updatePortfolio()">
+        <div class="form-group">
+          <label>{{ 'Name' | translate }}</label>
+          <input
+            class="form-control name"
+            type="text"
+            name="name"
+            [(ngModel)]="portfolioForm.name"
+            #name="ngModel"
+            autocomplete="off"
+			maxlength="20"
+          />
+          <div class="error danger" *ngIf="portfolioError.name">{{ 'NameRequired!' | translate }}</div>
+        </div>
+        
+        <div class="form-group">
+          <label>{{ 'Currency' | translate }}</label>
+          <select
+            class="form-control"            
+            name="currentCurrency"
+            [(ngModel)]="portfolioForm.currentCurrency"
+            #currentCurrency="ngModel"
+          >
+            <option value="{{ currency.name }}" *ngFor="let currency of currencyItemList; let i = index">{{ currency.name }} </option>
+          </select>
+        </div>
+        <div class="form-group">         
+          <button class="btn btn-success" type="submit">
+            {{ 'Submit' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

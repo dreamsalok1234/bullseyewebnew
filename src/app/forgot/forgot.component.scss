@@ -1,0 +1,21 @@
+// shared css for the login and signup page
+@import "../login/login.component.scss";
+
+.signing-form .intl-tel-input + .alert {
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    bottom: -22px;
+    margin: 0;
+    left: 12px;
+    letter-spacing: 0.7px;
+    padding: 0;
+    font-family: 'SFProDisplay-Light';
+}
+.form-group.country-code .intl-tel-input .phone_number {
+    padding-left: 50px;
+    font-size: 15px;
+    font-family: 'SFProDisplay-Regular';
+    color: #fff;
+}
+

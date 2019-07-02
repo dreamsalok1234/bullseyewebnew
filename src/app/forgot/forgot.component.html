@@ -1,0 +1,42 @@
+<div class="register-page" [@routerTransition]>
+  <div class="container">
+		<div class="login_form">
+    <div class="logo-centered">
+      <img src="../../assets/images/logo.png" alt="logo" />
+      <span class="signing-title">{{ 'Forgotten Password' | translate }}</span>
+    </div>
+    <div class="signing-form forgot_pass">
+      <form (ngSubmit)="ForgotPassword()" [formGroup]="registerForm">
+        <div class="form-group country-code">
+          <label>Please enter your registered mobile number here.</label>
+          <input
+            type="text"
+            formControlName="phone"
+            class="form-control phone_number"
+            [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+            placeholder="Phone Number"
+            ng2TelInput
+            [ng2TelInputOptions]="{ initialCountry: 'us' }"
+            (hasError)="hasError($event)"
+            (ng2TelOutput)="getNumber($event)"
+            (intlTelInputObject)="telInputObject($event)"
+            (countryChange)="onCountryChange($event)"
+            (keypress)="numberOnly($event)"
+          />
+          <div *ngIf="submitted && f.phone.errors" class="alert alert-dange">
+            <div *ngIf="f.phone.errors.required">Phone Number is required</div>
+            <div *ngIf="f.phone.errors.pattern">Invalid Phone Number</div>
+            <div *ngIf="f.phone.errors.minlength">Phone number entered must be greater than 8 digits in length and have the correct country code selected</div>
+          </div>
+				</div>
+				<div class="button_account">
+        <button type="submit" class="btn btn-primary">{{ showBtnText | translate }}</button>
+        <p>
+         <a [routerLink]="['/login']">{{ 'Sign In' | translate }}</a>
+				</p>
+				</div>
+      </form>
+		</div>
+		</div>
+  </div>
+</div>

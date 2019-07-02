@@ -1,0 +1,470 @@
+$color_1: #fff;
+$color_2: #64baf1;
+$color_3: rgb(255, 255, 255);
+$color_4: #00b050;
+$background_color_1: rgb(0, 176, 80);
+$background_color_2: rgba(250, 170, 15, 0);
+$background_color_3: #00b050;
+$border_color_1: rgb(255, 255, 255);
+$border_color_2: #00b050;
+.top-title {
+  padding: 25px 0 0;
+  h2 {
+    font-size: 31.251px;
+    color: $color_3;
+    line-height: 0.96;
+    font-weight: 500;
+  }
+}
+
+@import '../search-market/search-market.component.scss';
+.portfolio-heading {
+  padding: 0px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3 {
+    font-size: 25px;
+    color: $color_3;
+    line-height: 1.154;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .custom-btn {
+    border-radius: 22px;
+    background-color: rgb(0, 176, 80);
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .add-portfolio {
+    .fa {
+      width: 25px;
+      height: 25px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      padding-top: 5px;
+      font-size: 13px;
+      margin-right: 10px;
+    }
+  }
+}
+.top-title.search_market a {
+      background-color: #00b050;
+    margin-left: 20px;
+    padding: 0px 7.5px;
+    border-radius: 50%;
+    font-size: 25px;
+    float: right;
+  span{
+    color: #fff;
+  }
+}
+.watchlist-heading {
+  h3 {
+    font-size: 26px;
+    color: $color_3;
+    line-height: 1.154;
+    text-align: center;
+  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  .custom-btn {
+    border-radius: 22px;
+    background-color: rgb(0, 176, 80);
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      padding-right: 10px;
+    }
+  }
+}
+.left-section {
+  display: flex;
+  align-items: center;
+  h3 {
+    padding-right: 17px;
+  }
+}
+// .table-section {
+// 	.col-md-6 {
+// 		&:nth-child(1) {
+// 			padding-right: 50px;
+// 		}
+// 		&:nth-child(2) {
+// 			padding-left: 50px;
+// 		}
+// 	}
+// }
+
+.accuracy-section {
+  padding: 85px 0;
+  p {
+    font-size: 30px;
+    line-height: 1;
+    color: $color_3;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 65px;
+    color: $color_3;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 30px;
+  }
+  .trail-button {
+    border-style: solid;
+    border-width: 2px;
+    border-color: $border_color_1;
+    border-radius: 5px;
+    background-color: $background_color_2;
+    font-size: 16px;
+    color: $color_3;
+    line-height: 1.875;
+    padding: 20px 35px;
+  }
+}
+.body_div.fixed-1 li {
+  padding: 9px !important;
+}
+.pagination-top ul.pagination.pagination-sm {
+  margin-bottom: 0px;
+}
+.acc-body {
+  background-image: url(../../../assets/images/accuracy.jpg);
+  background-size: cover;
+  padding: 81px 0;
+}
+.search_market h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  .back_arrow {
+    background-color: #00b050;
+    margin-left: auto;
+    padding: 0px 7.5px;
+    border-radius: 50%;
+    font-size: 25px;
+    span {
+      color: #fff;
+    }
+  }
+}
+.processing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(#0e243b, #234b6f, #0e243b);
+  h4 {
+    color: #fff;
+    font-size: 15px;
+    margin: 20px 0;
+  }
+}
+.advr_big.history_ad {
+    height: 100%;
+    img {
+      height: 100%;
+    }
+  }
+  .body_div{
+    max-height: 500px;
+  }
+@media only screen and (min-width: 1420px) and (max-width: 1610px) {
+  .acc-body {
+    padding: 60px 0;
+  }
+  .accuracy-section {
+    p {
+      font-size: 24px;
+    }
+    h3 {
+      font-size: 55px;
+      margin-bottom: 25px;
+    }
+    .trail-button {
+      padding: 12px 35px;
+    }
+  }
+}
+@media only screen and (min-width: 1270px) and (max-width: 1419px) {
+  .top-title {
+    padding: 35px 0;
+    h2 {
+      font-size: 25px;
+      margin: 0;
+    }
+  }
+  .table-section {
+    .col-md-6 {
+      &:nth-child(1) {
+        padding-right: 25px;
+      }
+      &:nth-child(2) {
+        padding-left: 25px;
+      }
+    }
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 23px;
+      margin: 0;
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 23px;
+      margin: 0;
+    }
+  }
+  .accuracy-section {
+    padding: 60px 0;
+    p {
+      font-size: 23px;
+    }
+    h3 {
+      font-size: 48px;
+      margin-bottom: 25px;
+    }
+    .trail-button {
+      font-size: 15px;
+      padding: 10px 25px;
+    }
+  }
+  .acc-body {
+    padding: 55px 0;
+  }
+    .body_div{
+    max-height: 425px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1269px) {
+  .top-title {
+    padding: 35px 0;
+    h2 {
+      font-size: 25.251px;
+    }
+  }
+  .inner-body {
+    padding: 0 15px;
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .add-portfolio {
+      .fa {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+      }
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+  }
+  .table-section {
+    .col-md-6 {
+      &:nth-child(1) {
+        padding-right: 20px;
+      }
+      &:nth-child(2) {
+        padding-left: 20px;
+      }
+    }
+  }
+
+  .accuracy-section {
+    padding: 35px 0;
+    p {
+      font-size: 15px;
+    }
+    h3 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .trail-button {
+      font-size: 14px;
+      padding: 9px 21px;
+    }
+  }
+  .acc-body {
+    padding: 55px 0;
+  }
+  .body_div{
+    max-height: 274px;
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .inner-body {
+    padding: 0 10px;
+  }
+  .top-title {
+    padding: 35px 0;
+    h2 {
+      font-size: 25px;
+    }
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .add-portfolio {
+      .fa {
+        width: 20px;
+        height: 20px;
+        padding-top: 4px;
+        font-size: 10px;
+      }
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+  }
+  .table-section {
+    .col-md-6 {
+      width: 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding-bottom: 15px;
+      &:nth-child(1) {
+        padding-right: 15px;
+      }
+      &:nth-child(2) {
+        padding-left: 15px;
+      }
+    }
+  }
+
+  .accuracy-section {
+    padding: 30px 0 50px;
+    p {
+      font-size: 19px;
+    }
+    h3 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+    .trail-button {
+      font-size: 14px;
+      padding: 10px 25px;
+    }
+  }
+  .acc-body {
+    padding: 45px 0;
+    background-size: 100% 100%;
+    .col-md-5 {
+      max-width: 60%;
+      width: 60%;
+      flex: 0 0 60%;
+    }
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  body {
+    overflow-x: hidden;
+  }
+  .processing li h4 {
+    font-size: 12px;
+    margin: 10px 0;
+  }
+  .top-title {
+    padding: 20px 0;
+    h2 {
+      font-size: 20px;
+      margin: 0;
+      b {
+        font-family: 'SFProDisplay-Regular';
+        span {
+          color: #00b050;
+          text-transform: capitalize;
+          font-size: 20px;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+  }
+  .advr_big {
+    margin-top: 20px;
+  }
+  .portfolio-heading {
+    h3 {
+      font-size: 18px;
+      margin: 0 0 15px;
+      font-family: 'SFProDisplay-Regular';
+    }
+    .add-portfolio {
+      .fa {
+        width: 20px;
+        height: 20px;
+        padding-top: 4px;
+        font-size: 12px;
+      }
+    }
+  }
+  .watchlist-heading {
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
+  }
+
+  .acc-body {
+    padding: 35px 0;
+  }
+  .accuracy-section {
+    h3 {
+      font-size: 35px;
+      margin-bottom: 17px;
+    }
+    p {
+      font-size: 16px;
+    }
+    padding: 45px 0;
+    .trail-button {
+      font-size: 13px;
+      padding: 7px 25px;
+    }
+  }
+  .table-section.port-table {
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .news-nav {
+    display: none;
+  }
+  .table-section .col-md-6 {
+    padding: 0 15px !important;
+  }
+  .search_market h2 {
+    .back_arrow {
+      margin-left: 10px;
+      padding: 5px 7px;
+      border-radius: 50%;
+      font-size: 20px;
+      span {
+        color: #fff;
+      }
+    }
+  }
+}

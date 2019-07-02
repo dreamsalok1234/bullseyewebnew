@@ -1,0 +1,41 @@
+
+@import "../portfolio/portfolio.component.scss";
+.title-investment a {
+  float: right;
+  color: #fff;
+}
+.back_arrow{
+    background-color: #00b050;
+    margin-left: 20px;
+    padding: 5px 7px;
+    border-radius: 50%;
+    font-size: 25px;
+    span{
+    color: #fff;
+}
+}
+.form-group.MarketValue span~ .form-control ,.form-group.BookingCost span~ .form-control{
+    padding-left: 5px;
+    border-left: 0;
+     box-shadow: none;  
+}
+span.symbol{
+    color: #fff;
+    border: 2px solid #43607b;
+    background: rgba(67, 96, 123, 0.5);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    border-right: 0;
+    padding-right: 0;
+    
+}
+.span_input {
+    display: flex;
+}
+@media (min-width: 320px) and (max-width: 767px) {
+    .top-title h2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+}

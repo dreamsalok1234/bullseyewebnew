@@ -1,0 +1,336 @@
+<div class="account_settings">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="chat-title">
+        <h2>{{ 'AccountSettings' | translate }}</h2>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="account_feedback">
+        <div class="account_setup">
+          <h2>{{ 'AccountSetup' | translate }}</h2>
+          <ul>
+            <li>
+              <h3>
+                <a href="javascript:" (click)="open(content)"><img [src]="phoneIcon" />{{ 'ChangePhoneNumber' | translate }}</a>
+              </h3>
+            </li>
+            <li>
+              <h3>
+                <a href="javascript:" [routerLink]="['/change-password']"
+                  ><img [src]="passIcon" />{{ 'ChangePassword' | translate }}</a
+                >
+              </h3>
+            </li>
+            <li>
+              <h3><img [src]="langIcon" />{{ 'Language' | translate }}</h3>
+              <div class="md-select" (click)="languageToggle()" [ngClass]="activeTab1 ? '' : 'active'">
+                <label for="ul-lang">
+                  <button type="button" class="langseltext">{{ selectLang | translate }}</button>
+                </label>
+                <ul role="listbox" id="ul-lang" name="ul-id">
+                  <li *ngFor="let itemText of lang_array" (click)="languageMethod(itemText.shortname, itemText.name)">
+                    {{ itemText.name  | translate }}
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <h3><img [src]="currIcon" />{{ 'Currency' | translate }}</h3>
+              <div class="md-select" (click)="currencyToggle()" [ngClass]="activeTab2 ? '' : 'active'">
+                <label for="ul-curr">
+                  <button type="button">{{ selectCurr }}</button>
+                </label>
+                <ul role="listbox" id="ul-curr" name="ul-curr">
+                  <li *ngFor="let currency of curr_array" (click)="currencyMethod(currency.name)">{{ currency.name }}</li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <h3>
+                <!-- [routerLink]="['/bullseye-pro']" -->
+                <a href="javascript:" (click)="bullseyePro()"><img [src]="bproIcon" />{{ 'BullseyePro' | translate }}</a>
+              </h3>
+            </li>
+          </ul>
+        </div>
+        <div class="feedback">
+          <h2>{{ 'FeedbackHelp' | translate }}</h2>
+          <ul>
+            <li>
+              <h3>
+                <a href="javascript:" [routerLink]="['/enquiry']"><img [src]="enqIcon" />{{ 'Enquiry' | translate }}</a>
+              </h3>
+            </li>
+            <!-- <li>
+              <h3>
+                <a href="javascript:" (click)="openWindowCustomClass(appDemo)"><img [src]="appDemoIcon" />{{ 'AppQuickStart' | translate }}</a>
+              </h3>
+            </li> -->
+            <li>
+              <h3>
+                <a href="javascript:" (click)="openShare(share)"><img [src]="recFrnd" />{{ 'RecommendtoaFriend' | translate }}</a>
+              </h3>
+            </li>
+            <li>
+              <h3>
+                <a href="javascript:" [routerLink]="['/terms-of-service']"><img [src]="termsIcon" />{{ 'TermsofService' | translate }}</a>
+              </h3>
+            </li>
+            <li>
+              <h3>
+                <a href="javascript:" [routerLink]="['/privacy-policy']"><img [src]="privIcon" />{{ 'PrivacyPolicy' | translate }}</a>
+              </h3>
+            </li>
+            <li>
+              <h3>
+                <a href="javascript:" (click)="logout()"><img [src]="logoutIcon" />{{ 'Logout' | translate }}</a>
+              </h3>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1">      
+    </div>
+    <div class="col-lg-5">
+      <div class="advr_big">
+        <img src="assets/images/advr_b.png" class="img-fluid" />
+      </div>
+    </div>
+  </div>
+
+  <!-- modal to change phone number -->
+  <div class="card-body">
+    <ng-template #confirmicontent let-c="close" let-d="dismiss">
+		<div class="modal-body">
+			<p>{{modelText}}</p>
+		</div>
+		<div class="modal-footer" *ngIf="autRenewalInd==0 || autRenewalInd==1">
+			<button type="button" class="btn btn-success" (click)="changeAutoRenewal()">{{btnText}}</button>
+			<button type="button" class="btn btn-danger" (click)="resetAutoRenewal();">{{ 'No' | translate }}</button>
+		</div>
+		<div class="modal-footer" *ngIf="autRenewalInd==2">
+			<button type="button" class="btn btn-success" (click)="cancelSubscription()">{{btnText}}</button>
+			<button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'No' | translate }}</button>
+		</div>
+	</ng-template>
+	<ng-template #confirmisubupgrade let-c="close" let-d="dismiss">	
+		<div class="modal-header">
+          <h4 class="modal-title">{{ 'ManageSubscription' | translate }}</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+		<div class="modal-body">
+			<p>{{ 'Areyousureyouwanttochangeyoursubscriptionplan' | translate}}</p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-success" (click)="gotoUpgradeUrl()">{{ 'Confirm' | translate }}</button>
+			<button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'Cancel' | translate }}</button>
+		</div>
+	</ng-template>
+    <ng-template #content let-c="close" let-d="dismiss" class="phone_changes">
+      <div class="phone_changes">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ 'ChangePhoneNumber' | translate }}</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body update_number">
+          <form [formGroup]="changePhoneForm">
+            <div class="form-group country-code" *ngIf="phoneNumberOtp">
+              <input
+                type="text"
+                formControlName="phone"
+                class="form-control phone_number"
+                placeholder="Phone Number"
+                maxlength="12"
+                ng2TelInput
+                [ng2TelInputOptions]="{ initialCountry: 'us' }"
+                (ng2TelOutput)="getNumber($event)"
+                (intlTelInputObject)="telInputObject($event)"
+                (countryChange)="onCountryChange($event)"
+                (keypress)="numberOnly($event)"
+                [ngClass]="{ 'is-invalid': submitted && p.phone.errors }"
+              />
+              <button type="button" class="btn btn-success" [disabled]="loading" (click)="changePhoneNumber(1)">{{ showBtnText }}</button>
+            </div>
+            <div *ngIf="submitted && p.phone.errors" class="alert alert-dange">
+              <div *ngIf="p.phone.errors.required" style="color: #ff0024">{{ 'PhoneNumberisrequired' | translate }}</div>
+            </div>
+            <div class="form-group verify" *ngIf="phoneverifiedNumber">
+              <div class="signing-form verification-form">
+                <h4 class="modal-title" style="text-align: center; margin-bottom: 15px">{{ 'EnterVerificationCode' | translate }}</h4>
+                <div class="form-group">
+                  <span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="start"
+                      (keypress)="numberOnly($event)"
+                      maxlength="1"
+                      size="1"
+                      (keyup)="next($event)"
+                      formControlName="otp1"
+                  /></span>
+                  <span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      (keypress)="numberOnly($event)"
+                      maxlength="1"
+                      size="1"
+                      (keyup)="next($event)"
+                      formControlName="otp2"
+                  /></span>
+                  <span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      (keypress)="numberOnly($event)"
+                      maxlength="1"
+                      size="1"
+                      (keyup)="next($event)"
+                      formControlName="otp3"
+                  /></span>
+                  <span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="end"
+                      (keypress)="numberOnly($event)"
+                      maxlength="1"
+                      size="1"
+                      (keyup)="next($event)"
+                      formControlName="otp4"
+                  /></span>
+                  <div *ngIf="misMatch">{{ 'PleaseFillVerificationCode' | translate }}</div>
+                </div>
+                <button type="button" class="btn btn-primary" [disabled]="loading" (click)="changePhoneNumber(2)">{{ showBtnText }}</button>
+                <p>
+                  {{ 'DidnotreceivetheCode' | translate }}
+                  <button type="button" class="btn btn-primary" (click)="ResendOTP()">{{ 'ResendSMS' | translate }}</button>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-template>
+    <!-- reco friend -->
+    <ng-template #share let-modal>
+      <div class="modal-header alert_header">
+        <h4 class="modal-title" id="modal-basic-title">{{ 'ShareBullseye' | translate }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-inline form_price recommend" [formGroup]="inviteEmailForm">
+          <div class="form-group">
+            <label for="usr">{{ 'Email' | translate }}</label>
+            <div class="emails_share">
+              <input type="text" class="form-control" formControlName="email" id="email" autocomplete="off" placeholder="{{ 'FriendsEmailId' | translate }}" />
+              <button mat-button (click)="invitteFriend()">{{ inviteBtnText }}</button>
+            </div>
+            <div *ngIf="submitted && p.phone.errors" class="alert alert-dange">
+              <div *ngIf="p.phone.errors.required" style="color: #ff0024">{{ 'Emailisrequired' | translate }}</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="usr">{{ 'SocialMedia' | translate }}</label>
+            <ul>
+              <li>
+                <a href="https://www.facebook.com/sharer.php?u=http://52.14.191.189:4200/signup" target="_blank"
+                  ><i class="fa fa-facebook-square" aria-hidden="true"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/intent/tweet?url=http://52.14.191.189:4200/signup" target="_blank"
+                  ><i class="fa fa-twitter-square" aria-hidden="true"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+    <div class="profeature" [ngClass]="activePro ? '' : 'activePro'">  
+      <!-- Add Pro -->
+      <div class="bullseyepropopup" *ngIf="isAddPro">
+        <button type="button" class="close" aria-label="Close" (click)="proClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <iframe [src]="subscriptionUrl" width="100%"></iframe>
+      </div>
+      <!-- subs_counter -->
+      <div class="count_down" *ngIf="isProRemainDays">
+            <button type="button" class="close" aria-label="Close" (click)="proClose()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        <div class="round_prog">
+          <span class="prg_txt">
+            <!--<circle-progress [titleColor]='"#444444"' [titleFontSize]="22" [subtitleFontSize]="18" [showTitle]="true" [percent]="totalDisplayPer" [radius]="100" [animation]="true" [animationDuration]="1500" [maxPercent]="totalSubsPlanDays" [showSubtitle]="true" [subtitle]='["",((totalRemainingDays>1)?"DAYS LEFT":"DAY LEFT")]'> </circle-progress>-->
+			<circle-progress [titleColor]='"#444444"' [titleFontSize]="22" [subtitleFontSize]="18" [showTitle]="true" [showSubtitle]="false" [percent]="totalDisplayPer" [radius]="100" [animation]="true" [animationDuration]="1500" [maxPercent]="100" [title]='["",totalRemainingDays,((totalRemainingDays>1)?DAYSLEFT:DAYLEFT)]'> </circle-progress>
+          </span>
+        </div>
+        <div class="with-switch">
+          <p *ngIf="subCancelBtn">
+            {{ 'Auto-Renewal' | translate }}
+          <label class="switch" *ngIf="isSubsChecked">
+             <input type="checkbox" [checked]="true"  attr="true" (change)="checkAutoRenewal(confirmicontent,1)">
+			 <span class="slider round"></span>
+          </label>
+		  <label class="switch" *ngIf="!isSubsChecked">
+             <input type="checkbox" [checked]="false" attr="false" (change)="checkAutoRenewal(confirmicontent,0)">
+			 <span class="slider round"></span>
+          </label>
+         </p>
+         <a href="javascript:" class="custom-btn" (click)="openSubUpgrade(confirmisubupgrade)">{{ 'ManageSubscription' | translate }}</a>
+         <a href="javascript:" *ngIf="subCancelBtn" (click)="showPopupForCancel(confirmicontent)" class="custom-btn">{{ 'Cancel Subscription' | translate }}</a>
+        </div>
+      </div>
+    </div>
+
+<!-- app demo -->
+<ng-template #appDemo let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ 'Email' | translate }}App Demo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+        <div class="slider_div">
+          <ngb-carousel class="carousel slide carousel-fade">
+            <ng-template ngbSlide>
+              <img src="../../assets/images/Demo1.jpg" alt="" class="img-fluid">
+            </ng-template>
+            <ng-template ngbSlide>
+              <img src="../../assets/images/Demo2.jpg" alt="" class="img-fluid">
+            </ng-template>
+            <ng-template ngbSlide>
+              <img src="../../assets/images/Demo3.jpg" alt="" class="img-fluid">
+            </ng-template>
+            <ng-template ngbSlide>
+              <img src="../../assets/images/Demo4.jpg" alt="" class="img-fluid">
+            </ng-template>
+            <ng-template ngbSlide>
+              <img src="../../assets/images/Demo5.jpg" alt="" class="img-fluid">
+            </ng-template>
+            <ng-template ngbSlide>
+              <img src="../../assets/images/Demo6.jpg" alt="" class="img-fluid">
+            </ng-template>
+            <ng-template ngbSlide>
+              <a href="javascript:" [routerLink]="['/portfolio']" (click)="modal.dismiss('Cross click')">
+              <img src="../../assets/images/Demo7.jpg" alt="" class="img-fluid">
+              </a>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+  </div>  
+</ng-template>
+  </div>
+</div>

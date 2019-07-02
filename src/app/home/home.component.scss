@@ -1,0 +1,278 @@
+// shared css for the login and signup page
+//@import "./home.component.scss";
+$color_1: #fff;
+$color_2: #64baf1;
+$color_3: rgb(255, 255, 255);
+$color_4: #00b050;
+$background_color_1: rgb(0, 176, 80);
+$background_color_2: rgba(250, 170, 15, 0);
+$background_color_3: #00b050;
+$border_color_1: rgb(255, 255, 255);
+$border_color_2: #00b050;
+
+/*======= header section ========*/
+/*======= footer section ========*/
+/*======= footer section ========*/
+/******** responsive code ***********/
+.inner-body {
+	// background-image: url(../../assets/images/signup-bg.jpg);
+	background-size: 100% 100%;
+	padding: 0 25px 25px;	
+	background-position: center;
+    flex-grow: 1;
+    background-color: #11264c;
+}
+
+
+@media only screen and (min-width: 1420px) and (max-width: 1610px) {
+	.details-table {
+		.table {
+			thead {
+				th {
+					font-size: 18px;
+					padding: 20px 0;
+				}
+			}
+			tbody {
+				td {
+					font-size: 16px;
+					padding: 20px 0;
+				}
+			}
+		}
+	}
+	.acc-body {
+		padding: 60px 0;
+	}
+	.accuracy-section {
+		p {
+			font-size: 24px;
+		}
+		h3 {
+			font-size: 55px;
+			margin-bottom: 25px;
+		}
+		.trail-button {
+			padding: 12px 35px;
+		}
+	}
+}
+@media only screen and (min-width: 1270px) and (max-width: 1419px) {
+	.top-title {
+		padding: 35px 0;
+		h2 {
+			font-size: 27px;
+		}
+	}
+	.table-section {
+		.col-md-6 {
+			&:nth-child(1) {
+				padding-right: 25px;
+			}
+			&:nth-child(2) {
+				padding-left: 25px;
+			}
+		}
+	}
+	.portfolio-heading {
+		h3 {
+			font-size: 23px;
+			margin: 0;
+		}
+	}
+	.watchlist-heading {
+		h3 {
+			font-size: 23px;
+			margin: 0;
+		}
+	}
+
+	.accuracy-section {
+		padding: 60px 0;
+		p {
+			font-size: 23px;
+		}
+		h3 {
+			font-size: 48px;
+			margin-bottom: 25px;
+		}
+		.trail-button {
+			font-size: 15px;
+			padding: 10px 25px;
+		}
+	}
+	.acc-body {
+		padding: 55px 0;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	.inner-body {
+		padding: 0 10px;
+	}
+	.top-title {
+		padding: 35px 0;
+		h2 {
+			font-size: 25px;
+		}
+	}
+	.portfolio-heading {
+		h3 {
+			font-size: 20px;
+			margin: 0;
+		}
+		.add-portfolio {
+			.fa {
+				width: 20px;
+				height: 20px;
+				padding-top: 4px;
+				font-size: 10px;
+			}
+		}
+	}
+	.watchlist-heading {
+		h3 {
+			font-size: 20px;
+			margin: 0;
+		}
+	}
+	// .table-section {
+	// 	.col-md-6 {
+	// 		width: 100%;
+	// 		flex: 0 0 100%;
+	// 		max-width: 100%;
+	// 		padding-bottom: 15px;
+	// 		&:nth-child(1) {
+	// 			padding-right: 15px;
+	// 		}
+	// 		&:nth-child(2) {
+	// 			padding-left: 15px;
+	// 		}
+	// 	}
+	// }
+
+	.accuracy-section {
+		padding: 30px 0 50px;
+		p {
+			font-size: 19px;
+		}
+		h3 {
+			font-size: 40px;
+			margin-bottom: 20px;
+		}
+		.trail-button {
+			font-size: 14px;
+			padding: 10px 25px;
+		}
+	}
+	.acc-body {
+		padding: 45px 0;
+		background-size: 100% 100%;
+		.col-md-5 {
+			max-width: 60%;
+			width: 60%;
+			flex: 0 0 60%;
+		}
+	}
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+
+	.top-title {
+		padding: 30px 0;
+		h2 {
+			font-size: 25.251px;
+		}
+	}
+	.portfolio-heading {
+		h3 {
+			font-size: 20px;
+			margin: 0;
+		}
+		.add-portfolio {
+			.fa {
+				width: 20px;
+				height: 20px;
+				padding-top: 4px;
+				font-size: 12px;
+			}
+		}
+	}
+	.watchlist-heading {
+		h3 {
+			font-size: 20px;
+			margin: 0;
+		}
+	}
+	
+	.inner-body {
+		padding: 0;
+
+	}
+	// .table-section {
+	// 	.col-md-6 {
+	// 		&:nth-child(1) {
+	// 			padding-right: 15px;
+	// 			margin-bottom: 15px;
+	// 			overflow: scroll;
+	// 		}
+	// 		&:nth-child(2) {
+	// 			padding-left: 15px;
+	// 			overflow: scroll;
+	// 		}
+	// 	}
+	// 	width: 100%;
+	// }
+	// .details-table {
+	// 	.table {
+	// 		thead {
+	// 			th {
+	// 				font-size: 14px;
+	// 				padding: 15px 0;
+	// 				font-size: 12px;
+	// 			}
+	// 		}
+	// 		tbody {
+	// 			td {
+	// 				font-size: 14px;
+	// 				padding: 15px 0;
+	// 			}
+	// 		}
+	// 	}
+	// 	td.active {
+	// 		width: 85px;
+	// 	}
+	// 	td.inactive {
+	// 		width: 85px;
+	// 	}
+	// 	td {
+	// 		.action {
+	// 			.btn {
+	// 				font-size: 13px;
+	// 			}
+	// 		}
+	// 	}
+	// 	width: 450px;
+	// }
+	.acc-body {
+		padding: 35px 0;
+	}
+	.accuracy-section {
+		h3 {
+			font-size: 35px;
+			margin-bottom: 17px;
+		}
+		p {
+			font-size: 16px;
+		}
+		padding: 45px 0;
+		.trail-button {
+			font-size: 13px;
+			padding: 7px 25px;
+		}
+	}
+	.table-section.port-table {
+		width: 100%;
+		overflow: scroll;
+	}
+}
+

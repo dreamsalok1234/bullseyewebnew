@@ -1,0 +1,200 @@
+form.portfolio-heading {
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  .form-group {
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+    input {
+      border: 2px solid #43607b;
+      background: rgba(67, 96, 123, 0.5);
+      height: auto;
+      border-radius: 0;
+      font-size: 15px;
+      color: #fff;
+    }
+    select {
+      border: 2px solid #43607b;
+      background: rgba(67, 96, 123, 0.5);
+      height: auto;
+      border-radius: 0;
+      font-size: 15px;
+      color: #fff;
+      -webkit-appearance: none;
+      background-image: url(../../../assets/images/togg.png);
+      background-repeat: no-repeat;
+      background-position: 97% center;
+      background-size: 15px;
+    }
+    label {
+      color: #fff;
+      font-size: 18px;
+      font-family: 'SFProDisplay-Regular';
+      text-transform: capitalize;
+    }
+  }
+  .custom-btn {
+    width: 100%;
+    height: 50px;
+    border-radius: 50px;
+    font-family: 'SFProDisplay-Medium';
+    font-size: 20px;
+    //text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #00b050;
+    color: #fff;
+  }
+}
+form.portfolio-heading .form-control + .alert:not(:empty) {
+  &:before {
+    content: '*';
+    right: -10px;
+    position: absolute;
+    top: -5px;
+  }
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 0;
+}
+.portfolio-heading .add-portfolio .fa {
+  border: 1px solid #fff;
+  font-size: 12px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+form.portfolio-heading .form-group input {
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-size: 15px;
+    color: #8ca5bb;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    font-size: 15px;
+    color: #8ca5bb;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    font-size: 15px;
+    color: #8ca5bb;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    font-size: 15px;
+    color: #8ca5bb;
+  }
+}
+.portfolio-group.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .custom-btn {
+    border-radius: 22px;
+    background-color: rgb(0, 176, 80);
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    padding: 7px 15px;
+    font-family: 'SFProDisplay-Regular';
+    flex: 0 0 40%;
+    height: auto;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+  }
+}
+footer[_ngcontent-c4] {
+    background: #0e243b;
+    border-top: 5px solid #00b050;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .top-title form.portfolio-heading {
+    max-width: 350px;
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-size: 12px;
+    }
+    input,
+    select {
+      border: 1px solid #43607b;
+      font-size: 12px;
+      background-size: 10px;
+      font-family: 'SFProDisplay-Light';
+      &::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        font-size: 12px;
+      }
+      &::-moz-placeholder {
+        /* Firefox 19+ */
+        font-size: 12px;
+      }
+      &:-ms-input-placeholder {
+        /* IE 10+ */
+        font-size: 12px;
+      }
+      &:-moz-placeholder {
+        /* Firefox 18- */
+        font-size: 12px;
+      }
+    }
+    .custom-btn {
+      font-size: 10px;
+      padding: 5px 10px;
+      font-family: 'SFProDisplay-Light';
+      height: auto;
+      width: auto;
+      margin: auto;
+      .fa {
+        width: 15px;
+        height: 15px;
+        font-size: 8px;
+        margin-right: 5px;
+      }
+    }
+  }
+  form.portfolio-heading .form-control + .alert:not(:empty){font-size: 10px;}
+  a.back_arrow{
+    margin-left: 10px;
+    padding: 4px 5px;
+    font-size: 15px;
+}
+
+// .form-group.MarketValue span ~ .form-control, .form-group.BookingCost span ~ .form-control {
+//   padding-left: 30px!important;
+// }
+span.symbol{
+     font-size: 12px;
+    border-width: 1px !important;
+    line-height: 16px !important;
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  // .form-group.MarketValue span ~ .form-control, .form-group.BookingCost span ~ .form-control {
+  //   padding-left: 35px!important;
+  // }
+  span.symbol{
+    font-size: 15px;
+  }
+}

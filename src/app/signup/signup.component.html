@@ -1,0 +1,89 @@
+<div class="register-page"  [@routerTransition]>
+	<div class="container">
+		<div class="login_form">
+		<div class="logo-centered">
+			<img src="../../assets/images/logo.png" alt="logo" />
+			<span class="signing-title">{{ 'Create Account' | translate }}</span>
+		</div>
+		<div class="signing-form">
+			<form (ngSubmit)="RegisteredUs()"  [formGroup]="registerForm">
+				<div class="form-group">
+					<input type="text" formControlName="firstName" class="form-control" placeholder="First Name " [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                    <div *ngIf="submitted && f.firstName.errors" class="alert alert-dange">
+                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    </div>
+				</div>
+				<div class="form-group">
+					<input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" placeholder="Last Name" />
+                    <div *ngIf="submitted && f.lastName.errors" class="alert alert-dange">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    </div>
+					<!-- <div [hidden]="lastname.valid || lastname.pristine" class="alert alert-danger">
+						<div [hidden]="!lastname.hasError('required')">{{ 'Last Name is required' | translate }}</div>
+						<div [hidden]="!lastname.hasError('pattern')">{{'Only alphabets allowed' | translate }}</div>
+					</div> -->
+				</div>
+				<div class="form-group">
+					<input type="text" formControlName="userName" (keydown.space)="$event.preventDefault();" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" placeholder="User Name" />
+                    <div *ngIf="submitted && f.userName.errors" class="alert alert-dange">
+                        <div *ngIf="f.userName.errors.required">Username is required</div>
+                        <div *ngIf="f.userName.errors.pattern">Invalid Username</div>
+                    </div>		
+					
+				</div>
+				<div class="form-group country-code">
+					<input type="text" formControlName="phone" class="form-control phone_number" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" placeholder="Phone Number" ng2TelInput
+					  [ng2TelInputOptions]="{initialCountry: 'us'}"
+					  (hasError)="hasError($event)"
+					  (ng2TelOutput)="getNumber($event)"
+					  (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)" />
+                    <div *ngIf="submitted && f.phone.errors" class="alert alert-dange">
+                        <div *ngIf="f.phone.errors.required">Phone number is required *</div>
+                        <div *ngIf="f.phone.errors.pattern">Invalid Phone number *</div>
+                        <div *ngIf="f.phone.errors.minlength">Phone number entered must be greater than 8 digits *</div>
+					</div>
+					
+					<a href="javascript:" class="btn_info">
+						<!-- <i class="fa fa-info-circle" aria-hidden="true"></i> -->
+						i
+					</a>				
+					<p>Please enter a valid mobile phone number,
+					including the correct country code. We will send an
+					SMS to this number to complete account verification.</p>
+				</div>
+				<div class="form-group pass-sh">
+					<span (click)="onShowHidePassword()">{{showBtnText | translate }}</span>
+					<input [type]="show ? 'text' : 'password'" class="form-control"  formControlName="password" placeholder="{{ 'Password' | translate }}" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+					<div *ngIf="submitted && f.password.errors" class="alert alert-dange">
+						<div *ngIf="f.password.errors.required">{{'Password is required' | translate }}</div>
+					</div>
+				</div>
+				<div class="form-group with-switch">
+					<input type="checkbox" class="custom-control-input" name="termscondition" id="termscondition"  />					
+					<p>
+						<b>
+							<label class="switch">
+								<input type="checkbox" formControlName="termscondition" [ngClass]="{ 'is-invalid': submitted && f.termscondition.errors }" (change)="toggleVisibility($event)">
+								<span class="slider round"></span>
+							</label>
+						</b>
+						<b>{{ 'I agree to the' | translate }}
+						<a [routerLink]="['/terms']">&nbsp;{{ 'Terms of Service' | translate }}</a>
+											   &nbsp;{{ 'and' | translate }}
+						<a [routerLink]="['/privacy']">&nbsp;{{ 'Privacy Policy' | translate }}</a>
+						</b>
+					</p>
+					<div *ngIf="termsconditionCheck" class="alert alert-dange termscondition">
+                        <div>You must agree to the Terms of Service  and  Privacy Policy before register *</div>
+                    </div>
+				</div>
+				<div class="button_account">
+				<button type="submit" [disabled]="loading" class="btn btn-primary" >{{ btnText | translate }}</button>
+				<p>{{ 'Already have account?' | translate }} <a [routerLink]="['/login']"> {{ 'Sign In' | translate }}</a></p>
+				</div>
+			</form>
+			
+		</div>
+	</div>
+	</div>
+</div>

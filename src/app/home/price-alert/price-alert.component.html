@@ -1,0 +1,175 @@
+<div class="top-title enquiry search_market">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>{{ 'MarketPriceAlerts' | translate }}
+	  <div class="add-price"><div class="add_price_alert">
+        <a href="javascript:" (click)="addPriceAlert(addpricealert)"><i class="fa fa-plus" aria-hidden="true"></i>
+		{{ 'AddPriceAlert' | translate }} </a>
+      </div><a href="javascript:" onclick="history.go(-1); return false;"
+          title="{{ 'Back' | translate }}" class="back_arrow">
+          <span><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>
+        </a></div></h2>
+		
+		
+		
+    </div>
+  </div>
+  <div class="row stock_list">
+	
+   
+    <div class="col-lg-6">
+      
+      <ng-template #addpricealert let-c="close" let-d="dismiss">
+        <div class="modal-header ">
+          <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>          
+          <button type="button" class="btn btn-secondary btn-close" (click)="c('Close click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body stock_list">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:" (click)="toggleActive(1)"
+                [ngClass]="activeTab">{{ 'NewStocks' | translate }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:" (click)="toggleActive(2)"
+                [ngClass]="activeTab2">{{ 'Cryptocurrency' | translate }}</a>
+            </li>
+          </ul>
+          <!-- Nav tabs -->
+          <form class="form-inline form_price filters" [formGroup]="investmentForm" (submit)="setPriceAlert();"
+            style="margin: 0">
+            <div class="form-group">
+              <label for="Portfolio">{{ 'Ticker' | translate }}</label>
+              <!--<input type="text" formControlName="ticker" [formGroup]="investmentForm" (click)="resetTickerTxt()"
+                [formControl]="ticker" class="form-control" placeholder="Ticker" [matAutocomplete]="auto" />-->
+			  <input type="text" formControlName="ticker" (click)="resetTickerTxt()"
+                class="form-control" placeholder="Ticker" (input)="valuechange($event)" [matAutocomplete]="auto" />
+              <div [ngClass]="(tickerError=='')?'':'alert alert-dange'" class="error">
+                <div>{{tickerError}}</div>
+              </div>
+              <!-- CREATE AUTO COMPLETE PANEL WITH OPTIONS. -->
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option (click)="selectTicker(tic.id,tic.price,tic.symbol,tic.tickerName,tic.currency)"
+                  *ngFor="let tic of tickerList" [value]="tickerName">
+                  {{tic.tickerName}} ({{tic.symbol}} )
+                </mat-option>
+              </mat-autocomplete>
+            </div>
+            <div class="form-group">
+              <label>{{ 'Condition' | translate }}</label>
+              <select class="form-control" formControlName="compare">
+                <option value=">">{{ 'GreaterThan' | translate }}</option>
+                <option value="<">{{ 'LessThan' | translate }}</option>
+              </select>
+              <div *ngIf="submitted && i.compare.errors" class="alert alert-dange error">
+                <div *ngIf="i.compare.errors.required">{{'Compareisrequired' | translate }}</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'Currency' | translate }}</label>
+              <select class="form-control" (change)="ChangeCurrency()" formControlName="currency">
+                <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">
+                  {{ currency.name }} </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>{{ 'TargetPrice' | translate }}</label>
+              <input class="form-control amount" type="text" formControlName="amount" autocomplete="off"
+                (keypress)="numberOnly($event)" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" />
+              <div *ngIf="submitted && i.amount.errors" class="alert alert-dange error">
+                <div *ngIf="i.amount.errors.required">{{ targetPriceisRequiredMsg }}</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'ExpiryDate' | translate }}</label>
+              <div class="input-group datepicker-input">
+                <input class="form-control" placeholder="yyyy-mm-dd" formControlName="expiryDate" ngbDatepicker
+                  #d="ngbDatepicker" readonly />
+                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                  <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                  <span class="fa fa-calendar"></span>
+                </button>
+                <div *ngIf="submitted && i.expiryDate.errors" class="alert alert-dange error">
+                  <div *ngIf="i.expiryDate.errors.required">{{'ExpiryDateisrequired' | translate }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>&nbsp;</label>
+              <button class="btn btn-success btn_submit" type="submit">
+                {{ 'Submit' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+      <div class="stats_table">
+        <div class="head_div">
+          <ul class="stats_head">
+            <li>{{ 'Ticker' | translate }}</li>
+            <li>{{ 'Condition' | translate }}</li>
+            <li>{{ 'TargetPrice' | translate }}</li>
+            <li>{{ 'ExpiryDate' | translate }}</li>
+            <li>{{ 'Actions' | translate }}</li>
+          </ul>
+        </div>
+        <div class="body_div">
+          <ul class="stats_body" *ngFor="let item of itemList; let i = index;">
+            <li>{{ item.symbol }}</li>
+            <li>{{ item.alertType}}</li>
+            <li>{{ item.alertAmount | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
+            <li>{{ item.expiryDate | date: 'dd/MM/yyyy'  }}</li>
+            <li>
+              <button class="btn " title="{{ 'Edit' | translate }}" style="margin-right: 5px"><i class="fa fa-pencil"
+                  (click)="editPriceAlert(addpricealert,i)"></i></button>
+              <button class="btn" title="{{ 'Remove' | translate }}"
+                (click)="deleteInvestmentItem(deletepriceAlert, i)"><i class="fa fa-trash"></i></button>
+            </li>
+          </ul>
+          <ul class="processing" *ngIf="processing">
+            <li>
+              <h4>{{ processingTxt }}</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="news-content">
+        <p>{{ searchText }}</p>
+      </div>
+    </div>
+	<div class="col-lg-1">
+
+    </div>
+	 <div class="col-lg-5">
+      <div class="advr_hori">
+        <img class="img-fluid" src="assets/images/advr_2.png">
+      </div>
+    </div>
+	
+    
+  </div>
+</div>
+
+
+<!-- add_assets modal-->
+<div class="card-body">
+  <ng-template #deletepriceAlert let-c="close" let-d="dismiss">
+    <div class="modal-header alert_header">
+      <h4 class="modal-title">{{ 'DeletePriceAlert' | translate }}</h4>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ 'AreyousuretoDelete?' | translate }}</p>
+    </div>
+    <div class="modal-footer">
+      <a href="javascript:void(0);" class="btn custom-btn btn-danger"
+        (click)="DeletePriceAlert()">{{ 'Yes' | translate }}</a>
+      <a href="javascript:void(0);" class="btn custom-btn btn-success"
+        (click)="c('Close click')">{{ 'No' | translate }}</a>
+    </div>
+  </ng-template>
+</div>

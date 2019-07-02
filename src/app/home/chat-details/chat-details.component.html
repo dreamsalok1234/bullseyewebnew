@@ -1,0 +1,223 @@
+<div class="top-title chat_detail">
+  <div class="row">
+    <div class="col-lg-6 col-md-8">
+      <h2>
+        <span class="inve_icon">
+        <img src="{{placeholderImageUrl}}" style="max-width: 80px;" *ngIf="chatImage == undefined || chatImage.length == 0">
+        <img  src="{{chatImage}}" style="max-width: 80px;" *ngIf="chatImage != undefined && chatImage.length > 0">
+        </span>
+        <b>{{ chatName}}</b>
+        <div class="stock_list">
+          <div class="tab-pane favourite">
+            <ul>
+              <li>
+                <div class="price">
+                  <span>{{ chatPrice | currency: returnCurrSymbol(chatCurrency):'symbol':'1.3-3' }}</span>
+                </div>
+                <div class="" [ngClass]="chatChangePer == 0 ? 'zeroactive' : chatChangePer > 0 ? 'active' : 'inactive'">
+                  <span>
+                    <i class="fa fa-caret-up" aria-hidden="true" *ngIf="chatChangePer > 0"></i>
+                    <i class="fa fa-caret-down" aria-hidden="true" *ngIf="chatChangePer < 0"></i>
+                    <i class="fa fa-caret-left" aria-hidden="true" *ngIf="chatChangePer == 0"></i>
+                    <i class="fa fa-caret-right" aria-hidden="true" *ngIf="chatChangePer == 0"></i>
+                    {{ chatChangePer | number: '1.2-2' }}%</span
+                  >
+                </div>
+                <div class="rate_arrow">
+                  <span *ngIf="favouriteId == 0" (click)="openFavPopup(favcontent, chatBoardId, favouriteId, 'addfavourite')">
+                    <i class="fa fa-star nofav" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="favouriteId > 0">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </h2>
+    </div>
+    <div class="col-lg-6 col-md-4">
+      <div class="news-nav">
+        <div class="back_more">
+          <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}" onclick="history.go(-1); return false;">
+            <span>
+              <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+            </span>
+          </a>
+          <div class="more">
+            <a href="javascript:" (click)="open(content)" title="{{ 'NewMessage' | translate }}">
+              <span><i class="fa fa-plus" aria-hidden="true"></i></span>
+            </a>
+          </div>
+        </div>
+        <div class="paginate" *ngIf="!chatListCheck">
+          <ngb-pagination
+            [collectionSize]="totalPage"
+            [rotate]="true"
+            [(page)]="currentPage"
+            size="sm"
+            (pageChange)="onPageChange(currentPage)"
+          >
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="graph_chats">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="candle_stick">
+          <ul>
+            <li [ngClass]="activeTab && indMap == 0 ? 'active' : ''" (click)="getChartData(1, 'M', 0)">
+              <input type="button" value="1M" />
+            </li>
+            <li [ngClass]="activeTab && indMap == 1 ? 'active' : ''" (click)="getChartData(3, 'M', 1)">
+              <input type="button" value="3M" />
+            </li>
+            <li [ngClass]="activeTab && indMap == 2 ? 'active' : ''" (click)="getChartData(6, 'M', 2)">
+              <input type="button" value="6M" />
+            </li>
+            <li [ngClass]="activeTab && indMap == 3 ? 'active' : ''" (click)="getChartData(1, 'Y', 3)">
+              <input type="button" value="1Y" />
+            </li>
+            <li [ngClass]="activeTab && indMap == 4 ? 'active' : ''" (click)="getChartData(2, 'Y', 4)">
+              <input type="button" value="2Y" />
+            </li>
+          </ul>
+          <div id="chartdiv" style="display:flex">{{ chartDataText }}</div>
+          <div id="candlechart" style="display:none">{{ chartDataText }}</div>
+        </div>
+        <!--<div class="candle_stick">
+      <img src="../assets/images/graph.png" alt="graph" class="img-fluid" />							
+      </div>-->
+        <div class="main-checkbox">
+          <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
+          <label for="graphCheckbox" class="checkbox-custom-label">{{ CandlestickText }}</label>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul class="post_msg_list">
+          <li *ngFor="let chat of chatList; let i = index">
+            <div class="time_more">
+              <time>{{ formatDate(chat.createdAt) | date: 'dd/MM/yyyy' }}</time>
+              <h3 ngbDropdown placement="bottom-right" class="d-inline-block dropdown">
+                <a href="javascript:" ngbDropdownToggle>
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </a>
+                <div ngbDropdownMenu>
+                  <button
+                    class="dropdown-item"
+                    *ngIf="chat.userId != userId"
+                    (click)="openMsgPopup(chatcomplcontent, chat.messageId, i, chat.messageBody)"
+                  >
+                     {{ 'Report' | translate }}
+                  </button>
+                  <button
+                    class="dropdown-item"
+                    *ngIf="chat.userId == userId"
+                    (click)="openMsgPopup(favcontent, chat.messageId, i, chat.messageBody)"
+                  >
+                    {{ 'Delete' | translate }}
+                  </button>
+                  <button class="dropdown-item">{{ 'Cancel' | translate }}</button>
+                </div>
+              </h3>
+            </div>
+            <div class="msg_para">
+              <h3>{{ chat.messageTitle }}</h3>
+			  <p [innerHTML]="getSantizeUrl(chat.messageBody)"></p>
+            </div>
+            <div class="post_By">
+              <h3>
+                {{ chat.username }} | <span>{{ chat.totalMessage }}</span>
+              </h3>
+            </div>
+          </li>
+          <li *ngIf="chatList.length == 0 && chatListCheck">
+            <span style="color:#fff">{{ searchText }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-12">
+        <div class="advr_hori">
+         <img class="img-fluid" src="assets/images/advr1.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- The Add Message Modal -->
+    <div class="card-body">
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-body">
+          <form (ngSubmit)="addMessage()">
+            <div class="form-group">
+              <label for="post_title">{{ 'PostTitle' | translate }}</label>
+              <input
+                type="text"
+                class="form-control"
+				name="postTitle"
+				[(ngModel)]="postMessageArray.postTitle"
+				#postTitle="ngModel"
+				autocomplete="off"
+                [ngClass]="{ 'is-invalid': submitted && postTitleError }"
+              maxlength="30"/>
+              <div *ngIf="submitted && postTitleError" class="alert alert-dange">
+                <div>{{ 'Posttitleisrequired' | translate }}</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="msg">{{ 'Message' | translate }}</label>
+			  <div [ngClass]="{ 'is-invalid': submitted && postMessageError }">
+				<app-ngx-editor [config]="editorConfig" name="postMessage"
+				[(ngModel)]="postMessageArray.postMessage"
+				#postMessage="ngModel"></app-ngx-editor>
+			  </div>
+              <div *ngIf="submitted && postMessageError" class="alert alert-dange">
+                <div>{{ 'Messageisrequired' | translate }}</div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal_footer">
+          <button type="button" class="btn btn-close btn-danger" (click)="c('Close click')" style="margin-right: 5px">{{ 'Close' | translate }}</button>
+          <button type="button" (click)="addMessage()" class="btn btn-send btn-success">{{ btnText }}</button>
+        </div>
+      </ng-template>
+    </div>
+    <!-- The Add Message Modal -->
+    <div class="card-body">
+      <ng-template #chatcomplcontent let-c="close" let-d="dismiss">
+        <div class="modal-body">
+          <form (ngSubmit)="addComplain()" [formGroup]="chatComplaintForm">
+            <div class="form-group">
+              <label for="msg">{{ 'Message' | translate }}</label>
+              <textarea class="form-control" formControlName="comment" [ngClass]="{ 'is-invalid': isMessageReq }"> </textarea>
+              <div class="alert alert-dange" *ngIf="isMessageReq">
+                <div>{{ 'Messageisrequired' | translate }}</div>
+              </div>
+            </div>
+          </form>
+        </div>
+		 <div class="modal_footer" style="padding:15px; padding-top:0">
+			<button type="button" class="btn btn-close btn-danger" style="margin-right: 5px" (click)="c('Close click')">Close</button>
+			<button type="button" (click)="addComplain()" class="btn btn-send btn-success">{{ btnText }}</button>
+		</div>
+      </ng-template>
+    </div>
+    <!-- The Favourite Modal & Delete Comment -->
+    <div class="card-body">
+      <ng-template #favcontent let-c="close" let-d="dismiss">
+        <div class="modal-body">
+          <p>{{ modelText }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-danger" (click)="c('Close click')">{{ 'No' | translate }}</button>
+          <button type="button" class="btn btn-secondary btn-success" *ngIf="messageId == 0" (click)="updateFavouriteTicker('Close click')">
+            {{ btnText }}
+          </button>
+          <button type="button" class="btn btn-secondary btn-success" *ngIf="messageId > 0" (click)="deleteMessage()">{{ btnText }}</button>
+        </div>
+      </ng-template>
+    </div>
+  </div>

@@ -1,0 +1,246 @@
+@import '../news/news.component.scss';
+
+.stock_news h2 {
+  font-size: 25px;
+  color: white;
+  line-height: 0.96;
+  font-family: 'SFProDisplay-Medium';
+  margin-bottom: 30px;
+}
+
+.stock_news {
+  overflow: visible; height: auto;padding-right: 0;
+  li {
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: #00b050 5px 0px 0px 0px inset;
+    cursor: pointer;
+    background: #234b6f !important;
+    .price{
+        flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+    }
+  .icon_name {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+     flex-basis: 0;
+    flex-grow: 1;    
+     h3 {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 15px;
+    color: white;
+    line-height: 0.96;
+    font-family: 'SFProDisplay-Regular';
+  }
+  }
+  .rate_arrow {
+    display: flex;
+    flex-basis: 0;
+    flex-grow: 1;
+
+  span {
+    padding-left: 0;
+    color: #f89e31;
+    font-size: 20px;
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+     img{
+        max-width: 10px;
+      }
+  }
+  }
+}
+&.favourites{
+h2{
+      margin-bottom: 15px;
+    }
+  ul{
+    overflow: auto;
+  max-height: 420px;
+  height: 100%;
+  li{
+    padding: 10px 25px;
+    height: 65px!important;
+  }
+}
+}
+}
+.stock_news .price b {
+  font-size: 14px;
+  color: white;
+  line-height: 0.96;
+  font-family: 'SFProDisplay-Light';
+}
+.stock_list .nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #19334e;
+  border: 0;
+  border-bottom: 2px solid #00b050;
+}
+.chat-title h2 {
+  font-size: 30px;
+  color: white;
+  line-height: 0.96;
+  font-family: 'SFProDisplay-Bold';
+  margin-bottom: 30px;
+  padding-top: 50px;
+}
+
+.searchResult {
+  overflow: auto;
+  max-height: 410px;
+  height: 100%;
+  //margin-bottom: 30px;
+  li{
+     padding: 10px 25px;
+    height: 78px!important;
+  .rate_arrow {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+  .price {
+     flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+  .icon_name {
+    flex-basis: 0;
+    flex-grow: 1;
+    width: auto;
+    text-align: left;
+  }
+  .rate_arrow >div{
+    padding-left: 0;
+    color: #f89e31;
+    font-size: 20px;
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+span{
+      img{
+        max-width: 10px;
+      }
+    }
+  }
+  }
+}
+.nofav {
+  color: #fff;
+}
+h2.search_result{
+    font-size: 25px;
+    color: white;
+    line-height: 0.96;
+    font-family: 'SFProDisplay-Medium';
+    margin-bottom: 20px;
+}
+.processing {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(#0e243b,#234b6f,#0e243b);
+  h4 {
+    color: #fff;
+	font-size: 15px;
+	margin: 20px 0;
+	background: transparent;
+  }
+}
+.stock_news.favourites {
+    margin: 20px 0;
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .chat-title {
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      text-align: center;
+      width: 100%;
+      padding: 30px 0 0;
+    }
+  }
+  .stock_news h2,  h2.search_result {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .advr_hori {
+    margin: 20px 0;
+  }
+  .stock_news{
+    ul {
+      li {
+        font-size: 12px;
+        font-family: 'SFProDisplay-Light';
+        padding: 5px 10px;
+        height: auto!important;
+        border-radius: 0;
+        box-shadow: #00b050 2px 0px 0px 0px inset;
+        .icon_name {
+          flex-basis: 100px;
+          img{
+            width: 25px!important;
+          }
+          h3{
+                font-family: 'SFProDisplay-Light';
+                font-size: 12px;
+                margin: 0;
+                padding-left: 5px;
+          }
+        }
+        .rate_arrow span{
+          font-size: 18px;
+              padding-left: 15px;
+              img{
+                width: 8px;
+              }
+        }
+        .price b {
+          font-size: 10px;
+          font-family: 'SFProDisplay-Light';
+      }
+    }
+  }
+  }
+  .processing{
+  h4{
+  padding: 0 15px;
+    text-align: center;
+        font-size: 12px;
+        width: 100%;
+  }
+  } 
+  .stock_news:not(:empty){
+    max-height: 210px;
+    overflow: auto;
+    margin-bottom: 30px;
+    .searchResult{margin-bottom: 0;}
+  }
+  .stock_news.favourites ul{
+    max-height: 100%;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+.chat-title h2{padding-top: 35px;}
+}
+@media (min-width: 1400px) and (max-width: 1599px) {
+ .chat-title h2{padding-top: 35px;}
+}
+@media screen and (-webkit-device-pixel-ratio: 1) and (max-width: 1449px) {
+  .stock_news li {
+    height: 81px !important;
+  }
+}

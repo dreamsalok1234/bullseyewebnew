@@ -1,0 +1,38 @@
+<div class="top-title">
+	<div class="row">
+		<div class="col-md-12">			
+			<form (ngSubmit)="AddPortfolio(1)"  [formGroup]="portfolioForm" class="portfolio-heading">
+				<h2>{{ 'AddPortfolio' | translate }}</h2>
+				<div class="form-group">
+					<label for="Portfolio">{{ 'PortfolioName' | translate }}</label>	
+					<input type="text" formControlName="portfolioName" (keydown.space)="$event.preventDefault();" class="form-control" maxlength="20" placeholder="{{ 'PortfolioName' | translate }}" [ngClass]="{ 'is-invalid': submitted && p.portfolioName.errors }" />
+                    <div *ngIf="submitted && p.portfolioName.errors" class="alert alert-dange" >
+                        <div *ngIf="p.portfolioName.errors.required">{{ 'PortfolioNameisrequired' | translate }}</div>
+                    </div>
+				</div>
+				<div class="form-group">
+				  <label for="p_folio">{{ 'PortfolioType' | translate }}</label>
+				  <select class="form-control" formControlName="portfolioType" class="form-control" [ngClass]="{ 'is-invalid': submitted && p.portfolioType.errors }">
+						<option selected value="Stock">{{ 'Stock' | translate }}</option>
+						<option value="Cryptocurrency">{{ 'Cryptocurrency' | translate }}</option>
+				  </select>
+				  <div *ngIf="submitted && p.portfolioType.errors" class="alert alert-dange">
+                        <div *ngIf="p.portfolioType.errors.required">{{ 'PortfolioTypeisrequired' | translate }}</div>
+                   </div>
+				</div>
+				<div class="form-group">
+				  <label for="curre">{{ 'Currency' | translate }}</label>
+				  <select class="form-control" formControlName="portfolioCurrency" class="form-control"  [ngClass]="{ 'is-invalid': submitted && p.portfolioCurrency.errors }">
+					  <option value="{{currency.name}}" *ngFor="let currency of currencyList;let i=index;">
+					  {{currency.name}}
+					  </option>
+				  </select>
+				</div>
+				<div class="portfolio-group btn-group">
+				<button type="button" (click)="AddPortfolio(1);"  [disabled]="loading" class="btn custom-btn add-portfolio"><i class="fa fa-floppy-o" aria-hidden="true"></i>{{ 'SavePortfolio' | translate }}</button>
+				<button type="button" (click)="AddPortfolio(2);"  [disabled]="loading" class="btn custom-btn add-portfolio"><i class="fa fa-plus"></i>{{ 'SaveAddInvestment' | translate }}</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
