@@ -398,5 +398,36 @@ export class AuthService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
+
+   /* Upload Profile Image */
+  uploadProfileImage(formdataItem, callback) {   
+      this.responseItem = { data: {}, statusCode: 200 };
+      
+       return this.globalService.callFilePostApi('users/uploadsingleimage',{"uploadImg": formdataItem},true).subscribe(
+          data  => {  
+              debugger;
+              try {
+                this.responseItem.data  = data;
+              }
+              catch (error) {
+                this.responseItem.data  = {message: "Something went wrong, please try again!", status: false};
+                this.responseItem.statusCode = 403;
+              } 
+              
+              return callback(null, this.responseItem);             
+          },
+          error => {   
+              debugger;          
+              try {                 
+                this.responseItem.data  = error.error;
+              }
+              catch (err) {
+                this.responseItem.data  = { message: "Something went wrong, please try again!", status: false };
+              }
+              this.responseItem.statusCode = error.status;
+              
+              return callback(null, this.responseItem);
+        });
+    }
 	
 }

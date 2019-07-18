@@ -255,6 +255,5 @@
 	"24HVolume":"24시간 볼륨",
 	"ProfileImage": "프로필 이미지",
 	"DeleteAccount": "계정 삭제",
-	"UploadProfileImage" : "Upload Profile Image",
-	"UploadImage" : "Upload Image"
+	"UploadProfileImage" : "Upload Profile Image"
 }

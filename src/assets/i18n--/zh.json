@@ -255,6 +255,5 @@
 	"24HVolume":"24小时交易量",
 	"ProfileImage": "个人资料图片",
 	"DeleteAccount": "删除帐户",
-	"UploadProfileImage" : "Upload Profile Image",
-	"UploadImage" : "Upload Image"
+	"UploadProfileImage" : "Upload Profile Image"
 }

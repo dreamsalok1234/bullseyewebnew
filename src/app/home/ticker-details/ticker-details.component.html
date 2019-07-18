@@ -101,6 +101,14 @@
             <h4>{{ '24HHIGH' | translate }}</h4>
           </li>
           <li>
+            <img src="assets/images/52W_high.png" alt="52W_high" />
+            <h3>
+              {{(getCurrencyValue(tickerListData.WHigh52)=='' || getCurrencyValue(tickerListData.WHigh52)==0 || getCurrencyValue(tickerListData.WHigh52)==null)? 'N/A' : (getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
+            </h3>
+          
+            <h4>{{ '52W HIGH' | translate }}</h4>
+          </li>
+          <li>
             <img src="assets/images/market_cap.png" alt="market_cap" />
 			{{getCurrencyMarketValue(tickerListData.marketCap,tickerListData.currency,'marketCap')}}
 			<h3>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? '0' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</h3>
@@ -117,31 +125,24 @@
             <img src="assets/images/24h_low.png" alt="24h_change" />
 			<h3>{{(getCurrencyValue(tickerListData.Low24)=='' || getCurrencyValue(tickerListData.Low24)==0 || getCurrencyValue(tickerListData.Low24)==null)? 'N/A' : (getCurrencyValue(tickerListData.Low24,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}</h3>
             <h4>{{ '24HLOW' | translate }}</h4>
-          </li>
+          </li>         
           <li>
-            <img src="assets/images/24h_vol.png" alt="24h_vol" />
-            <h3>{{(getCurrencyValue(tickerListData.WHigh52)=='' || getCurrencyValue(tickerListData.WHigh52)==0 || getCurrencyValue(tickerListData.WHigh52)==null)? 'N/A' : (getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
-            </h3>
-          
-            <h4>{{ '24HVolume' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/24h_low.png" alt="24h_change" />
+            <img src="assets/images/52W_low.png" alt="52W_low" />
             <h3>
               {{(getCurrencyValue(tickerListData.WLow52)=='' || getCurrencyValue(tickerListData.WLow52)==0 || getCurrencyValue(tickerListData.WLow52)==null)? 'N/A' : (getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
             </h3>
-            <h4>{{ '24HLOW' | translate }}</h4>
+            <h4>{{ '52W LOW' | translate }}</h4>
           </li>
         </ul>
         <div class="data_fatch">
           <div class="loader"><i></i><i></i><i></i><i></i><i></i></div>
         </div>
       </div>
-        <div class="col-lg-12">
+        <!-- <div class="col-lg-12">
           <div class="advr_hori">
           <img src="assets/images/advr1.png" alt="advr" class="img-fluid" />
           </div>
-        </div>
+        </div> -->
     </div>
   </div>
 </div>

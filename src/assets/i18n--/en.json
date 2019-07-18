@@ -256,7 +256,6 @@
 	"24HVolume":"24H Volume",
 	"ProfileImage": "Profile Image",
 	"DeleteAccount": "Delete Account",
-	"UploadProfileImage" : "Upload Profile Image",
-	"UploadImage" : "Upload Image"
+	"UploadProfileImage" : "Upload Profile Image"
 	
 }

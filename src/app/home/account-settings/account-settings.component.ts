@@ -15,12 +15,14 @@ import { Title, Meta } from '@angular/platform-browser';
   styleUrls: ['./account-settings.component.scss']
 })
 export class AccountSettingsComponent implements OnInit {
+  fileUrl: any;
   closeResult: string;
   countryCode = '+1';
   phoneNumber = '';
   activeTab1 = 'active';
   activeTab2 = 'active';
   activePro = 'active';
+  fileData = null;
   lang_array = [
     { name: 'English', shortname: 'en' },
     { name: 'Korean', shortname: 'ko' },
@@ -86,6 +88,9 @@ export class AccountSettingsComponent implements OnInit {
   title='BullsEye Investors | Account Setting';
   autorenewalstatuschanged="Auto-renewal status changed.";
   subscriptionplansuccessfullycancelled="Subscription plan successfully cancelled.";
+  uploadBtnText = 'Upload Image';
+  uploadSubmitBtnText = '';
+  fileUploadProcessing = false;
   subCancelBtn=true;
   dectLanguage='en';
   constructor(
@@ -136,7 +141,8 @@ export class AccountSettingsComponent implements OnInit {
     this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken+'&language='+this.dectLanguage
     );
-	
+	if(this.profileInfo.img != '' && this.profileInfo.img != undefined)
+    this.fileUrl = this.profileInfo.img;
 	if(localStorage.getItem("proActive")!=undefined && localStorage.getItem("proActive")!="" && localStorage.getItem("proActive")!=null){
 		if(localStorage.getItem("proActive")==="false"){
 			this.bullseyePro();
@@ -170,6 +176,10 @@ export class AccountSettingsComponent implements OnInit {
     this.translate.get('Processing...').subscribe(value => {
       this.processingTxt = value;
     });
+    this.translate.get('UploadImage').subscribe(value => {
+      this.uploadBtnText = value;
+    });
+
     this.translate.get('Pleasechangephonenumber').subscribe(value => {
       this.phoneNumberChangeText = value;
     });
@@ -200,6 +210,7 @@ export class AccountSettingsComponent implements OnInit {
 	this.translate.get('DAY LEFT').subscribe(value => {
       this.DAYLEFT = value;
     });
+    this.uploadSubmitBtnText = this.uploadBtnText;
     if (this.profileInfo.baseCurrency !== undefined && this.profileInfo.baseCurrency !== '') {
       this.baseCurrency = this.profileInfo.baseCurrency;
     }
@@ -343,6 +354,21 @@ export class AccountSettingsComponent implements OnInit {
     this.changePhoneForm.controls.phone.setValue(this.countryCode + this.profileInfo.mobile);
     this.showBtnText = this.submitBtnText;
     this.modalService.open(content,{ windowClass: 'add_chat_modal', size: 'lg' }).result.then(
+      result => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      reason => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+  openUploadImg(content) {
+    this.phoneverifiedNumber = this.misMatch = false;
+    this.phoneNumberOtp = true;
+    this.countryCode = this.countryCode.indexOf('+') > -1 ? this.countryCode : '+' + this.countryCode;
+    this.changePhoneForm.controls.phone.setValue(this.countryCode + this.profileInfo.mobile);
+    this.showBtnText = this.submitBtnText;
+    this.modalService.open(content, { windowClass: 'open_upload_img', size: 'sm' }).result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
       },
@@ -712,5 +738,51 @@ export class AccountSettingsComponent implements OnInit {
 		  this.isAddPro = true;
 		  this.modalService.dismissAll();
 	  } 
+  }
+
+  fileEvent(fileInput: any) {
+    this.fileData = <File>fileInput.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL((<HTMLInputElement>fileInput.target).files[0]);// read file as data url
+    reader.onload = (event) => { // called once readAsDataURL is completed
+      this.fileUrl = (<FileReader>event.target).result;
+    }
+  }
+
+  uploadImg() {
+      const objectType = this;
+      if(this.fileData.name == '' || this.fileData.name == undefined || this.fileData.name == null) {
+        objectType.toastr.errorToastr("Choose file", null, {
+            autoDismiss: true,
+            maxOpened: 1,
+            preventDuplicates: true
+          });
+        return false;
+      }
+      if(this.fileUploadProcessing == true )
+        return false;
+      this.fileUploadProcessing = true;
+      this.uploadSubmitBtnText = this.processingTxt;
+      this.authService.uploadProfileImage(this.fileData, function(err, response) {
+        objectType.fileUploadProcessing = false;
+        objectType.uploadSubmitBtnText = objectType.uploadBtnText;
+        objectType.loading = false;
+        objectType.loadingBar.stop();
+        if (err) {
+          objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {
+            autoDismiss: true,
+            maxOpened: 1,
+            preventDuplicates: true
+          });
+        }
+        if (response.statusCode === 200) {
+          objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+          objectType.profileInfo.img = response.data.profile.img;
+          localStorage.setItem('userProfileInfo', JSON.stringify(objectType.profileInfo));
+          objectType.fileUrl = objectType.profileInfo.img;          
+        } else {
+          objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+        }
+      });
   }
 }

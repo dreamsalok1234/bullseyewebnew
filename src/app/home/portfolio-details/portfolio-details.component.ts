@@ -28,6 +28,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	profileInfo: any;
 	investmentForm: FormGroup;
 	submitted = false;
+	activeFilter = false;
 	searchSearchText='';
 	portfolioId=0;
 	portfolioCurrency="";
@@ -76,6 +77,8 @@ export class PortfolioDetailsComponent implements OnInit {
 	showBookingSymbol=false;
 	showMarketSymbol=false;
 	currencyPriceList = {};
+	stockExchangeType: [];
+	criteriaFilter = [{ 'key': 'high', 'value': 'Top 10 by 24 Hour Change' }, { 'key': 'low', 'value': 'Bottom 10 by 24 Hour Change' }, { 'key': 'market_cap', 'value': 'Top 10 by Market Capitalisation' }];
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
     ngOnInit() {

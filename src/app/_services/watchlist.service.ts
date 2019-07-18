@@ -94,8 +94,9 @@ export class WatchlistService {
               return callback(null, this.responseItem);
         });
     }   
-    getExchangeWithData(callback) {
-      let exchangeTypeAPI = this.globalService.callGetApi('watchlist/stockMarket', true);
+    getExchangeWithData(stockType, callback) {
+      stockType = ( stockType == '' || stockType == undefined) ? 'STOCK' : stockType;
+      let exchangeTypeAPI = this.globalService.callGetApi('watchlist/stockMarket?stockType='+stockType, true);
       let currencyListAPI = this.globalService.callGetApi('stock/currencyExchange', false);
       forkJoin(
         exchangeTypeAPI, currencyListAPI

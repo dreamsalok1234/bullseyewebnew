@@ -110,11 +110,22 @@
           </ul>
         </div> -->
         <div class="body_div">
-          <ul class="stats_body" *ngFor="let item of itemList; let i = index">
-            <li>{{ item.symbol }}</li>
-            <li>{{ getCurrencyValue(item) | currency: returnCurrSymbol(model.currentCurrency):'symbol':'1.3-3' }}
-              <br>
-              {{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}
+          <ul class="stats_body searchlist" *ngFor="let item of itemList; let i = index">
+            <li>
+              <span class="ticker_img" style="max-width:30px">
+                <img [src]="item.tickerUrl" alt="" style="max-width:100%" onError="this.src='assets/images/logo.png';"
+                  alt="ticker image" />
+              </span>
+              <div>
+                <h5>{{item.tickerName}}</h5>
+                <h6>{{ item.symbol }}</h6>
+              </div>             
+              
+              </li>
+            <li>
+              <h5>{{ getCurrencyValue(item) | currency: returnCurrSymbol(model.currentCurrency):'symbol':'1.3-3' }}</h5>
+             <h6>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</h6>
+            
             </li>
             {{
               getCurrencyMarketValue(item, 'marketCap')

@@ -27,7 +27,7 @@ export class TickerDetailsComponent implements OnInit {
 	profileInfo: any;
 	tickerId = 0;
 	searchSearchText = '';
-	tickerListData = [];
+	tickerListData : any;
 	currencyList = [];
 	currencyItemList: any = [];
 	benkMarchList:any=[];
@@ -85,6 +85,8 @@ export class TickerDetailsComponent implements OnInit {
 	openText="Open";
 	lowText="24H LOW";
 	highText="24H HIGH";
+	cryptoMaxValue = 0;
+	cryptoMinValue = 0;
 	limitsize=30;
     constructor(
 			private translate: TranslateService,
@@ -222,6 +224,8 @@ export class TickerDetailsComponent implements OnInit {
 			});
 			objectNtype.getTickerDetails();
 			objectNtype.getChartData(1, 'D', 0);
+			if (objectNtype.tickerType.toLowerCase() === 'crypto' || objectNtype.tickerType.toLowerCase() === 'cryptocurrency') 
+				objectNtype.getCrypto1YearHighLow();
 		},1000);
 
     }
@@ -241,7 +245,22 @@ export class TickerDetailsComponent implements OnInit {
 		   return this.formatNumber(finalPrice);
 	   }
     }
-
+    getMinMax(arr, prop, type= "low") {
+	    var max;
+	    if(type == "low") {
+	    	for (var i=0 ; i<arr.length ; i++) {
+	        	if (!max || parseInt(arr[i][prop]) < parseInt(max[prop]))
+	            	max = arr[i];
+	    	}
+	    }
+	    else{
+		    for (var i=0 ; i<arr.length ; i++) {
+		        if (!max || parseInt(arr[i][prop]) > parseInt(max[prop]))
+		            max = arr[i];
+		    }
+		}
+	    return max;
+	}
 	getTickerDetails() {
 		const objectType = this;
 		if (this.tickerId > 0) {
@@ -259,8 +278,16 @@ export class TickerDetailsComponent implements OnInit {
 						objectType.currencyPriceList = response.data[1].data;
 					}
 					if (response.data[0].status === true && response.data[0].historyData.currentDayData !== undefined && Object.keys(response.data[0].historyData.currentDayData).length > 0) {
-						debugger;
+						
 					     objectType.tickerListData = response.data[0].historyData.currentDayData;
+					     if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
+					     	if(objectType.cryptoMaxValue != 0 ) {
+					     		objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
+					     		objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
+					     	}
+					     	else
+					     		objectType.getCrypto1YearHighLow();
+					     }
 						 objectType.tickerDetailsCurrency=<any>response.data[0].historyData.currentDayData.currency;
 						 const icon=response.data[0].historyData.currentDayData.tickerUrl;
 						 if(icon!=='' && icon!==undefined) {
@@ -278,6 +305,37 @@ export class TickerDetailsComponent implements OnInit {
 			objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			objectType.searchSearchText = objectType.defaulterrSomethingMsg;
 		}
+    }
+
+    getCrypto1YearHighLow(){
+    	const objectType = this;
+    	this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, 365, '', '', function(err, response) {
+			if ( err ) {
+				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+				objectType.tickerDataText = objectType.defaulterrSomethingMsg;
+			}
+			if ( response.statusCode === 200 ) {
+				objectType.tickerDataText = '';
+				const keys = [];
+				const candleStickData = [];
+				let data = [];
+				let max = objectType.getMinMax(response.data.Data, 'high', 'high'); 
+    			let min = objectType.getMinMax(response.data.Data, 'low', 'low'); 
+    			objectType.cryptoMaxValue = max.high;
+    			objectType.cryptoMinValue = min.low;
+    			if(objectType.tickerListData.WHigh52 != undefined && objectType.tickerListData.WHigh52 == 0) {
+    				objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
+    				objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
+    			}
+
+			} 
+			else {
+				objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+				objectType.tickerDataText = response.data.message;			
+
+			}
+			
+		});
     }
 	ChangeCurrency() {
 		this.loadingBar.start();
@@ -343,10 +401,12 @@ export class TickerDetailsComponent implements OnInit {
 		this.tickerDataText = this.processingTxt;
 		this.num = num;
 		this.type = type;
+
 		objectType.loadingBar.start();
 		if (this.tickerType !== '' && this.tickerName !== '' && this.tickerSymbol !== '' && this.tickerDetailsCurrency !== '' && this.num !== '' && this.type !== '') {
 
 			if( this.type === 'D' ) {
+
 				this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
 
 					if (err) {
@@ -529,11 +589,11 @@ export class TickerDetailsComponent implements OnInit {
 		// series.fillOpacity = 0.5;
 		series.strokeWidth = 1.5;
 		series.stroke = am4core.color('#00b050');
-		debugger;
+		
 		// let currency=this.tickerDetailsCurrency;
 		// let showDateTime = (dataType == '1D') ? `{currentDateTime}`: `{date}`;
 		series.tooltipText =
-			((dataType === '1D') ? this.timeText + `:` + ` {currentDateTime}` : this.dateText + `:` + ` {date}`)+`\n`+
+			this.dateText + `:` + ` {date}`+`\n`+
 			this.currencyText + `: {currency}\n` +
 			this.valueText + `: {close}`;
 		/*series.tooltipText =

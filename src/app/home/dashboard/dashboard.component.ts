@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit {
 	modelText = '';
     math = Math;
 	tickerMarketCapData = {};
+	imgUrl ='';
 	portfolioEditInd=0;
 	showBannerIcon=false;
 	defaulterrSomethingMsg='Something went wrong';
@@ -83,6 +84,7 @@ export class DashboardComponent implements OnInit {
 		this.title="BullsEye Investors | Home | "+localStorage.getItem('loginUserName');
 		this.titleService.setTitle(this.title);
 		this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
+		this.imgUrl = this.profileInfo.img;
 		 /* Set Language Translator */
 		this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
 		this.translate.setDefaultLang('en');
@@ -135,7 +137,7 @@ export class DashboardComponent implements OnInit {
     	if (this.profileInfo.isProAccount)
     		this.disabledCurrency = false;
 		else{
-			let newKeys=[];
+			let newKeys =[];
 			const objectType = this;
 			this.currencyList.map(function(item){
 				if(item.name==objectType.watchListCurrency)
@@ -147,7 +149,7 @@ export class DashboardComponent implements OnInit {
 		setTimeout(function(){
 			objectNType.getPageContent();
 		},1000);
-    	//this.getPageContent();
+    	// this.getPageContent();
 		
 	}
     getPageContent() {
@@ -155,17 +157,21 @@ export class DashboardComponent implements OnInit {
 		objectType.loadingBar.start();
 		
     	this.portfolioService.getHomePageData(function(err, response) {
-			objectType.showBannerIcon=true;
+			objectType.showBannerIcon =true;
     		if ( err ) {
               objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			}
           	if( response.statusCode === 200 ) {
-          		if (response.data[0].status === true)
+				  if (response.data[0].status === true) {				  
           			objectType.portfolioList = response.data[0].portfolioList;
-          		if (response.data[1].status === true)
+						}
+				  if (response.data[1].status === true) {
+					  debugger;
+						}
           			objectType.watchlist = response.data[1].watchList;
-          		if (response.data[2].status === true)
+          		if (response.data[2].status === true) {
           			objectType.currencyPriceList = response.data[2].data;
+            }
           	} else {
           		objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
           		if(response.statusCode == 401) {
@@ -200,8 +206,9 @@ export class DashboardComponent implements OnInit {
             }
 			this.tickerMarketCapData = {amount : (douValue), text : sy};
        }
-	   else
+	   else {
 		   this.tickerMarketCapData = {amount : (finalPrice), text : ''};
+				}
     }
   ChangeWatchListCurrency() {
   	this.loadingBar.start();
@@ -256,7 +263,7 @@ export class DashboardComponent implements OnInit {
         objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
         objectType.portfolioList.splice(portfolioListIndex, 1);
       } else {
-        objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+        objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='') ? objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 		if(response.statusCode == 401) {
 			localStorage.clear();
 			objectType.router.navigate(['/login']);
@@ -275,7 +282,7 @@ export class DashboardComponent implements OnInit {
     this.btnText = this.confirmMsg;
     this.ind = itemIndex;
     this.deleteType = keyItem;
-    this.modelText = (keyItem=='portfolio')?this.areYoueSurePortfolioMsg:this.areYoueSureWatchlistMsg;
+    this.modelText = (keyItem=='portfolio')?this.areYoueSurePortfolioMsg :this.areYoueSureWatchlistMsg;
 	this.modalService.open(content).result.then((result) => {
 		this.closeResult = `Closed with: ${result}`;
 	}, (reason) => {
@@ -312,49 +319,51 @@ export class DashboardComponent implements OnInit {
     if(this.portfolioForm.name == '' || this.portfolioForm.name == undefined) {
       this.portfolioError.name = true;
       return false;
-    }
-    else
+    } else {
         this.portfolioError.name = false;
+    }
     const formData = {"name" : this.portfolioForm.name, "type": this.portfolioForm.type, "currency" : this.portfolioForm.currentCurrency, "portfolioId": this.portfolioForm.portfolioId};
-    var objectType = this;
+    let objectType = this;
     this.loading =true;
     this.loadingBar.start();
-    this.portfolioService.addPortfolio(formData, function(err, response){ 
+    this.portfolioService.addPortfolio(formData, function(err, response) {
       objectType.loading = false;
       objectType.loadingBar.stop();
-      if( err )
+      if( err ) {
         objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+      }
       if( response.statusCode == 200 ) {
         objectType.toastr.successToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
-		if(Object.keys(objectType.portfolioList[objectType.portfolioEditInd]).length>0){
+		if(Object.keys(objectType.portfolioList[objectType.portfolioEditInd]).length>0) {
 			objectType.portfolioList[objectType.portfolioEditInd].name=objectType.portfolioForm.name;
 			objectType.portfolioList[objectType.portfolioEditInd].currency=objectType.portfolioForm.currentCurrency;
-			//objectType.portfolioList[objectType.portfolioEditInd].currency=objectType.portfolioForm.currentCurrency;
-		}     
+			// objectType.portfolioList[objectType.portfolioEditInd].currency=objectType.portfolioForm.currentCurrency;
+		}
         objectType.modalService.dismissAll();
+      } else {
+        objectType.toastr.errorToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
       }
-      else 
-        objectType.toastr.errorToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
     });
 
   }
   deleteItems(content, indexVal, deleteItemType) {
-    if (this.btnText === this.processingTxt)
+    if (this.btnText === this.processingTxt) {
       return false;
+    }
     this.btnText = this.processingTxt;
-    if (deleteItemType === 'watchlist')
+    if (deleteItemType === 'watchlist') {
       this.deleteWatchListItem(indexVal, content);
-    else if (deleteItemType === 'portfolio')
+    } else if (deleteItemType === 'portfolio') {
       this.deletePortfolioItem(indexVal, content);
+         }
   }
 
   openAlert(content, keyIndex) {
-	if (!this.profileInfo.isProAccount){
+	if (!this.profileInfo.isProAccount) {
 		localStorage.setItem("proActive","false");
 		this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
 		this.router.navigate(['/account-settings']));
-	}
-	else{
+	} else {
 		localStorage.setItem("proActive","");
 		let tickerDetails = this.watchlist[keyIndex];
 		this.priceAlert.tickerName = tickerDetails.tickerName;
@@ -377,11 +386,11 @@ export class DashboardComponent implements OnInit {
 		localStorage.setItem("portfolioCurrency", portfolioCurrency);
 		localStorage.setItem("portfolioName", portfolioName);
 		this.router.navigate([''+portfolioName+'/'+localStorage.getItem('loginUserName')]);
-    }
-	else
+    } else {
 		this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+    }
   }
-  goToTickerDetails(tickerId,tickerCurrency,tickerType,tickerName,tickerSymbol,watchlistId){
+  goToTickerDetails(tickerId,tickerCurrency,tickerType,tickerName,tickerSymbol,watchlistId) {
 	  if (tickerId > 0 && (tickerCurrency!="" && tickerCurrency!=undefined) && (tickerType!="" && tickerType!=undefined) && (watchlistId!=undefined && watchlistId>0 && watchlistId!="")) {
 		localStorage.setItem("tickerId",tickerId);
 		localStorage.setItem("tickerCurrency",tickerCurrency);
@@ -391,79 +400,78 @@ export class DashboardComponent implements OnInit {
 		localStorage.setItem("watchlistId",watchlistId);
 		localStorage.setItem("pageTickerRequest",'dashboard');
 		this.router.navigate(['/investment/'+tickerSymbol+'/'+tickerName]);
-    }
-	else
+    } else {
 		this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			}
   }
-  setPriceAlert(){
+  setPriceAlert() {
 	this.priceAlertError.amount=(this.priceAlert.amount !=undefined && this.priceAlert.amount!="")?false:true;
 	this.priceAlertError.expiryDate=(this.priceAlert.expiryDate !=undefined && this.priceAlert.expiryDate!="")?false:true;
-	if(this.priceAlertError.amount){
-		this.toastr.errorToastr(this.targetPriceisRequiredMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
+	if(this.priceAlertError.amount) {
+		this.toastr.errorToastr(this.targetPriceisRequiredMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
 		return false;
-	}
-	else{
+	} else {
 		if (!(/^\d+[.,]?\d{0,3}$/g).test(this.priceAlert.amount)) {
-		  this.toastr.errorToastr(this.PriceTo3DecimalPlacesMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
+		  this.toastr.errorToastr(this.PriceTo3DecimalPlacesMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
 		  return false;
 		}
 	}
-	if(this.priceAlertError.expiryDate){
-		this.toastr.errorToastr(this.expiryDateisRequiredMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
+	if(this.priceAlertError.expiryDate) {
+		this.toastr.errorToastr(this.expiryDateisRequiredMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
 		return false;
 	}
-    let month = (this.priceAlert.expiryDate.month < 10 )? '0'+this.priceAlert.expiryDate.month : this.priceAlert.expiryDate.month;
-    let day = (this.priceAlert.expiryDate.day < 10 )? '0'+this.priceAlert.expiryDate.day : this.priceAlert.expiryDate.day;
-    let expiryDatevalue = day+'/'+month+'/'+this.priceAlert.expiryDate.year
-    
-    const formData = {"tickerId": this.priceAlert.tickerId, "alertPriceType" : this.priceAlert.compare,"priceThreshold":this.priceAlert.amount,"expiryDate":expiryDatevalue,"currency":this.priceAlert.currentCurrency};
-    var objectType = this;
+    const month = (this.priceAlert.expiryDate.month < 10 )? '0'+this.priceAlert.expiryDate.month : this.priceAlert.expiryDate.month;
+    const day = (this.priceAlert.expiryDate.day < 10 )? '0'+this.priceAlert.expiryDate.day : this.priceAlert.expiryDate.day;
+    const expiryDatevalue = day+'/'+month+'/'+this.priceAlert.expiryDate.year
+
+    const formData = {'tickerId': this.priceAlert.tickerId, 'alertPriceType' : this.priceAlert.compare,'priceThreshold':this.priceAlert.amount,'expiryDate':expiryDatevalue,'currency':this.priceAlert.currentCurrency};
+    const objectType = this;
     this.loading =true;
     this.loadingBar.start();
-    this.commonService.addPriceAlert(formData, function(err, response){ 
+    this.commonService.addPriceAlert(formData, function(err, response) {
       objectType.loading = false;
       objectType.loadingBar.stop();
-      if( err )
+      if( err ) {
         objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
-      if( response.statusCode == 200 ) {
+      }
+      if( response.statusCode === 200 ) {
         objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
         objectType.modalService.dismissAll();
-      }
-      else 
-	  {
-		 objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-		 if(response.statusCode == 401) {
+      } else {
+		 objectType.toastr.errorToastr(((response.data.message===undefined || response.data.message==='')?objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+		 if(response.statusCode === 401) {
 			localStorage.clear();
 			objectType.router.navigate(['/login']);
 		 }
 	  }
     });
   }
-  setTagetValueWith3Digit(){
+  setTagetValueWith3Digit() {
 	  if(this.priceAlert.amount !== '') {
-		 let amt=parseFloat(this.priceAlert.amount);
+		 const amt=parseFloat(this.priceAlert.amount);
 		 this.priceAlert.amount=amt.toFixed(3);
 	  }
    }
   /*Numeric value with decimal value*/
   numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
-      return (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))?false:true;
+      return (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57))?false:true;
   }
-  checkTargetValidation(){
-	 if(this.priceAlert.amount!=""){
-		 if (!(/^\d+[.,]?\d{0,3}$/g.test(this.priceAlert.amount))){ 
-		     let a=this.priceAlert.amount.split('.');
-			 this.priceAlert.amount=a[0]+'.'+a[1].substring(0, 3);
+  checkTargetValidation() {
+	 if(this.priceAlert.amount!=='') {
+		 if (!(/^\d+[.,]?\d{0,3}$/g.test(this.priceAlert.amount))) {
+		     const a = this.priceAlert.amount.split('.');
+			 this.priceAlert.amount = a[0] + '.' + a[1].substring(0, 3);
 		 }
 	 }
   }
   /*Return Currency Symbol*/
-  returnCurrSymbol(v){
-	  let cur=v;
-	  this.currencyItemList.map(function(item){
-			if(item.name==v)
-				cur=item.symbol;
+  returnCurrSymbol(v) {
+	  let cur = v;
+	  this.currencyItemList.map(function(item) {
+			if (item.name === v) {
+				cur = item.symbol;
+			}
 	  });
 	  return cur;
   }

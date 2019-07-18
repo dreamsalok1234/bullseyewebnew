@@ -181,4 +181,56 @@ export class GlobalService {
                 return user.json();
             });*/
     }
+
+    callFilePostApi(apiname, parameter, accessToken = false) {
+       
+        let httpParams = new FormData();
+        Object.keys(parameter).forEach(function (key) {
+             httpParams.append(key, parameter[key], parameter[key].name);
+        });
+        if(accessToken) {
+            let authToken = localStorage.getItem('userAccessToken');
+            var headers = new HttpHeaders({ 'Authorization': `JWT ${authToken}` });
+        }
+        else
+            var headers = new HttpHeaders({});
+        
+        var objectType=this;
+        return this.http.post(this.apiUrl+apiname, httpParams, { headers }).map((user : Response) => {
+            
+            objectType.check=0;
+            return user;
+        }).catch((error: any) => {
+            
+            if (error.status==401) {
+                if(objectType.check==0){
+                    //objectType.toastr.errorToastr(objectType.unauthorizedReqMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+                    objectType.check=1;
+                }    
+                localStorage.clear();
+                objectType.modalService.dismissAll();
+                objectType.router.navigateByUrl('login',{replaceUrl: true});
+                return new EmptyObservable();
+            }
+            else
+                objectType.check=0;
+            return throwError(error);
+        });
+      
+        /*var headers = new Headers();
+
+        if(accessToken) {
+            let authToken = localStorage.getItem('userAccessToken');
+            headers.append('Authorization', `JWT ${authToken}`); 
+
+        }
+        headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        headers.append('Accept' , 'application/json');
+        let options = new RequestOptions({ headers: headers });      
+        
+        
+        return this.newhttp.post(this.apiUrl+apiname, parameter, options).map((user : Response) => {
+                return user.json();
+            });*/
+    }
 }

@@ -13,7 +13,7 @@
 				<div class="form-group">
 				  <label for="p_folio">{{ 'PortfolioType' | translate }}</label>
 				  <select class="form-control" formControlName="portfolioType" class="form-control" [ngClass]="{ 'is-invalid': submitted && p.portfolioType.errors }">
-						<option selected value="Stock">{{ 'Stock' | translate }}</option>
+						<option selected value="Stock">{{ 'Stocks' | translate }}</option>
 						<option value="Cryptocurrency">{{ 'Cryptocurrency' | translate }}</option>
 				  </select>
 				  <div *ngIf="submitted && p.portfolioType.errors" class="alert alert-dange">
