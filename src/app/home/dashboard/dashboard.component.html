@@ -20,26 +20,17 @@
 						class="fa fa-plus"></i> {{ 'AddPortfolio' | translate }}</button>
 			</div>
 			<div class="stats_table">
-				<!-- <div class="head_div">
-<ul class="stats_head">
-<li>{{ 'Portfolio' | translate }}</li>
-<li>{{ 'BookCost' | translate }}</li>
-<li>{{ 'MarketValue' | translate }}<br>{{ 'BookCost' | translate }}</li>
-<li>{{ 'Change' | translate }}</li>
-<li>{{ 'Actions' | translate }}</li>
-</ul>
-</div> -->
 				<div class="body_div">
 					<ul class="stats_body portfoliolist" *ngFor="let portfolioItem of portfolioList; let i= index;">
 						<li>
 							<h5>{{portfolioItem.name}}</h5>
-							<h6>{{portfolioItem.type}}</h6>
+							<h6>{{portfolioItem.type | translate}}</h6>
 						</li>
 						<li>
 							<h5>{{(portfolioItem.investmentmarketcalcost=='' || portfolioItem.investmentmarketcalcost==0 || portfolioItem.investmentmarketcalcost==null)? 'N/A' : (portfolioItem.investmentmarketcalcost | currency : returnCurrSymbol(portfolioItem.currency):'symbol':'1.0-0')}}
 							</h5>
 							<h6>{{(portfolioItem.investmentbookcost=='' || portfolioItem.investmentbookcost==0 || portfolioItem.investmentbookcost==null)? 'N/A' : (portfolioItem.investmentbookcost | currency : returnCurrSymbol(portfolioItem.currency):'symbol':'1.0-0')}}
-							</h6>							
+							</h6>
 						</li>
 						<li class=""
 							[ngClass]="((portfolioItem.performance==0)?'zeroactive':(portfolioItem.performance>0)?'active':'inactive')">
@@ -96,40 +87,38 @@
 			</div>
 			<div class="wachlist_index">
 				<div class="stats_table">
-					<!-- <div class="head_div">
-<ul class="stats_head">
-<li>{{ 'Ticker' | translate }}</li>
-<li>{{ 'MarketPrice' | translate }}</li>
-<li>{{ 'MarketCap' | translate }}</li>
-<li>{{ '24HChange' | translate }}</li>
-<li>{{ 'Actions' | translate }}</li>
-</ul>
-</div> -->
 					<div class="body_div">
 						<ul class="stats_body watchlist" *ngFor="let watchlistitem of watchlist; let i= index;">
 							<li><span class="ticker_img" style="max-width:30px">
 									<img [src]="watchlistitem.tickerUrl" alt="" style="max-width:100%"
 										onError="this.src='assets/images/logo.png';" alt="ticker image" />
 								</span>
-								<div><h5>{{watchlistitem.tickerName}}</h5>
-									 <h6>{{watchlistitem.symbol}}</h6>
+								<div>
+									<h5>{{watchlistitem.tickerName}}</h5>
+									<h6>{{watchlistitem.symbol}}</h6>
 								</div>
 							</li>
 
-							<li><h5>{{(getCurrencyValue(watchlistitem)=='' || getCurrencyValue(watchlistitem)==0 || getCurrencyValue(watchlistitem)==null)? 'N/A' : (getCurrencyValue(watchlistitem) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}</h5>
-								<h6>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</h6>
+							<li>
+								<h5>{{(getCurrencyValue(watchlistitem)=='' || getCurrencyValue(watchlistitem)==0 || getCurrencyValue(watchlistitem)==null)? 'N/A' : (getCurrencyValue(watchlistitem) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
+								</h5>
+								<h6>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}
+								</h6>
 							</li>
 							{{getCurrencyMarketValue(watchlistitem,'marketCap')}}
 							<!-- <li>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li> -->
 							<li class=""
 								[ngClass]="((watchlistitem.changePct==0)?'zeroactive':(watchlistitem.changePct>0)?'active':'inactive')">
 								<span>
-										<i class="fa fa-caret-up" aria-hidden="true" *ngIf="watchlistitem.changePct>0"></i>
-										<i class="fa fa-caret-down" aria-hidden="true" *ngIf="watchlistitem.changePct<0"></i>
-										<i class="fa fa-caret-left left-arrow" aria-hidden="true" *ngIf="watchlistitem.changePct==0"></i>
-										<i class="fa fa-caret-right" aria-hidden="true" *ngIf="watchlistitem.changePct==0"></i>
-										{{ watchlistitem.changePct | number:'1.2-2'}}%
-									</span>								
+									<i class="fa fa-caret-up" aria-hidden="true" *ngIf="watchlistitem.changePct>0"></i>
+									<i class="fa fa-caret-down" aria-hidden="true"
+										*ngIf="watchlistitem.changePct<0"></i>
+									<i class="fa fa-caret-left left-arrow" aria-hidden="true"
+										*ngIf="watchlistitem.changePct==0"></i>
+									<i class="fa fa-caret-right" aria-hidden="true"
+										*ngIf="watchlistitem.changePct==0"></i>
+									{{ watchlistitem.changePct | number:'1.2-2'}}%
+								</span>
 							</li>
 							<li>
 								<div class="action">

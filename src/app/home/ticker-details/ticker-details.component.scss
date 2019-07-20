@@ -231,7 +231,8 @@ ul.blurTdetails + .data_fatch {
 	}
 }
 div#chartdiv,
-div#candlechart {
+div#candlechart
+{
       background-color: #0e243b;
   border: 1px solid #1b3e5c;
   position: relative;
@@ -241,7 +242,18 @@ div#candlechart {
   align-items: center;
   color: #ffff;
 }
-
+div#volumechart {
+    background-color: transparent;
+    //border: 1px solid #1b3e5c;
+    display: flex;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+    color: #ffff;
+    left:0;
+    position: absolute;
+    right: 0;
+    top: 49px; }
 .candle_stick ul {
   display: flex;
   justify-content: space-between;
@@ -598,6 +610,6 @@ ul.blurTdetails + .data_fatch i {
 .checkbox-custom-label{font-size: 15px;}
 .value_change ul li{padding: 5px}
 .value_change ul li h3{font-size: 15px;}
-div#chartdiv,div#bookchart,div#candlechart{height: 320px;}
+div#chartdiv,div#bookchart,div#candlechart,div#volumechart{height: 320px;}
 
 }

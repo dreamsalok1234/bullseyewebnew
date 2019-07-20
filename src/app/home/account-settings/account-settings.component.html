@@ -12,7 +12,7 @@
           <ul>
             <li>
               <h3>
-                <a href="javascript:" (click)="open(content)"><img
+                <a href="javascript:" (click)="changePhone(chgNumber)"><img
                     [src]="phoneIcon" />{{ 'ChangePhoneNumber' | translate }}</a>
               </h3>
             </li>
@@ -22,6 +22,12 @@
                     [src]="passIcon" />{{ 'ChangePassword' | translate }}</a>
               </h3>
             </li>
+              <li>
+                <h3>
+                  <a href="javascript:" (click)="openUploadImg(updateProfileImage)"><img
+                      [src]="profileChange" />{{ 'ProfileImage' | translate }}</a>
+                </h3>
+              </li>
             <li>
               <h3><img [src]="langIcon" />{{ 'Language' | translate }}</h3>
               <div class="md-select" (click)="languageToggle()" [ngClass]="activeTab1 ? '' : 'active'">
@@ -53,20 +59,20 @@
                 <a href="javascript:" (click)="bullseyePro()"><img
                     [src]="bproIcon" />{{ 'BullseyePro' | translate }}</a>
               </h3>
-            </li>
-            <li>
-              <h3>
-                <a href="javascript:" (click)="openUploadImg(updateProfileImage)"><img
-                    [src]="logoutIcon" />{{ 'ProfileImage' | translate }}</a>
-              </h3>
-            </li>
+            </li>          
             <li>
             <h3>
-              <a href="javascript:" (click)="open(deltAccount)"><img [src]="logoutIcon" />{{ 'DeleteAccount' | translate }}</a>
+              <a href="javascript:" (click)="deltAccount(delAccount)"><img [src]="DelAccount" />{{ 'DeleteAccount' | translate }}</a>
             </h3>
             </li>
           </ul>
-        </div>
+        </div>      
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <!-- <div class="advr_big">
+        <img src="assets/images/advr_b.png" class="img-fluid" />
+      </div> -->
         <div class="feedback">
           <h2>{{ 'FeedbackHelp' | translate }}</h2>
           <ul>
@@ -76,10 +82,10 @@
               </h3>
             </li>
             <!-- <li>
-<h3>
-<a href="javascript:" (click)="openWindowCustomClass(appDemo)"><img [src]="appDemoIcon" />{{ 'AppQuickStart' | translate }}</a>
-</h3>
-</li> -->
+        <h3>
+        <a href="javascript:" (click)="openWindowCustomClass(appDemo)"><img [src]="appDemoIcon" />{{ 'AppQuickStart' | translate }}</a>
+        </h3>
+        </li> -->
             <li>
               <h3>
                 <a href="javascript:" (click)="openShare(share)"><img
@@ -105,14 +111,6 @@
             </li>
           </ul>
         </div>
-      </div>
-    </div>
-    <div class="col-lg-1">
-    </div>
-    <div class="col-lg-5">
-      <div class="advr_big">
-        <img src="assets/images/advr_b.png" class="img-fluid" />
-      </div>
     </div>
   </div>
 
@@ -146,9 +144,9 @@
         <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'Cancel' | translate }}</button>
       </div>
     </ng-template>
-    <ng-template #content let-c="close" let-d="dismiss" class="phone_changes">
+    <ng-template #chgNumber let-c="close" let-d="dismiss" class="phone_changes">
       <div class="phone_changes">
-        <div class="modal-header">
+        <div class="modal-header alert_header">
           <h4 class="modal-title">{{ 'ChangePhoneNumber' | translate }}</h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
@@ -199,8 +197,8 @@
     </ng-template>
     <ng-template #updateProfileImage let-c="close" let-d="dismiss" class="update_profile">
       <div class="update_profile">
-        <div class="modal-header">
-          <h4 class="modal-title">{{ 'UploadProfileImage' | translate }}</h4>
+        <div class="modal-header alert_header">
+          <h6 class="modal-title">{{ 'UploadProfileImage' | translate }}</h6>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -208,8 +206,10 @@
         <div class="modal-body update_profile_image">
           <form>
             <div class="upld_imge">
-              <label for="files" class="btn">Upload Your File</label>
+              <div class="choose_input">
+              <label for="files" class="btn">{{'UploadFile' | translate }}</label>
               <input id="files" style="visibility:hidden;" type="file" (change)="fileEvent($event)" accept="image/png, image/jpeg, image/jpg">
+              </div>
               <div class="update_img">
                 <button (click)="uploadImg($event)"> {{ uploadSubmitBtnText }}</button>
               </div>
@@ -221,9 +221,9 @@
         </div>
       </div>
     </ng-template>
-    <ng-template #deltAccount let-d="dismiss" class="update_profile">
-      <div class="modal-header">
-        <h4 class="modal-title">{{ 'Are you sure you want to delete your account' }}</h4>
+    <ng-template #delAccount let-d="dismiss" class="update_profile">
+      <div class="modal-header alert_header">
+        <h6 class="modal-title">{{ 'Are you sure you want to delete your account' }}</h6>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>

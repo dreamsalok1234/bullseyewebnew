@@ -201,9 +201,9 @@ export class CommonService {
     this.responseItem = { data: {}, statusCode: 200 };
     let apiName = '';
     if (type.toLowerCase() === 'crypto' || type.toLowerCase() === 'cryptocurrency') {
-      apiName = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + chatSymbol + '&tsym=' + currency + '&aggregate=1';
+      apiName = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + chatSymbol + '&tsym=' + currency + '&aggregate=1&minuteDif=15&limit=96';
     } else {
-      apiName = 'https://intraday.worldtradingdata.com/api/v1/intraday?symbol=' + chatSymbol + '&range=1&interval=60&api_token=Enbl13NdXIwtInHQM4u9wNQMXrBEJY3WQnqb1nBlT8vK7aWK9DUXdKlcJLVc';
+      apiName = 'https://intraday.worldtradingdata.com/api/v1/intraday?symbol=' + chatSymbol + '&range=1&interval=15&api_token=Enbl13NdXIwtInHQM4u9wNQMXrBEJY3WQnqb1nBlT8vK7aWK9DUXdKlcJLVc';
       // apiName += '&symbol=' + chatSymbol;
     }
     this.globalService.callGlobalGetApi(apiName, false).subscribe(data => {

@@ -24,7 +24,7 @@
     border: 0;
     padding: 5px 20px;
     margin-left: 15px;
-    font-size: 18px;
+    font-size: 15px;
     font-family: 'SFProDisplay-Regular';
     color: #fff;
     border-radius: 30px;
@@ -50,7 +50,7 @@
       box-shadow: none;
     }
     width: 100px;
-    padding: 5px 20px;
+    padding: 7px 20px;
     height: auto;
     border: 0;
     background: #00b050;
@@ -122,12 +122,12 @@ ul.stats_body {
     background-color: #3b5a76;
     border-radius: 0;
     text-align: center;
-    font-size: 18px;
+    font-size: 15px;
     font-family: 'SFProDisplay-Regular';
     text-transform: capitalize;
     color: #fff;
     cursor: pointer;
-    height: 40px;
+    height: 35px;
     &.active {
       background-color: #00b050;
       border-radius: 0;
@@ -351,7 +351,7 @@ div#bookchart {
   margin-bottom: 20px;
   li {
     width: 100%;
-    height: 40px;
+    height: 35px;
     background-color: #3b5a76;
     display: flex;
     justify-content: center;
@@ -364,7 +364,7 @@ div#bookchart {
       background-color: transparent;
       border: transparent;
       color: #fff;
-      font-size: 18px;
+      font-size: 15px;
       font-family: 'SFProDisplay-Regular';
       cursor: pointer;
       outline: none;
@@ -388,6 +388,9 @@ div#bookchart {
 }
 .pop_filters.book_cost{
   max-width: 100px;
+  a{
+    border-radius: 20px;
+  }
 }
 @import '../search-market/search-market.component.scss';
 

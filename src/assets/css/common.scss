@@ -2647,6 +2647,7 @@ body::-webkit-scrollbar-thumb,
   .intl-tel-input {
     display: block;
     flex-basis: 70%;
+    margin-right: 10px;
     .country-list {
       overflow-x: hidden;
       .country-name {
@@ -2663,7 +2664,7 @@ body::-webkit-scrollbar-thumb,
     }
   }
   button {
-    flex-basis: 120px;
+    flex-basis: 80px;
   }
 }
 .modal-dialog {
@@ -2677,35 +2678,15 @@ body::-webkit-scrollbar-thumb,
     border: 0;
     .phone_changes {
       .modal-header {
-        background: #194166 !important;
+        //background: #194166 !important;
         border: 0;
         align-items: center;
-        overflow: hidden;
-        .modal-title {
-          color: #fff;
-          width: 100%;
-          text-align: center;
-          font-size: 18px;
-          font-family: 'SFProDisplay-Regular';
-        }
-        button {
-          color: #fff;
-          opacity: 1;
-          background: #00b050;
-          box-shadow: -1px 1px 0px 2px #176e2b;
-          outline: none;
-          margin-top: -1.5em;
-        }
-      }
-      .modal-body {
-        background: #4d7191;
-        form {
-          background: #a1b6c8;
-          padding: 10px;
-          border-radius: 10px;
-        }
+        overflow: hidden;        
       }
     }
+  }
+  &.modal-sm {
+    max-width: 410px;
   }
 }
 // app demo modal

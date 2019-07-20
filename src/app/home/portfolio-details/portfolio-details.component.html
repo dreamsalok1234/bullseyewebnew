@@ -55,24 +55,17 @@
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2>{{ 'Filters' | translate }}</h2>
+              <h2>{{ 'GraphAnalytics' | translate }}</h2>
               <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
             </div>
-            <div class="form-group" *ngIf="model.stockType == 'STOCK'">
-              <label>{{ 'StockMarket' | translate }}</label>
-              <select class="form-control" name="exchangeId" [(ngModel)]="model.exchangeId" #exchangeId="ngModel">
-                <option value="">{{ 'SelectMarket' | translate }}</option>
-                <option value="{{ exchange.exchangeId }}" *ngFor="let exchange of stockExchangeType">{{ exchange.exchangeName }}
-                </option>
-              </select>
-            </div>
             <div class="form-group">
-              <label>{{ 'SelectCriteria' | translate }}</label>
-              <select class="form-control" name="searchCriteria" [(ngModel)]="model.searchCriteria" #searchCriteria="ngModel">
-                <option value="">{{ 'SelectCriteria' | translate }}</option>
-                <option value="{{ criteria.key }}" *ngFor="let criteria of criteriaFilter">{{ criteria.value }}</option>
+              <label>{{ 'GraphDisplay' | translate }}</label>
+              <select class="form-control" name="exchangeId" >
+                <option value="">Both</option>
+                <option value="">Portfolio Market Value</option>
+                <option value="">Portfolio Book Cost</option>
               </select>
-            </div>
+            </div>           
         
             <div class="actions_to">
               <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>

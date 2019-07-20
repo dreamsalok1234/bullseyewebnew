@@ -24,10 +24,11 @@ export class TickerDetailsComponent implements OnInit {
 	closeResult: string;
 	math = Math;
 	model: any = {'currentCurrency': 'USD'};
+	filterModel: any = { "searchCriteria": 0, "graphDisplay": 0 };
 	profileInfo: any;
 	tickerId = 0;
 	searchSearchText = '';
-	tickerListData : any;
+	tickerListData: any = [];
 	currencyList = [];
 	currencyItemList: any = [];
 	benkMarchList:any=[];
@@ -37,6 +38,7 @@ export class TickerDetailsComponent implements OnInit {
 	placeholderImageUrl: string;
 	currencyType = '';
 	marketCapData: any;
+	activeFilter = false;
 	activeTab = '';
 	tickerDataText = '';
 	indMap = 1;
@@ -80,6 +82,7 @@ export class TickerDetailsComponent implements OnInit {
 	dateText="Date";
 	timeText = "Time";
 	valueText="Value";
+	volumeText = "Volume";
 	currencyText="Currency";
 	closeText="Close";
 	openText="Open";
@@ -424,12 +427,14 @@ export class TickerDetailsComponent implements OnInit {
 								data = response.data.Data;
 								data.map(function (item) {
 									const currentDateTime = new Date(item.time * 1000);
-									keys.push({ date: new Date(item.time * 1000), currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)) });
+									
+									keys.push({ date: new Date(item.time * 1000), currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4)) });
 
 									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
 								});
 								objectType.renderChart(keys, '1D');
+								objectType.renderVolumeChart(keys, '1D');
 								objectType.renderCandleStickChartData(keys, '1D');
 							} else {
 								objectType.tickerDataText = objectType.noChartDataText;
@@ -440,7 +445,8 @@ export class TickerDetailsComponent implements OnInit {
 								data = response.data.intraday;
 								Object.keys(data).map(function (key) {
 									const currentDateTime = new Date(key);
-									keys.push({ date: new Date(key), currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)) });
+									
+									keys.push({ date: new Date(key), currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(3)) });
 
 									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
 
@@ -452,6 +458,7 @@ export class TickerDetailsComponent implements OnInit {
 								  return <any>new Date(a.date) - <any>new Date(b.date);
 								}); */
 								objectType.renderChart(keys, '1D');
+								objectType.renderVolumeChart(keys, '1D');
 								objectType.renderCandleStickChartData(keys, '1D');
 							} else {
 								objectType.tickerDataText = objectType.noChartDataText;
@@ -506,12 +513,14 @@ export class TickerDetailsComponent implements OnInit {
 
 									data = response.data.Data;
 									data.map(function(item) {
-										keys.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4))});
+										const currentDateTime = new Date(item.time * 1000);
+										keys.push({date: new Date(item.time * 1000), currentDateTime: currentDateTime.getDate(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
 
 										// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
 									});
 									objectType.renderChart(keys);
+									objectType.renderVolumeChart(keys);
 									objectType.renderCandleStickChartData(keys);
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
@@ -521,8 +530,8 @@ export class TickerDetailsComponent implements OnInit {
 
 									data = response.data.history;
 									Object.keys(data).map(function (key) {
-
-										keys.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
+										const currentDateTime = new Date(key);
+										keys.push({date : new Date(key), currentDateTime: currentDateTime.getDate(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(3))});
 
 										// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
 
@@ -534,6 +543,7 @@ export class TickerDetailsComponent implements OnInit {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									}); */
 									objectType.renderChart(keys);
+									objectType.renderVolumeChart(keys);
 									objectType.renderCandleStickChartData(keys);
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
@@ -564,7 +574,7 @@ export class TickerDetailsComponent implements OnInit {
 	renderChart(data, dataType = 'normal') {
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create('chartdiv', am4charts.XYChart);
-		chart.paddingRight = 20;
+		chart.paddingRight = 10;
 		chart.data = data;
 		const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 		dateAxis.renderer.grid.template.location = 0;
@@ -618,13 +628,74 @@ export class TickerDetailsComponent implements OnInit {
 		chart.cursor.lineY.strokeOpacity = 1;
 		chart.cursor.lineY.strokeDasharray = '';
 	}
+
+	renderVolumeChart(data, dataType = 'normal') {
+		debugger;
+		am4core.useTheme(am4themes_animated);
+		const chart = am4core.create('volumechart', am4charts.XYChart);
+		chart.paddingRight = 20;
+
+		chart.data = data;
+		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "currentDateTime";
+		categoryAxis.renderer.grid.template.strokeOpacity = 0;
+		categoryAxis.renderer.labels.template.disabled = true;
+		categoryAxis.renderer.cellStartLocation = 0.2;
+		categoryAxis.renderer.cellEndLocation = 0.8;
+		categoryAxis.tooltip.disabled = true;
+
+		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.inside = true;
+		valueAxis.renderer.labels.template.fillOpacity = 0.3;
+		valueAxis.renderer.grid.template.strokeOpacity = 0;
+		valueAxis.renderer.minWidth = 35;
+		valueAxis.cursorTooltipEnabled = false;
+		valueAxis.renderer.baseGrid.strokeOpacity = 0;
+		valueAxis.renderer.grid.template.location = 0;
+	    valueAxis.renderer.grid.template.disabled = true;
+		valueAxis.renderer.ticks.template.disabled = true;
+		valueAxis.renderer.labels.template.disabled = true;
+		var series = chart.series.push(new am4charts.ColumnSeries);
+		series.dataFields.valueY = "volume";
+		series.dataFields.categoryX = "currentDateTime";
+		series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
+			this.currencyText + `: {currency}\n` +
+			this.volumeText + `: {volume}`;
+		//series.tooltip.pointerOrientation = "vertical";
+		series.tooltip.dy = - 6;
+		series.columnsContainer.zIndex = 100;
+
+		var columnTemplate = series.columns.template;
+		columnTemplate.width = am4core.percent(50);
+		columnTemplate.height = am4core.percent(50);
+		columnTemplate.maxHeight = 100;
+		columnTemplate.maxWidth = 10;
+		//columnTemplate.column.cornerRadius(60, 60, 10, 10);
+		columnTemplate.strokeOpacity = 0;
+		series.tooltip.getFillFromObject = false;
+
+		series.tooltip.background.fill = am4core.color('#00b050');
+		chart.cursor = new am4charts.XYCursor();
+		chart.cursor.behavior = 'zoomX';
+		chart.cursor.lineX.disabled = true;
+		/* Set Chart Tooltip Dotted Line */
+		chart.cursor.lineX.stroke = am4core.color('#5a7e9e');
+		chart.cursor.lineX.strokeWidth = 1.5;
+		chart.cursor.lineX.strokeOpacity = 1;
+		chart.cursor.lineX.strokeDasharray = '';
+
+		chart.cursor.lineY.stroke = am4core.color('#5a7e9e');
+		chart.cursor.lineY.strokeWidth = 1;
+		chart.cursor.lineY.strokeOpacity = 1;
+		chart.cursor.lineY.strokeDasharray = '';
+	}
 	/* Render Candle Chart Data */
 	renderCandleStickChartData(data, dataType = 'normal') {
 		// Themes begin
 		am4core.useTheme(am4themes_animated);
 		// Themes end
 		const chart = am4core.create('candlechart', am4charts.XYChart);
-		chart.paddingRight = 20;
+		chart.paddingRight = 10;
 
 		chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd';
 
@@ -953,6 +1024,27 @@ export class TickerDetailsComponent implements OnInit {
 			objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 		  }
 		});
+  }
+
+  filterExchangeItem(){
+  	this.loadingBar.start();
+	this.getChartData(this.num, this.type, this.indMap);
+	if (this.filterModel.graphDisplay) {
+		document.getElementById('chartdiv').style.display = 'none';
+		document.getElementById('candlechart').style.display = 'flex';
+
+	} else {
+		document.getElementById('candlechart').style.display = 'none';
+		document.getElementById('chartdiv').style.display = 'flex';
+	}
+
+	if(this.filterModel.searchCriteria == 24)
+		document.getElementById('volumechart').style.display = 'flex';
+	else
+		document.getElementById('volumechart').style.display = 'none';
+	this.activeFilter = false;
+	this.loadingBar.stop();
+
   }
 }
 

@@ -15,7 +15,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
-  background: rgba(35, 75, 111, 0.4);
+  background: #234b6f !important;
   padding: 10px 15px;
 }
 .account_setup h3,
@@ -33,6 +33,7 @@
   align-items: center;
   img {
     margin-right: 10px;
+    max-width: 35px;
   }
 }
 .md-select [type='button'] {
@@ -57,7 +58,7 @@
   margin-bottom: 20px;
 }
 .feedback {
-  margin-top: 40px;
+  //margin-top: 40px;
 }
 .privacy {
   margin-top: 55px;
@@ -155,6 +156,7 @@ form.form_price.recommend {
     }
     ul {
       display: flex;
+      width: 100%;
       li {
         margin: 0 5px;
         a {
@@ -173,34 +175,17 @@ form.form_price.recommend {
     }
     label {
       position: relative;
-      font-size: 15px;
-      color: #fff;
-      font-family: 'SFProDisplay-Regular';
-      background: rgba(0, 176, 80, 1);
+      font-size: 16px;
+      color: #000;
+      font-family: 'SFProDisplay-Medium';
+      //background: rgba(0, 176, 80, 1);
       padding: 5px 10px;
       text-transform: capitalize;
       margin-bottom: 15px;
       letter-spacing: 0.7px;
       width: 100%;
       height: 40px;
-      /*&:before {
-        content: '';
-        right: -80%;
-        position: absolute;
-        top: 15px;
-        width: 75%;
-        height: 0px;
-        border: 1px solid #00b050;
-      }*/
-      /*&:after {
-        content: '';
-        left: -80%;
-        position: absolute;
-        top: 15px;
-        width: 75%;
-        height: 0px;
-        border: 1px solid #00b050;
-      }*/
+      justify-content: flex-start;
     }
     .emails_share {
       display: flex;
@@ -433,6 +418,11 @@ form.form_price.recommend {
   }
 }
 .modal-header.alert_header {
+  h6.modal-title {
+    // text-transform: unset;
+    // color: #000;
+    font-size: 20px;
+  }
   .close {
     padding: 7px 10px;
     color: #000;
@@ -449,16 +439,49 @@ form.form_price.recommend {
     }
   }
 }
-.upld_imge{
-  label{
-    background: #111e36;
-    color: #fff;
+.update_profile_image {
+  form {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    .upld_imge {
+      display: flex;
+      align-items: center;
+      position: relative;
+      justify-content: space-between;
+      margin-top: 15px;
+      width: 100%;
+
+      .choose_input {
+        max-width: 175px;
+        label {
+          background: #111e36;
+          color: #fff;
+          margin: 0;
+          border-radius: 5px;
+        }
+        input {
+          width: 100%;
+          position: absolute;
+          left: 0;
+        }
+      }
+      .update_img {
+        button {
+          background-color: #00b050;
+          border: 0;
+          padding: 7px 10px;
+          color: #fff;
+          border-radius: 5px;
+        }
+      }
+    }
   }
 }
+
 .uploaded_img {
   border: 2px solid #111e36;
   width: 100px;
-  // height: 100px;
   margin-top: 20px;
   overflow: hidden;
   text-align: center;
@@ -470,6 +493,7 @@ form.form_price.recommend {
     height: auto;
   }
 }
+
 @media (min-width: 320px) and (max-width: 767px) {
   .count_down {
     .custom-btn {

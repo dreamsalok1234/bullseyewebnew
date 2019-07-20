@@ -45,6 +45,8 @@ export class AccountSettingsComponent implements OnInit {
   termsIcon = 'assets/images/Terms-of-Service.png';
   privIcon = 'assets/images/Privacy-Policy.png';
   logoutIcon = 'assets/images/Logout.png';
+  profileChange = 'assets/images/profile_img.png';
+  DelAccount = 'assets/images/delete_icon.png';
   showBtnText = 'Submit';
   changePhoneForm: FormGroup;
   inviteEmailForm: FormGroup;
@@ -88,7 +90,7 @@ export class AccountSettingsComponent implements OnInit {
   title='BullsEye Investors | Account Setting';
   autorenewalstatuschanged="Auto-renewal status changed.";
   subscriptionplansuccessfullycancelled="Subscription plan successfully cancelled.";
-  uploadBtnText = 'Upload Image';
+  uploadBtnText = 'Update';
   uploadSubmitBtnText = '';
   fileUploadProcessing = false;
   subCancelBtn=true;
@@ -143,8 +145,8 @@ export class AccountSettingsComponent implements OnInit {
     );
 	if(this.profileInfo.img != '' && this.profileInfo.img != undefined)
     this.fileUrl = this.profileInfo.img;
-	if(localStorage.getItem("proActive")!=undefined && localStorage.getItem("proActive")!="" && localStorage.getItem("proActive")!=null){
-		if(localStorage.getItem("proActive")==="false"){
+	if(localStorage.getItem("proActive") !=undefined && localStorage.getItem("proActive")!="" && localStorage.getItem("proActive") !=null) {
+		if(localStorage.getItem("proActive")==="false") {
 			this.bullseyePro();
 		}
 	}
@@ -158,7 +160,7 @@ export class AccountSettingsComponent implements OnInit {
       this.isAddPro = true;
     } */
     /* Set Language Translator */
-    
+
 
     this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
     this.translate.get('Somethingwentwrong').subscribe(value => {
@@ -230,7 +232,7 @@ export class AccountSettingsComponent implements OnInit {
     this.countryCode = this.profileInfo.countryCode.indexOf('+') > -1 ? this.profileInfo.countryCode : '+' + this.profileInfo.countryCode;
     this.phoneNumber = this.countryCode + this.profileInfo.mobile;
     this._initForm();
-	
+
     const objectTypeNew = this;
     this.lang_array.map(function(v) {
       if (v.shortname === browserLang) {
@@ -363,12 +365,27 @@ export class AccountSettingsComponent implements OnInit {
     );
   }
   openUploadImg(content) {
-    this.phoneverifiedNumber = this.misMatch = false;
-    this.phoneNumberOtp = true;
-    this.countryCode = this.countryCode.indexOf('+') > -1 ? this.countryCode : '+' + this.countryCode;
-    this.changePhoneForm.controls.phone.setValue(this.countryCode + this.profileInfo.mobile);
-    this.showBtnText = this.submitBtnText;
     this.modalService.open(content, { windowClass: 'open_upload_img', size: 'sm' }).result.then(
+      result => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      reason => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+  deltAccount(content) {
+    this.modalService.open(content, { windowClass: 'delt_account', size: 'sm' }).result.then(
+      result => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      reason => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+  changePhone(content) {
+    this.modalService.open(content, { windowClass: 'change_phone', size: 'sm' }).result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
       },
@@ -534,9 +551,10 @@ export class AccountSettingsComponent implements OnInit {
 
   /*  Invite Friend */
   invitteFriend() {
-	 
-    if (this.inviteBtnText === this.processingTxt)
+
+    if (this.inviteBtnText === this.processingTxt) {
       return;
+    }
     this.submitted = true;
     if (this.inviteEmailForm.invalid) {
 		this.inviteBtnText = this.inviteBtnTextTrans;
@@ -574,12 +592,12 @@ export class AccountSettingsComponent implements OnInit {
   bullseyePro() {
 	const objectType = this;
 	this.loading = true;
-	objectType.subCancelBtn=true;
-	objectType.totalRemainingDays=objectType.totalDisplayPer=objectType.totalSubsPlanDays=0;
+	objectType.subCancelBtn = true;
+	objectType.totalRemainingDays = objectType.totalDisplayPer = objectType.totalSubsPlanDays = 0;
 	objectType.isAddPro =  objectType.isProRemainDays = false;
     this.loadingBar.start();
 	this.authService.getMySubscription(function(err, response) {
-		
+
         objectType.loading = false;
         objectType.loadingBar.stop();
         if (err) {
@@ -590,44 +608,43 @@ export class AccountSettingsComponent implements OnInit {
           });
         }
         if (response.statusCode === 200) {
-		  if(Object.keys(response.data.data).length>0){
-			 if (response.data.data.isProAccount == response.data.data.isTrailVersion) {
+		  if(Object.keys(response.data.data).length > 0) {
+			 if (response.data.data.isProAccount === response.data.data.isTrailVersion) {
 				  objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
-					  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken+'&language='+objectType.dectLanguage
+					  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 					);
 					objectType.isProRemainDays = false;
 					objectType.isAddPro = true;
-				} 
-				else {
-					objectType.subCancelBtn=(response.data.data.paymentMethod!=undefined && response.data.data.paymentMethod.toLowerCase()=='ios')?false:true;
-				  objectType.isSubsChecked=(response.data.data.autoRenew !== undefined && response.data.data.autoRenew != null) ? ((response.data.data.autoRenew=='on')?true:false) : false;
+				} else {
+					objectType.subCancelBtn = (response.data.data.paymentMethod !== undefined && response.data.data.paymentMethod.toLowerCase() === 'ios') ? false : true;
+				  objectType.isSubsChecked = (response.data.data.autoRenew !== undefined && response.data.data.autoRenew != null) ? ((response.data.data.autoRenew === 'on') ? true : false) : false;
 				  objectType.isAddPro = false;
 				  objectType.isProRemainDays = true;
-				  objectType.btnText=objectType.autoRenewalBtn;
-				  
+				  objectType.btnText = objectType.autoRenewalBtn;
+
 				 setTimeout(() => {
-					 
+
 					 objectType.totalSubsPlanDays =
 				  (response.data.data.totalDays !== undefined && response.data.data.totalDays != null) ? response.data.data.totalDays : 0;
 					 objectType.totalRemainingDays =
 				  (response.data.data.remainingDays !== undefined && response.data.data.remainingDays != null) ? response.data.data.remainingDays : 0;
-				  objectType.totalDisplayPer=Math.round((objectType.totalRemainingDays/objectType.totalSubsPlanDays)*100);
-				},200);
+				  objectType.totalDisplayPer = Math.round((objectType.totalRemainingDays / objectType.totalSubsPlanDays) * 100);
+				}, 200);
 			   }
-			   
-		  }
-		  else {
+
+		  } else {
 				objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
-				  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken+'&language='+objectType.dectLanguage
+				  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 				);
 				objectType.isProRemainDays = false;
 				objectType.isAddPro = true;
 		   }
 		   objectType.activePro = objectType.activePro ? '' : 'activePro';
-        }else
+        } else {
           objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+        }
     });
-    
+
   }
   proClose() {
     this.activePro = this.activePro ? '' : 'closed';
@@ -635,50 +652,52 @@ export class AccountSettingsComponent implements OnInit {
   openWindowCustomClass(content) {
     this.modalService.open(content, { windowClass: 'full_width_modal', size: 'lg' });
   }
-  checkAutoRenewal(content,i){
-	this.autRenewalInd=i;
-	this.modelText = (this.autRenewalInd==0)?this.areYouSureWantToRenewOn:this.areYouSureWantToRenewOff;
-	this.isSubsChecked=(this.autRenewalInd==0)?true:false;
+  checkAutoRenewal(content, i) {
+	this.autRenewalInd = i;
+	this.modelText = (this.autRenewalInd === 0) ? this.areYouSureWantToRenewOn : this.areYouSureWantToRenewOff;
+	this.isSubsChecked = (this.autRenewalInd === 0) ? true : false;
 	this.modalService.open(content).result.then((result) => {
 		this.closeResult = `Closed with: ${result}`;
 	}, (reason) => {
 		this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 	});
   }
-  resetAutoRenewal(){
-	  this.isSubsChecked=(!this.isSubsChecked)?true:false;
+  resetAutoRenewal() {
+	  this.isSubsChecked = (!this.isSubsChecked) ? true : false;
 	  this.modalService.dismissAll();
   }
-  changeAutoRenewal(){
+  changeAutoRenewal() {
 	const objectType = this;
-	if (this.btnText === this.processingTxt)
+	if (this.btnText === this.processingTxt) {
       return;
+	}
     this.btnText = this.processingTxt;
     this.loading = true;
     this.loadingBar.start();
-    const formData = { renew: ((this.isSubsChecked)?'on':'off')};
+    const formData = { renew: ((this.isSubsChecked) ? 'on' : 'off')};
     this.authService.changeAutoRenewal(formData, function(err, response) {
       objectType.loading = false;
       objectType.btnText = objectType.autoRenewalBtn;
       objectType.loadingBar.stop();
-      if (err)
+      if (err) {
         objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {
           autoDismiss: true,
           maxOpened: 1,
           preventDuplicates: true
         });
-      if (response.statusCode === 200){
+      }
+      if (response.statusCode === 200) {
 		  objectType.toastr.successToastr(objectType.autorenewalstatuschanged, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
-		  //objectType.activePro='closed';
+		  // objectType.activePro='closed';
           objectType.modalService.dismissAll();
-	  }
-      else
+	  } else {
         objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+      }
     });
-	
+
   }
-  showPopupForCancel(content){
-	this.autRenewalInd=2;
+  showPopupForCancel(content) {
+	this.autRenewalInd = 2;
 	this.modelText = this.areYouSureWantToCancel;
 	this.modalService.open(content).result.then((result) => {
 		this.closeResult = `Closed with: ${result}`;
@@ -686,81 +705,83 @@ export class AccountSettingsComponent implements OnInit {
 		this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 	});
   }
-  cancelSubscription(){
+  cancelSubscription() {
 	const objectType = this;
-	if (this.btnText === this.processingTxt)
+	if (this.btnText === this.processingTxt) {
       return;
+	}
     this.btnText = this.processingTxt;
     this.loading = true;
     this.loadingBar.start();
     this.authService.cancelSubscription(function(err, response) {
-		
+
       objectType.loading = false;
       objectType.btnText = objectType.autoRenewalBtn;
       objectType.loadingBar.stop();
-      if (err)
+      if (err) {
         objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {
           autoDismiss: true,
           maxOpened: 1,
           preventDuplicates: true
         });
-      if (response.statusCode === 200){
+      }
+      if (response.statusCode === 200) {
 		  objectType.toastr.successToastr(objectType.subscriptionplansuccessfullycancelled, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
-		  objectType.profileInfo.isProAccount =false;
-		  objectType.profileInfo.isTrailVersion ="0";
+		  objectType.profileInfo.isProAccount = false;
+		  objectType.profileInfo.isTrailVersion = '0';
           localStorage.setItem('userProfileInfo', JSON.stringify(objectType.profileInfo));
-		  objectType.activePro='closed';
+		  objectType.activePro = 'closed';
           objectType.modalService.dismissAll();
 		  window.location.reload();
-	  }
-      else
+	  } else {
         objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+      }
     });
-	
+
   }
-  openSubUpgrade(content){
+  openSubUpgrade(content) {
 	this.modalService.open(content).result.then((result) => {
 		this.closeResult = `Closed with: ${result}`;
 	}, (reason) => {
 		this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 	});
   }
-  gotoUpgradeUrl(){
+  gotoUpgradeUrl() {
 	  const objectType = this;
-	  if(!this.subCancelBtn){
+	  if (!this.subCancelBtn) {
 		  this.modalService.dismissAll();
-		 window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_blank");}
-	  else{
+		 window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank'); } else {
 		  this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-			  'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken+'&language='+objectType.dectLanguage
+			  'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 		  );
 		  this.isProRemainDays = false;
 		  this.isAddPro = true;
 		  this.modalService.dismissAll();
-	  } 
+	  }
   }
 
   fileEvent(fileInput: any) {
     this.fileData = <File>fileInput.target.files[0];
-    var reader = new FileReader();
-    reader.readAsDataURL((<HTMLInputElement>fileInput.target).files[0]);// read file as data url
+    const reader = new FileReader();
+    reader.readAsDataURL((<HTMLInputElement>fileInput.target).files[0]); // read file as data url
     reader.onload = (event) => { // called once readAsDataURL is completed
       this.fileUrl = (<FileReader>event.target).result;
-    }
+    };
   }
 
   uploadImg() {
       const objectType = this;
-      if(this.fileData.name == '' || this.fileData.name == undefined || this.fileData.name == null) {
-        objectType.toastr.errorToastr("Choose file", null, {
+      if (this.fileData.name === '' || this.fileData.name === undefined || this.fileData.name == null) {
+        objectType.toastr.errorToastr('Choose file', null, {
             autoDismiss: true,
             maxOpened: 1,
             preventDuplicates: true
           });
         return false;
       }
-      if(this.fileUploadProcessing == true )
+      if (this.fileUploadProcessing === true ) {
         return false;
+      }
       this.fileUploadProcessing = true;
       this.uploadSubmitBtnText = this.processingTxt;
       this.authService.uploadProfileImage(this.fileData, function(err, response) {
@@ -779,7 +800,7 @@ export class AccountSettingsComponent implements OnInit {
           objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
           objectType.profileInfo.img = response.data.profile.img;
           localStorage.setItem('userProfileInfo', JSON.stringify(objectType.profileInfo));
-          objectType.fileUrl = objectType.profileInfo.img;          
+          objectType.fileUrl = objectType.profileInfo.img;
         } else {
           objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
         }

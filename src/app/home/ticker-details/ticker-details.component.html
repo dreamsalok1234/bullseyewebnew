@@ -1,4 +1,4 @@
-<div class="top-title ticker_detail">
+<div class="top-title enquiry ticker_detail">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12 col-lg-6">
@@ -23,7 +23,7 @@
         </h2>
       </div>
       <div class="col-md-12 col-lg-6">
-        <div class="buttons_grp">
+        <div class="buttons_grp">         
           <button style="margin-left: 0" [routerLink]="['/market-search']" class="search_mar">
             <span style="margin-right: 5px"> <img src="assets/images/search-market-icon.png" alt="search-market-icon"/></span>
             {{ 'SearchMarkets' | translate }}
@@ -76,10 +76,41 @@
           </ul>
           <div id="chartdiv" style="display:flex">{{ tickerDataText }}</div>
           <div id="candlechart" style="display:none">{{ tickerDataText }}</div>
+          <div id="volumechart" style="display:none">{{ tickerDataText }}</div>
         </div>
-        <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
+        <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
           <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
           <label for="graphCheckbox" class="checkbox-custom-label">{{ CandlestickText }}</label>
+        </div> -->
+        <div class="pop_filters book_cost">
+          	<a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
+              src="assets/images/search-market-icon.png" /></a>
+	          <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
+	            <div class="title_div">
+	              <h2>{{ 'Filters' | translate }}</h2>
+	              <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+	            </div>
+	            <div class="form-group" >
+	              <label>{{ 'GraphDisplay' | translate }}</label>
+	              <select class="form-control" name="graphDisplay" [(ngModel)] = "filterModel.graphDisplay" #graphDisplay="ngModel">
+	                <option value="0">Market Price</option>
+	                <option value="1" >Candlestick</option>
+	              </select>
+	            </div>
+	            <div class="form-group">
+	              <label>{{ 'GraphAnalytics' | translate }}</label>
+	              <select class="form-control" name="searchCriteria" [(ngModel)] = "filterModel.searchCriteria" #searchCriteria="ngModel">
+	                <option value="0">None</option>
+	                <option value="50">50-day SMA </option>
+	                <option value="100">100-day SMA </option>
+	                <option value="200">200-day SMA </option>
+	                <option value="24">24H Volume </option>             
+	              </select>
+	            </div>
+	            <div class="actions_to">
+	              <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+	            </div>
+	          </div>
         </div>
       </div>
       <div class="col-lg-6">
