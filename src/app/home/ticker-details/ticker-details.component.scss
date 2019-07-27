@@ -1,5 +1,6 @@
 /*ticker details*/
 @import '../search-market/search-market.component.scss';
+
 .post_msg_list {
   max-height: 750px;
   overflow-y: auto;
@@ -242,8 +243,12 @@ div#candlechart
   align-items: center;
   color: #ffff;
 }
+div.filter_modal_popup {
+    z-index: 2;
+    position: relative;
+}
 div#volumechart {
-    background-color: transparent;
+    background-color: #0e243b;
     //border: 1px solid #1b3e5c;
     display: flex;
     height: 400px;
@@ -253,7 +258,7 @@ div#volumechart {
     left:0;
     position: absolute;
     right: 0;
-    top: 49px; }
+    top: -19px; }
 .candle_stick ul {
   display: flex;
   justify-content: space-between;
@@ -280,6 +285,13 @@ div#volumechart {
 }
 .candle_stick ul li.active {
   background-color: #00b050 !important;
+}
+.highOpacity{
+  z-index: 2;
+  background-color: transparent !important;
+}
+.lowOpacity{
+  z-index: 0;
 }
 .potential {
   width: 100%;

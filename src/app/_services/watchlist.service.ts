@@ -70,7 +70,7 @@ export class WatchlistService {
     add(formdata, callback) {  
        this.responseItem = { data: {}, statusCode: 200 }; 
        return this.globalService.callPostApi('watchlist/add',formdata, true).subscribe(
-          data  => {  
+          data  => {
               
               try {
                 this.responseItem.data  = data;
@@ -153,6 +153,34 @@ export class WatchlistService {
     priceAlertList(callback) {  
        this.responseItem = { data: {}, statusCode: 200 }; 
        return this.globalService.callGetApi('watchlist/pricealertlist', true).subscribe(
+          data  => {                
+              try {
+                this.responseItem.data  = data;
+              }
+              catch (error) {
+                this.responseItem.data  = {message: "Something Wrong", status: false};
+                this.responseItem.statusCode = 403;
+              } 
+              return callback(null, this.responseItem);             
+          },
+          error => {   
+                         
+              try {     
+                            
+                this.responseItem.data  = error.error;
+              }
+              catch (err) {
+                this.responseItem.data  = { message: "Something Wrong", status: false };
+              }
+              this.responseItem.statusCode = error.status;
+              return callback(null, this.responseItem);
+        });
+
+    }
+
+    changeWatchListOrder(formdata, callback) {  
+       this.responseItem = { data: {}, statusCode: 200 }; 
+       return this.globalService.callPostApi('watchlist/change_order', formdata, true).subscribe(
           data  => {                
               try {
                 this.responseItem.data  = data;

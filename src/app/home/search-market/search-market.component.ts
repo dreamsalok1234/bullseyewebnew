@@ -9,6 +9,7 @@ import { WatchlistService } from '../../_services/watchlist.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Title, Meta } from '@angular/platform-browser';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-search-market',
   templateUrl: './search-market.component.html',
@@ -438,5 +439,8 @@ export class SearchMarketComponent implements OnInit {
 			 this.priceAlert.amount = a[0] + '.' + a[1].substring(0, 3);
 		 }
 	 }
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.itemList, event.previousIndex, event.currentIndex);
   }
 }

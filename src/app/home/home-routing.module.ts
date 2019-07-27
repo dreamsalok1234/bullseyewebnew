@@ -8,6 +8,7 @@ const routes: Routes = [
         path: '', component: HomeComponent,
 		children: [
             { path: 'home/:username', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+            // { path: 'drag-drop', loadChildren: './drag-drop/drag-drop.module#DrDropModule' },
             { path: 'account-settings', loadChildren: './account-settings/account-settings.module#AccountSettingsModule' },
 			{ path: 'check-pro', loadChildren: './account-settings/account-settings.module#AccountSettingsModule' },
             { path: 'portfolio', loadChildren: './portfolio/portfolio.module#PortfolioModule' },
@@ -17,11 +18,6 @@ const routes: Routes = [
 			{ path: 'investment/:pname/:username', component: TickerDetailsComponent, children: [
 			  {path: 'investment/:pname/:username', loadChildren:'./ticker-details/ticker-details.module#TickerDetailsModule'}
 			]},
-			/* { path: ':tsymbol/:tname', component: TickerDetailsComponent, children: [
-			  {path: ':tsymbol/:tname', loadChildren: './ticker-details/ticker-details.module#TickerDetailsModule'}
-			]}, 
-            //{ path: 'portfolio-details/:pname/:username', loadChildren: './portfolio-details/portfolio-details.module#PortfolioDetailsModule' },
-            //{ path: 'ticker-details', loadChildren: './ticker-details/ticker-details.module#TickerDetailsModule' },*/
 			{ path: 'investment', loadChildren: './investment/investment.module#InvestmentModule'},
             { path: 'news', loadChildren: './news/news.module#NewsModule'},
             { path: 'chat', loadChildren: './chat/chat.module#ChatModule'},

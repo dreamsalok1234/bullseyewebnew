@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         NgbModule,
         NgbCarouselModule,
         NgbAlertModule,
+        DragDropModule,
         DashboardRoutingModule
     ],
     declarations: [

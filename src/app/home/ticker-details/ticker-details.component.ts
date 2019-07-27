@@ -91,6 +91,7 @@ export class TickerDetailsComponent implements OnInit {
 	cryptoMaxValue = 0;
 	cryptoMinValue = 0;
 	limitsize=30;
+	chartActionType = 'graphDisplay';
     constructor(
 			private translate: TranslateService,
 			private commonService: CommonService,
@@ -1042,9 +1043,14 @@ export class TickerDetailsComponent implements OnInit {
 		document.getElementById('volumechart').style.display = 'flex';
 	else
 		document.getElementById('volumechart').style.display = 'none';
+	
 	this.activeFilter = false;
 	this.loadingBar.stop();
 
+  }
+
+  setChartActionType(actionType) {
+  		this.chartActionType = actionType;
   }
 }
 

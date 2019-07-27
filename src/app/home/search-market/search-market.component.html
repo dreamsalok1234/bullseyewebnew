@@ -109,8 +109,8 @@
             <li>{{ 'Actions' | translate }}</li>
           </ul>
         </div> -->
-        <div class="body_div">
-          <ul class="stats_body searchlist" *ngFor="let item of itemList; let i = index">
+        <div class="body_div" cdkDropList (cdkDropListDropped)="drop($event)" cdkDropListOrientation="vertical">
+          <ul class="stats_body searchlist" *ngFor="let item of itemList; let i = index"  cdkDrag>
             <li>
               <span class="ticker_img" style="max-width:30px">
                 <img [src]="item.tickerUrl" alt="" style="max-width:100%" onError="this.src='assets/images/logo.png';"

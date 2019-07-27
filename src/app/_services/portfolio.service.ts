@@ -262,4 +262,33 @@ export class PortfolioService {
     public requestDataFromMultipleSources(apiList): Observable<any[]> {
       return Observable.forkJoin(apiList);
     }
+
+    /* CHange portfolio Order*/
+    changeWatchListOrder(formdata, callback) {  
+       this.responseItem = { data: {}, statusCode: 200 }; 
+       return this.globalService.callPostApi('portfolio/change_order', formdata, true).subscribe(
+          data  => {                
+              try {
+                this.responseItem.data  = data;
+              }
+              catch (error) {
+                this.responseItem.data  = {message: "Something Wrong", status: false};
+                this.responseItem.statusCode = 403;
+              } 
+              return callback(null, this.responseItem);             
+          },
+          error => {   
+                         
+              try {     
+                            
+                this.responseItem.data  = error.error;
+              }
+              catch (err) {
+                this.responseItem.data  = { message: "Something Wrong", status: false };
+              }
+              this.responseItem.statusCode = error.status;
+              return callback(null, this.responseItem);
+        });
+
+    }
 }

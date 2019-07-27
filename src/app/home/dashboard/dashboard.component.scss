@@ -8,6 +8,7 @@ $background_color_3: #00b050;
 $border_color_1: rgb(255, 255, 255);
 $border_color_2: #00b050;
 @import '../search-market/search-market.component.scss';
+
 .top-title h2 {
   margin-bottom: 0;
   display: inline-flex;
@@ -199,6 +200,7 @@ ul.stats_body.portfoliolist li {
   li {
     flex-grow: 0.5;
     justify-content: flex-start;
+    cursor: move;
     div {
       text-align: left;
     }

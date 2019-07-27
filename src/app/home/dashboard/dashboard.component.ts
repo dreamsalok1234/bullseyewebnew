@@ -10,6 +10,7 @@ import { WatchlistService } from '../../_services/watchlist.service';
 import { CommonService } from '../../_services/common.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Title, Meta } from '@angular/platform-browser';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 declare var jQuery: any, intlTelInput: any, intlTelInputUtils: any;
 @Component({
     selector: 'app-dashboard',
@@ -334,9 +335,9 @@ export class DashboardComponent implements OnInit {
       }
       if( response.statusCode == 200 ) {
         objectType.toastr.successToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
-		if(Object.keys(objectType.portfolioList[objectType.portfolioEditInd]).length>0) {
+		if(Object.keys(objectType.portfolioList[objectType.portfolioEditInd]).length> 0) {
 			objectType.portfolioList[objectType.portfolioEditInd].name=objectType.portfolioForm.name;
-			objectType.portfolioList[objectType.portfolioEditInd].currency=objectType.portfolioForm.currentCurrency;
+			objectType.portfolioList[objectType.portfolioEditInd].currency =objectType.portfolioForm.currentCurrency;
 			// objectType.portfolioList[objectType.portfolioEditInd].currency=objectType.portfolioForm.currentCurrency;
 		}
         objectType.modalService.dismissAll();
@@ -360,17 +361,17 @@ export class DashboardComponent implements OnInit {
 
   openAlert(content, keyIndex) {
 	if (!this.profileInfo.isProAccount) {
-		localStorage.setItem("proActive","false");
-		this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
+		localStorage.setItem('proActive','false');
+		this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(() =>
 		this.router.navigate(['/account-settings']));
 	} else {
-		localStorage.setItem("proActive","");
-		let tickerDetails = this.watchlist[keyIndex];
+		localStorage.setItem('proActive','');
+		const tickerDetails = this.watchlist[keyIndex];
 		this.priceAlert.tickerName = tickerDetails.tickerName;
 		this.priceAlert.symbol = tickerDetails.symbol;
 		this.priceAlert.amount = '';
 		this.priceAlert.tickerId = tickerDetails.id;
-		this.priceAlert.tickerIcon=(tickerDetails.tickerUrl!='' && tickerDetails.tickerUrl!=undefined)?tickerDetails.tickerUrl:'../assets/images/not-found.png';
+		this.priceAlert.tickerIcon = (tickerDetails.tickerUrl!=='' && tickerDetails.tickerUrl!==undefined) ? tickerDetails.tickerUrl :'../assets/images/not-found.png';
 		this.modalService.open(content).result.then((result) => {
 		  this.closeResult = `Closed with: ${result}`;
 		}, (reason) => {
@@ -380,33 +381,33 @@ export class DashboardComponent implements OnInit {
   }
 
   goToPortfolioDetails(portfolioId,portfolioCurrency,portfolioType,portfolioName) {
-    if (portfolioId > 0 && portfolioCurrency!="" && portfolioType!="" && portfolioName!="") {
-		localStorage.setItem("portfolioId",portfolioId);
-		localStorage.setItem("portfolioType", portfolioType);
-		localStorage.setItem("portfolioCurrency", portfolioCurrency);
-		localStorage.setItem("portfolioName", portfolioName);
-		this.router.navigate([''+portfolioName+'/'+localStorage.getItem('loginUserName')]);
+    if (portfolioId > 0 && portfolioCurrency !== '' && portfolioType !== '' && portfolioName !== '') {
+		localStorage.setItem('portfolioId',portfolioId);
+		localStorage.setItem('portfolioType', portfolioType);
+		localStorage.setItem('portfolioCurrency', portfolioCurrency);
+		localStorage.setItem('portfolioName', portfolioName);
+		this.router.navigate([''+portfolioName+'/' + localStorage.getItem('loginUserName')]);
     } else {
 		this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
     }
   }
   goToTickerDetails(tickerId,tickerCurrency,tickerType,tickerName,tickerSymbol,watchlistId) {
-	  if (tickerId > 0 && (tickerCurrency!="" && tickerCurrency!=undefined) && (tickerType!="" && tickerType!=undefined) && (watchlistId!=undefined && watchlistId>0 && watchlistId!="")) {
-		localStorage.setItem("tickerId",tickerId);
-		localStorage.setItem("tickerCurrency",tickerCurrency);
-		localStorage.setItem("tickerType",tickerType);
-		localStorage.setItem("tickerName",tickerName);
-		localStorage.setItem("tickerSymbol",tickerSymbol);
-		localStorage.setItem("watchlistId",watchlistId);
-		localStorage.setItem("pageTickerRequest",'dashboard');
-		this.router.navigate(['/investment/'+tickerSymbol+'/'+tickerName]);
+	  if (tickerId > 0 && (tickerCurrency !== '' && tickerCurrency !== undefined) && (tickerType !== '' && tickerType !== undefined) && (watchlistId !== undefined && watchlistId > 0 && watchlistId !== '')) {
+		localStorage.setItem('tickerId',tickerId);
+		localStorage.setItem('tickerCurrency',tickerCurrency);
+		localStorage.setItem('tickerType',tickerType);
+		localStorage.setItem('tickerName',tickerName);
+		localStorage.setItem('tickerSymbol',tickerSymbol);
+		localStorage.setItem('watchlistId',watchlistId);
+		localStorage.setItem('pageTickerRequest','dashboard');
+		this.router.navigate(['/investment/'+tickerSymbol+'/' + tickerName]);
     } else {
 		this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			}
   }
   setPriceAlert() {
-	this.priceAlertError.amount=(this.priceAlert.amount !=undefined && this.priceAlert.amount!="")?false:true;
-	this.priceAlertError.expiryDate=(this.priceAlert.expiryDate !=undefined && this.priceAlert.expiryDate!="")?false:true;
+	this.priceAlertError.amount = (this.priceAlert.amount !==undefined && this.priceAlert.amount!=='') ? false :true;
+	this.priceAlertError.expiryDate = (this.priceAlert.expiryDate !== undefined && this.priceAlert.expiryDate !== '') ? false :true;
 	if(this.priceAlertError.amount) {
 		this.toastr.errorToastr(this.targetPriceisRequiredMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
 		return false;
@@ -420,26 +421,26 @@ export class DashboardComponent implements OnInit {
 		this.toastr.errorToastr(this.expiryDateisRequiredMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
 		return false;
 	}
-    const month = (this.priceAlert.expiryDate.month < 10 )? '0'+this.priceAlert.expiryDate.month : this.priceAlert.expiryDate.month;
-    const day = (this.priceAlert.expiryDate.day < 10 )? '0'+this.priceAlert.expiryDate.day : this.priceAlert.expiryDate.day;
-    const expiryDatevalue = day+'/'+month+'/'+this.priceAlert.expiryDate.year
+    const month = (this.priceAlert.expiryDate.month < 10 ) ? '0' + this.priceAlert.expiryDate.month : this.priceAlert.expiryDate.month;
+    const day = (this.priceAlert.expiryDate.day < 10 ) ? '0' + this.priceAlert.expiryDate.day : this.priceAlert.expiryDate.day;
+    const expiryDatevalue = day+'/'+month + '/' + this.priceAlert.expiryDate.year;
 
-    const formData = {'tickerId': this.priceAlert.tickerId, 'alertPriceType' : this.priceAlert.compare,'priceThreshold':this.priceAlert.amount,'expiryDate':expiryDatevalue,'currency':this.priceAlert.currentCurrency};
+    const formData = {'tickerId': this.priceAlert.tickerId, 'alertPriceType' : this.priceAlert.compare, 'priceThreshold': this.priceAlert.amount, 'expiryDate': expiryDatevalue, 'currency': this.priceAlert.currentCurrency};
     const objectType = this;
-    this.loading =true;
+    this.loading = true;
     this.loadingBar.start();
     this.commonService.addPriceAlert(formData, function(err, response) {
       objectType.loading = false;
       objectType.loadingBar.stop();
-      if( err ) {
-        objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+      if ( err ) {
+        objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
       }
-      if( response.statusCode === 200 ) {
+      if ( response.statusCode === 200 ) {
         objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
         objectType.modalService.dismissAll();
       } else {
-		 objectType.toastr.errorToastr(((response.data.message===undefined || response.data.message==='')?objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-		 if(response.statusCode === 401) {
+		 objectType.toastr.errorToastr(((response.data.message === undefined || response.data.message === '') ? objectType.defaulterrSomethingMsg : response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+		 if (response.statusCode === 401) {
 			localStorage.clear();
 			objectType.router.navigate(['/login']);
 		 }
@@ -447,18 +448,18 @@ export class DashboardComponent implements OnInit {
     });
   }
   setTagetValueWith3Digit() {
-	  if(this.priceAlert.amount !== '') {
-		 const amt=parseFloat(this.priceAlert.amount);
-		 this.priceAlert.amount=amt.toFixed(3);
+	  if (this.priceAlert.amount !== '') {
+		 const amt = parseFloat(this.priceAlert.amount);
+		 this.priceAlert.amount = amt.toFixed(3);
 	  }
    }
   /*Numeric value with decimal value*/
   numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
-      return (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57))?false:true;
+      return (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) ? false : true;
   }
   checkTargetValidation() {
-	 if(this.priceAlert.amount!=='') {
+	 if (this.priceAlert.amount !== '') {
 		 if (!(/^\d+[.,]?\d{0,3}$/g.test(this.priceAlert.amount))) {
 		     const a = this.priceAlert.amount.split('.');
 			 this.priceAlert.amount = a[0] + '.' + a[1].substring(0, 3);
@@ -475,4 +476,62 @@ export class DashboardComponent implements OnInit {
 	  });
 	  return cur;
   }
+	drop(event: CdkDragDrop<string[]>) {
+		const currentIndex = event.currentIndex;
+		const previousIndex = event.previousIndex;
+		moveItemInArray(this.watchlist, event.previousIndex, event.currentIndex);
+		this.loading = true;
+	    this.loadingBar.start();
+	    var objectType = this;
+	    const formData = {"currentOrderNo": previousIndex +1 , "newOrderNo": currentIndex+1, "watchlistId" : this.watchlist[currentIndex].watchlistId};
+	   	debugger;
+	    this.watchListService.changeWatchListOrder(formData, function(err, response) {
+	      debugger;
+	      objectType.loading = false;
+	      objectType.loadingBar.stop();
+	      if ( err ) {
+	        objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+	      }
+	      if ( response.statusCode === 200 ) {
+	        objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+	        objectType.modalService.dismissAll();
+	      } else {
+			 objectType.toastr.errorToastr(((response.data.message === undefined || response.data.message === '') ? objectType.defaulterrSomethingMsg : response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			 if (response.statusCode === 401) {
+				localStorage.clear();
+				objectType.router.navigate(['/login']);
+			 }
+		  }
+	    });
+
+	}
+	dropPortfolio(event: CdkDragDrop<string[]>) {
+		const currentIndex = event.currentIndex;
+		const previousIndex = event.previousIndex;
+		moveItemInArray(this.portfolioList, event.previousIndex, event.currentIndex);
+		this.loading = true;
+	    this.loadingBar.start();
+	    var objectType = this;
+	    const formData = {"currentOrderNo": previousIndex +1 , "newOrderNo": currentIndex+1, "portfolioId" : this.portfolioList[currentIndex].portfolioId};
+	   	debugger;
+	    this.portfolioService.changeWatchListOrder(formData, function(err, response) {
+	      debugger;
+	      objectType.loading = false;
+	      objectType.loadingBar.stop();
+	      if ( err ) {
+	        objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+	      }
+	      if ( response.statusCode === 200 ) {
+	        objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+	        objectType.modalService.dismissAll();
+	      } else {
+			 objectType.toastr.errorToastr(((response.data.message === undefined || response.data.message === '') ? objectType.defaulterrSomethingMsg : response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			 if (response.statusCode === 401) {
+				localStorage.clear();
+				objectType.router.navigate(['/login']);
+			 }
+		  }
+	    });
+
+	}
 }

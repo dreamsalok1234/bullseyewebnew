@@ -1,4 +1,4 @@
-<div class="top-title chat_detail">
+<div class="top-title enquiry chat_detail">
   <div class="row">
     <div class="col-lg-6 col-md-8">
       <h2>
@@ -68,33 +68,61 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="candle_stick">
-          <ul>
-            <li [ngClass]="activeTab && indMap == 0 ? 'active' : ''" (click)="getChartData(1, 'M', 0)">
-              <input type="button" value="1M" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 1 ? 'active' : ''" (click)="getChartData(3, 'M', 1)">
-              <input type="button" value="3M" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 2 ? 'active' : ''" (click)="getChartData(6, 'M', 2)">
-              <input type="button" value="6M" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 3 ? 'active' : ''" (click)="getChartData(1, 'Y', 3)">
-              <input type="button" value="1Y" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 4 ? 'active' : ''" (click)="getChartData(2, 'Y', 4)">
-              <input type="button" value="2Y" />
-            </li>
-          </ul>
-          <div id="chartdiv" style="display:flex">{{ chartDataText }}</div>
-          <div id="candlechart" style="display:none">{{ chartDataText }}</div>
+        <ul>
+          <li [ngClass]="activeTab && indMap == 0 ? 'active' : ''" (click)="getChartData(1, 'D', 0)">
+            <input type="button" value="1D" />
+          </li>
+          <li [ngClass]="activeTab && indMap == 1 ? 'active' : ''" (click)="getChartData(1, 'M', 1)">
+            <input type="button" value="1M" />
+          </li>
+          <li [ngClass]="activeTab && indMap == 2 ? 'active' : ''" (click)="getChartData(3, 'M', 2)">
+            <input type="button" value="3M" />
+          </li>
+          <li [ngClass]="activeTab && indMap == 3 ? 'active' : ''" (click)="getChartData(6, 'M', 3)">
+            <input type="button" value="6M" />
+          </li>
+          <li [ngClass]="activeTab && indMap == 4 ? 'active' : ''" (click)="getChartData(1, 'Y', 4)">
+            <input type="button" value="1Y" />
+          </li>
+          <li [ngClass]="activeTab && indMap == 5 ? 'active' : ''" (click)="getChartData(2, 'Y', 5)">
+            <input type="button" value="2Y" />
+          </li>
+        </ul>
+          <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ chartDataText }}</div>
+          <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ chartDataText }}</div>
+          <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ chartDataText }}</div>
         </div>
-        <!--<div class="candle_stick">
-      <img src="../assets/images/graph.png" alt="graph" class="img-fluid" />							
-      </div>-->
-        <div class="main-checkbox">
-          <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
-          <label for="graphCheckbox" class="checkbox-custom-label">{{ CandlestickText }}</label>
+      <div class="pop_filters book_cost filter_modal_popup">
+        <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
+            src="assets/images/search-market-icon.png" /></a>
+        <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
+          <div class="title_div">
+            <h2>{{ 'Filters' | translate }}</h2>
+            <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+          </div>
+          <div class="form-group">
+            <label>{{ 'GraphDisplay' | translate }}</label>
+            <select class="form-control" name="graphDisplay" (change) ="setChartActionType('graphDisplay');" [(ngModel)]="filterModel.graphDisplay" #graphDisplay="ngModel">
+              <option value="0">Market Price</option>
+              <option value="1">Candlestick</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>{{ 'GraphAnalytics' | translate }}</label>
+            <select class="form-control" name="searchCriteria" (change) ="setChartActionType('searchCriteria');" [(ngModel)]="filterModel.searchCriteria"
+              #searchCriteria="ngModel">
+              <option value="0">None</option>
+              <!-- <option value="50">50-day SMA </option>
+              <option value="100">100-day SMA </option>
+              <option value="200">200-day SMA </option> -->
+              <option value="24">24H Volume </option>
+            </select>
+          </div>
+          <div class="actions_to">
+            <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+          </div>
         </div>
+      </div>
       </div>
       <div class="col-lg-6">
         <ul class="post_msg_list">

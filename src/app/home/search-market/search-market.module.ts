@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } f
 import { SearchMarketRoutingModule } from './search-market-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchMarketComponent } from './search-market.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { SearchMarketComponent } from './search-market.component';
 		CommonModule,
 		TranslateModule,
 		SearchMarketRoutingModule,
+		DragDropModule,
 		NgbModule
 	],
 	declarations: [SearchMarketComponent]

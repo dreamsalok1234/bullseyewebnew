@@ -20,8 +20,8 @@
 						class="fa fa-plus"></i> {{ 'AddPortfolio' | translate }}</button>
 			</div>
 			<div class="stats_table">
-				<div class="body_div">
-					<ul class="stats_body portfoliolist" *ngFor="let portfolioItem of portfolioList; let i= index;">
+				<div class="body_div" cdkDropList (cdkDropListDropped)="dropPortfolio($event)" cdkDropListOrientation="vertical">
+					<ul class="stats_body portfoliolist" *ngFor="let portfolioItem of portfolioList; let i= index;" cdkDrag>
 						<li>
 							<h5>{{portfolioItem.name}}</h5>
 							<h6>{{portfolioItem.type | translate}}</h6>
@@ -87,8 +87,8 @@
 			</div>
 			<div class="wachlist_index">
 				<div class="stats_table">
-					<div class="body_div">
-						<ul class="stats_body watchlist" *ngFor="let watchlistitem of watchlist; let i= index;">
+					<div class="body_div" cdkDropList (cdkDropListDropped)="drop($event)" cdkDropListOrientation="vertical">
+						<ul class="stats_body watchlist" *ngFor="let watchlistitem of watchlist; let i= index;" cdkDrag>
 							<li><span class="ticker_img" style="max-width:30px">
 									<img [src]="watchlistitem.tickerUrl" alt="" style="max-width:100%"
 										onError="this.src='assets/images/logo.png';" alt="ticker image" />
@@ -184,7 +184,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 <!-- The Modal -->

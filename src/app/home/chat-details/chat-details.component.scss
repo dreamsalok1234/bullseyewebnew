@@ -1,4 +1,5 @@
 @import '../chat/chat.component.scss';
+@import '../search-market/search-market.component.scss';
 .top-title.chat_detail h2 {
   display: flex;
   align-items: center;
@@ -302,7 +303,11 @@ a.back_arrow{
     font-family: 'SFProDisplay-Regular';
     margin: 0;
 }
-
+.pop_filters.book_cost{
+    max-width: 100px;
+    border-radius: 25px;
+    overflow: hidden;
+}
 .checkbox-custom {
   + .checkbox-custom-label:before {
     content: '';
@@ -369,13 +374,28 @@ div#candlechart {
   //   bottom: 0;
   // }
 }
-
+div.filter_modal_popup {
+    z-index: 2;
+    position: relative;
+}
+div#volumechart {
+    background-color: #0e243b;
+    //border: 1px solid #1b3e5c;
+    display: flex;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+    color: #ffff;
+    left:0;
+    position: absolute;
+    right: 0;
+    top: 49px; }
 .candle_stick ul {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
   li {
-    flex: 0 0 19%;
+    flex: 0 0 15%;
     height: 40px;
     background-color: #3b5a76;
     display: flex;
@@ -399,6 +419,13 @@ div#candlechart {
 }
 span.inve_icon {
     margin-right: 15px;
+}
+.highOpacity{
+  z-index: 2;
+  background-color: transparent !important;
+}
+.lowOpacity{
+  z-index: 0;
 }
 .modal.fade.show.d-block.add_chat_modal{display: none!important}
 @media only screen and (min-width: 320px) and (max-width: 767px) {
