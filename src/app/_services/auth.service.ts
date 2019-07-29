@@ -405,7 +405,7 @@ export class AuthService {
       
        return this.globalService.callFilePostApi('users/uploadsingleimage',{"uploadImg": formdataItem},true).subscribe(
           data  => {  
-              debugger;
+              
               try {
                 this.responseItem.data  = data;
               }
@@ -417,7 +417,7 @@ export class AuthService {
               return callback(null, this.responseItem);             
           },
           error => {   
-              debugger;          
+                        
               try {                 
                 this.responseItem.data  = error.error;
               }

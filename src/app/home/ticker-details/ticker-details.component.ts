@@ -82,6 +82,7 @@ export class TickerDetailsComponent implements OnInit {
 	dateText="Date";
 	timeText = "Time";
 	valueText="Value";
+	chartValue ="Price";
 	volumeText = "Volume";
 	currencyText="Currency";
 	closeText="Close";
@@ -606,7 +607,7 @@ export class TickerDetailsComponent implements OnInit {
 		series.tooltipText =
 			this.dateText + `:` + ` {date}`+`\n`+
 			this.currencyText + `: {currency}\n` +
-			this.valueText + `: {close}`;
+			this.chartValue + `: {close}`;
 		/*series.tooltipText =
 		`Date: {date}
 		 Currency: {currency}
@@ -631,7 +632,7 @@ export class TickerDetailsComponent implements OnInit {
 	}
 
 	renderVolumeChart(data, dataType = 'normal') {
-		debugger;
+		
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create('volumechart', am4charts.XYChart);
 		chart.paddingRight = 20;

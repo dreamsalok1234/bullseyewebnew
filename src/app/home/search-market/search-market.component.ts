@@ -161,7 +161,7 @@ export class SearchMarketComponent implements OnInit {
 
     this.model.exchangeId = '';
     this.model.searchCriteria = '';
-    debugger;
+    
     this.searchMarketData(this.model.stockType);
   }
 
@@ -291,7 +291,7 @@ export class SearchMarketComponent implements OnInit {
 		  objectType.processingTxtOfList = this.noRecord + ' ' + this.tryUsingTheSearchBarorAddFilters;
         }
         if ( response.statusCode === 200 ) {
-          debugger;
+          
           if (response.data.status === true) {
 			   if (Object.keys(response.data.data.exchangeList.stockList).length > 0) {
 					objectType.processing = false;

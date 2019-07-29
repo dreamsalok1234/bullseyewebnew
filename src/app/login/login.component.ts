@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
 		this.loadingBar.start();
 		
         this.authService.login(formData, function(err, response){ 
-			debugger;
+			
             objectType.loading = false;
 			objectType.showBtnText='Login';
 			objectType.loadingBar.stop();

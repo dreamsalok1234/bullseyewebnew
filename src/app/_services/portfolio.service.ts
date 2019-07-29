@@ -232,7 +232,7 @@ export class PortfolioService {
 	  }
 	 /* Get Portfolio History*/
 	getPortfolioHistory(portfolioId,pageSize,pageNoRequest, callback) {   
-	 debugger;
+	 
        this.responseItem = { data: {}, statusCode: 200 };
 	   let pageResquest="?pageSize="+pageSize;
 	   pageResquest+=(pageNoRequest=="")?"":"&pageNo="+pageNoRequest;

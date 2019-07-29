@@ -104,7 +104,7 @@ export class PortfolioHistoryComponent implements OnInit {
 			objectType.searchSearchText = this.processingTxt;
 			objectType.loadingBar.start();
 			this.portfolioService.getPortfolioHistory(this.portfolioId, this.pageSize, this.pageNo, function(err, response) {
-				debugger;
+				
 				if ( err ) {
 				  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 				  objectType.searchSearchText = objectType.defaulterrSomethingMsg;
@@ -196,7 +196,7 @@ export class PortfolioHistoryComponent implements OnInit {
 
 	addInvestmentAction(){
 		this.submitted = true;
-		debugger;
+		
 		if (this.investmentForm.invalid && (this.investDetails.id == '' || this.investDetails.id == undefined))
             return;
 		let holdU=(this.investmentForm.controls.holding.value.toString().indexOf(".")>-1)?this.investmentForm.controls.holding.value.replace( /[^\d.]/g, ''):this.investmentForm.controls.holding.value;

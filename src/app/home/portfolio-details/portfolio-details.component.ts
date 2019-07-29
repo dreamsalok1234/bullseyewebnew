@@ -71,6 +71,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	targetPriceisRequiredMsg="Target Price is required!";
 	dateText="Date";
 	valueText="Value";
+	chartValue = "Price";
 	currencyText="Currency";
 	costText="Cost";
 	symbol="";
@@ -741,7 +742,7 @@ export class PortfolioDetailsComponent implements OnInit {
 			series.tooltipText = 
 			this.dateText+`: {date}\n`+
 			this.currencyText+`: {currency}\n`+
-			this.valueText+`: {value}`;
+			this.chartValue+`: {value}`;
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
 			series.tooltip.background.fill = am4core.color("#00b050");

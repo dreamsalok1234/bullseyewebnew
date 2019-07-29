@@ -85,6 +85,7 @@ export class ChatDetailsComponent implements OnInit {
 	showAddPopup=false;
 	dateText="Date";
 	valueText="Value";
+	chartValue = "Price";
 	currencyText="Currency";
 	closeText="Close";
 	openText="Open";
@@ -543,7 +544,7 @@ export class ChatDetailsComponent implements OnInit {
 						const keys = [];
 						const candleStickData = [];
 						let data = [];
-						debugger;
+						
 						if (objectType.chatType.toLowerCase() === 'crypto' || objectType.chatType.toLowerCase() === 'cryptocurrency') {
 							if (response.data.Data !== undefined && response.data.Data.length > 0) {
 
@@ -729,7 +730,7 @@ export class ChatDetailsComponent implements OnInit {
 		series.tooltipText =
 			this.dateText + `:` + ` {date}`+`\n`+
 			this.currencyText + `: {currency}\n` +
-			this.valueText + `: {close}`;
+			this.chartValue + `: {close}`;
 		/*series.tooltipText =
 		`Date: {date}
 		 Currency: {currency}
@@ -754,7 +755,7 @@ export class ChatDetailsComponent implements OnInit {
 	}
 
 	renderVolumeChart(data, dataType = 'normal') {
-		debugger;
+		
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create('volumechart', am4charts.XYChart);
 		chart.paddingRight = 20;

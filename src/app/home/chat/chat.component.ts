@@ -104,7 +104,7 @@ export class ChatComponent implements OnInit {
 			this.NoFavTickerText = value;
 		});
 		this.translate.get('Usethesearchbartofindyourfavouritechatboard').subscribe(value => {
-			debugger;
+			
 			this.Usethesearchbartofindyourfavouritechatboard = value;
 		});
 		try {

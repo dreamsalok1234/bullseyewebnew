@@ -189,7 +189,7 @@ a.back_arrow{
   flex-basis: 0;
   flex-grow: 1;
   margin-left: 10px;
-  max-width: 400px;
+  //max-width: 400px;
   .tab-pane {
     ul {
       padding: 0;
@@ -303,6 +303,10 @@ a.back_arrow{
     font-family: 'SFProDisplay-Regular';
     margin: 0;
 }
+.chat_detail .candle_stick{
+    margin-top: 0;
+    position: relative;
+}
 .pop_filters.book_cost{
     max-width: 100px;
     border-radius: 25px;
@@ -365,14 +369,7 @@ div#candlechart {
   justify-content: center;
   align-items: center;
   color: #ffff;
-  // &:after {
-  //   content: "";
-  //   width: 60px;
-  //   height: 50px;
-  //   background-color: #163551;
-  //   position: absolute;
-  //   bottom: 0;
-  // }
+  
 }
 div.filter_modal_popup {
     z-index: 2;
@@ -386,10 +383,10 @@ div#volumechart {
     justify-content: center;
     align-items: center;
     color: #ffff;
-    left:0;
+    left: 0;
     position: absolute;
-    right: 0;
-    top: 49px; }
+    bottom: 0;
+  }
 .candle_stick ul {
   display: flex;
   justify-content: space-between;
@@ -489,12 +486,18 @@ div#chartdiv, div#candlechart{
     margin: 10px 0 10px;
 }
 }
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
 .stock_list {
     margin-left: 0px;
 }
 .top-title h2 {
     font-size: 15px;
+}
+.top-title.chat_detail h2 b{
+   font-size: 18px;
+}
+.stock_list .tab-pane ul li div span{
+  font-size: 18px;
 }
 .stock_list .tab-pane ul li div.inactive span {
    padding: 10px 15px;
@@ -509,6 +512,12 @@ div#chartdiv, div#candlechart{
 @media only screen and (min-width: 1024px) and (max-width: 1199px) {
 .top-title h2 {
     font-size: 16px;
+}
+.top-title.chat_detail h2 b{
+   font-size: 25px;
+}
+.stock_list .tab-pane ul li div span{
+  font-size: 25px;
 }
 .stock_list .tab-pane ul li div.inactive span {
     padding: 10px 15px;
@@ -525,10 +534,14 @@ div#candlechart{height: 300px;}
     max-height: 360px;
     overflow-y: auto;
 }
+
 }
 @media only screen and (min-width: 1200px) and (max-width: 1448px) {
 .top-title h2 {
     font-size: 16px;
+}
+.top-title.chat_detail h2 b{
+  font-size: 30px;
 }
 .stock_list .tab-pane ul li div.inactive span {
     padding: 10px 15px;

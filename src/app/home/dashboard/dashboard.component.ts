@@ -141,8 +141,9 @@ export class DashboardComponent implements OnInit {
 			let newKeys =[];
 			const objectType = this;
 			this.currencyList.map(function(item){
-				if(item.name==objectType.watchListCurrency)
+				if(item.name ==objectType.watchListCurrency) {
 					return newKeys.push({name:item.name,symbol:item.symbol});
+				}
 			});
 			this.currencyList=newKeys;
 		}
@@ -151,30 +152,30 @@ export class DashboardComponent implements OnInit {
 			objectNType.getPageContent();
 		},1000);
     	// this.getPageContent();
-		
+
 	}
     getPageContent() {
     	const objectType = this;
 		objectType.loadingBar.start();
-		
+
     	this.portfolioService.getHomePageData(function(err, response) {
 			objectType.showBannerIcon =true;
     		if ( err ) {
               objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			}
           	if( response.statusCode === 200 ) {
-				  if (response.data[0].status === true) {				  
+				  if (response.data[0].status === true) {
           			objectType.portfolioList = response.data[0].portfolioList;
 						}
 				  if (response.data[1].status === true) {
-					  debugger;
+					  
 						}
           			objectType.watchlist = response.data[1].watchList;
           		if (response.data[2].status === true) {
           			objectType.currencyPriceList = response.data[2].data;
             }
           	} else {
-          		objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+          		objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')? objectType.defaulterrSomethingMsg:response.data.message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
           		if(response.statusCode == 401) {
 					localStorage.clear();
           			objectType.router.navigate(['/login']);
@@ -195,19 +196,18 @@ export class DashboardComponent implements OnInit {
       const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
 	  const keyType = (key === 'price') ? false : true;
       const currency = watchListData.currency;
-	  
+
       const finalPrice =  this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency,keyType);
-	  
+
 	   if (finalPrice > 1000000) {
-		    var douValue = finalPrice / 1000000;
-            var  sy = "m";
+		    let douValue = finalPrice / 1000000;
+            let  sy = "m";
             if (douValue > 1000) {
                 sy = "b";
                 douValue = douValue / 1000;
             }
 			this.tickerMarketCapData = {amount : (douValue), text : sy};
-       }
-	   else {
+       } else {
 		   this.tickerMarketCapData = {amount : (finalPrice), text : ''};
 				}
     }
@@ -303,7 +303,7 @@ export class DashboardComponent implements OnInit {
   /*--------------------------------- Edit Portfolio --------------------------*/
   editPortfolio(content, itemIndex, keyItem) {
       this.portfolioEditInd=itemIndex;
-      let portfolioDetails = this.portfolioList[itemIndex];
+      const portfolioDetails = this.portfolioList[itemIndex];
       this.portfolioForm.name = portfolioDetails.name;
       this.portfolioForm.portfolioId = portfolioDetails.portfolioId;
       this.portfolioForm.currentCurrency = portfolioDetails.currency;
@@ -324,7 +324,7 @@ export class DashboardComponent implements OnInit {
         this.portfolioError.name = false;
     }
     const formData = {"name" : this.portfolioForm.name, "type": this.portfolioForm.type, "currency" : this.portfolioForm.currentCurrency, "portfolioId": this.portfolioForm.portfolioId};
-    let objectType = this;
+    const objectType = this;
     this.loading =true;
     this.loadingBar.start();
     this.portfolioService.addPortfolio(formData, function(err, response) {
@@ -482,11 +482,11 @@ export class DashboardComponent implements OnInit {
 		moveItemInArray(this.watchlist, event.previousIndex, event.currentIndex);
 		this.loading = true;
 	    this.loadingBar.start();
-	    var objectType = this;
+	    const objectType = this;
 	    const formData = {"currentOrderNo": previousIndex +1 , "newOrderNo": currentIndex+1, "watchlistId" : this.watchlist[currentIndex].watchlistId};
-	   	debugger;
+	   	
 	    this.watchListService.changeWatchListOrder(formData, function(err, response) {
-	      debugger;
+	      
 	      objectType.loading = false;
 	      objectType.loadingBar.stop();
 	      if ( err ) {
@@ -511,11 +511,11 @@ export class DashboardComponent implements OnInit {
 		moveItemInArray(this.portfolioList, event.previousIndex, event.currentIndex);
 		this.loading = true;
 	    this.loadingBar.start();
-	    var objectType = this;
-	    const formData = {"currentOrderNo": previousIndex +1 , "newOrderNo": currentIndex+1, "portfolioId" : this.portfolioList[currentIndex].portfolioId};
-	   	debugger;
+	    const objectType = this;
+	    const formData = {'currentOrderNo': previousIndex + 1 , 'newOrderNo': currentIndex + 1, 'portfolioId' : this.portfolioList[currentIndex].portfolioId};
+	   	
 	    this.portfolioService.changeWatchListOrder(formData, function(err, response) {
-	      debugger;
+	      
 	      objectType.loading = false;
 	      objectType.loadingBar.stop();
 	      if ( err ) {

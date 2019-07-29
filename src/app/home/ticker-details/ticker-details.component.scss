@@ -82,7 +82,7 @@ ul.blurTdetails + .data_fatch {
 }
 
 .ticker_detail .candle_stick {
-  margin-top: 0;
+  margin-top: 0; position: relative;
 }
 
 .main-checkbox {
@@ -255,10 +255,11 @@ div#volumechart {
     justify-content: center;
     align-items: center;
     color: #ffff;
-    left:0;
+    left: 0;
     position: absolute;
     right: 0;
-    top: -19px; }
+    bottom: 0;
+   }
 .candle_stick ul {
   display: flex;
   justify-content: space-between;

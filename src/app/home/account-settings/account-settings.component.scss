@@ -482,7 +482,7 @@ form.form_price.recommend {
 .uploaded_img {
   border: 2px solid #111e36;
   width: 100px;
-  margin-top: 20px;
+  //margin-top: 20px;
   overflow: hidden;
   text-align: center;
   display: flex;
@@ -541,7 +541,7 @@ form.form_price.recommend {
   .feedback,
   .account_setup {
     margin-top: 0;
-    flex: 0 0 48%;
+    flex: 0 0 100%;
   }
   .advr_big {
     padding: 40px 0 20px !important;
