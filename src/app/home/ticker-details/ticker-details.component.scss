@@ -247,7 +247,8 @@ div.filter_modal_popup {
     z-index: 2;
     position: relative;
 }
-div#volumechart {
+div#volumechart,
+div#smachart {
     background-color: #0e243b;
     //border: 1px solid #1b3e5c;
     display: flex;
@@ -623,6 +624,6 @@ ul.blurTdetails + .data_fatch i {
 .checkbox-custom-label{font-size: 15px;}
 .value_change ul li{padding: 5px}
 .value_change ul li h3{font-size: 15px;}
-div#chartdiv,div#bookchart,div#candlechart,div#volumechart{height: 320px;}
+div#chartdiv,div#bookchart,div#candlechart,div#volumechart,div#smachart{height: 320px;}
 
 }

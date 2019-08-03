@@ -375,7 +375,8 @@ div.filter_modal_popup {
     z-index: 2;
     position: relative;
 }
-div#volumechart {
+div#volumechart,
+div#smachart {
     background-color: #0e243b;
     //border: 1px solid #1b3e5c;
     display: flex;

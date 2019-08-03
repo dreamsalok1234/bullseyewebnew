@@ -70,6 +70,7 @@
           <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
           <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
           <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
+		  <div id="smachart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
         </div>
         <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
 <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
@@ -96,9 +97,9 @@
               <select class="form-control" name="searchCriteria" (change) ="setChartActionType('searchCriteria');" [(ngModel)]="filterModel.searchCriteria"
                 #searchCriteria="ngModel">
                 <option value="0">None</option>
-                <!-- <option value="50">50-day SMA </option>
+                <option value="50">50-day SMA </option>
                 <option value="100">100-day SMA </option>
-                <option value="200">200-day SMA </option> -->
+                <option value="200">200-day SMA </option>
                 <option value="24">24H Volume </option>
               </select>
             </div>

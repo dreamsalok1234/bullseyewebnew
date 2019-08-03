@@ -116,7 +116,7 @@ export class ChatComponent implements OnInit {
 		this.placeholderImageUrl = '../assets/images/not-found.png';
 		this.searchFavText = this.processingTxt;
 		this.searchChatFav = true;
-		this.stockType = this.stockText;
+		this.stockType = this.stockType;
 		
 		this.searchResultCnt=this.searchChatSearch = true;
 		var objectNtype=this;
@@ -142,7 +142,7 @@ export class ChatComponent implements OnInit {
 		this.pageSize = 20;
 		this.apiName = 'favourite';
 		this.keywords = '';
-		this.stockType = (i === 1) ? this.stockText : this.cryptoType;
+		this.stockType = (i === 1) ? this.stockType : this.cryptoType;
 		this.searchChatFav = true;
 		this.getChatData();
 
@@ -151,7 +151,6 @@ export class ChatComponent implements OnInit {
 	getChatData() {
 		const objectType = this;
 		objectType.loadingBar.start();
-
 		this.chatService.getChatData(this.apiName, this.stockType, this.keywords, this.pageSize, this.pageNo, function(err, response) {
 			if ( err ) {
 			  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});

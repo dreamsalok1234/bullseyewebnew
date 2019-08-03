@@ -94,6 +94,8 @@ export class ChatDetailsComponent implements OnInit {
 	chartActionType = 'graphDisplay';
 	limitsize = 30;
 	volumeText = "Volume";
+	chartDataObject : any;
+	smaChartData : any;
     constructor( private translate: TranslateService,private commonService: CommonService, private chatService: ChatService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager,private modalService: NgbModal, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute,private sanitizer: DomSanitizer) { }
 	
@@ -557,9 +559,14 @@ export class ChatDetailsComponent implements OnInit {
 									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.chatCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
 								});
+								keys.sort((a, b) => {
+									return <any>new Date(a.date) - <any>new Date(b.date);
+									});
+								objectType.chartDataObject = keys;
 								objectType.renderChart(keys, '1D');
 								objectType.renderVolumeChart(keys, '1D');
 								objectType.renderCandleStickChartData(keys, '1D');
+								objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
 							} else {
 								objectType.chartDataText = objectType.noChartDataText;
 							}
@@ -581,9 +588,11 @@ export class ChatDetailsComponent implements OnInit {
 								/* candleStickData.sort((a, b) => {
 								  return <any>new Date(a.date) - <any>new Date(b.date);
 								}); */
+								objectType.chartDataObject = keys;
 								objectType.renderChart(keys, '1D');
 								objectType.renderVolumeChart(keys, '1D');
 								objectType.renderCandleStickChartData(keys, '1D');
+								objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
 							} else {
 								objectType.chartDataText = objectType.noChartDataText;
 							}
@@ -644,9 +653,14 @@ export class ChatDetailsComponent implements OnInit {
 										// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.chatCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
 									});
+									keys.sort((a, b) => {
+									return <any>new Date(a.date) - <any>new Date(b.date);
+									});
+									objectType.chartDataObject = keys;
 									objectType.renderChart(keys);
 									objectType.renderVolumeChart(keys);
 									objectType.renderCandleStickChartData(keys);
+									objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
 								} else {
 									objectType.chartDataText = objectType.noChartDataText;
 								}
@@ -667,9 +681,11 @@ export class ChatDetailsComponent implements OnInit {
 									/* candleStickData.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									}); */
+									objectType.chartDataObject = keys;
 									objectType.renderChart(keys);
 									objectType.renderVolumeChart(keys);
 									objectType.renderCandleStickChartData(keys);
+									objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
 								} else {
 									objectType.chartDataText = objectType.noChartDataText;
 								}
@@ -696,9 +712,9 @@ export class ChatDetailsComponent implements OnInit {
 	}
 
 	/* Render Chart Data */
-	renderChart(data, dataType = 'normal') {
+	renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
 		am4core.useTheme(am4themes_animated);
-		const chart = am4core.create('chartdiv', am4charts.XYChart);
+		const chart = am4core.create(chartType, am4charts.XYChart);
 		chart.paddingRight = 10;
 		chart.data = data;
 		const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -723,14 +739,18 @@ export class ChatDetailsComponent implements OnInit {
 		series.dataFields.valueY = 'close';
 		// series.fillOpacity = 0.5;
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color('#00b050');
+		if(chartType == 'chartdiv')
+			series.stroke = am4core.color('#00b050');
+		else
+			series.stroke = am4core.color('#ffffff');
+		//series.stroke = am4core.color('#00b050');
 		
 		// let currency=this.chatCurrency;
 		// let showDateTime = (dataType == '1D') ? `{currentDateTime}`: `{date}`;
 		series.tooltipText =
 			this.dateText + `:` + ` {date}`+`\n`+
 			this.currencyText + `: {currency}\n` +
-			this.chartValue + `: {close}`;
+			this.chartValue + `: {close}`+`\n`;
 		/*series.tooltipText =
 		`Date: {date}
 		 Currency: {currency}
@@ -926,7 +946,7 @@ export class ChatDetailsComponent implements OnInit {
   getSantizeUrl(value: string) {
 	 return value.replace(/\\/g, '');
   }
-	filterExchangeItem(){
+  filterExchangeItem(){
   	this.loadingBar.start();
 	this.getChartData(this.num, this.type, this.indMap);
 	if (this.filterModel.graphDisplay) {
@@ -937,11 +957,19 @@ export class ChatDetailsComponent implements OnInit {
 		document.getElementById('candlechart').style.display = 'none';
 		document.getElementById('chartdiv').style.display = 'flex';
 	}
-
-	if(this.filterModel.searchCriteria == 24)
-		document.getElementById('volumechart').style.display = 'flex';
-	else
+	if(this.filterModel.searchCriteria == 0) {
 		document.getElementById('volumechart').style.display = 'none';
+		document.getElementById('smachart').style.display = 'none';
+	}
+	else if(this.filterModel.searchCriteria == 24)
+		document.getElementById('volumechart').style.display = 'flex';
+	else {
+		const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
+		this.smaChartData = smaData;
+		this.renderChart(smaData, 'normal', "smachart");
+		document.getElementById('smachart').style.display = 'flex';
+		document.getElementById('volumechart').style.display = 'none';
+	}
 	
 	this.activeFilter = false;
 	this.loadingBar.stop();
@@ -950,5 +978,25 @@ export class ChatDetailsComponent implements OnInit {
 
   setChartActionType(actionType) {
   		this.chartActionType = actionType;
+  }
+
+  getSMAData(data, SMAType){
+	var SMAData = [];
+	SMAType = parseInt(SMAType);
+	if( data.length > SMAType ) {
+		const loopcount = data.length - SMAType + 1;
+		for( let i = 0; i <= loopcount; i++) {				
+			let smaTotal : number = 0;
+			const nextLoop = SMAType + i;
+			for( let j= i; j <= nextLoop; j++ ) {
+				if(data[j] != undefined)									
+					smaTotal = smaTotal + parseFloat(data[j].close);
+			}	
+			if(data[nextLoop] != undefined)			
+				SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
+			
+		}
+	}
+	return SMAData;
   }
 }

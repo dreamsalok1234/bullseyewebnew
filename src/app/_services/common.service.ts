@@ -175,6 +175,7 @@ export class CommonService {
 			  apiName += '&date_to=' + dateTo;
 			  apiName += '&date_from=' + dateFrom;
 		  }
+      
 		  this.globalService.callGlobalGetApi(apiName, false).subscribe(data  => {
               try {
                 this.responseItem.data  = data;

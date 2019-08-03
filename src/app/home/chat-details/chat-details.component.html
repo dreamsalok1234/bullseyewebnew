@@ -91,6 +91,7 @@
           <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ chartDataText }}</div>
           <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ chartDataText }}</div>
           <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ chartDataText }}</div>
+          <div id="smachart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
         </div>
       <div class="pop_filters book_cost filter_modal_popup">
         <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
@@ -112,9 +113,9 @@
             <select class="form-control" name="searchCriteria" (change) ="setChartActionType('searchCriteria');" [(ngModel)]="filterModel.searchCriteria"
               #searchCriteria="ngModel">
               <option value="0">None</option>
-              <!-- <option value="50">50-day SMA </option>
+              <option value="50">50-day SMA </option>
               <option value="100">100-day SMA </option>
-              <option value="200">200-day SMA </option> -->
+              <option value="200">200-day SMA </option>
               <option value="24">24H Volume </option>
             </select>
           </div>
