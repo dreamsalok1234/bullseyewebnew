@@ -124,15 +124,15 @@
       font-size: 15px;
       font-family: 'SFProDisplay-Regular';
     }
-    .alert{
+    .alert {
       color: #ff0000;
       font-size: 12px;
       position: absolute;
-     padding: 0;
-    left: 0;
-    margin: 0;
-       top:100%;
-	   line-height:12px;
+      padding: 0;
+      left: 0;
+      margin: 0;
+      top: 100%;
+      line-height: 12px;
       transition: all 0.7s;
     }
     select.form-control {
@@ -143,10 +143,10 @@
       background-position: 97% center;
       background-size: 15px;
     }
-    
-      select.form-control::-ms-expand {
-    display: none;
-}
+
+    select.form-control::-ms-expand {
+      display: none;
+    }
     .datepicker-input {
       width: 100%;
       button {
@@ -199,25 +199,25 @@
       }
       .symbol {
         border: 1px solid #00b050;
-    padding: 0.375rem 0.75rem;
-    line-height: 1.5em;
-    border-right: 0;
-    padding-right: 0;
+        padding: 0.375rem 0.75rem;
+        line-height: 1.5em;
+        border-right: 0;
+        padding-right: 0;
       }
     }
     &.marketValue {
       .form-control {
         border-left: 0;
         padding-left: 5px;
-        box-shadow: none;  
-        background: transparent;  
+        box-shadow: none;
+        background: transparent;
       }
       .symbol {
         border: 1px solid #00b050;
-    padding: 0.375rem 0.75rem;
-    line-height: 1.5em;
-    border-right: 0;
-    padding-right: 0;
+        padding: 0.375rem 0.75rem;
+        line-height: 1.5em;
+        border-right: 0;
+        padding-right: 0;
       }
     }
   }
@@ -268,9 +268,9 @@ li.gain_green b {
   }
 }
 .span_input {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 .modal-body h3:not(:empty) {
   font-size: 18px;
@@ -348,10 +348,10 @@ li.gain_green b {
     color: #000;
     background-repeat: no-repeat;
     -webkit-appearance: none;
-        background-position: 95% center;
-        &select.form-control{
-          background: transparent;
-        }
+    background-position: 95% center;
+    &select.form-control {
+      background: transparent;
+    }
   }
 }
 .title_div h2 {
@@ -402,9 +402,8 @@ li.gain_green b {
 .row.stock_list .col-lg-5 {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  //justify-content: space-between;
 }
-
 
 @media (min-width: 1024px) and (max-width: 1399px) {
   .stock_list .nav-tabs {
@@ -426,7 +425,7 @@ li.gain_green b {
 }
 
 .body_div {
-  max-height: 440px;
+  max-height: 560px;
   overflow-y: auto;
   height: 100%;
 }
@@ -476,7 +475,7 @@ ul {
     color: #fff;
     font-size: 12px;
     font-family: 'SFProDisplay-Regular';
-   //background: #234b6f;
+    //background: #234b6f;
     //background: #0e243b;
     background: #234b6f;
     padding: 10px;
@@ -550,31 +549,31 @@ ul {
     }
   }
 }
-.stats_body.searchlist{
- li{
-   flex-grow: 0.5;
-    
-    div{
+.stats_body.searchlist {
+  li {
+    flex-grow: 0.5;
+
+    div {
       text-align: left;
     }
-    &:first-child{
-    flex-grow: 1.3;
-justify-content: flex-start;
+    &:first-child {
+      flex-grow: 1.3;
+      justify-content: flex-start;
     }
-     &:nth-child(2){
-     flex-direction: column;
-     justify-content: center;
+    &:nth-child(2) {
+      flex-direction: column;
+      justify-content: center;
     }
-  
-    h5{
-    margin: 0;
-    font-size: 15px;
-    font-weight: bold;
-  }
-  h6{
-    margin: 0;
-    font-size: 13px;
-  }
+
+    h5 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    h6 {
+      margin: 0;
+      font-size: 13px;
+    }
   }
 }
 @media (min-width: 1024px) and (max-width: 1199px) {
@@ -716,8 +715,8 @@ justify-content: flex-start;
       padding: 0;
     }
     &.stats_body li {
-      font-size: 8px;
-      padding: 5px 0;
+      font-size: 10px;
+      padding: 5px;
       font-family: 'SFProDisplay-Light';
       span {
         i {
@@ -783,22 +782,36 @@ justify-content: flex-start;
       }
     }
   }
-  .stats_body.watchlist{
- li{
-   padding: 5px; 
-   .ticker_img{
-     max-width: 25px!important;
-     margin-right: 5px;
-   }
-    &:first-child{
-     min-width: 150px!important;
+  .stats_body.watchlist {
+    li {
+      padding: 5px;
+      .ticker_img {
+        max-width: 25px !important;
+        margin-right: 5px;
+      }
+      &:first-child {
+        min-width: 150px !important;
+      }
     }
   }
-}
+  .stats_table{overflow: hidden;}
+  .stats_body {
+    width: 550px;
+    li {
+      h5 {
+        font-size: 12px!important;
+      }
+      h6 {
+        font-size: 10px!important;
+      }
+    }
+  }
+  .stats_table .body_div::-webkit-scrollbar{
+    height: 5px;
+  }
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
-
   .advr_big {
     padding: 10px 0 20px;
     position: static;
@@ -870,16 +883,31 @@ justify-content: flex-start;
       font-size: 10px;
     }
   }
-.stats_body.watchlist{
- li{
-   .ticker_img{
-     max-width: 25px;
-   }
-    &:first-child{
-     min-width: 200px!important;
+  .stats_body.watchlist {
+    li {
+      .ticker_img {
+        max-width: 25px;
+      }
+      &:first-child {
+        min-width: 200px !important;
+      }
     }
   }
-}
+  .stats_table{overflow: hidden;}
+    .stats_body{
+    //width: 550px;
+    li {
+      h5 {
+        font-size: 12px!important;
+      }
+      h6 {
+        font-size: 10px!important;
+      }
+    }
+  }
+    .stats_table .body_div::-webkit-scrollbar{
+   height: 5px;
+  }
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
 }

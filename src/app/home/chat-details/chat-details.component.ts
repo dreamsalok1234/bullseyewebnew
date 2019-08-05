@@ -281,7 +281,7 @@ export class ChatDetailsComponent implements OnInit {
 			  objectType.searchText = objectType.defaulterrSomethingMsg;
 			}
 			if ( response.statusCode === 200 ) {
-
+debugger;
 				if (objectType.pageNo === 1) { objectType.totalPage = response.data.totalPage; }
 				objectType.chatList = response.data.data;
 				if (objectType.chatList.length > 0) {

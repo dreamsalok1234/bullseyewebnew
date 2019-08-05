@@ -252,8 +252,9 @@
 	"UploadProfileImage" : "Upload Profile Image",
 	"UploadFile" : "Choose New Image",
 	"UploadImage" : "Update",
-	"GraphDisplay": "Graph Display",
-	"GraphAnalytics": "Graph Analytics",
+	"GraphDisplay": "Primary display",
+	"GraphAnalytics": "Secondary display",
+	"GraphAnaTitle": "Graph Analytics",
 	"SocialMedia": "Social Media"
 	
 }

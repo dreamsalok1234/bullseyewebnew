@@ -9,7 +9,6 @@ import { WatchlistService } from '../../_services/watchlist.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Title, Meta } from '@angular/platform-browser';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-search-market',
   templateUrl: './search-market.component.html',
@@ -54,7 +53,7 @@ export class SearchMarketComponent implements OnInit {
   targetPriceisRequiredMsg="Target Price is required!";
   PriceTo3DecimalPlacesMsg="Price should be to 3 decimal place";
   expiryDateisRequiredMsg="Expiry Date is required!";
-  noRecord="No records found.";
+  noRecord ="No records found.";
   processingTxtOfList ='';
   processingTxt ='Processing...';
   tryUsingTheSearchBarorAddFilters ="Try using the search bar or add filters.";
@@ -161,7 +160,7 @@ export class SearchMarketComponent implements OnInit {
 
     this.model.exchangeId = '';
     this.model.searchCriteria = '';
-    
+
     this.searchMarketData(this.model.stockType);
   }
 
@@ -291,7 +290,7 @@ export class SearchMarketComponent implements OnInit {
 		  objectType.processingTxtOfList = this.noRecord + ' ' + this.tryUsingTheSearchBarorAddFilters;
         }
         if ( response.statusCode === 200 ) {
-          
+
           if (response.data.status === true) {
 			   if (Object.keys(response.data.data.exchangeList.stockList).length > 0) {
 					objectType.processing = false;
@@ -439,8 +438,5 @@ export class SearchMarketComponent implements OnInit {
 			 this.priceAlert.amount = a[0] + '.' + a[1].substring(0, 3);
 		 }
 	 }
-  }
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.itemList, event.previousIndex, event.currentIndex);
   }
 }
