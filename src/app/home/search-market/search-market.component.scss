@@ -443,6 +443,9 @@ ul {
     width: 100%;
     // overflow: hidden;
     // border-radius: 10px 10px 0px 0px;
+    border: 1px solid #1b2e40;
+    border-right: 0;
+    border-bottom: 0;
   }
   &.stats_body {
     margin-bottom: 3px;
@@ -454,8 +457,8 @@ ul {
     color: #fff;
     // background-color: #0e243b;
     // background-color: #01172c;
-    background: #234b6f !important;
-    font-size: 12px;
+    background: #111e36!important;
+    font-size: 15px;
     font-family: 'SFProDisplay-Regular';
     line-height: normal;
     padding: 10px;
@@ -465,7 +468,7 @@ ul {
     border-right: 1px solid #1b2e40;
     // word-break: break-word;
     &:last-child {
-      border: 0;
+      // border: 0;
     }
   }
   &.stats_body li {
@@ -473,7 +476,7 @@ ul {
     flex-basis: 0;
     text-align: center;
     color: #fff;
-    font-size: 12px;
+    font-size: 15px;
     font-family: 'SFProDisplay-Regular';
     //background: #234b6f;
     //background: #0e243b;
@@ -609,7 +612,7 @@ ul {
     height: 55px;
   }
   ul.stats_body li {
-    font-size: 10px;
+    font-size: 15px;
     padding: 8px 5px;
   }
   .body_div ul.stats_body .gain_green {

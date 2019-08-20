@@ -97,7 +97,9 @@
     opacity: 1;
   }
 }
-
+g line {
+    stroke: #fff;
+}
 @media screen and (-ms-high-contrast: active) {
   .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
     opacity: 0.6;
