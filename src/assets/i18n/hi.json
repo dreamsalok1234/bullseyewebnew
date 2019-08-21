@@ -74,7 +74,7 @@
 	"Condition":"शर्त",
 	"TargetPrice":"लक्षित मूल्‍य",
 	"DeletePriceAlert":"मूल्य चेतावनी हटाएं",
-	"AreyousuretoDelete?":"क्या आप पक्का इसे हटाना चाहते हैं?",
+	"AreyousuretoDelete?":"क्या आप वाकई इस मूल्य चेतावनी को हटाना चाहते हैं?",
 	"Yes":"हां",
 	"No":"नहीं",
 	"Tickernameisrequired":"कृपया निवेश नाम दर्ज करें",

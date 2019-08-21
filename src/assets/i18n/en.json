@@ -69,7 +69,7 @@
 	"Condition":"Condition",
 	"TargetPrice":"Target Price",
 	"DeletePriceAlert":"Delete Price Alert",
-	"AreyousuretoDelete?":"Are you sure to Delete ?",
+	"AreyousuretoDelete?":"Are you sure you want to delete this price alert?",
 	"Yes":"Yes",
 	"No":"No",
 	"Tickernameisrequired":"Ticker is required",

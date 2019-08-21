@@ -74,7 +74,7 @@
 	"Condition":"条件",
 	"TargetPrice":"目標価格",
 	"DeletePriceAlert":"価格アラートを削除",
-	"AreyousuretoDelete?":"消去してもよろしいですか？",
+	"AreyousuretoDelete?":"この価格アラートを削除してもよろしいですか？",
 	"Yes":"はい",
 	"No":"いいえ",
 	"Tickernameisrequired":"投資が必要です。",
