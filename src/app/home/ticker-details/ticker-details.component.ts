@@ -448,6 +448,8 @@ export class TickerDetailsComponent implements OnInit {
 								objectType.renderVolumeChart(keys, '1D');
 								objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
 								objectType.renderCandleStickChartData(keys, '1D');
+								objectType.renderCandleStickChartData(keys, '1D', 'smachart');
+								objectType.renderChart(keys, '1D', 'smachart');
 							} else {
 								objectType.tickerDataText = objectType.noChartDataText;
 							}
@@ -474,6 +476,8 @@ export class TickerDetailsComponent implements OnInit {
 								objectType.renderVolumeChart(keys, '1D');
 								objectType.renderCandleStickChartData(keys, '1D');
 								objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
+								objectType.renderCandleStickChartData(keys, '1D', 'smachart');
+								objectType.renderChart(keys, '1D', 'smachart');
 							} else {
 								objectType.tickerDataText = objectType.noChartDataText;
 							}
@@ -541,6 +545,8 @@ export class TickerDetailsComponent implements OnInit {
 									objectType.renderVolumeChart(keys);
 									objectType.renderCandleStickChartData(keys);
 									objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
+									objectType.renderCandleStickChartData(keys, 'normal','smachart');
+									objectType.renderChart(keys, 'normal', 'smachart');
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
 								}
@@ -566,6 +572,8 @@ export class TickerDetailsComponent implements OnInit {
 									objectType.renderVolumeChart(keys);
 									objectType.renderCandleStickChartData(keys);
 									objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
+									objectType.renderCandleStickChartData(keys, 'normal','smachart');
+									objectType.renderChart(keys, 'normal', 'smachart');
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
 								}
@@ -591,6 +599,109 @@ export class TickerDetailsComponent implements OnInit {
 		}
 	}
 
+
+	createAxisAndSeries(field,chart) {
+		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.grid.template.location = 0;
+		valueAxis.renderer.grid.template.disabled = true;
+		valueAxis.renderer.ticks.template.disabled = true;
+		valueAxis.renderer.labels.template.disabled = true;
+		valueAxis.tooltip.disabled = true;
+		valueAxis.renderer.minWidth = 35;
+		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50 SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100 SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200 SMA: {SMA}`: "")));
+		debugger;
+		let tooltipText =
+			this.dateText + `:` + ` {date}`+`\n`+
+			this.currencyText + `: {currency}\n` +
+			this.chartValue + `: {close}\n`+extraParam;
+		if(field=="value"){
+			let series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = "date";
+			series.dataFields.valueY = "close";
+			series.strokeWidth = 1.5;
+			series.stroke = am4core.color("#00b050"); 
+			
+			// let currency=this.chatDetailsCurrency;
+			series.tooltipText = tooltipText;
+			/* Set Chart Tooltip Style */
+			series.tooltip.getFillFromObject = false;
+			series.tooltip.background.fill = am4core.color("#00b050");
+		}
+		else if(field=="chartwithSma"){
+			let series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = "date";
+			series.dataFields.valueY = "close";
+			series.strokeWidth = 1.5;
+			series.stroke = am4core.color("#00b050");
+			series.tooltipText = tooltipText;
+			
+			/* Set Chart Tooltip Style */
+			series.tooltip.getFillFromObject = false;
+			series.tooltip.background.fill = am4core.color("#00b050");
+		}
+		else if(field=="sma"){
+			let series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = "date";
+			series.dataFields.valueY = "SMA";
+			series.strokeWidth = 1.5;
+			series.stroke = am4core.color("#ff0000");
+			
+		}
+		else if(field == 'candle') {
+			const series = chart.series.push(new am4charts.CandlestickSeries());
+			series.dataFields.dateX = 'date';
+			series.dataFields.openValueY = 'open';
+			series.dataFields.valueY = 'close';
+			series.dataFields.highValueY = 'high';
+			series.dataFields.lowValueY = 'low';
+
+			series.simplifiedProcessing = true;
+			chart.cursor = new am4charts.XYCursor();
+			series.tooltip.background.strokeWidth = 0;
+			series.tooltip.background.pointerLength = 1;
+			series.tooltip.label.fill = am4core.color('#FFFFFF');
+			series.tooltip.background.filters.clear();
+			// a separate series for scrollbar
+			const lineSeries = chart.series.push(new am4charts.LineSeries());
+			lineSeries.dataFields.dateX = 'date';
+			lineSeries.dataFields.valueY = 'close';
+			// need to set on default state, as initially series is "show"
+			lineSeries.defaultState.properties.visible = false;
+
+			// hide from legend too (in case there is one)
+			lineSeries.hiddenInLegend = true;
+			lineSeries.fillOpacity = 1.5;
+			lineSeries.strokeOpacity = 1.5;
+
+			series.dropFromOpenState.properties.fill = am4core.color('#ec1111');
+			series.dropFromOpenState.properties.stroke = am4core.color('#ec1111');
+
+			series.riseFromOpenState.properties.fill = am4core.color('#00b050');
+			series.riseFromOpenState.properties.stroke = am4core.color('#00b050');
+			series.tooltipText =
+			this.dateText+`: {date}\n`+
+			this.currencyText+`: {currency}\n`+
+			this.openText+`: {open}\n`+
+			this.closeText+`: {close}\n`+
+			this.highText + `: {high}\n` +
+			this.lowText + `: {low}\n`+extraParam;
+			
+		}
+		if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
+			chart.cursor = new am4charts.XYCursor();
+			/* Set Chart Tooltip Dotted Line */
+			chart.cursor.lineX.stroke = am4core.color("#5a7e9e");
+			chart.cursor.lineX.strokeWidth = 1.5;
+			chart.cursor.lineX.strokeOpacity = 1;
+			chart.cursor.lineX.strokeDasharray = "";
+
+			chart.cursor.lineY.stroke = am4core.color("#5a7e9e");
+			chart.cursor.lineY.strokeWidth = 1;
+			chart.cursor.lineY.strokeOpacity = 1;
+			chart.cursor.lineY.strokeDasharray = "";
+		}
+	}
+
 	/* Render Chart Data */
 	renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
 		am4core.useTheme(am4themes_animated);
@@ -604,53 +715,15 @@ export class TickerDetailsComponent implements OnInit {
 		dateAxis.renderer.ticks.template.disabled = true;
 		dateAxis.renderer.labels.template.disabled = true;
 		dateAxis.tooltip.disabled = true;
-
-		const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-		valueAxis.renderer.grid.template.location = 0;
-		valueAxis.renderer.grid.template.disabled = true;
-		valueAxis.renderer.ticks.template.disabled = true;
-		valueAxis.renderer.labels.template.disabled = true;
-		valueAxis.tooltip.disabled = true;
-		valueAxis.renderer.minWidth = 35;
-
-		const series = chart.series.push(new am4charts.LineSeries());
-
-		series.dataFields.dateX = 'date';
-		series.dataFields.valueY = 'close';
-		// series.fillOpacity = 0.5;
-		series.strokeWidth = 1.5;
 		if(chartType == 'chartdiv')
-			series.stroke = am4core.color('#00b050');
-		else
-			series.stroke = am4core.color('#ffffff');
-		// let currency=this.tickerDetailsCurrency;
-		// let showDateTime = (dataType == '1D') ? `{currentDateTime}`: `{date}`;
-		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50 SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100 SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200 SMA: {SMA}`: "")));
-		series.tooltipText =
-			this.dateText + `:` + ` {date}`+`\n`+
-			this.currencyText + `: {currency}\n` +
-			this.chartValue + `: {close}\n`+extraParam;
-		/*series.tooltipText =
-		`Date: {date}
-		 Currency: {currency}
-		 Price: {close}`;*/
-		// series3.tooltip.pointerOrientation = "vertical";
-		/* Set Chart Tooltip Style */
-		series.tooltip.getFillFromObject = false;
-		series.tooltip.background.fill = am4core.color('#00b050');
-		chart.cursor = new am4charts.XYCursor();
-		chart.cursor.behavior = 'zoomX';
-		chart.cursor.lineX.disabled = true;
-		/* Set Chart Tooltip Dotted Line */
-		chart.cursor.lineX.stroke = am4core.color('#5a7e9e');
-		chart.cursor.lineX.strokeWidth = 1.5;
-		chart.cursor.lineX.strokeOpacity = 1;
-		chart.cursor.lineX.strokeDasharray = '';
-
-		chart.cursor.lineY.stroke = am4core.color('#5a7e9e');
-		chart.cursor.lineY.strokeWidth = 1;
-		chart.cursor.lineY.strokeOpacity = 1;
-		chart.cursor.lineY.strokeDasharray = '';
+			this.createAxisAndSeries("value",chart);
+		else{
+			
+			
+			this.createAxisAndSeries("chartwithSma",chart);
+			this.createAxisAndSeries("sma",chart);
+		}
+		
 	}
 
 	renderVolumeChart(data, dataType = 'normal') {
@@ -714,13 +787,13 @@ export class TickerDetailsComponent implements OnInit {
 		chart.cursor.lineY.strokeDasharray = '';
 	}
 	/* Render Candle Chart Data */
-	renderCandleStickChartData(data, dataType = 'normal') {
+	renderCandleStickChartData(data, dataType = 'normal', chartType = 'candleStick') {
 		// Themes begin
 		am4core.useTheme(am4themes_animated);
 		// Themes end
-		const chart = am4core.create('candlechart', am4charts.XYChart);
+		const chart = am4core.create((chartType == 'candleStick') ? 'candlechart' : 'candleSma', am4charts.XYChart);
 		chart.paddingRight = 10;
-
+		chart.data = data;
 		chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd';
 
 		const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -733,53 +806,20 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
-
-		const series = chart.series.push(new am4charts.CandlestickSeries());
-		series.dataFields.dateX = 'date';
-		series.dataFields.openValueY = 'open';
-		series.dataFields.valueY = 'close';
-		series.dataFields.highValueY = 'high';
-		series.dataFields.lowValueY = 'low';
-
-		series.simplifiedProcessing = true;
-		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50 SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100 SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200 SMA: {SMA}`: "")));
-		series.tooltipText =
-			this.dateText+`: {date}\n`+
-			this.currencyText+`: {currency}\n`+
-			this.openText+`: {open}\n`+
-			this.closeText+`: {close}\n`+
-			this.highText + `: {high}\n` +
-			this.lowText + `: {low}\n`+extraParam;
-		// series.tooltipText = 'Date: {date}\nCurrency: {currency}\nOpen: {open}\nClose: {close}\n24H High: {high}\n24H Low: {low}';
-
-		chart.cursor = new am4charts.XYCursor();
-		series.tooltip.background.strokeWidth = 0;
-		series.tooltip.background.pointerLength = 1;
-		series.tooltip.label.fill = am4core.color('#FFFFFF');
-		series.tooltip.background.filters.clear();
-		// a separate series for scrollbar
-		const lineSeries = chart.series.push(new am4charts.LineSeries());
-		lineSeries.dataFields.dateX = 'date';
-		lineSeries.dataFields.valueY = 'close';
-		// need to set on default state, as initially series is "show"
-		lineSeries.defaultState.properties.visible = false;
-
-		// hide from legend too (in case there is one)
-		lineSeries.hiddenInLegend = true;
-		lineSeries.fillOpacity = 1.5;
-		lineSeries.strokeOpacity = 1.5;
-
-		series.dropFromOpenState.properties.fill = am4core.color('#ec1111');
-		series.dropFromOpenState.properties.stroke = am4core.color('#ec1111');
-
-		series.riseFromOpenState.properties.fill = am4core.color('#00b050');
-		series.riseFromOpenState.properties.stroke = am4core.color('#00b050');
+		if(chartType == 'candleStick')
+			this.createAxisAndSeries("candle",chart);
+		else{
+			
+			this.createAxisAndSeries("sma",chart);
+			this.createAxisAndSeries("candle",chart);
+		}
+		
 
 		/* let scrollbarX = new am4charts.XYChartScrollbar();
 		scrollbarX.series.push(lineSeries);
 		chart.scrollbarX = scrollbarX; */
 
-		chart.data = data;
+		
 	}
 	/* Add to watch list */
 	addToWatchList() {
@@ -1056,24 +1096,52 @@ export class TickerDetailsComponent implements OnInit {
 	this.getChartData(this.num, this.type, this.indMap);
 	if (this.filterModel.graphDisplay) {
 		document.getElementById('chartdiv').style.display = 'none';
-		document.getElementById('candlechart').style.display = 'flex';
+		document.getElementById('smachart').style.display = 'none';
+		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
+			document.getElementById('candleSma').style.display = 'none';
+			document.getElementById('candlechart').style.display = 'flex';
+		}
+		else {
+			document.getElementById('candlechart').style.display = 'none';
+			document.getElementById('candleSma').style.display = 'flex';
+		}
 
 	} else {
 		document.getElementById('candlechart').style.display = 'none';
 		document.getElementById('chartdiv').style.display = 'flex';
+		document.getElementById('candleSma').style.display = 'none';
+		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
+			document.getElementById('smachart').style.display = 'none';
+			document.getElementById('chartdiv').style.display = 'flex';
+		}
+		else {
+			document.getElementById('chartdiv').style.display = 'none';
+			document.getElementById('smachart').style.display = 'flex';
+		}
 	}
 	if(this.filterModel.searchCriteria == 0) {
 		document.getElementById('volumechart').style.display = 'none';
 		document.getElementById('smachart').style.display = 'none';
+		document.getElementById('candleSma').style.display = 'none';
 	}
-	else if(this.filterModel.searchCriteria == 24)
+	else if(this.filterModel.searchCriteria == 24) 
 		document.getElementById('volumechart').style.display = 'flex';
 	else {
 		const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
 		debugger;
 		this.smaChartData = smaData;
-		this.renderChart(smaData, 'normal', "smachart");
-		document.getElementById('smachart').style.display = 'flex';
+		this.renderChart(this.chartDataObject, 'normal', "smachart");
+		this.renderCandleStickChartData(this.chartDataObject, 'normal', "candleSma");
+		if(!this.filterModel.graphDisplay) {
+			document.getElementById('candleSma').style.display = 'none';
+			document.getElementById('smachart').style.display = 'flex';
+		}
+		else {
+			document.getElementById('smachart').style.display = 'none';
+			document.getElementById('candleSma').style.display = 'flex';
+		}
+		document.getElementById('candlechart').style.display = 'none';
+		document.getElementById('chartdiv').style.display = 'none';
 		document.getElementById('volumechart').style.display = 'none';
 	}
 	
@@ -1104,9 +1172,9 @@ export class TickerDetailsComponent implements OnInit {
 				if(count == 0) {
 					for (let k = 0; k< SMAType; k++) {
 						let chartItemVal = this.chartDataObject[k];
-						chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
+						chartItemVal.SMA = 'N/A';
 						this.chartDataObject[k] = chartItemVal;
-						SMAData.push( {date: data[k].date, currency: data[k].currency, close: (smaTotal / SMAType).toFixed(6)});
+						SMAData.push( {date: data[k].date, currency: data[k].currency, close: chartItemVal.SMA});
 					}
 				}
 				let chartItemVal = this.chartDataObject[nextLoop];

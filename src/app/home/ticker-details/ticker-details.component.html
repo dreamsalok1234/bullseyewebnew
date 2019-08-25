@@ -70,7 +70,8 @@
           <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
           <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
           <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
-		  <div id="smachart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
+		  <div id="smachart" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
+      <div id="candleSma" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
         </div>
         <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
 <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
