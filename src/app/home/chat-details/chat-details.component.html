@@ -161,7 +161,8 @@
               <h3>
                 {{ chat.username }} | <span>{{ chat.totalMessage }}</span>
               </h3>
-              <span class="user_img"><img [src]=chat.img alt="user_img"></span>
+              <span class="user_img"><img src="{{placeholderImageUrl}}" style="max-width: 80px;" *ngIf="chat.img == undefined || chat.img.length == 0 || chat.img == ''" title="user image not found">
+              <img src="{{chat.img}}" style="max-width: 80px;" *ngIf="chat.img != undefined && chatImage.length > 0"></span>
             </div>
           </li>
           <li *ngIf="chatList.length == 0 && chatListCheck">

@@ -127,7 +127,7 @@ export class TickerDetailsComponent implements OnInit {
 		else
 			this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
 		
-		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!=undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | "+localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | "+localStorage.getItem('tickerSymbol'):"");
+		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!= undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | " +localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | "+localStorage.getItem('tickerSymbol'):"");
 		this.titleService.setTitle(this.title);
 		
 		/*Set Risk Indicators*/
@@ -608,8 +608,8 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 35;
-		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50 SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100 SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200 SMA: {SMA}`: "")));
-		debugger;
+		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50 day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100 day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200 day SMA: {SMA}`: "")));
+		
 		let tooltipText =
 			this.dateText + `:` + ` {date}`+`\n`+
 			this.currencyText + `: {currency}\n` +
@@ -683,8 +683,8 @@ export class TickerDetailsComponent implements OnInit {
 			this.currencyText+`: {currency}\n`+
 			this.openText+`: {open}\n`+
 			this.closeText+`: {close}\n`+
-			this.highText + `: {high}\n` +
-			this.lowText + `: {low}\n`+extraParam;
+			'High' + `: {high}\n` +
+			'Low' + `: {low}\n`+extraParam;
 			
 		}
 		if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
@@ -758,16 +758,17 @@ export class TickerDetailsComponent implements OnInit {
 		series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
 			this.currencyText + `: {currency}\n` +
 			this.volumeText + `: {volume}`;
-		//series.tooltip.pointerOrientation = "vertical";
+		// series.tooltip.pointerOrientation = "vertical";
 		series.tooltip.dy = - 6;
 		series.columnsContainer.zIndex = 100;
 
 		var columnTemplate = series.columns.template;
 		columnTemplate.width = am4core.percent(50);
 		columnTemplate.height = am4core.percent(50);
+		columnTemplate.fill = am4core.color("#6e7a75");
 		columnTemplate.maxHeight = 100;
 		columnTemplate.maxWidth = 10;
-		//columnTemplate.column.cornerRadius(60, 60, 10, 10);
+		// columnTemplate.column.cornerRadius(60, 60, 10, 10);
 		columnTemplate.strokeOpacity = 0;
 		series.tooltip.getFillFromObject = false;
 
@@ -806,8 +807,9 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
-		if(chartType == 'candleStick')
+		if(chartType == 'candleStick') {
 			this.createAxisAndSeries("candle",chart);
+		}
 		else{
 			
 			this.createAxisAndSeries("sma",chart);
@@ -1124,11 +1126,12 @@ export class TickerDetailsComponent implements OnInit {
 		document.getElementById('smachart').style.display = 'none';
 		document.getElementById('candleSma').style.display = 'none';
 	}
-	else if(this.filterModel.searchCriteria == 24) 
+	else if(this.filterModel.searchCriteria == 24) { 
 		document.getElementById('volumechart').style.display = 'flex';
+						}
 	else {
 		const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
-		debugger;
+		
 		this.smaChartData = smaData;
 		this.renderChart(this.chartDataObject, 'normal', "smachart");
 		this.renderCandleStickChartData(this.chartDataObject, 'normal', "candleSma");
@@ -1151,7 +1154,7 @@ export class TickerDetailsComponent implements OnInit {
   }
 
   setChartActionType(actionType) {
-  		//this.chartActionType = actionType;
+  		// this.chartActionType = actionType;
   }
 
   getSMAData(data, SMAType){
@@ -1162,34 +1165,35 @@ export class TickerDetailsComponent implements OnInit {
 		const loopcount = data.length - SMAType + 1;
 		let count = 0;
 		for( let i = 0; i <= loopcount; i++) {				
-			let smaTotal : number = 0;
+			let smaTotal = 0;
 			const nextLoop = SMAType + i;
 			for( let j= i; j <= nextLoop; j++ ) {
-				if(data[j] != undefined)									
+				if(data[j] != undefined) {
 					smaTotal = smaTotal + parseFloat(data[j].close);
-			}	
-			if(data[nextLoop] != undefined)	{	
+				}
+			}
+			if(data[nextLoop] != undefined)	{
 				if(count == 0) {
 					for (let k = 0; k< SMAType; k++) {
-						let chartItemVal = this.chartDataObject[k];
+						const chartItemVal = this.chartDataObject[k];
 						chartItemVal.SMA = 'N/A';
 						this.chartDataObject[k] = chartItemVal;
 						SMAData.push( {date: data[k].date, currency: data[k].currency, close: chartItemVal.SMA});
 					}
 				}
-				let chartItemVal = this.chartDataObject[nextLoop];
+				const chartItemVal = this.chartDataObject[nextLoop];
 				chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
-				this.chartDataObject[nextLoop] = chartItemVal;	
+				this.chartDataObject[nextLoop] = chartItemVal;
 				SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
 			}
 			count++;
-			
+
 		}
-		
+
 	}
 	return SMAData;
   }
 
-  
+
 }
 

@@ -43,8 +43,8 @@
               <input type="button" value="2Y" />
             </li>
           </ul>
-          <div id="chartdiv" style="display:flex">{{ portGraphDataText }}</div>
-          <div id="bookchart" style="display:none">{{ portGraphDataText }}</div>
+          <div id="chartdiv" style="display:none">{{ portGraphDataText }}</div>
+          <div id="bookchart" style="display:flex">{{ portGraphDataText }}</div>
         </div>
         <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
           <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
@@ -61,14 +61,14 @@
             <div class="form-group">
               <label>{{ 'GraphDisplay' | translate }}</label>
               <select class="form-control" name="exchangeId" >
-                <option value="">Both</option>
-                <option value="">Portfolio Market Value</option>
-                <option value="">Portfolio Book Cost</option>
+                <option value="0">Both</option>
+                <option value="1">Portfolio Market Value</option>
+                <option value="2">Portfolio Book Cost</option>
               </select>
             </div>           
         
             <div class="actions_to">
-              <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+              <button class="custom-btn" (click)="showHideChart()">{{ 'Apply' | translate }}</button>
             </div>
           </div>
         </div>

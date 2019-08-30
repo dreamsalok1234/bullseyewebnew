@@ -71,7 +71,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	targetPriceisRequiredMsg="Target Price is required!";
 	dateText="Date";
 	valueText="Value";
-	chartValue = "Price";
+	chartValue = "Value";
 	currencyText="Currency";
 	costText="Cost";
 	symbol="";
@@ -336,17 +336,18 @@ export class PortfolioDetailsComponent implements OnInit {
 								objectType.riskList=newDataArray;
 							}
 							else
-								objectType.processingTxtOfList=objectType.noRecord;
+								objectType.processingTxtOfList =objectType.noRecord;
 						}
 						
 						objectType.totalMarketVal=(response.data[0].totalMarketVal!=undefined)?Math.round((response.data[0].totalMarketVal)):0;
 						objectType.portfolioChanges=(response.data[0].performance!=undefined)?response.data[0].performance:0;
 					}
-					else
+					else {
 						objectType.processingTxtOfList=objectType.noRecord;
+					}
 				}
 				else {
-					objectType.searchSearchText=((response.data[0].message==undefined || response.data[0].message=='')?objectType.defaulterrSomethingMsg:response.data[0].message);
+					objectType.searchSearchText=((response.data[0].message== undefined || response.data[0].message=='')?objectType.defaulterrSomethingMsg:response.data[0].message);
 					objectType.toastr.errorToastr(((response.data[0].message==undefined || response.data[0].message=='')?objectType.defaulterrSomethingMsg:response.data[0].message), null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 					objectType.processingTxtOfList=objectType.noRecord;
 				}
@@ -392,8 +393,9 @@ export class PortfolioDetailsComponent implements OnInit {
 			}
 			if (response.statusCode === 200 ) {
 				
-				if (response.data[1].status === true) 
+				if (response.data[1].status === true) { 
 					objectType.currencyPriceList = response.data[1].data;
+				}
 				if(response.data[0]!=undefined && response.data[0]!=null && response.data[0]!=""){
 					if(objectType.investDetails.type.toLowerCase()=='crypto' || objectType.investDetails.type.toLowerCase()=='cryptocurrency'){
 						Object.keys(response.data[0]).forEach(function (key,value) {
@@ -480,11 +482,12 @@ export class PortfolioDetailsComponent implements OnInit {
 			if(bookCost.indexOf(".")>-1){
 				let decimalPos = bookCost.split('.');
 				bookCost=decimalPos[0]+"."+decimalPos[1];
-				//this.investmentForm.controls["bookingCost"].setValue(bookCost);
+				// this.investmentForm.controls["bookingCost"].setValue(bookCost);
 			}
 		}
-		else
+		else {
 			bookCost="0";
+		}
 		
 		bookCost=parseFloat(bookCost);
 		var marketValue = ((this.modelHeading == 'Buy')?((this.investDetails.currentTickerPrice) * holdU1):(bookCost * holdU1));
@@ -497,8 +500,9 @@ export class PortfolioDetailsComponent implements OnInit {
 	addInvestmentAction(){
 		this.submitted = true;
 
-		if (this.investmentForm.invalid && (this.investDetails.id == '' || this.investDetails.id == undefined))
+		if (this.investmentForm.invalid && (this.investDetails.id == '' || this.investDetails.id == undefined)) {
             return;
+		}
 		let holdU=(this.investmentForm.controls.holding.value.toString().indexOf(".")>-1)?this.investmentForm.controls.holding.value.replace( /[^\d.]/g, ''):this.investmentForm.controls.holding.value;
 		holdU=(holdU.toString().indexOf(",")>-1)?holdU.replace(/,/g, ""):holdU;
 		
@@ -508,8 +512,9 @@ export class PortfolioDetailsComponent implements OnInit {
 		let marketUCost=(this.investmentForm.controls.marketValue.value.toString().indexOf(".")>-1)?this.investmentForm.controls.marketValue.value.replace( /[^\d.]/g, ''):this.investmentForm.controls.marketValue.value;
 		marketUCost=(marketUCost.toString().indexOf(",")>-1)?marketUCost.replace(/,/g, ""):marketUCost;
 		
-		if(holdU==undefined || holdU=='' ||  parseFloat(holdU)==0 || marketUCost==undefined || marketUCost=='' || parseFloat(marketUCost)==0 || bookNCost==undefined || bookNCost=='' ||  parseFloat(bookNCost)==0 || this.investDetails.currentTickerPrice==undefined || this.investDetails.currentTickerPrice=='' || parseFloat(this.investDetails.currentTickerPrice)==0)
+		if(holdU==undefined || holdU=='' ||  parseFloat(holdU)==0 || marketUCost==undefined || marketUCost=='' || parseFloat(marketUCost)==0 || bookNCost==undefined || bookNCost=='' ||  parseFloat(bookNCost)==0 || this.investDetails.currentTickerPrice==undefined || this.investDetails.currentTickerPrice=='' || parseFloat(this.investDetails.currentTickerPrice)==0) {
 		  return;
+		}
 		
 		if(this.modelHeading=='Sell'){
 			bookNCost=marketUCost;
@@ -642,9 +647,9 @@ export class PortfolioDetailsComponent implements OnInit {
 		}
 	 }
 	 getCurrencyValue(price,currency,toCurrency,key = 'price') {
-    	//const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
+    	// const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
 		const keyType = (key === 'price') ? false : true;
-    	//const currency = watchListData.currency;
+    	// const currency = watchListData.currency;
     	return this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, toCurrency,keyType);
     }
 	getChartData(num,type,clickind){
@@ -666,8 +671,9 @@ export class PortfolioDetailsComponent implements OnInit {
 					var keys = [];
 					let data=[];
 					objectType.portGraphDataText="";
-					if (response.data[1].status === true)
+					if (response.data[1].status === true) {
 						objectType.currencyPriceList = response.data[1].data;
+					}
 					if (response.data[0].status === true)
 					{
 						if(response.data[0].historyData.graphData.length>0 && response.data[0].historyData.graphData !=undefined){
@@ -679,11 +685,13 @@ export class PortfolioDetailsComponent implements OnInit {
 							objectType.renderChart(keys,"value");
 							objectType.renderChart(keys,"cost");
 						}
-						else
+						else {
 							objectType.portGraphDataText=objectType.noChartDataText;
+						}
 					}
-					else
+					else {
 						objectType.portGraphDataText=objectType.noChartDataText;
+					}
 				}
 				else {
 					objectType.toastr.errorToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
@@ -693,7 +701,7 @@ export class PortfolioDetailsComponent implements OnInit {
 						localStorage.removeItem("userProfileInfo");
 						objectType.router.navigate(['/login']);
 					}*/
-					
+
 				}
 				objectType.loadingBar.stop();
 			});
@@ -715,13 +723,14 @@ export class PortfolioDetailsComponent implements OnInit {
 		dateAxis.renderer.ticks.template.disabled = true;
 		dateAxis.renderer.labels.template.disabled = true;
 		dateAxis.tooltip.disabled = true;
-		if(type=='value')
+		if(type=='value') {
 			this.createAxisAndSeries("value",chart);
+		}
 		else{
 			this.createAxisAndSeries("valuebookcost",chart);
 			this.createAxisAndSeries("bookcost",chart);
 		}
-		
+
 	}
 	createAxisAndSeries(field,chart) {
 		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
@@ -736,10 +745,10 @@ export class PortfolioDetailsComponent implements OnInit {
 			series.dataFields.dateX = "date";
 			series.dataFields.valueY = "value";
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#00b050"); 
-			
+			series.stroke = am4core.color("#00b050");
+
 			// let currency=this.chatDetailsCurrency;
-			series.tooltipText = 
+			series.tooltipText =
 			this.dateText+`: {date}\n`+
 			this.currencyText+`: {currency}\n`+
 			this.chartValue+`: {value}`;
@@ -760,12 +769,12 @@ export class PortfolioDetailsComponent implements OnInit {
 			series.dataFields.valueY = "cost";
 			series.strokeWidth = 1.5;
 			series.stroke = am4core.color("#ff0000");
-			series.tooltipText = 
+			series.tooltipText =
 			this.dateText+`: {date}\n`+
 			this.currencyText+`: {currency}\n`+
 			this.valueText+`: {value}\n`+
 			this.costText+`: {cost}`;
-			
+
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
 			series.tooltip.background.fill = am4core.color("#00b050");
@@ -791,23 +800,8 @@ export class PortfolioDetailsComponent implements OnInit {
 		});
 		this.hideme[i] = !this.hideme[i];
 	}
-	/* Show hide chart*/
-	showHideChart() {
-		this.loadingBar.start();
-		this.isChecked = (!this.isChecked) ? true : false;
-		this.getChartData(this.num, this.type, this.indMap);
-		if (this.isChecked) {
-			document.getElementById('chartdiv').style.display = 'none';
-			document.getElementById('bookchart').style.display = 'flex';
-
-		} else {
-			document.getElementById('bookchart').style.display = 'none';
-			document.getElementById('chartdiv').style.display = 'flex';
-		}
-		this.loadingBar.stop();
-	}
    goToTickerDetails(tickerId,tickerCurrency,tickerType,tickerName,tickerSymbol,watchlistId,keyIndex){
-	  
+
 	  const tickerDetailsValue = this.riskList[keyIndex];
 	  if (tickerId > 0 && (tickerCurrency!="" && tickerCurrency!=undefined) && (tickerType!="" && tickerType!=undefined) && Object.keys(tickerDetailsValue).length>0)  {
 		localStorage.setItem("tickerId",tickerId);
@@ -815,7 +809,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		localStorage.setItem("tickerType",tickerType);
 		localStorage.setItem("tickerName",tickerName);
 		localStorage.setItem("tickerSymbol",tickerSymbol);
-		
+
 		localStorage.setItem("shortTerm",(tickerDetailsValue.shortTerm==undefined || tickerDetailsValue.shortTerm=="N/A" || tickerDetailsValue.shortTerm=="0")?"":tickerDetailsValue.shortTerm);
 		localStorage.setItem("mediumTerm",(tickerDetailsValue.mediumTerm==undefined || tickerDetailsValue.mediumTerm=="N/A" || tickerDetailsValue.mediumTerm=="0")?"":tickerDetailsValue.mediumTerm);
 		localStorage.setItem("longTerm",(tickerDetailsValue.longTerm==undefined || tickerDetailsValue.longTerm=="N/A" || tickerDetailsValue.longTerm=="0")?"":tickerDetailsValue.longTerm);
@@ -825,11 +819,12 @@ export class PortfolioDetailsComponent implements OnInit {
 		localStorage.setItem("investmentId",(tickerDetailsValue.investmentId==undefined || tickerDetailsValue.investmentId=="N/A" || tickerDetailsValue.investmentId=="0")?"":tickerDetailsValue.investmentId);
 		localStorage.setItem("potentialId",(tickerDetailsValue.potentialId==undefined || tickerDetailsValue.potentialId=="N/A" || tickerDetailsValue.potentialId=="0")?"":tickerDetailsValue.potentialId);
 		localStorage.setItem("pageTickerRequest",'portfolio-details');
-		
+
 		localStorage.setItem("watchlistId",(watchlistId=="")?"0":watchlistId);
 		this.router.navigate(['/investment/'+tickerSymbol+'/'+tickerName]);
-    } else
+    } else {
 		this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			}
    }
    /*Return Currency Symbol*/
    returnCurrSymbol(v) {
@@ -876,7 +871,44 @@ export class PortfolioDetailsComponent implements OnInit {
 			let v=vSplitValue[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 			return v+"."+vSplitValue[1];
 		}
-		else
+		else {
 			return numNew.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+		}
   }
+	/* Show hide chart*/
+	showHideChart() {
+		// this.loadingBar.start();
+		// this.isChecked = (this.isChecked) ? false : true;
+		// this.getChartData(this.num, this.type, this.indMap);
+		// if (this.isChecked) {
+		// 	document.getElementById('chartdiv').style.display = 'flex';
+		// 	document.getElementById('bookchart').style.display = 'flex';
+
+		// }
+		// else if("both") {
+		// 	document.getElementById('bookchart').style.display = 'none';
+		// 	document.getElementById('chartdiv').style.display = 'flex';
+		// }
+		// else {
+		// 	document.getElementById('bookchart').style.display = 'flex';
+		// 	document.getElementById('chartdiv').style.display = 'none';
+		// }
+		// this.loadingBar.stop();
+	}
+
+	// filterExchangeItem() {
+	// 	this.loadingBar.start();
+	// 	this.getChartData(this.num, this.type, this.indMap);
+	// 	if (this.filterModel.graphDisplay) {
+	// 		document.getElementById('chartdiv').style.display = 'none';
+	// 		document.getElementById('bookchart').style.display = 'flex';
+
+	// 	} else {
+	// 		document.getElementById('bookchart').style.display = 'none';
+	// 		document.getElementById('chartdiv').style.display = 'flex';
+	// 	}
+	// 	this.activeFilter = false;
+	// 	this.loadingBar.stop();
+
+	// }
 }
