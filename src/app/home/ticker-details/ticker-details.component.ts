@@ -95,6 +95,8 @@ export class TickerDetailsComponent implements OnInit {
 	chartActionType = 'graphDisplay';
 	chartDataObject : any;
 	smaChartData : any;
+	shortingTab = '1D';
+	shortZone = "GMT";
     constructor(
 			private translate: TranslateService,
 			private commonService: CommonService,
@@ -127,14 +129,14 @@ export class TickerDetailsComponent implements OnInit {
 		else
 			this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
 		
-		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!= undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | " +localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | "+localStorage.getItem('tickerSymbol'):"");
+		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!= undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | " +localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | "+ localStorage.getItem('tickerSymbol') :"");
 		this.titleService.setTitle(this.title);
-		
+
 		/*Set Risk Indicators*/
 		this.riskEnditiorStatus=((localStorage.getItem('pageTickerRequest')=="portfolio-details"))?true:false;
 		if(this.riskEnditiorStatus){
-			
-			this.shortTerm=(localStorage.getItem('shortTerm')=="")?"1":localStorage.getItem('shortTerm');
+
+			this.shortTerm=(localStorage.getItem('shortTerm')=="")? "1":localStorage.getItem('shortTerm');
 			this.mediumTerm=((localStorage.getItem('mediumTerm')=="")?"1":(parseInt(localStorage.getItem('mediumTerm')) /2).toString());
 			this.longTerm=((localStorage.getItem('longTerm')=='')?'1':(parseInt(localStorage.getItem('longTerm'))/3).toString());
 			this.voladility=(localStorage.getItem('voladility') =='')?'3':localStorage.getItem('voladility');
@@ -220,19 +222,20 @@ export class TickerDetailsComponent implements OnInit {
 			objectNtype.translate.get('Open').subscribe(value => {
 				objectNtype.openText= value;
 			});
-			objectNtype.translate.get('24HLOW').subscribe(value => {
+			objectNtype.translate.get('Low').subscribe(value => {
 				objectNtype.lowText=value;
 			});
-			objectNtype.translate.get('24HHIGH').subscribe(value => {
+			objectNtype.translate.get('High').subscribe(value => {
 				objectNtype.highText =value;
 			});
 			objectNtype.translate.get('Tickeralreadyaddedtoyourwatchlist').subscribe(value => {
 				objectNtype.tickerAlreadyAddedToYourWatchlist= value;
 			});
 			objectNtype.getTickerDetails();
-			objectNtype.getChartData(1, 'D', 0);
-			if (objectNtype.tickerType.toLowerCase() === 'crypto' || objectNtype.tickerType.toLowerCase() === 'cryptocurrency') 
+			objectNtype.getChartData(3, 'M', 2);
+			if (objectNtype.tickerType.toLowerCase() === 'crypto' || objectNtype.tickerType.toLowerCase() === 'cryptocurrency') {
 				objectNtype.getCrypto1YearHighLow();
+			}
 		},1000);
 
     }
@@ -253,19 +256,21 @@ export class TickerDetailsComponent implements OnInit {
 	   }
     }
     getMinMax(arr, prop, type= "low") {
-	    var max;
-	    
+	    let max;
+
 	    if(type == "low") {
-	    	for (var i=0 ; i<arr.length ; i++) {
-	        	if (!max || parseFloat(arr[i][prop]) < parseFloat(max.low))
+	    	for (let i=0 ; i<arr.length ; i++) {
+	        	if (!max || parseFloat(arr[i][prop]) < parseFloat(max.low)) {
 	            	max = arr[i];
+										}
 	    	}
 	    }
 	    else{
-		    for (var i=0 ; i<arr.length ; i++) {
-		        if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high))
+		    for (let i=0 ; i<arr.length ; i++) {
+		        if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high)) {
 		            max = arr[i];
-		        
+										}
+
 		    }
 		}
 	    return max;
@@ -287,15 +292,15 @@ export class TickerDetailsComponent implements OnInit {
 						objectType.currencyPriceList = response.data[1].data;
 					}
 					if (response.data[0].status === true && response.data[0].historyData.currentDayData !== undefined && Object.keys(response.data[0].historyData.currentDayData).length > 0) {
-						
+
 					     objectType.tickerListData = response.data[0].historyData.currentDayData;
 					     if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 					     	if(objectType.cryptoMaxValue != 0 ) {
 					     		objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
 					     		objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
-					     	}
-					     	else
+					     	} else {
 					     		objectType.getCrypto1YearHighLow();
+											}
 					     }
 						 objectType.tickerDetailsCurrency=<any>response.data[0].historyData.currentDayData.currency;
 						 const icon=response.data[0].historyData.currentDayData.tickerUrl;
@@ -316,7 +321,7 @@ export class TickerDetailsComponent implements OnInit {
 		}
     }
 
-    getCrypto1YearHighLow(){
+    getCrypto1YearHighLow() {
     	const objectType = this;
     	this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, 365, '', '', function(err, response) {
 			if ( err ) {
@@ -328,23 +333,22 @@ export class TickerDetailsComponent implements OnInit {
 				const keys = [];
 				const candleStickData = [];
 				let data = [];
-				let max = objectType.getMinMax(response.data.Data, 'high', 'high'); 
-    			let min = objectType.getMinMax(response.data.Data, 'low', 'low'); 
-    			
+				let max = objectType.getMinMax(response.data.Data, 'high', 'high');
+    			let min = objectType.getMinMax(response.data.Data, 'low', 'low');
+
     			objectType.cryptoMaxValue = max.high;
     			objectType.cryptoMinValue = min.low;
 
 				objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
 				objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
-    			
 
-			} 
-			else {
+
+			} else {
 				objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-				objectType.tickerDataText = response.data.message;			
+				objectType.tickerDataText = response.data.message;
 
 			}
-			
+
 		});
     }
 	ChangeCurrency() {
@@ -404,6 +408,45 @@ export class TickerDetailsComponent implements OnInit {
 		}
 		this.loadingBar.stop();
 	}
+
+	getExtraSMA(){
+		// setting date range in sma case
+		let limit = 0;
+		if(this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200){
+			if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
+				switch (this.filterModel.searchCriteria) {
+					case "50": { 
+						limit += 50 
+						break; 
+					} 
+					case "100": { 
+						limit += 100 
+						break; 
+					}
+					case "200": { 
+						limit += 200 
+						break; 
+					}
+				}
+			} else {
+				switch (this.filterModel.searchCriteria) {
+					case "50": { 
+						limit += 80 
+						break; 
+					} 
+					case "100": { 
+						limit += 150 
+						break; 
+					}
+					case "200": { 
+						limit += 295 
+						break; 
+					}
+				}
+			}
+		}
+		return limit;
+	}
 	getChartData(num, type, clickind) {
 		const objectType = this;
 		this.activeTab = 'active';
@@ -416,7 +459,8 @@ export class TickerDetailsComponent implements OnInit {
 		if (this.tickerType !== '' && this.tickerName !== '' && this.tickerSymbol !== '' && this.tickerDetailsCurrency !== '' && this.num !== '' && this.type !== '') {
 
 			if( this.type === 'D' ) {
-
+				this.shortingTab = '1D';
+				// this.filterModel.searchCriteria = 0;
 				this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
 
 					if (err) {
@@ -434,8 +478,7 @@ export class TickerDetailsComponent implements OnInit {
 								data = response.data.Data;
 								data.map(function (item) {
 									const currentDateTime = new Date(item.time * 1000);
-									
-									keys.push({ date: new Date(item.time * 1000), currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4)) });
+									keys.push({ date: new Date(item.time * 1000), shortZone: 'GMT', currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4)) });
 
 									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
@@ -446,7 +489,7 @@ export class TickerDetailsComponent implements OnInit {
 								objectType.chartDataObject = keys;
 								objectType.renderChart(keys, '1D');
 								objectType.renderVolumeChart(keys, '1D');
-								objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
+								// objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
 								objectType.renderCandleStickChartData(keys, '1D');
 								objectType.renderCandleStickChartData(keys, '1D', 'smachart');
 								objectType.renderChart(keys, '1D', 'smachart');
@@ -457,14 +500,16 @@ export class TickerDetailsComponent implements OnInit {
 							if (response.data.intraday !== undefined && Object.keys(response.data.intraday).length > 0) {
 
 								data = response.data.intraday;
+								let dataTimeZone = response.data.timezone_name;
 								Object.keys(data).map(function (key) {
 									const currentDateTime = new Date(key);
-									
-									keys.push({ date: new Date(key), currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(3)) });
+									let shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
+									keys.push({ date: new Date(key), shortZone: shortZone, currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(3)) });
 
 									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
 
 								});
+
 								keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 								});
@@ -497,25 +542,32 @@ export class TickerDetailsComponent implements OnInit {
 					objectType.loadingBar.stop();
 				});
 			} else {
+					this.shortingTab = '1M';
 					/* Current Date */
 					const d = new Date();
 					const y = d.getUTCFullYear();
 					let m = d.getUTCMonth();
 					let day = d.getUTCDate();
 					m = m + 1;
-					let mm = (m < 9 ) ? ('0' + m) : m;
-					let dd = (day < 9 ) ? ('0' + day) : day;
+					let mm = (m <= 9 ) ? ('0' + m) : m;
+					let dd = (day <= 9 ) ? ('0' + day) : day;
 					const dateTo = y + '-' + mm + '-' + dd;
-
+					
 					const num = parseInt(this.num);
-					const limit = (this.type === 'M') ? (num * 30) : (num * 365);
+					let limit = (this.type === 'M') ? (num * 30) : (num * 365);
+					let extraSMA   = this.getExtraSMA();
+					limit = limit+extraSMA;
+
 					d.setDate(d.getDate() - limit);
 					m = d.getUTCMonth();
 					day = d.getUTCDate();
 					m = m + 1;
-					mm = (m < 9 ) ? ('0' + m) : m;
-					dd = (day < 9 ) ? ('0' + day) : day;
+					mm = (m <= 9 ) ? ('0' + m) : m;
+					dd = (day <= 9 ) ? ('0' + day) : day;
 					const dateFrom = d.getUTCFullYear() + '-' + mm + '-' + dd;
+
+					
+
 					this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, limit, dateFrom, dateTo, function(err, response) {
 						if ( err ) {
 						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
@@ -526,10 +578,11 @@ export class TickerDetailsComponent implements OnInit {
 							const keys = [];
 							const candleStickData = [];
 							let data = [];
+							let newData = [];
 							if(objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 								if (response.data.Data !== undefined && response.data.Data.length > 0) {
-
 									data = response.data.Data;
+									
 									data.map(function(item) {
 										const currentDateTime = new Date(item.time * 1000);
 										keys.push({date: new Date(item.time * 1000), currentDateTime: currentDateTime.getDate(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
@@ -540,19 +593,20 @@ export class TickerDetailsComponent implements OnInit {
 									keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									});
-									objectType.chartDataObject = keys;
-									objectType.renderChart(keys);
-									objectType.renderVolumeChart(keys);
-									objectType.renderCandleStickChartData(keys);
-									objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
-									objectType.renderCandleStickChartData(keys, 'normal','smachart');
-									objectType.renderChart(keys, 'normal', 'smachart');
+									newData = keys.slice(extraSMA);
+									
+									objectType.chartDataObject = newData;
+									objectType.renderChart(newData);
+									objectType.renderVolumeChart(newData);
+									objectType.renderCandleStickChartData(newData);
+									objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
+									objectType.renderCandleStickChartData(newData, 'normal','smachart');
+									objectType.renderChart(newData, 'normal', 'smachart');
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
 								}
 							} else if (objectType.tickerType.toLowerCase() === 'stock') {
 								if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
-
 									data = response.data.history;
 									Object.keys(data).map(function (key) {
 										const currentDateTime = new Date(key);
@@ -564,16 +618,18 @@ export class TickerDetailsComponent implements OnInit {
 									keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									});
+									
+									newData = keys.slice(objectType.filterModel.searchCriteria);
 									/* candleStickData.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									}); */
-									objectType.chartDataObject = keys;
-									objectType.renderChart(keys);
-									objectType.renderVolumeChart(keys);
-									objectType.renderCandleStickChartData(keys);
-									objectType.getSMAData(objectType.chartDataObject, objectType.filterModel.searchCriteria);
-									objectType.renderCandleStickChartData(keys, 'normal','smachart');
-									objectType.renderChart(keys, 'normal', 'smachart');
+									objectType.chartDataObject = newData;
+									objectType.renderChart(newData);
+									objectType.renderVolumeChart(newData);
+									objectType.renderCandleStickChartData(newData);
+									objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
+									objectType.renderCandleStickChartData(newData, 'normal','smachart');
+									objectType.renderChart(newData, 'normal', 'smachart');
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
 								}
@@ -601,6 +657,7 @@ export class TickerDetailsComponent implements OnInit {
 
 
 	createAxisAndSeries(field,chart) {
+
 		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.grid.template.location = 0;
 		valueAxis.renderer.grid.template.disabled = true;
@@ -608,46 +665,43 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 35;
-		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50 day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100 day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200 day SMA: {SMA}`: "")));
-		
+		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100-day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200-day SMA: {SMA}`: "")));
+
 		let tooltipText =
-			this.dateText + `:` + ` {date}`+`\n`+
+			this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 			this.currencyText + `: {currency}\n` +
-			this.chartValue + `: {close}\n`+extraParam;
+			this.valueText + `: {close}\n`+extraParam;
 		if(field=="value"){
 			let series = chart.series.push(new am4charts.LineSeries());
 			series.dataFields.dateX = "date";
 			series.dataFields.valueY = "close";
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#00b050"); 
-			
+			series.stroke = am4core.color("#00b050");
+
 			// let currency=this.chatDetailsCurrency;
 			series.tooltipText = tooltipText;
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
 			series.tooltip.background.fill = am4core.color("#00b050");
-		}
-		else if(field=="chartwithSma"){
+		} else if(field=="chartwithSma"){
 			let series = chart.series.push(new am4charts.LineSeries());
 			series.dataFields.dateX = "date";
 			series.dataFields.valueY = "close";
 			series.strokeWidth = 1.5;
 			series.stroke = am4core.color("#00b050");
 			series.tooltipText = tooltipText;
-			
+
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
 			series.tooltip.background.fill = am4core.color("#00b050");
-		}
-		else if(field=="sma"){
+		} else if(field=="sma"){
 			let series = chart.series.push(new am4charts.LineSeries());
 			series.dataFields.dateX = "date";
 			series.dataFields.valueY = "SMA";
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#ff0000");
-			
-		}
-		else if(field == 'candle') {
+			series.stroke = am4core.color("#add8e6");
+
+		} else if(field == 'candle') {
 			const series = chart.series.push(new am4charts.CandlestickSeries());
 			series.dataFields.dateX = 'date';
 			series.dataFields.openValueY = 'open';
@@ -685,7 +739,7 @@ export class TickerDetailsComponent implements OnInit {
 			this.closeText+`: {close}\n`+
 			'High' + `: {high}\n` +
 			'Low' + `: {low}\n`+extraParam;
-			
+
 		}
 		if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
 			chart.cursor = new am4charts.XYCursor();
@@ -704,6 +758,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	/* Render Chart Data */
 	renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
+
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create(chartType, am4charts.XYChart);
 		chart.paddingRight = 10;
@@ -715,25 +770,24 @@ export class TickerDetailsComponent implements OnInit {
 		dateAxis.renderer.ticks.template.disabled = true;
 		dateAxis.renderer.labels.template.disabled = true;
 		dateAxis.tooltip.disabled = true;
-		if(chartType == 'chartdiv')
+		if(chartType == 'chartdiv') {
 			this.createAxisAndSeries("value",chart);
-		else{
-			
-			
+		} else {
+
+
 			this.createAxisAndSeries("chartwithSma",chart);
 			this.createAxisAndSeries("sma",chart);
 		}
-		
+
 	}
 
 	renderVolumeChart(data, dataType = 'normal') {
-		
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create('volumechart', am4charts.XYChart);
 		chart.paddingRight = 20;
 
 		chart.data = data;
-		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 		categoryAxis.dataFields.category = "currentDateTime";
 		categoryAxis.renderer.grid.template.strokeOpacity = 0;
 		categoryAxis.renderer.labels.template.disabled = true;
@@ -741,7 +795,7 @@ export class TickerDetailsComponent implements OnInit {
 		categoryAxis.renderer.cellEndLocation = 0.8;
 		categoryAxis.tooltip.disabled = true;
 
-		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.inside = true;
 		valueAxis.renderer.labels.template.fillOpacity = 0.3;
 		valueAxis.renderer.grid.template.strokeOpacity = 0;
@@ -752,7 +806,7 @@ export class TickerDetailsComponent implements OnInit {
 	    valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
-		var series = chart.series.push(new am4charts.ColumnSeries);
+		let series = chart.series.push(new am4charts.ColumnSeries);
 		series.dataFields.valueY = "volume";
 		series.dataFields.categoryX = "currentDateTime";
 		series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
@@ -762,7 +816,7 @@ export class TickerDetailsComponent implements OnInit {
 		series.tooltip.dy = - 6;
 		series.columnsContainer.zIndex = 100;
 
-		var columnTemplate = series.columns.template;
+		let columnTemplate = series.columns.template;
 		columnTemplate.width = am4core.percent(50);
 		columnTemplate.height = am4core.percent(50);
 		columnTemplate.fill = am4core.color("#6e7a75");
@@ -809,19 +863,18 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.tooltip.disabled = true;
 		if(chartType == 'candleStick') {
 			this.createAxisAndSeries("candle",chart);
-		}
-		else{
-			
+		} else {
+
 			this.createAxisAndSeries("sma",chart);
 			this.createAxisAndSeries("candle",chart);
 		}
-		
+
 
 		/* let scrollbarX = new am4charts.XYChartScrollbar();
 		scrollbarX.series.push(lineSeries);
 		chart.scrollbarX = scrollbarX; */
 
-		
+
 	}
 	/* Add to watch list */
 	addToWatchList() {
@@ -1093,7 +1146,7 @@ export class TickerDetailsComponent implements OnInit {
 		});
   }
 
-  filterExchangeItem(){
+  filterExchangeItem() {
   	this.loadingBar.start();
 	this.getChartData(this.num, this.type, this.indMap);
 	if (this.filterModel.graphDisplay) {
@@ -1102,8 +1155,7 @@ export class TickerDetailsComponent implements OnInit {
 		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 			document.getElementById('candleSma').style.display = 'none';
 			document.getElementById('candlechart').style.display = 'flex';
-		}
-		else {
+		} else {
 			document.getElementById('candlechart').style.display = 'none';
 			document.getElementById('candleSma').style.display = 'flex';
 		}
@@ -1115,8 +1167,7 @@ export class TickerDetailsComponent implements OnInit {
 		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 			document.getElementById('smachart').style.display = 'none';
 			document.getElementById('chartdiv').style.display = 'flex';
-		}
-		else {
+		} else {
 			document.getElementById('chartdiv').style.display = 'none';
 			document.getElementById('smachart').style.display = 'flex';
 		}
@@ -1125,21 +1176,18 @@ export class TickerDetailsComponent implements OnInit {
 		document.getElementById('volumechart').style.display = 'none';
 		document.getElementById('smachart').style.display = 'none';
 		document.getElementById('candleSma').style.display = 'none';
-	}
-	else if(this.filterModel.searchCriteria == 24) { 
+	} else if(this.filterModel.searchCriteria == 24) {
 		document.getElementById('volumechart').style.display = 'flex';
-						}
-	else {
+						} else {
 		const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
-		
+
 		this.smaChartData = smaData;
 		this.renderChart(this.chartDataObject, 'normal', "smachart");
 		this.renderCandleStickChartData(this.chartDataObject, 'normal', "candleSma");
 		if(!this.filterModel.graphDisplay) {
 			document.getElementById('candleSma').style.display = 'none';
 			document.getElementById('smachart').style.display = 'flex';
-		}
-		else {
+		} else {
 			document.getElementById('smachart').style.display = 'none';
 			document.getElementById('candleSma').style.display = 'flex';
 		}
@@ -1147,7 +1195,7 @@ export class TickerDetailsComponent implements OnInit {
 		document.getElementById('chartdiv').style.display = 'none';
 		document.getElementById('volumechart').style.display = 'none';
 	}
-	
+
 	this.activeFilter = false;
 	this.loadingBar.stop();
 
@@ -1157,34 +1205,51 @@ export class TickerDetailsComponent implements OnInit {
   		// this.chartActionType = actionType;
   }
 
-  getSMAData(data, SMAType){
-	var SMAData = [];
+
+  getSMAData(data, SMAType) {
+	  debugger;
+	  let extraSMA   = this.getExtraSMA();
+	const SMAData = [];
 	SMAType = parseInt(SMAType);
 	SMAType = (data.length >= SMAType) ? SMAType : data.length;
-	if( data.length >= SMAType ) {
+
+
+
+	if ( data.length >= SMAType ) {
 		const loopcount = data.length - SMAType + 1;
 		let count = 0;
-		for( let i = 0; i <= loopcount; i++) {				
+		for ( let i = 0; i <= loopcount; i++) {
+			
+
 			let smaTotal = 0;
 			const nextLoop = SMAType + i;
-			for( let j= i; j <= nextLoop; j++ ) {
-				if(data[j] != undefined) {
-					smaTotal = smaTotal + parseFloat(data[j].close);
+			for ( let j = i; j <= nextLoop; j++ ) {
+				
+
+				if (data[j] !== undefined) {
+					smaTotal = smaTotal + parseFloat(data[j].close.replace(',', ''));
 				}
 			}
-			if(data[nextLoop] != undefined)	{
-				if(count == 0) {
-					for (let k = 0; k< SMAType; k++) {
-						const chartItemVal = this.chartDataObject[k];
-						chartItemVal.SMA = 'N/A';
-						this.chartDataObject[k] = chartItemVal;
-						SMAData.push( {date: data[k].date, currency: data[k].currency, close: chartItemVal.SMA});
-					}
+			if (data[nextLoop] !== undefined)	{
+				// if (count === 0) {
+				// 	for (let k = 0; k < SMAType; k++) {
+				// 		const chartItemVal = this.chartDataObject[k];
+				// 		chartItemVal.SMA = 'N/A';
+				// 		this.chartDataObject[k] = chartItemVal;
+				// 		SMAData.push( {date: data[k].date, currency: data[k].currency, close: chartItemVal.SMA});
+				// 	}
+				// }
+				const chartItemVal = this.chartDataObject[count];
+				if(this.chartDataObject[count] != undefined && SMAType > 0){
+					console.log(smaTotal +'--'+SMAType +'--'+count);
+					chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
+					
+					console.log(chartItemVal.SMA);
+					this.chartDataObject[count] = chartItemVal;
+					SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
 				}
-				const chartItemVal = this.chartDataObject[nextLoop];
-				chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
-				this.chartDataObject[nextLoop] = chartItemVal;
-				SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
+				if(this.chartDataObject[count] === undefined)
+					debugger;
 			}
 			count++;
 

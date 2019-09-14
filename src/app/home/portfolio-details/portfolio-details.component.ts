@@ -80,6 +80,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	currencyPriceList = {};
 	stockExchangeType: [];
 	criteriaFilter = [{ 'key': 'high', 'value': 'Top 10 by 24 Hour Change' }, { 'key': 'low', 'value': 'Bottom 10 by 24 Hour Change' }, { 'key': 'market_cap', 'value': 'Top 10 by Market Capitalisation' }];
+	graphFilter:number = 0;
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
     ngOnInit() {
@@ -727,8 +728,14 @@ export class PortfolioDetailsComponent implements OnInit {
 			this.createAxisAndSeries("value",chart);
 		}
 		else{
-			this.createAxisAndSeries("valuebookcost",chart);
-			this.createAxisAndSeries("bookcost",chart);
+			if(this.graphFilter ==1){
+				this.createAxisAndSeries("valuebookcost",chart);
+			}else if(this.graphFilter ==2){
+				this.createAxisAndSeries("bookcost",chart);
+			}else{				
+				this.createAxisAndSeries("valuebookcost",chart);
+				this.createAxisAndSeries("bookcost",chart);
+			}
 		}
 
 	}
@@ -876,11 +883,19 @@ export class PortfolioDetailsComponent implements OnInit {
 		}
   }
 	/* Show hide chart*/
-	showHideChart() {
+	showHideChart(val) {
+		this.getChartData(this.num, this.type, this.indMap);
+		this.activeFilter = false;
 		// this.loadingBar.start();
 		// this.isChecked = (this.isChecked) ? false : true;
 		// this.getChartData(this.num, this.type, this.indMap);
+		
+
+		// document.getElementById('id-305').style.display = 'none';
+
+		// debugger;
 		// if (this.isChecked) {
+		// 	debugger;
 		// 	document.getElementById('chartdiv').style.display = 'flex';
 		// 	document.getElementById('bookchart').style.display = 'flex';
 

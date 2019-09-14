@@ -98,9 +98,9 @@
               <select class="form-control" name="searchCriteria" (change) ="setChartActionType('searchCriteria');" [(ngModel)]="filterModel.searchCriteria"
                 #searchCriteria="ngModel">
                 <option value="0">None</option>
-                <option value="50">50-day SMA </option>
-                <option value="100">100-day SMA </option>
-                <option value="200">200-day SMA </option>
+                <option value="50" *ngIf="shortingTab != '1D'">50-day SMA </option>
+                <option value="100" *ngIf="shortingTab != '1D'">100-day SMA </option>
+                <option value="200" *ngIf="shortingTab != '1D'">200-day SMA </option>
                 <option value="24">Volume </option>
               </select>
             </div>

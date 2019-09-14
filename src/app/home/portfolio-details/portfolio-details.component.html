@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
               <label>{{ 'GraphDisplay' | translate }}</label>
-              <select class="form-control" name="exchangeId" >
+              <select class="form-control" name="exchangeId" [(ngModel)]="graphFilter" >
                 <option value="0">Both</option>
                 <option value="1">Portfolio Market Value</option>
                 <option value="2">Portfolio Book Cost</option>
@@ -68,7 +68,7 @@
             </div>           
         
             <div class="actions_to">
-              <button class="custom-btn" (click)="showHideChart()">{{ 'Apply' | translate }}</button>
+              <button class="custom-btn" (click)="showHideChart(graphFilter)">{{ 'Apply' | translate }}</button>
             </div>
           </div>
         </div>
@@ -259,9 +259,9 @@
                       <li>
                         {{ riskItem.symbol }}
                       </li>
-                      <li *ngIf="riskItem.type=='Stock'">{{ riskItem.alphaMarketSymbol }}</li>
-					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
-					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li>
+                      <li>{{ (riskItem.alphaMarketSymbol != null)?riskItem.alphaMarketSymbol:'N/A' }}</li>
+					  <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
+					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
 					  <li
                         [ngClass]="riskItem.isTemp == '0' && riskItem.isTemp != undefined ?'':
                           riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == ''

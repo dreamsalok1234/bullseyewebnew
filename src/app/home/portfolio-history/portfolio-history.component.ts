@@ -49,9 +49,10 @@ export class PortfolioHistoryComponent implements OnInit {
 	defaulterrSomethingMsg = 'Something went wrong';
 	processingTxt = 'Processing...';
 	noRecordText = 'No Record';
-	title = 'BullsEye Investors | Portfolio History';
-	showBookingSymbol = false;
-	showMarketSymbol = false;
+	title = 'BullsEye Investors | Portfolio History';	
+	symbol="";
+	showBookingSymbol = true;
+	showMarketSymbol = true;
 	valueList = false;
 	currencyPriceList = false;
 	priceAlert = false;
@@ -95,6 +96,13 @@ export class PortfolioHistoryComponent implements OnInit {
 		try {
 			this.currencyItemList = this.commonService.getCurrency();
 		} catch (error) {}
+		
+		var objectNtype=this;
+		this.currencyItemList.map(function(item){
+			if(item.name==localStorage.getItem("portfolioCurrency"))
+				objectNtype.symbol=item.symbol;
+		});
+
         this.getPortfolioHistory();
 	}
 	get f() { return this.investmentForm.controls; }
@@ -186,6 +194,7 @@ export class PortfolioHistoryComponent implements OnInit {
 			}, (reason) => {
 			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 			});
+			this.showMarketSymbol = this.showBookingSymbol = true;
 			objectType.loadingBar.stop();
 		}
 
@@ -203,26 +212,27 @@ export class PortfolioHistoryComponent implements OnInit {
 		holdU=(holdU.toString().indexOf(",")>-1)?holdU.replace(/,/g, ""):holdU;
 		
 		let bookNCost=(this.investmentForm.controls.bookingCost.value.toString().indexOf(".")>-1)?this.investmentForm.controls.bookingCost.value.replace( /[^\d.]/g, ''):this.investmentForm.controls.bookingCost.value;
-		bookNCost=(bookNCost.toString().indexOf(",")>-1)?bookNCost.replace(/,/g, ""):bookNCost;
+		bookNCost=(bookNCost.toString().indexOf(",") >-1) ?bookNCost.replace(/,/g, ""):bookNCost;
 		
 		let marketUCost=(this.investmentForm.controls.marketValue.value.toString().indexOf(".")>-1)?this.investmentForm.controls.marketValue.value.replace( /[^\d.]/g, ''):this.investmentForm.controls.marketValue.value;
 		marketUCost=(marketUCost.toString().indexOf(",")>-1)?marketUCost.replace(/,/g, ""):marketUCost;
 		
-		if(holdU==undefined || holdU=='' ||  parseFloat(holdU)==0 || marketUCost==undefined || marketUCost=='' || parseFloat(marketUCost)==0 || bookNCost==undefined || bookNCost=='' ||  parseFloat(bookNCost)==0 || this.investDetails.currentTickerPrice==undefined || this.investDetails.currentTickerPrice=='' || parseFloat(this.investDetails.currentTickerPrice)==0)
+		if(holdU==undefined || holdU=='' ||  parseFloat(holdU)==0 || marketUCost==undefined || marketUCost=='' || parseFloat(marketUCost)==0 || bookNCost==undefined || bookNCost=='' ||  parseFloat(bookNCost)==0 || this.investDetails.currentTickerPrice==undefined || this.investDetails.currentTickerPrice=='' || parseFloat(this.investDetails.currentTickerPrice)==0) {
 		  return;
-		
+		}
+
 		if(this.modelHeading=='Sell'){
 			bookNCost=marketUCost;
 			marketUCost=(Math.round((this.investDetails.currentTickerPrice*parseFloat(holdU) * 100) / 100)).toFixed(3);
 		}
-		
+
 		let formData = {"investmentId" : this.investDetails.investmentId, "tickerId": this.investDetails.tickerId, "noOfUnits" : holdU,"bookCost":bookNCost,"marketCalCost":marketUCost, currentTickerPrice: this.investDetails.currentTickerPrice, transactionId: this.investDetails.transactionId};
 
 
-		var objectType = this;
+		let objectType = this;
 		this.loading =true;
 		this.loadingBar.start();
-		this.investmentService.addInvestmentAction(this.modelHeading, formData, function(err, response){
+		this.investmentService.addInvestmentAction(this.modelHeading, formData, function(err, response) {
 			objectType.loading = false;
 			objectType.loadingBar.stop();
 			if( err ) {
@@ -236,12 +246,11 @@ export class PortfolioHistoryComponent implements OnInit {
 				/* Portfolio Call */
 				//objectType.getPortfolioDetails();
 				/* Chart Call */
-				//objectType.getChartData(objectType.num, objectType.type, objectType.indMap);
+				// objectType.getChartData(objectType.num, objectType.type, objectType.indMap);
 				/*--------- We need reload current page -----------*/
 
-			}
-			else {
-			  objectType.toastr.errorToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+			} else {
+			  objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			}
 		});
 	}
@@ -284,7 +293,7 @@ export class PortfolioHistoryComponent implements OnInit {
 	}
 
 	calculateMarketPrice(v) {
-
+		debugger;
 		this.showMarketSymbol = this.showBookingSymbol = false;
 		this.holdingUnit = this.investmentForm.controls.holding.value;
 		this.holdingUnit = (this.holdingUnit == null || this.holdingUnit === undefined) ? '0' : this.holdingUnit;
@@ -353,6 +362,14 @@ export class PortfolioHistoryComponent implements OnInit {
 		this.investmentForm.controls['bookingCost'].setValue(this.formatNumber((v === 'sell') ? parseFloat(bookCost).toFixed(3) : parseFloat(bookCost).toFixed(2)));
 		this.showBookingSymbol = true;
 	}
+	numberWithCommas(x) {
+		const parts = x.toString().split('.');
+		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		return parts.join('.');
+	}
+
+
+
 }
 
 

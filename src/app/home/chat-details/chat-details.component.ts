@@ -186,7 +186,7 @@ export class ChatDetailsComponent implements OnInit {
 		this.userName = this.profileInfo.firstname;
 		this.userId = this.profileInfo.userId;
 		this.btnText = this.sendText;
-		this.placeholderImageUrl = '../assets/images/not-found.png';
+		this.placeholderImageUrl = '../assets/images/user-not-found.png';
 		this.pageSize = 10;
 		this.chatListCheck = true;
 		
