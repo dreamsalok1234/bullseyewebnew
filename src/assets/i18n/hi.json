@@ -256,6 +256,7 @@
 	"24HVolume":"24घंटे वॉल्‍यूम",
 	"ProfileImage": "प्रोफ़ाइल छवि",
 	"DeleteAccount": "खाता हटा दो",
-	"UploadProfileImage" : "Upload Profile Image",
-	"UploadImage" : "Upload Image"
+	"UploadProfileImage" : "प्रोफ़ाइल छवि अपलोड करें",
+	"UploadImage" : "तस्वीर डालिये",
+	"Price": "कीमत"
 }

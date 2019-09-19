@@ -138,13 +138,14 @@ export class AccountSettingsComponent implements OnInit {
       this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '' && this.profileInfo.defaultLanguage != null
         ? this.profileInfo.defaultLanguage
         : 'en';
-	this.dectLanguage=browserLang;
+	this.dectLanguage =browserLang;
     this.accessToken = localStorage.getItem('userAccessToken');
     this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken+'&language='+this.dectLanguage
     );
-	if(this.profileInfo.img != '' && this.profileInfo.img != undefined)
+	if(this.profileInfo.img != '' && this.profileInfo.img != undefined) {
     this.fileUrl = this.profileInfo.img;
+	}
 	if(localStorage.getItem("proActive") !=undefined && localStorage.getItem("proActive")!="" && localStorage.getItem("proActive") !=null) {
 		if(localStorage.getItem("proActive")==="false") {
 			this.bullseyePro();
@@ -159,7 +160,7 @@ export class AccountSettingsComponent implements OnInit {
       this.isProRemainDays = false;
       this.isAddPro = true;
     } */
-    /* Set Language Translator */
+    /*  Set Language Translator */
 
 
     this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
@@ -264,7 +265,7 @@ export class AccountSettingsComponent implements OnInit {
     return this.inviteEmailForm.controls;
   }
   languageToggle() {
-    // this.activeTab2 = '';
+    //  this.activeTab2 = '';
     if (this.activeTab2 === '') {
       this.activeTab2 = 'active';
     }
@@ -622,14 +623,14 @@ export class AccountSettingsComponent implements OnInit {
 				  objectType.isProRemainDays = true;
 				  objectType.btnText = objectType.autoRenewalBtn;
 
-				 setTimeout(() => {
+				//  setTimeout(() => {
 
 					 objectType.totalSubsPlanDays =
 				  (response.data.data.totalDays !== undefined && response.data.data.totalDays != null) ? response.data.data.totalDays : 0;
 					 objectType.totalRemainingDays =
 				  (response.data.data.remainingDays !== undefined && response.data.data.remainingDays != null) ? response.data.data.remainingDays : 0;
 				  objectType.totalDisplayPer = Math.round((objectType.totalRemainingDays / objectType.totalSubsPlanDays) * 100);
-				}, 200);
+				// }, 200);
 			   }
 
 		  } else {

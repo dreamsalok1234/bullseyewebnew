@@ -198,7 +198,7 @@ export class CommonService {
 
   /* Get Ticker Data By 3Party */
   getTicker1DDataListByType(chatSymbol, type, currency, limit, callback) {
-
+    debugger;
     this.responseItem = { data: {}, statusCode: 200 };
     let apiName = '';
     if (type.toLowerCase() === 'crypto' || type.toLowerCase() === 'cryptocurrency') {

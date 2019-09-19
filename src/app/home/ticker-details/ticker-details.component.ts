@@ -24,7 +24,7 @@ export class TickerDetailsComponent implements OnInit {
 	closeResult: string;
 	math = Math;
 	model: any = {'currentCurrency': 'USD'};
-	filterModel: any = { "searchCriteria": 0, "graphDisplay": 0 };
+	filterModel: any = { "searchCriteria": 24, "graphDisplay": 0 };
 	profileInfo: any;
 	tickerId = 0;
 	searchSearchText = '';
@@ -85,10 +85,11 @@ export class TickerDetailsComponent implements OnInit {
 	chartValue ="Price";
 	volumeText = "Volume";
 	currencyText="Currency";
+	priceText="Price";
 	closeText="Close";
 	openText="Open";
-	lowText="24H LOW";
-	highText="24H HIGH";
+	lowText="LOW";
+	highText="HIGH";
 	cryptoMaxValue = 0;
 	cryptoMinValue = 0;
 	limitsize=30;
@@ -129,7 +130,7 @@ export class TickerDetailsComponent implements OnInit {
 		else
 			this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
 		
-		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!= undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | " +localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | "+ localStorage.getItem('tickerSymbol') :"");
+		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!= undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | " +localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | " + localStorage.getItem('tickerSymbol') :"");
 		this.titleService.setTitle(this.title);
 
 		/*Set Risk Indicators*/
@@ -228,6 +229,9 @@ export class TickerDetailsComponent implements OnInit {
 			objectNtype.translate.get('High').subscribe(value => {
 				objectNtype.highText =value;
 			});
+			objectNtype.translate.get('Price').subscribe(value => {
+				objectNtype.priceText =value;
+			});
 			objectNtype.translate.get('Tickeralreadyaddedtoyourwatchlist').subscribe(value => {
 				objectNtype.tickerAlreadyAddedToYourWatchlist= value;
 			});
@@ -236,6 +240,8 @@ export class TickerDetailsComponent implements OnInit {
 			if (objectNtype.tickerType.toLowerCase() === 'crypto' || objectNtype.tickerType.toLowerCase() === 'cryptocurrency') {
 				objectNtype.getCrypto1YearHighLow();
 			}
+			
+			objectNtype.filterExchangeItem();
 		},1000);
 
     }
@@ -594,7 +600,6 @@ export class TickerDetailsComponent implements OnInit {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									});
 									newData = keys.slice(extraSMA);
-									
 									objectType.chartDataObject = newData;
 									objectType.renderChart(newData);
 									objectType.renderVolumeChart(newData);
@@ -623,6 +628,7 @@ export class TickerDetailsComponent implements OnInit {
 									/* candleStickData.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									}); */
+									
 									objectType.chartDataObject = newData;
 									objectType.renderChart(newData);
 									objectType.renderVolumeChart(newData);
@@ -665,12 +671,13 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 35;
+		
 		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100-day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200-day SMA: {SMA}`: "")));
 
 		let tooltipText =
 			this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 			this.currencyText + `: {currency}\n` +
-			this.valueText + `: {close}\n`+extraParam;
+			this.priceText + `: {close}\n`+extraParam;
 		if(field=="value"){
 			let series = chart.series.push(new am4charts.LineSeries());
 			series.dataFields.dateX = "date";
@@ -737,8 +744,8 @@ export class TickerDetailsComponent implements OnInit {
 			this.currencyText+`: {currency}\n`+
 			this.openText+`: {open}\n`+
 			this.closeText+`: {close}\n`+
-			'High' + `: {high}\n` +
-			'Low' + `: {low}\n`+extraParam;
+			this.highText + `: {high}\n` +
+			this.lowText + `: {low}\n`+extraParam;
 
 		}
 		if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
@@ -762,6 +769,7 @@ export class TickerDetailsComponent implements OnInit {
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create(chartType, am4charts.XYChart);
 		chart.paddingRight = 10;
+		chart.paddingBottom = 40;
 		chart.data = data;
 		const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 		dateAxis.renderer.grid.template.location = 0;
@@ -773,8 +781,6 @@ export class TickerDetailsComponent implements OnInit {
 		if(chartType == 'chartdiv') {
 			this.createAxisAndSeries("value",chart);
 		} else {
-
-
 			this.createAxisAndSeries("chartwithSma",chart);
 			this.createAxisAndSeries("sma",chart);
 		}
@@ -797,7 +803,7 @@ export class TickerDetailsComponent implements OnInit {
 
 		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.inside = true;
-		valueAxis.renderer.labels.template.fillOpacity = 0.3;
+		valueAxis.renderer.labels.template.fillOpacity = 0;
 		valueAxis.renderer.grid.template.strokeOpacity = 0;
 		valueAxis.renderer.minWidth = 35;
 		valueAxis.cursorTooltipEnabled = false;
@@ -819,7 +825,7 @@ export class TickerDetailsComponent implements OnInit {
 		let columnTemplate = series.columns.template;
 		columnTemplate.width = am4core.percent(50);
 		columnTemplate.height = am4core.percent(50);
-		columnTemplate.fill = am4core.color("#6e7a75");
+		columnTemplate.fill = am4core.color("#364451");
 		columnTemplate.maxHeight = 100;
 		columnTemplate.maxWidth = 10;
 		// columnTemplate.column.cornerRadius(60, 60, 10, 10);
@@ -1149,6 +1155,7 @@ export class TickerDetailsComponent implements OnInit {
   filterExchangeItem() {
   	this.loadingBar.start();
 	this.getChartData(this.num, this.type, this.indMap);
+	
 	if (this.filterModel.graphDisplay) {
 		document.getElementById('chartdiv').style.display = 'none';
 		document.getElementById('smachart').style.display = 'none';
@@ -1207,7 +1214,7 @@ export class TickerDetailsComponent implements OnInit {
 
 
   getSMAData(data, SMAType) {
-	  debugger;
+	  
 	  let extraSMA   = this.getExtraSMA();
 	const SMAData = [];
 	SMAType = parseInt(SMAType);
@@ -1241,15 +1248,14 @@ export class TickerDetailsComponent implements OnInit {
 				// }
 				const chartItemVal = this.chartDataObject[count];
 				if(this.chartDataObject[count] != undefined && SMAType > 0){
-					console.log(smaTotal +'--'+SMAType +'--'+count);
 					chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
 					
-					console.log(chartItemVal.SMA);
 					this.chartDataObject[count] = chartItemVal;
 					SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
 				}
-				if(this.chartDataObject[count] === undefined)
-					debugger;
+				if(this.chartDataObject[count] === undefined) {
+					
+				}
 			}
 			count++;
 

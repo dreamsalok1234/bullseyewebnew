@@ -255,6 +255,7 @@
 	"24HVolume":"24時間 数量",
 	"ProfileImage": "プロフィール画像",
 	"DeleteAccount": "アカウントを削除する",
-	"UploadProfileImage" : "Upload Profile Image",
-	"UploadImage" : "Upload Image"
+	"UploadProfileImage" : "プロフィール画像をアップロード",
+	"UploadImage" : "画像をアップロード",
+	"Price": "価格"
 }
