@@ -255,7 +255,13 @@
 	"24HVolume":"Volumen De 24 h",
 	"ProfileImage": "Imagen de perfil",
 	"DeleteAccount": "Borrar cuenta",
+	"Areyousureyouwanttodeleteaccount": "Ĉu vi certas, ke vi volas forigi vian konton?",
 	"UploadProfileImage" : "Subir imagen de perfil",
+	"UploadFile" : "Elektu Novan Bildon",
 	"UploadImage" : "Cargar imagen",
+	"GraphDisplay": "Primara montrado",
+	"GraphAnalytics": "Malĉefa montrado",
+	"GraphAnaTitle": "Grafika Analitiko",
+	"SocialMedia": "Sociaj Amaskomunikiloj",
 	"Price": "Precio"
 }

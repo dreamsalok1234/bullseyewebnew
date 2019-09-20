@@ -67,9 +67,7 @@
   <div class="graph_chats">
     <div class="row">
       <div class="col-lg-6">
-        <!--<div class="candle_stick">
-<img src="assets/images/graph.png" alt="graph" class="img-fluid">
-</div>-->
+
         <div class="candle_stick">
           <ul>
             <li [ngClass]="activeTab && indMap == 0 ? 'active' : ''" (click)="getChartData(1, 'D', 0)">
@@ -91,19 +89,16 @@
               <input type="button" value="2Y" />
             </li>
           </ul>
-          <!-- [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'" -->
+          
           <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
           <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
           <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
-		  <div id="smachart" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
-      <div id="candleSma" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
+          <div id="smachart" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
+          <div id="candleSma" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
         </div>
-        <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
-<input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
-<label for="graphCheckbox" class="checkbox-custom-label">{{ CandlestickText }}</label>
-</div> -->
+
         <div class="pop_filters book_cost filter_modal_popup">
-          <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
+          <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}"><img
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
@@ -180,11 +175,7 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="col-lg-12">
-        <div class="advr_hori">
-         <img class="img-fluid" src="assets/images/advr1.png" />
-        </div>
-      </div> -->
+
     </div>
   </div>
     <!-- The Add Message Modal -->

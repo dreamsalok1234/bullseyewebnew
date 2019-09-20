@@ -1,7 +1,7 @@
 @import '../chat/chat.component.scss';
 @import '../search-market/search-market.component.scss';
 .top-title.chat_detail h2 {
-  display: flex;
+  display: flex!important;
   align-items: center;
   justify-content: space-between;
   margin: 0;

@@ -255,7 +255,13 @@
 	"24HVolume":"24時間 数量",
 	"ProfileImage": "プロフィール画像",
 	"DeleteAccount": "アカウントを削除する",
+	"Areyousureyouwanttodeleteaccount": "アカウントを削除してもよろしいですか？",
 	"UploadProfileImage" : "プロフィール画像をアップロード",
+	"UploadFile" : "新しい画像を選択",
 	"UploadImage" : "画像をアップロード",
+	"GraphDisplay": "プライマリディスプレイ",
+	"GraphAnalytics": "セカンダリーディスプレイ",
+	"GraphAnaTitle": "グラフ分析",
+	"SocialMedia": "ソーシャルメディア",
 	"Price": "価格"
 }

@@ -118,10 +118,10 @@
   <div class="card-body">
     <ng-template #confirmicontent let-c="close" let-d="dismiss">
       <div class="modal-body">
-        <p>{{modelText}}</p>
+        <p>{{modelText|translate}}</p>
       </div>
       <div class="modal-footer" *ngIf="autRenewalInd==0 || autRenewalInd==1">
-        <button type="button" class="btn btn-success" (click)="changeAutoRenewal()">{{btnText}}</button>
+        <button type="button" class="btn btn-success" (click)="changeAutoRenewal()">{{ btnYes | translate }}</button>
         <button type="button" class="btn btn-danger" (click)="resetAutoRenewal();">{{ 'No' | translate }}</button>
       </div>
       <div class="modal-footer" *ngIf="autRenewalInd==2">
@@ -161,7 +161,7 @@
                 (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"
                 [ngClass]="{ 'is-invalid': submitted && p.phone.errors }" />
               <button type="button" class="btn btn-success" [disabled]="loading"
-                (click)="changePhoneNumber(1)">{{ showBtnText }}</button>
+                (click)="changePhoneNumber(1)">{{ showBtnText | translate }}</button>
             </div>
             <div *ngIf="submitted && p.phone.errors" class="alert alert-dange">
               <div *ngIf="p.phone.errors.required" style="color: #ff0024">{{ 'PhoneNumberisrequired' | translate }}
@@ -207,11 +207,11 @@
           <form>
             <div class="upld_imge">
               <div class="choose_input">
-              <label for="files" class="btn">{{'UploadFile' | translate }}</label>
+              <label for="files" class="btn">{{UploadFile | translate }}</label>
               <input id="files" style="visibility:hidden;" type="file" (change)="fileEvent($event)" accept="image/png, image/jpeg, image/jpg">
               </div>
               <div class="update_img">
-                <button (click)="uploadImg($event)"> {{ uploadSubmitBtnText }}</button>
+                <button (click)="uploadImg($event)"> {{ uploadBtnText  | translate}}</button>
               </div>
             </div>           
             <div class="uploaded_img">
@@ -223,14 +223,14 @@
     </ng-template>
     <ng-template #delAccount let-d="dismiss" class="update_profile">
       <div class="modal-header alert_header">
-        <h6 class="modal-title">{{ 'Are you sure you want to delete your account?' }}</h6>
+        <h6 class="modal-title">{{ Areyousureyouwanttodeleteaccount | translate }}</h6>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success" aria-label="Close">Yes</button>
-        <button type="submit" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">No</button>
+        <button type="submit" class="btn btn-success" aria-label="Close">{{ btnYes | translate }}</button>
+        <button type="submit" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">{{ btnNo | translate }}</button>
       </div>
     </ng-template>
     <!-- reco friend -->
@@ -244,18 +244,18 @@
       <div class="modal-body">
         <form class="form-inline form_price recommend" [formGroup]="inviteEmailForm">
           <div class="form-group">
-            <label for="usr">{{ 'Email' | translate }}</label>
+            <label for="usr">{{ 'FriendsEmailId' | translate }}</label>
             <div class="emails_share">
               <input type="text" class="form-control" formControlName="email" id="email" autocomplete="off"
                 placeholder="{{ 'FriendsEmailId' | translate }}" />
-              <button mat-button (click)="invitteFriend()">{{ inviteBtnText }}</button>
+              <button mat-button (click)="invitteFriend()">{{ inviteBtnText | translate }}</button>
             </div>
             <div *ngIf="submitted && p.phone.errors" class="alert alert-dange">
               <div *ngIf="p.phone.errors.required" style="color: #ff0024">{{ 'Emailisrequired' | translate }}</div>
             </div>
           </div>
           <div class="form-group">
-            <label for="usr">{{ 'SocialMedia' | translate }}</label>
+            <label for="usr">{{ 'ViaSocialMedia' | translate }}</label>
             <ul>
               <li>
                 <a href="https://www.facebook.com/sharer.php?u=http://52.14.191.189:4200/signup" target="_blank"><i

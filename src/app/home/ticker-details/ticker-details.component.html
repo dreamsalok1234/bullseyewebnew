@@ -78,7 +78,7 @@
 <label for="graphCheckbox" class="checkbox-custom-label">{{ CandlestickText }}</label>
 </div> -->
         <div class="pop_filters book_cost filter_modal_popup">
-          <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
+          <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}"><img
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">

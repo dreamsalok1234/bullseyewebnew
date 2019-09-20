@@ -249,6 +249,7 @@
 	"24HVolume":"24H Volume",
 	"ProfileImage": "Profile Photo",
 	"DeleteAccount": "Delete Account",
+	"Areyousureyouwanttodeleteaccount": "Are you sure you want to delete your account?",
 	"UploadProfileImage" : "Upload Profile Image",
 	"UploadFile" : "Choose New Image",
 	"UploadImage" : "Update",

@@ -255,7 +255,13 @@
 	"24HVolume":"24시간 볼륨",
 	"ProfileImage": "프로필 이미지",
 	"DeleteAccount": "계정 삭제",
+	"Areyousureyouwanttodeleteaccount": "계정을 삭제 하시겠습니까?",
 	"UploadProfileImage" : "프로필 이미지 업로드",
+	"UploadFile" : "새 이미지를 선택하십시오",
 	"UploadImage" : "이미지 업로드",
+	"GraphDisplay": "기본 디스플레이",
+	"GraphAnalytics": "보조 디스플레이",
+	"GraphAnaTitle": "그래프 분석",
+	"SocialMedia": "소셜 미디어",
 	"Price": "가격"
 }

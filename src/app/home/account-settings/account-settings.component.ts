@@ -80,20 +80,24 @@ export class AccountSettingsComponent implements OnInit {
   areYouSureWantToRenewOn="Are you sure you want to turn auto-renewal on?";
   areYouSureWantToRenewOff="Are you sure you want to turn auto-renewal off?";
   areYouSureWantToCancel="Are you sure you want to cancel subscription?";
+  Areyousureyouwanttodeleteaccount="Are you sure you want to delete your account?";
   DAYSLEFT="DAYS LEFT";
   DAYLEFT="DAY LEFT";
   isSubsChecked=false;
   modelText = '';
   btnText='Yes';
+  btnYes='Yes';
+  btnNo='No';
   autoRenewalBtn='Yes';
   autRenewalInd=0;
-  title='BullsEye Investors | Account Setting';
+  title='Account Setting';
+  UploadFile='Choose New Image';
   autorenewalstatuschanged="Auto-renewal status changed.";
   subscriptionplansuccessfullycancelled="Subscription plan successfully cancelled.";
   uploadBtnText = 'Update';
   uploadSubmitBtnText = '';
   fileUploadProcessing = false;
-  subCancelBtn=true;
+  subCancelBtn =true;
   dectLanguage='en';
   constructor(
     private commonService: CommonService,
@@ -131,23 +135,23 @@ export class AccountSettingsComponent implements OnInit {
     }
 
     this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
-	
+
 	this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
     this.translate.setDefaultLang('en');
     const browserLang =
       this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '' && this.profileInfo.defaultLanguage != null
         ? this.profileInfo.defaultLanguage
         : 'en';
-	this.dectLanguage =browserLang;
+	this.dectLanguage = browserLang;
     this.accessToken = localStorage.getItem('userAccessToken');
     this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken+'&language='+this.dectLanguage
+      'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
     );
-	if(this.profileInfo.img != '' && this.profileInfo.img != undefined) {
+	if (this.profileInfo.img !== '' && this.profileInfo.img !== undefined) {
     this.fileUrl = this.profileInfo.img;
 	}
-	if(localStorage.getItem("proActive") !=undefined && localStorage.getItem("proActive")!="" && localStorage.getItem("proActive") !=null) {
-		if(localStorage.getItem("proActive")==="false") {
+	if (localStorage.getItem('proActive') !== undefined && localStorage.getItem('proActive') !== '' && localStorage.getItem('proActive') != null) {
+		if (localStorage.getItem('proActive') === 'false') {
 			this.bullseyePro();
 		}
 	}
@@ -164,55 +168,7 @@ export class AccountSettingsComponent implements OnInit {
 
 
     this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
-    this.translate.get('Somethingwentwrong').subscribe(value => {
-      this.defaulterrSomethingMsg = value;
-    });
-    this.translate.get('Share').subscribe(value => {
-      this.inviteBtnTextTrans = value;
-    });
-    this.translate.get('Submit').subscribe(value => {
-      this.submitBtnText = value;
-    });
-    this.translate.get('Verify').subscribe(value => {
-      this.verifyText = value;
-    });
-    this.translate.get('Processing...').subscribe(value => {
-      this.processingTxt = value;
-    });
-    this.translate.get('UploadImage').subscribe(value => {
-      this.uploadBtnText = value;
-    });
-
-    this.translate.get('Pleasechangephonenumber').subscribe(value => {
-      this.phoneNumberChangeText = value;
-    });
-	this.translate.get('Accountbasecurrencysuccessfullyupdated').subscribe(value => {
-      this.AccountbasecurrencysuccessfullyupdatedText = value;
-    });
-	this.translate.get('areYouSureWantToRenewOn').subscribe(value => {
-      this.areYouSureWantToRenewOn = value;
-    });
-	this.translate.get('areYouSureWantToRenewOff').subscribe(value => {
-      this.areYouSureWantToRenewOff = value;
-    });
-	this.translate.get('areYouSureWantToCancel').subscribe(value => {
-      this.areYouSureWantToCancel = value;
-    });
-	this.translate.get('Yes').subscribe(value => {
-      this.btnText = value;
-    });
-	this.translate.get('Autorenewalstatuschanged').subscribe(value => {
-      this.autorenewalstatuschanged = value;
-    });
-	this.translate.get('Subscriptionplansuccessfullycancelled').subscribe(value => {
-      this.subscriptionplansuccessfullycancelled = value;
-    });
-	this.translate.get('DAYS LEFT').subscribe(value => {
-      this.DAYSLEFT = value;
-    });
-	this.translate.get('DAY LEFT').subscribe(value => {
-      this.DAYLEFT = value;
-    });
+    this.refreshTranslation();
     this.uploadSubmitBtnText = this.uploadBtnText;
     if (this.profileInfo.baseCurrency !== undefined && this.profileInfo.baseCurrency !== '') {
       this.baseCurrency = this.profileInfo.baseCurrency;
@@ -264,6 +220,9 @@ export class AccountSettingsComponent implements OnInit {
   get i() {
     return this.inviteEmailForm.controls;
   }
+
+
+
   languageToggle() {
     //  this.activeTab2 = '';
     if (this.activeTab2 === '') {
@@ -271,6 +230,7 @@ export class AccountSettingsComponent implements OnInit {
     }
     this.activeTab1 = this.activeTab1 ? '' : 'active';
   }
+
   languageMethod(itemText, languageName) {
     this.selectLang = languageName;
     const objectType = this;
@@ -293,15 +253,78 @@ export class AccountSettingsComponent implements OnInit {
         }
         if (response.statusCode === 200) {
           objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
-          objectType.profileInfo.defaultLanguage =objectType.dectLanguage= itemText;
+          objectType.profileInfo.defaultLanguage = objectType.dectLanguage = itemText;
           localStorage.setItem('userProfileInfo', JSON.stringify(objectType.profileInfo));
           objectType.selectLang = languageName;
           objectType.translate.use(itemText.match(/en|ko|hi|zh|es|ja/) ? itemText : 'en');
+          objectType.ngOnInit();
         } else {
           objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
         }
       });
     }
+  }
+
+  refreshTranslation(){
+    
+    this.translate.get('Somethingwentwrong').subscribe(value => {
+      this.defaulterrSomethingMsg = value;
+    });
+    this.translate.get('Share').subscribe(value => {
+      this.inviteBtnTextTrans = value;
+    });
+    this.translate.get('Submit').subscribe(value => {
+      this.submitBtnText = value;
+    });
+    this.translate.get('Verify').subscribe(value => {
+      this.verifyText = value;
+    });
+    this.translate.get('Processing...').subscribe(value => {
+      this.processingTxt = value;
+    });
+    this.translate.get('UploadImage').subscribe(value => {
+      this.uploadBtnText = value;
+    });
+    this.translate.get('UploadFile').subscribe(value => {
+      this.UploadFile = value;
+    });
+
+    this.translate.get('Pleasechangephonenumber').subscribe(value => {
+      this.phoneNumberChangeText = value;
+    });
+    this.translate.get('Accountbasecurrencysuccessfullyupdated').subscribe(value => {
+        this.AccountbasecurrencysuccessfullyupdatedText = value;
+      });
+    this.translate.get('areYouSureWantToRenewOn').subscribe(value => {
+        this.areYouSureWantToRenewOn = value;
+      });
+    this.translate.get('areYouSureWantToRenewOff').subscribe(value => {
+        this.areYouSureWantToRenewOff = value;
+      });
+    this.translate.get('areYouSureWantToCancel').subscribe(value => {
+        this.areYouSureWantToCancel = value;
+      });
+    this.translate.get('Areyousureyouwanttodeleteaccount').subscribe(value => {
+        this.Areyousureyouwanttodeleteaccount = value;
+      });
+    this.translate.get('Yes').subscribe(value => {
+      this.btnYes = this.btnText = value;
+      });
+    this.translate.get('No').subscribe(value => {
+      this.btnNo = value;
+      });
+    this.translate.get('Autorenewalstatuschanged').subscribe(value => {
+        this.autorenewalstatuschanged = value;
+      });
+    this.translate.get('Subscriptionplansuccessfullycancelled').subscribe(value => {
+        this.subscriptionplansuccessfullycancelled = value;
+      });
+    this.translate.get('DAYS LEFT').subscribe(value => {
+        this.DAYSLEFT = value;
+      });
+    this.translate.get('DAY LEFT').subscribe(value => {
+        this.DAYLEFT = value;
+      });
   }
   currencyToggle() {
     // this.activeTab1 = '';
@@ -356,7 +379,7 @@ export class AccountSettingsComponent implements OnInit {
     this.countryCode = this.countryCode.indexOf('+') > -1 ? this.countryCode : '+' + this.countryCode;
     this.changePhoneForm.controls.phone.setValue(this.countryCode + this.profileInfo.mobile);
     this.showBtnText = this.submitBtnText;
-    this.modalService.open(content,{ windowClass: 'add_chat_modal', size: 'lg' }).result.then(
+    this.modalService.open(content, { windowClass: 'add_chat_modal', size: 'lg' }).result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
       },
@@ -401,7 +424,7 @@ export class AccountSettingsComponent implements OnInit {
     this.countryCode = this.countryCode.indexOf('+') > -1 ? this.countryCode : '+' + this.countryCode;
     this.changePhoneForm.controls.phone.setValue(this.countryCode + this.profileInfo.mobile);
     this.showBtnText = this.submitBtnText;
-    this.modalService.open(content,{ windowClass: 'sharemodal', size: 'lg' }).result.then(
+    this.modalService.open(content, { windowClass: 'sharemodal', size: 'lg' }).result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
       },
@@ -591,17 +614,21 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   bullseyePro() {
-	const objectType = this;
+  
+    const objectType = this;
 	this.loading = true;
 	objectType.subCancelBtn = true;
 	objectType.totalRemainingDays = objectType.totalDisplayPer = objectType.totalSubsPlanDays = 0;
 	objectType.isAddPro =  objectType.isProRemainDays = false;
     this.loadingBar.start();
+    
 	this.authService.getMySubscription(function(err, response) {
 
-        objectType.loading = false;
+     
+      objectType.loading = false;
         objectType.loadingBar.stop();
         if (err) {
+          
           objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {
             autoDismiss: true,
             maxOpened: 1,
@@ -609,7 +636,7 @@ export class AccountSettingsComponent implements OnInit {
           });
         }
         if (response.statusCode === 200) {
-		  if(Object.keys(response.data.data).length > 0) {
+          if (Object.keys(response.data.data).length > 0) {
 			 if (response.data.data.isProAccount === response.data.data.isTrailVersion) {
 				  objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
 					  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
@@ -698,8 +725,17 @@ export class AccountSettingsComponent implements OnInit {
 
   }
   showPopupForCancel(content) {
-	this.autRenewalInd = 2;
-	this.modelText = this.areYouSureWantToCancel;
+  this.autRenewalInd = 2;
+  this.translate.get('areYouSureWantToCancel').subscribe(value => {
+    this.modelText = value;
+  });
+  this.translate.get('processingTxt').subscribe(value => {
+    this.processingTxt = value;
+  });
+  this.translate.get('Yes').subscribe(value => {
+    this.btnText = this.autoRenewalBtn = value;
+  });
+
 	this.modalService.open(content).result.then((result) => {
 		this.closeResult = `Closed with: ${result}`;
 	}, (reason) => {
@@ -710,7 +746,7 @@ export class AccountSettingsComponent implements OnInit {
 	const objectType = this;
 	if (this.btnText === this.processingTxt) {
       return;
-	}
+	} 
     this.btnText = this.processingTxt;
     this.loading = true;
     this.loadingBar.start();

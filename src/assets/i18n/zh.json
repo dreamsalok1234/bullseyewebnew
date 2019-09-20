@@ -255,7 +255,13 @@
 	"24HVolume":"24小时交易量",
 	"ProfileImage": "个人资料图片",
 	"DeleteAccount": "删除帐户",
+	"Areyousureyouwanttodeleteaccount": "您确定要删除自己的帐户吗？",
 	"UploadProfileImage" : "上传个人资料图片",
+	"UploadFile" : "选择新图片",
 	"UploadImage" : "上传图片",
+	"GraphDisplay": "主要展示",
+	"GraphAnalytics": "二次显示",
+	"GraphAnaTitle": "图分析",
+	"SocialMedia": "社交媒体",
 	"Price": "价钱"
 }
