@@ -590,8 +590,15 @@ export class TickerDetailsComponent implements OnInit {
 									data = response.data.Data;
 									
 									data.map(function(item) {
-										const currentDateTime = new Date(item.time * 1000);
-										keys.push({date: new Date(item.time * 1000), currentDateTime: currentDateTime.getDate(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
+										debugger;
+										let currentDateTime = new Date(item.time * 1000);
+										let y = currentDateTime.getUTCFullYear();
+										let m = currentDateTime.getUTCMonth();
+										let day = currentDateTime.getUTCDate();
+										m = m + 1;
+										let mm = (m <= 9 ) ? ('0' + m) : m;
+										let dd = (day <= 9 ) ? ('0' + day) : day;
+										keys.push({date: new Date(item.time * 1000), currentDateTime: y + '-' + mm + '-' + dd, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
 
 										// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
@@ -614,8 +621,14 @@ export class TickerDetailsComponent implements OnInit {
 								if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
 									data = response.data.history;
 									Object.keys(data).map(function (key) {
-										const currentDateTime = new Date(key);
-										keys.push({date : new Date(key), currentDateTime: currentDateTime.getDate(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0))});
+										let currentDateTime = new Date(key);
+										let y = currentDateTime.getUTCFullYear();
+										let m = currentDateTime.getUTCMonth();
+										let day = currentDateTime.getUTCDate();
+										m = m + 1;
+										let mm = (m <= 9 ) ? ('0' + m) : m;
+										let dd = (day <= 9 ) ? ('0' + day) : day;
+										keys.push({date : new Date(key), currentDateTime: y + '-' + mm + '-' + dd, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0))});
 
 										// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
 
@@ -663,7 +676,7 @@ export class TickerDetailsComponent implements OnInit {
 
 
 	createAxisAndSeries(field,chart) {
-
+		debugger;
 		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.grid.template.location = 0;
 		valueAxis.renderer.grid.template.disabled = true;
@@ -765,7 +778,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	/* Render Chart Data */
 	renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
-
+		debugger;
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create(chartType, am4charts.XYChart);
 		chart.paddingRight = 10;
@@ -779,6 +792,7 @@ export class TickerDetailsComponent implements OnInit {
 		dateAxis.renderer.labels.template.disabled = true;
 		dateAxis.tooltip.disabled = true;
 		if(chartType == 'chartdiv') {
+			debugger;
 			this.createAxisAndSeries("value",chart);
 		} else {
 			this.createAxisAndSeries("chartwithSma",chart);
@@ -1153,26 +1167,21 @@ export class TickerDetailsComponent implements OnInit {
   }
 
   filterExchangeItem() {
-	  debugger;
   	this.loadingBar.start();
 	this.getChartData(this.num, this.type, this.indMap);
 	
 	if (this.filterModel.graphDisplay) {
-		debugger;
 		document.getElementById('chartdiv').style.display = 'none';
 		document.getElementById('smachart').style.display = 'none';
 		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
-			debugger;
 			document.getElementById('candleSma').style.display = 'none';
 			document.getElementById('candlechart').style.display = 'flex';
 		} else {
-			debugger;
 			document.getElementById('candlechart').style.display = 'none';
 			document.getElementById('candleSma').style.display = 'flex';
 		}
 
 	} else {
-		debugger;
 		document.getElementById('candlechart').style.display = 'none';
 		document.getElementById('chartdiv').style.display = 'flex';
 		document.getElementById('candleSma').style.display = 'none';
