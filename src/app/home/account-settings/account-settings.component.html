@@ -285,11 +285,28 @@
         </button>
         <div class="round_prog">
           <span class="prg_txt">
+
+
             <!--<circle-progress [titleColor]='"#444444"' [titleFontSize]="22" [subtitleFontSize]="18" [showTitle]="true" [percent]="totalDisplayPer" [radius]="100" [animation]="true" [animationDuration]="1500" [maxPercent]="totalSubsPlanDays" [showSubtitle]="true" [subtitle]='["",((totalRemainingDays>1)?"DAYS LEFT":"DAY LEFT")]'> </circle-progress>-->
-            <circle-progress [titleColor]='"#444444"' [titleFontSize]="22" [subtitleFontSize]="18" [showTitle]="true"
+
+
+            <!-- <circle-progress [titleColor]='"#444444"' [titleFontSize]="22" [subtitleFontSize]="18" [showTitle]="true"
               [showSubtitle]="false" [percent]="totalDisplayPer" [radius]="100" [animation]="true"
               [animationDuration]="1500" [maxPercent]="100" [title]="['',totalRemainingDays,((totalRemainingDays>1)?(DAYSLEFT | translate):(DAYLEFT | translate))]"
-              > </circle-progress>
+              > </circle-progress> -->
+
+              <circle-progress
+  [percent]="85"
+  [radius]="100"
+  [outerStrokeWidth]="16"
+  [innerStrokeWidth]="8"
+  [outerStrokeColor]="'#78C000'"
+  [innerStrokeColor]="'#C7E596'"
+  [animation]="true"
+  [animationDuration]="300"
+></circle-progress>
+
+
               <!-- [title]='["",totalRemainingDays,((totalRemainingDays>1)?DAYSLEFT:DAYLEFT)]' -->
           </span>
         </div>

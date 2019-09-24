@@ -14,6 +14,7 @@ import { GlobalService } from './_services/global.service';
 import { CommonService } from './_services/common.service';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -34,7 +35,8 @@ export const createTranslateLoader = (http: HttpClient) => {
         HttpClientModule,
         ToastrModule.forRoot(),
 		LoadingBarModule,
-		LoadingBarRouterModule,
+        LoadingBarRouterModule,
+        NgCircleProgressModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
