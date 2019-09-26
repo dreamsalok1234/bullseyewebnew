@@ -1,0 +1,12 @@
+@import '../account-settings/account-settings.component.scss';
+
+.mat-dialog-container {
+    overflow: visible;
+}
+
+.mat-dialog-content {
+    max-height: none;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+}

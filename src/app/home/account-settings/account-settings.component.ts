@@ -9,6 +9,8 @@ import { AuthService } from '../../_services/auth.service';
 import { CommonService } from '../../_services/common.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Title, Meta } from '@angular/platform-browser';
+import { ProdialogComponent } from '../prodialog/prodialog.component';
+import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
@@ -89,7 +91,7 @@ export class AccountSettingsComponent implements OnInit {
   btnYes='Yes';
   btnNo='No';
   autoRenewalBtn='Yes';
-  autRenewalInd=0;
+  autRenewalInd =0;
   title='Account Setting';
   UploadFile='Choose New Image';
   autorenewalstatuschanged="Auto-renewal status changed.";
@@ -98,7 +100,7 @@ export class AccountSettingsComponent implements OnInit {
   uploadSubmitBtnText = '';
   fileUploadProcessing = false;
   subCancelBtn =true;
-  dectLanguage='en';
+  dectLanguage ='en';
   constructor(
     private commonService: CommonService,
     private authService: AuthService,
@@ -110,8 +112,9 @@ export class AccountSettingsComponent implements OnInit {
     public toastr: ToastrManager,
     private loadingBar: LoadingBarService,
     private sanitizer: DomSanitizer,
-	private titleService: Title,
-	private meta: Meta
+	  private titleService: Title,
+    private meta: Meta,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -266,7 +269,7 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   refreshTranslation(){
-    
+
     this.translate.get('Somethingwentwrong').subscribe(value => {
       this.defaulterrSomethingMsg = value;
     });
@@ -612,23 +615,25 @@ export class AccountSettingsComponent implements OnInit {
       }
     });
   }
+  bullseyePro1() {
 
+  }
   bullseyePro() {
-  
+
     const objectType = this;
 	this.loading = true;
 	objectType.subCancelBtn = true;
 	objectType.totalRemainingDays = objectType.totalDisplayPer = objectType.totalSubsPlanDays = 0;
 	objectType.isAddPro =  objectType.isProRemainDays = false;
     this.loadingBar.start();
-    
+
 	this.authService.getMySubscription(function(err, response) {
 
-     
+
       objectType.loading = false;
         objectType.loadingBar.stop();
         if (err) {
-          
+
           objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {
             autoDismiss: true,
             maxOpened: 1,
@@ -648,8 +653,7 @@ export class AccountSettingsComponent implements OnInit {
 				  objectType.isSubsChecked = (response.data.data.autoRenew !== undefined && response.data.data.autoRenew != null) ? ((response.data.data.autoRenew === 'on') ? true : false) : false;
 				  objectType.isAddPro = false;
 				  objectType.isProRemainDays = true;
-				  objectType.btnText = objectType.autoRenewalBtn;
-
+          objectType.btnText = objectType.autoRenewalBtn;
 				//  setTimeout(() => {
 
 					 objectType.totalSubsPlanDays =
@@ -657,7 +661,24 @@ export class AccountSettingsComponent implements OnInit {
 					 objectType.totalRemainingDays =
 				  (response.data.data.remainingDays !== undefined && response.data.data.remainingDays != null) ? response.data.data.remainingDays : 0;
 				  objectType.totalDisplayPer = Math.round((objectType.totalRemainingDays / objectType.totalSubsPlanDays) * 100);
-				// }, 200);
+        // }, 200);
+
+        const langText = (objectType.totalRemainingDays>1)?objectType.DAYSLEFT:objectType.DAYLEFT;
+        const dialogConfig = new MatDialogConfig();
+        debugger;
+        dialogConfig.data = {totalRemainingDays:objectType.totalRemainingDays, totalDisplayPer: objectType.totalDisplayPer,DAYSLEFT:langText };
+        // dialogConfig.height = '400px';
+        dialogConfig.width = '650px';
+        dialogConfig.maxWidth = '100%';
+        dialogConfig.maxHeight = 'none';
+        const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(value => {
+          console.log(`Dialog sent: ${value}`);
+        });
+
+
+
 			   }
 
 		  } else {
@@ -746,7 +767,7 @@ export class AccountSettingsComponent implements OnInit {
 	const objectType = this;
 	if (this.btnText === this.processingTxt) {
       return;
-	} 
+	}
     this.btnText = this.processingTxt;
     this.loading = true;
     this.loadingBar.start();
@@ -844,3 +865,4 @@ export class AccountSettingsComponent implements OnInit {
       });
   }
 }
+

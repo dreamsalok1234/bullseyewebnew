@@ -18,6 +18,7 @@ import { NewsService } from '../_services/news.service';
 import { ChatService } from '../_services/chat.service';
 import { TickerService } from '../_services/ticker.service';
 import { GlobalService } from '../_services/global.service';
+import { ProdialogComponent } from './prodialog/prodialog.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -28,7 +29,7 @@ import { GlobalService } from '../_services/global.service';
     Ng2TelInputModule,
     NgbModule
   ],
-  declarations: [HomeComponent,PortfolioDetailsComponent,TickerDetailsComponent,HeaderComponent, FooterComponent],
-  providers: [PortfolioService, WatchlistService, InvestmentService,AuthService,NewsService, ChatService, TickerService,GlobalService]
+  declarations: [HomeComponent, PortfolioDetailsComponent, TickerDetailsComponent, HeaderComponent, FooterComponent],
+  providers: [PortfolioService, WatchlistService, InvestmentService, AuthService, NewsService, ChatService, TickerService, GlobalService]
 })
 export class HomeModule { }

@@ -15,6 +15,8 @@ import { CommonService } from './_services/common.service';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ProdialogComponent } from './home/prodialog/prodialog.component';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -36,7 +38,9 @@ export const createTranslateLoader = (http: HttpClient) => {
         ToastrModule.forRoot(),
 		LoadingBarModule,
         LoadingBarRouterModule,
-        NgCircleProgressModule,
+        MatDialogModule,
+        NgCircleProgressModule.forRoot({}),
+
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -46,8 +50,9 @@ export const createTranslateLoader = (http: HttpClient) => {
         }),
         AppRoutingModule
     ],
-    declarations: [AppComponent],
-    providers: [AuthGuard, GlobalService,CommonService],
-    bootstrap: [AppComponent]
+    declarations: [AppComponent, ProdialogComponent],
+    providers: [AuthGuard, GlobalService, CommonService],
+    bootstrap: [AppComponent],
+    entryComponents: [ProdialogComponent]
 })
 export class AppModule {}
