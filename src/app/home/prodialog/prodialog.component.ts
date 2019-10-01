@@ -24,8 +24,8 @@ export class ProdialogComponent {
   totalRemainingDays = 0;
   totalDisplayPer = 0;
   activePro = 'active';
-  isAddPro = true;
-  isProRemainDays = true;
+  isAddPro = false;
+  isProRemainDays = false;
   subCancelBtn = 1;
 
 
@@ -84,6 +84,8 @@ export class ProdialogComponent {
     this.totalRemainingDays = data.totalRemainingDays;
     this.totalDisplayPer = data.totalDisplayPer;
     this.DAYSLEFT = data.DAYSLEFT;
+    this.isProRemainDays = data.isProRemainDays;
+    this.isAddPro = data.isAddPro;
 
 
   }
@@ -314,7 +316,7 @@ export class ProdialogComponent {
       if (!this.subCancelBtn) {
         this.modalService.dismissAll();
         this.close();
-       window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank');
+        window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank');
       } else {
         this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
           'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
@@ -322,7 +324,6 @@ export class ProdialogComponent {
         this.isProRemainDays = false;
         this.isAddPro = true;
         this.modalService.dismissAll();
-        this.close();
       }
     }
     private getDismissReason(reason: any): string {

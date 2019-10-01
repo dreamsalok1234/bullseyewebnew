@@ -41,6 +41,13 @@
   </ng-template>
 </div>
 
+      <!-- Add Pro -->
+      <div class="bullseyepropopup" *ngIf="isAddPro">
+        <button type="button" class="close" aria-label="Close" (click)="proClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <iframe [src]="subscriptionUrl" width="100%"></iframe>
+      </div>
 
   <div class="count_down" *ngIf="isProRemainDays">
     <div class="round_prog">

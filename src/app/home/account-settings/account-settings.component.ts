@@ -663,10 +663,10 @@ export class AccountSettingsComponent implements OnInit {
 				  objectType.totalDisplayPer = Math.round((objectType.totalRemainingDays / objectType.totalSubsPlanDays) * 100);
         // }, 200);
 
-        const langText = (objectType.totalRemainingDays>1)?objectType.DAYSLEFT:objectType.DAYLEFT;
+        const langText = (objectType.totalRemainingDays>1)?objectType.DAYSLEFT :objectType.DAYLEFT;
         const dialogConfig = new MatDialogConfig();
-        
-        dialogConfig.data = {totalRemainingDays:objectType.totalRemainingDays, totalDisplayPer: objectType.totalDisplayPer,DAYSLEFT:langText };
+
+        dialogConfig.data = {totalRemainingDays: objectType.totalRemainingDays, totalDisplayPer: objectType.totalDisplayPer, DAYSLEFT: langText, isProRemainDays: objectType.isProRemainDays, isAddPro: objectType.isAddPro };
         // dialogConfig.height = '400px';
         dialogConfig.width = '650px';
         dialogConfig.maxWidth = '100%';
