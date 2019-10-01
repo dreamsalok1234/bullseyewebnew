@@ -1,6 +1,47 @@
+
+
+
 <div mat-dialog-title><button class="close pull-right" (click)="close()"><span aria-hidden="true">&times;</span></button></div>
 
 <mat-dialog-content>
+  
+  
+  <div class="card-body">
+  <ng-template #confirmicontent let-c="close" let-d="dismiss" class="newclass">
+<div class="pro-modal-content">   
+   <div class="modal-body">
+      <p>{{modelText|translate}}</p>
+    </div>
+    <div class="modal-footer" *ngIf="autRenewalInd==0 || autRenewalInd==1">
+      <button type="button" class="btn btn-success" (click)="changeAutoRenewal()">{{ btnYes | translate }}</button>
+      <button type="button" class="btn btn-danger" (click)="resetAutoRenewal();">{{ 'No' | translate }}</button>
+    </div>
+    <div class="modal-footer" *ngIf="autRenewalInd==2">
+      <button type="button" class="btn btn-success" (click)="cancelSubscription()">{{btnText}}</button>
+      <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'No' | translate }}</button>
+    </div>
+	</div>
+  </ng-template>
+  <ng-template #confirmisubupgrade let-c="close" let-d="dismiss">
+    <div class="pro-modal-content">
+	<div class="modal-header">
+      <h4 class="modal-title">{{ 'ManageSubscription' | translate }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{ 'Areyousureyouwanttochangeyoursubscriptionplan' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="gotoUpgradeUrl()">{{ 'Confirm' | translate }}</button>
+      <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'Cancel' | translate }}</button>
+    </div>
+	</div>
+  </ng-template>
+</div>
+
+
   <div class="count_down" *ngIf="isProRemainDays">
     <div class="round_prog">
       <span class="prg_txt">
@@ -38,6 +79,7 @@
         class="custom-btn">{{ 'Cancel Subscription' | translate }}</a>
     </div>
   </div>
+  
 </mat-dialog-content>
 <mat-dialog-actions>
   

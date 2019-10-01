@@ -1549,6 +1549,14 @@ th.mat-header-cell {
   background-color: #673ab7;
 }
 
+.modal {
+    z-index: 99999;
+}
+
+.modal .pro-modal-content {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 .mat-progress-bar {
   &.mat-accent {
     .mat-progress-bar-background {
