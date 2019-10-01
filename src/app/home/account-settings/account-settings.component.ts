@@ -665,7 +665,7 @@ export class AccountSettingsComponent implements OnInit {
 
         const langText = (objectType.totalRemainingDays>1)?objectType.DAYSLEFT:objectType.DAYLEFT;
         const dialogConfig = new MatDialogConfig();
-        debugger;
+        
         dialogConfig.data = {totalRemainingDays:objectType.totalRemainingDays, totalDisplayPer: objectType.totalDisplayPer,DAYSLEFT:langText };
         // dialogConfig.height = '400px';
         dialogConfig.width = '650px';

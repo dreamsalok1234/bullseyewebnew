@@ -58,6 +58,10 @@ export class ProdialogComponent {
   newclass = 'new';
 
 
+  curr_array = [];
+  fileUrl: any;
+
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ProdialogComponent>,
@@ -82,7 +86,110 @@ export class ProdialogComponent {
     this.DAYSLEFT = data.DAYSLEFT;
 
 
-	}
+  }
+
+
+  ngOnInit() {
+    // this.meta.removeTag('name=title');
+    // this.meta.removeTag('name=description');
+    // this.titleService.setTitle(this.title);
+      /* Get All Static Currency*/
+      try {
+        this.curr_array = this.commonService.getCurrency();
+      } catch (error) {}
+      /* Check Token */
+      if (
+        (localStorage.getItem('userProfileInfo') === '' ||
+          localStorage.getItem('userProfileInfo') === undefined ||
+          localStorage.getItem('userProfileInfo') === null) &&
+        (localStorage.getItem('userAccessToken') === '' ||
+          localStorage.getItem('userAccessToken') === undefined ||
+          localStorage.getItem('userAccessToken') === null)
+      ) {
+        this.router.navigate(['/login']);
+      }
+
+      this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
+
+    this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
+      this.translate.setDefaultLang('en');
+      const browserLang =
+        this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '' && this.profileInfo.defaultLanguage != null
+          ? this.profileInfo.defaultLanguage
+          : 'en';
+    this.dectLanguage = browserLang;
+      this.accessToken = localStorage.getItem('userAccessToken');
+      this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
+      );
+    if (this.profileInfo.img !== '' && this.profileInfo.img !== undefined) {
+      this.fileUrl = this.profileInfo.img;
+    }
+
+      /* if (this.profileInfo.isProAccount) {
+        this.isAddPro = false;
+        this.isProRemainDays = true;
+        this.totalRemainingDays =
+        this.profileInfo.remainingDays !== undefined && this.profileInfo.remainingDays != null ? this.profileInfo.remainingDays : 0;
+      } else {
+        this.isProRemainDays = false;
+        this.isAddPro = true;
+      } */
+      /*  Set Language Translator */
+
+
+      this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
+      this.refreshTranslation();
+
+
+
+
+
+      const objectTypeNew = this;
+    }
+
+    refreshTranslation() {
+
+      this.translate.get('Somethingwentwrong').subscribe(value => {
+        this.defaulterrSomethingMsg = value;
+      });
+
+      this.translate.get('Processing...').subscribe(value => {
+        this.processingTxt = value;
+      });
+
+
+      this.translate.get('areYouSureWantToRenewOn').subscribe(value => {
+          this.areYouSureWantToRenewOn = value;
+      });
+      this.translate.get('areYouSureWantToRenewOff').subscribe(value => {
+          this.areYouSureWantToRenewOff = value;
+        });
+      this.translate.get('areYouSureWantToCancel').subscribe(value => {
+          this.areYouSureWantToCancel = value;
+        });
+      this.translate.get('Areyousureyouwanttodeleteaccount').subscribe(value => {
+          this.Areyousureyouwanttodeleteaccount = value;
+        });
+      this.translate.get('Yes').subscribe(value => {
+        this.btnYes = this.btnText = value;
+        });
+      this.translate.get('No').subscribe(value => {
+        this.btnNo = value;
+        });
+      this.translate.get('Autorenewalstatuschanged').subscribe(value => {
+          this.autorenewalstatuschanged = value;
+        });
+      this.translate.get('Subscriptionplansuccessfullycancelled').subscribe(value => {
+          this.subscriptionplansuccessfullycancelled = value;
+        });
+      this.translate.get('DAYS LEFT').subscribe(value => {
+          this.DAYSLEFT = value;
+        });
+      this.translate.get('DAY LEFT').subscribe(value => {
+          this.DAYLEFT = value;
+        });
+    }
 	close() {
 		this.dialogRef.close('Thanks for using me!');
     }
@@ -146,7 +253,7 @@ export class ProdialogComponent {
     this.translate.get('areYouSureWantToCancel').subscribe(value => {
       this.modelText = value;
     });
-    this.translate.get('processingTxt').subscribe(value => {
+    this.translate.get('Processing...').subscribe(value => {
       this.processingTxt = value;
     });
     this.translate.get('Yes').subscribe(value => {
@@ -164,6 +271,7 @@ export class ProdialogComponent {
     if (this.btnText === this.processingTxt) {
         return;
     }
+
       this.btnText = this.processingTxt;
       this.loading = true;
       this.loadingBar.start();
@@ -186,7 +294,7 @@ export class ProdialogComponent {
             localStorage.setItem('userProfileInfo', JSON.stringify(objectType.profileInfo));
         objectType.activePro = 'closed';
             objectType.modalService.dismissAll();
-        window.location.reload();
+            window.location.reload();
       } else {
           objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
         }
@@ -202,15 +310,19 @@ export class ProdialogComponent {
     }
     gotoUpgradeUrl() {
       const objectType = this;
+
       if (!this.subCancelBtn) {
         this.modalService.dismissAll();
-       window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank'); } else {
+        this.close();
+       window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank');
+      } else {
         this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
           'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
         );
         this.isProRemainDays = false;
         this.isAddPro = true;
         this.modalService.dismissAll();
+        this.close();
       }
     }
     private getDismissReason(reason: any): string {
