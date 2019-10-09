@@ -32,7 +32,7 @@ export class TickerDetailsComponent implements OnInit {
 	tickerListData: any = [];
 	currencyList = [];
 	currencyItemList: any = [];
-	benkMarchList:any=[];
+	benkMarchList:any= [];
 	currencyPriceList = {};
 	watchListCurrency = 'USD';
 	formData:any={};
@@ -55,50 +55,50 @@ export class TickerDetailsComponent implements OnInit {
 	loading = false;
 	processingText = 'blurTdetails';
 	priceAlert: any = {'currentCurrency': 'USD', 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol' : '', 'compare' : '>', 'expiryDate' : '','tickerIcon':''};
-	riskPerformanceArray: any = {'tickerId': '', 'tickerName': '', 'symbol' : '','tickerIcon':'','potentialST':'1','potentialMT':'1','potentialLT':'1','riskVolality':'3','riskFundamentals':'1','benkMarchIndex':'0'};
+	riskPerformanceArray: any = {'tickerId': '', 'tickerName': '', 'symbol' : '', 'tickerIcon': '', 'potentialST': '1', 'potentialMT': '1', 'potentialLT': '1', 'riskVolality': '3', 'riskFundamentals': '1', 'benkMarchIndex': '0'};
     priceAlertError: any = {'amount' : false, 'expiryDate' : false};
     datepicker: any;
-	defaulterrSomethingMsg='Something went wrong';
-	processingTxt='Processing...';
-	CandlestickText="Candlestick";
-	noChartDataText="No chart data available.";
-	title='BullsEye Investors | Investment Details';
-	tickerNIcon='../assets/images/not-found.png';
-	targetPriceisRequiredMsg="Target Price is required!";
-	PriceTo3DecimalPlacesMsg="Price should be to 3 decimal place";
-	expiryDateisRequiredMsg="Expiry Date is required!";
-	tickerAlreadyAddedToYourWatchlist="Ticker already added to your watchlist";
-	getBenchMark=false;
-	potentialId="0";
-	investmentId="0";
-	saveRiskText="Save";
-	saveRiskBtnText="Save";
-	riskEnditiorStatus=false;
-	shortTerm="1";
-	mediumTerm="1";
-	longTerm="1"
-	voladility="3";
-	fundamentals="1";
-	alphaMarketId="0";
-	dateText="Date";
-	timeText = "Time";
-	valueText="Value";
-	chartValue ="Price";
-	volumeText = "Volume";
-	currencyText="Currency";
-	priceText="Price";
-	closeText="Close";
-	openText="Open";
-	lowText="LOW";
-	highText="HIGH";
+	defaulterrSomethingMsg = 'Something went wrong';
+	processingTxt = 'Processing...';
+	CandlestickText = 'Candlestick';
+	noChartDataText = 'No chart data available.';
+	title = 'BullsEye Investors | Investment Details';
+	tickerNIcon = '../assets/images/not-found.png';
+	targetPriceisRequiredMsg = 'Target Price is required!';
+	PriceTo3DecimalPlacesMsg = 'Price should be to 3 decimal place';
+	expiryDateisRequiredMsg = 'Expiry Date is required!';
+	tickerAlreadyAddedToYourWatchlist = 'Ticker already added to your watchlist';
+	getBenchMark = false;
+	potentialId = '0';
+	investmentId = '0';
+	saveRiskText = 'Save';
+	saveRiskBtnText = 'Save';
+	riskEnditiorStatus = false;
+	shortTerm = '1';
+	mediumTerm = '1';
+	longTerm = '1';
+	voladility = '3';
+	fundamentals = '1';
+	alphaMarketId = '0';
+	dateText = 'Date';
+	timeText = 'Time';
+	valueText = 'Value';
+	chartValue = 'Price';
+	volumeText = 'Volume';
+	currencyText = 'Currency';
+	priceText = 'Price';
+	closeText = 'Close';
+	openText = 'Open';
+	lowText = 'LOW';
+	highText = 'HIGH';
 	cryptoMaxValue = 0;
 	cryptoMinValue = 0;
-	limitsize=30;
+	limitsize = 30;
 	chartActionType = 'graphDisplay';
-	chartDataObject : any;
-	smaChartData : any;
+	chartDataObject: any;
+	smaChartData: any;
 	shortingTab = '1D';
-	shortZone = "GMT";
+	shortZone = 'GMT';
     constructor(
 			private translate: TranslateService,
 			private commonService: CommonService,
@@ -111,44 +111,46 @@ export class TickerDetailsComponent implements OnInit {
 			private meta: Meta,
 			private activeRoute: ActivatedRoute,
 	) {}
-	
-	
+
+
     ngOnInit() {
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
-		
-    	if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined  || localStorage.getItem('tickerCurrency')==null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null))
+
+    	if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined  || localStorage.getItem('tickerCurrency') == null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
     		this.router.navigate(['/login']);
-		
+					}
+
 		this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
-		if(this.activeRoute.snapshot.queryParams){
-			
-			if(this.activeRoute.snapshot.params.pname!=undefined && this.activeRoute.snapshot.params.pname!=null && this.activeRoute.snapshot.params.username!=undefined && this.activeRoute.snapshot.params.username!=null){
-				if(this.activeRoute.snapshot.params.pname!=localStorage.getItem('tickerSymbol') || this.activeRoute.snapshot.params.username!=localStorage.getItem('tickerName'))
-					this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
+		if (this.activeRoute.snapshot.queryParams) {
+
+			if (this.activeRoute.snapshot.params.pname !== undefined && this.activeRoute.snapshot.params.pname != null && this.activeRoute.snapshot.params.username !== undefined && this.activeRoute.snapshot.params.username != null) {
+				if (this.activeRoute.snapshot.params.pname !== localStorage.getItem('tickerSymbol') || this.activeRoute.snapshot.params.username !== localStorage.getItem('tickerName')) {
+					this.router.navigate(['/home/' + localStorage.getItem('loginUserName')]);
+				}
+			} else {
+				this.router.navigate(['/home/' + localStorage.getItem('loginUserName')]);
 			}
-			else
-				this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
+		} else {
+			this.router.navigate(['/home/' + localStorage.getItem('loginUserName')]);
 		}
-		else
-			this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
-		
-		this.title="BullsEye Investors"+ ((localStorage.getItem('tickerName')!= undefined && localStorage.getItem('tickerName')!=null && localStorage.getItem('tickerName')!="")?" | " +localStorage.getItem('tickerName'):"")+((localStorage.getItem('tickerSymbol')!=undefined && localStorage.getItem('tickerSymbol')!=null && localStorage.getItem('tickerSymbol')!="")?" | " + localStorage.getItem('tickerSymbol') :"");
+
+		this.title = 'BullsEye Investors' + ((localStorage.getItem('tickerName') !== undefined && localStorage.getItem('tickerName') != null && localStorage.getItem('tickerName') !== '') ? ' | ' + localStorage.getItem('tickerName') : '') + ((localStorage.getItem('tickerSymbol') !== undefined && localStorage.getItem('tickerSymbol') != null && localStorage.getItem('tickerSymbol') !== '') ? ' | ' + localStorage.getItem('tickerSymbol') : '');
 		this.titleService.setTitle(this.title);
 
 		/*Set Risk Indicators*/
-		this.riskEnditiorStatus=((localStorage.getItem('pageTickerRequest')=="portfolio-details"))?true:false;
-		if(this.riskEnditiorStatus){
+		this.riskEnditiorStatus = ((localStorage.getItem('pageTickerRequest') === 'portfolio-details')) ? true : false;
+		if (this.riskEnditiorStatus) {
 
-			this.shortTerm=(localStorage.getItem('shortTerm')=="")? "1":localStorage.getItem('shortTerm');
-			this.mediumTerm=((localStorage.getItem('mediumTerm')=="")?"1":(parseInt(localStorage.getItem('mediumTerm')) /2).toString());
-			this.longTerm=((localStorage.getItem('longTerm')=='')?'1':(parseInt(localStorage.getItem('longTerm'))/3).toString());
-			this.voladility=(localStorage.getItem('voladility') =='')?'3':localStorage.getItem('voladility');
-			this.fundamentals=(localStorage.getItem('fundamentals')=='')?'1':localStorage.getItem('fundamentals');
-			this.alphaMarketId=(localStorage.getItem('alphaMarketId') =='')?'':localStorage.getItem('alphaMarketId');
+			this.shortTerm = (localStorage.getItem('shortTerm') === '') ? '1' : localStorage.getItem('shortTerm');
+			this.mediumTerm = ((localStorage.getItem('mediumTerm') === '') ? '1' : (parseInt(localStorage.getItem('mediumTerm')) / 2).toString());
+			this.longTerm = ((localStorage.getItem('longTerm') === '') ? '1' : (parseInt(localStorage.getItem('longTerm')) / 3).toString());
+			this.voladility = (localStorage.getItem('voladility') === '') ? '3' : localStorage.getItem('voladility');
+			this.fundamentals = (localStorage.getItem('fundamentals') === '') ? '1' : localStorage.getItem('fundamentals');
+			this.alphaMarketId = (localStorage.getItem('alphaMarketId') === '') ? '' : localStorage.getItem('alphaMarketId');
 
-			this.potentialId=localStorage.getItem('potentialId');
-			this.investmentId= localStorage.getItem('investmentId');
+			this.potentialId = localStorage.getItem('potentialId');
+			this.investmentId = localStorage.getItem('investmentId');
 		}
 
 
@@ -156,28 +158,28 @@ export class TickerDetailsComponent implements OnInit {
 		 /* Set Language Translator */
 		this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
 		this.translate.setDefaultLang('en');
-		const browserLang = (this.profileInfo.defaultLanguage!= undefined && this.profileInfo.defaultLanguage!='')?this.profileInfo.defaultLanguage :'en';
+		const browserLang = (this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '') ? this.profileInfo.defaultLanguage : 'en';
 		this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
 		this.translate.get('Somethingwentwrong').subscribe(value => {
-			this.defaulterrSomethingMsg =value;
+			this.defaulterrSomethingMsg = value;
 		});
 		this.translate.get('Processing...').subscribe(value => {
-			this.processingTxt=value;
+			this.processingTxt = value;
 		});
 		this.translate.get('Candlestick').subscribe(value => {
-			this.CandlestickText=value;
+			this.CandlestickText = value;
 		});
 		this.translate.get('Nochartdataavailable').subscribe(value => {
-			this.noChartDataText =value;
+			this.noChartDataText = value;
 		});
 		this.translate.get('TargetPriceisRequired').subscribe(value => {
-			this.targetPriceisRequiredMsg=value;
+			this.targetPriceisRequiredMsg = value;
 		});
 		this.translate.get('ExpiryDateisrequired').subscribe(value => {
-			this.expiryDateisRequiredMsg =value;
+			this.expiryDateisRequiredMsg = value;
 		});
 		this.translate.get('Priceto3decimalplaces').subscribe(value => {
-			this.PriceTo3DecimalPlacesMsg= value;
+			this.PriceTo3DecimalPlacesMsg = value;
 		});
 		/* Get All Static Currency*/
 		try {
@@ -208,48 +210,48 @@ export class TickerDetailsComponent implements OnInit {
 			});
 			this.currencyList = newKeys;
 		}
-		const objectNtype=this;
+		const objectNtype = this;
 		/* Chart Call */
 		setTimeout(() => {
 			objectNtype.translate.get('Date').subscribe(value => {
-				objectNtype.dateText=value;
+				objectNtype.dateText = value;
 			});
 			objectNtype.translate.get('value').subscribe(value => {
-				objectNtype.valueText=value;
+				objectNtype.valueText = value;
 			});
 			objectNtype.translate.get('Currency').subscribe(value => {
-				objectNtype.currencyText=value;
+				objectNtype.currencyText = value;
 			});
 			objectNtype.translate.get('Close').subscribe(value => {
-				objectNtype.closeText=value;
+				objectNtype.closeText = value;
 			});
 			objectNtype.translate.get('Open').subscribe(value => {
-				objectNtype.openText= value;
+				objectNtype.openText = value;
 			});
 			objectNtype.translate.get('Low').subscribe(value => {
-				objectNtype.lowText=value;
+				objectNtype.lowText = value;
 			});
 			objectNtype.translate.get('High').subscribe(value => {
-				objectNtype.highText =value;
+				objectNtype.highText = value;
 			});
 			objectNtype.translate.get('Price').subscribe(value => {
-				objectNtype.priceText =value;
+				objectNtype.priceText = value;
 			});
 			objectNtype.translate.get('Tickeralreadyaddedtoyourwatchlist').subscribe(value => {
-				objectNtype.tickerAlreadyAddedToYourWatchlist= value;
+				objectNtype.tickerAlreadyAddedToYourWatchlist = value;
 			});
 			objectNtype.getTickerDetails();
 			objectNtype.getChartData(3, 'M', 2);
 			if (objectNtype.tickerType.toLowerCase() === 'crypto' || objectNtype.tickerType.toLowerCase() === 'cryptocurrency') {
 				objectNtype.getCrypto1YearHighLow();
 			}
-			
+
 			objectNtype.filterExchangeItem();
-		},1000);
+		}, 1000);
 
     }
 	getCurrencyMarketValueOld(finalPrice) {
-	  finalPrice=(finalPrice!='' && finalPrice!=undefined)?parseFloat(finalPrice):0;
+	  finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
 	  if (finalPrice > 1000000) {
 		    let douValue = finalPrice / 1000000;
             let  sy = 'm';
@@ -257,25 +259,24 @@ export class TickerDetailsComponent implements OnInit {
                 sy = 'b';
                 douValue = douValue / 1000;
             }
-			const douValue1=(this.tickerType.toLowerCase() === 'stock')?douValue.toFixed(2):douValue.toFixed(3);
-			return this.formatNumber(douValue1)+sy;
+			const douValue1 = (this.tickerType.toLowerCase() === 'stock') ? douValue.toFixed(2) : douValue.toFixed(3);
+			return this.formatNumber(douValue1) + sy;
        } else {
-		   finalPrice=parseInt(finalPrice);
+		   finalPrice = parseInt(finalPrice);
 		   return this.formatNumber(finalPrice);
 	   }
     }
-    getMinMax(arr, prop, type= "low") {
+    getMinMax(arr, prop, type= 'low') {
 	    let max;
 
-	    if(type == "low") {
-	    	for (let i=0 ; i<arr.length ; i++) {
+	    if (type === 'low') {
+	    	for (let i = 0 ; i < arr.length ; i++) {
 	        	if (!max || parseFloat(arr[i][prop]) < parseFloat(max.low)) {
 	            	max = arr[i];
 										}
 	    	}
-	    }
-	    else{
-		    for (let i=0 ; i<arr.length ; i++) {
+	    } else {
+		    for (let i = 0 ; i < arr.length ; i++) {
 		        if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high)) {
 		            max = arr[i];
 										}
@@ -304,17 +305,17 @@ export class TickerDetailsComponent implements OnInit {
 
 					     objectType.tickerListData = response.data[0].historyData.currentDayData;
 					     if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
-					     	if(objectType.cryptoMaxValue != 0 ) {
+					     	if (objectType.cryptoMaxValue !== 0 ) {
 					     		objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
 					     		objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
 					     	} else {
 					     		objectType.getCrypto1YearHighLow();
 											}
 					     }
-						 objectType.tickerDetailsCurrency=<any>response.data[0].historyData.currentDayData.currency;
-						 const icon=response.data[0].historyData.currentDayData.tickerUrl;
-						 if(icon!=='' && icon!==undefined) {
-							objectType.tickerNIcon=response.data[0].historyData.currentDayData.tickerUrl;
+						 objectType.tickerDetailsCurrency = <any>response.data[0].historyData.currentDayData.currency;
+						 const icon = response.data[0].historyData.currentDayData.tickerUrl;
+						 if (icon !== '' && icon !== undefined) {
+							objectType.tickerNIcon = response.data[0].historyData.currentDayData.tickerUrl;
 							}
 					}
 				} else {
@@ -341,9 +342,9 @@ export class TickerDetailsComponent implements OnInit {
 				objectType.tickerDataText = '';
 				const keys = [];
 				const candleStickData = [];
-				let data = [];
-				let max = objectType.getMinMax(response.data.Data, 'high', 'high');
-    			let min = objectType.getMinMax(response.data.Data, 'low', 'low');
+				const data = [];
+				const max = objectType.getMinMax(response.data.Data, 'high', 'high');
+    			const min = objectType.getMinMax(response.data.Data, 'low', 'low');
 
     			objectType.cryptoMaxValue = max.high;
     			objectType.cryptoMinValue = min.low;
@@ -368,11 +369,11 @@ export class TickerDetailsComponent implements OnInit {
 		this.tickerListData = tickerListDataData;
 		this.loadingBar.stop();
    }
-   getCurrencyValue(price,currency,keyType) {
+   getCurrencyValue(price, currency, keyType) {
     	/* const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
 		const keyType = (key === 'price') ? false : true; */
     	// const currency = watchListData.currency;
-    	return this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency,keyType);
+    	return this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency, keyType);
    }
    /* getCurrencyMarketValue(finalPrice, key = 'price') {
       if (finalPrice >= 1000000 && finalPrice <= 999999999) {
@@ -386,11 +387,11 @@ export class TickerDetailsComponent implements OnInit {
 		    this.currencyType = '';
 	  }
     } */
-	getCurrencyMarketValue(price,currency, key = 'price') {
+	getCurrencyMarketValue(price, currency, key = 'price') {
       /* const price = (key === 'price') ? itemData.price : itemData.marketCap;
       const currency = itemData.currency; */
 	  const keyType = (key === 'price') ? false : true;
-	  const finalPrice =  this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency,keyType);
+	  const finalPrice =  this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency, keyType);
 	   if (finalPrice > 1000000) {
 		    let douValue = finalPrice / 1000000;
             let  sy = 'm';
@@ -418,38 +419,38 @@ export class TickerDetailsComponent implements OnInit {
 		this.loadingBar.stop();
 	}
 
-	getExtraSMA(){
+	getExtraSMA() {
 		// setting date range in sma case
 		let limit = 0;
-		if(this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200){
+		if (this.filterModel.searchCriteria === 50 || this.filterModel.searchCriteria === 100 || this.filterModel.searchCriteria === 200) {
 			if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 				switch (this.filterModel.searchCriteria) {
-					case "50": { 
-						limit += 50 
-						break; 
-					} 
-					case "100": { 
-						limit += 100 
-						break; 
+					case '50': {
+						limit += 50;
+						break;
 					}
-					case "200": { 
-						limit += 200 
-						break; 
+					case '100': {
+						limit += 100;
+						break;
+					}
+					case '200': {
+						limit += 200;
+						break;
 					}
 				}
 			} else {
 				switch (this.filterModel.searchCriteria) {
-					case "50": { 
-						limit += 80 
-						break; 
-					} 
-					case "100": { 
-						limit += 150 
-						break; 
+					case '50': {
+						limit += 80;
+						break;
 					}
-					case "200": { 
-						limit += 295 
-						break; 
+					case '100': {
+						limit += 150;
+						break;
+					}
+					case '200': {
+						limit += 295;
+						break;
 					}
 				}
 			}
@@ -457,7 +458,7 @@ export class TickerDetailsComponent implements OnInit {
 		return limit;
 	}
 	getChartData(num, type, clickind) {
-		//debugger;
+		// debugger;
 		const objectType = this;
 		this.activeTab = 'active';
 		this.indMap = clickind;
@@ -468,7 +469,7 @@ export class TickerDetailsComponent implements OnInit {
 		objectType.loadingBar.start();
 		if (this.tickerType !== '' && this.tickerName !== '' && this.tickerSymbol !== '' && this.tickerDetailsCurrency !== '' && this.num !== '' && this.type !== '') {
 
-			if( this.type === 'D' ) {
+			if ( this.type === 'D' ) {
 				this.shortingTab = '1D';
 				// this.filterModel.searchCriteria = 0;
 				this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
@@ -510,10 +511,10 @@ export class TickerDetailsComponent implements OnInit {
 							if (response.data.intraday !== undefined && Object.keys(response.data.intraday).length > 0) {
 
 								data = response.data.intraday;
-								let dataTimeZone = response.data.timezone_name;
+								const dataTimeZone = response.data.timezone_name;
 								Object.keys(data).map(function (key) {
 									const currentDateTime = new Date(key);
-									let shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
+									const shortZone = currentDateTime.toLocaleTimeString('en-us', {timeZoneName: 'short', timeZone: dataTimeZone}).split(' ')[2];
 									keys.push({ date: new Date(key), shortZone: shortZone, currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
 
 									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
@@ -562,11 +563,11 @@ export class TickerDetailsComponent implements OnInit {
 					let mm = (m <= 9 ) ? ('0' + m) : m;
 					let dd = (day <= 9 ) ? ('0' + day) : day;
 					const dateTo = y + '-' + mm + '-' + dd;
-					
+
 					const num = parseInt(this.num);
 					let limit = (this.type === 'M') ? (num * 30) : (num * 365);
-					let extraSMA   = this.getExtraSMA();
-					limit = limit+extraSMA;
+					const extraSMA   = this.getExtraSMA();
+					limit = limit + extraSMA;
 
 					d.setDate(d.getDate() - limit);
 					m = d.getUTCMonth();
@@ -576,7 +577,7 @@ export class TickerDetailsComponent implements OnInit {
 					dd = (day <= 9 ) ? ('0' + day) : day;
 					const dateFrom = d.getUTCFullYear() + '-' + mm + '-' + dd;
 
-					
+
 
 					this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, limit, dateFrom, dateTo, function(err, response) {
 						if ( err ) {
@@ -589,19 +590,19 @@ export class TickerDetailsComponent implements OnInit {
 							const candleStickData = [];
 							let data = [];
 							let newData = [];
-							if(objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
+							if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 								if (response.data.Data !== undefined && response.data.Data.length > 0) {
 									data = response.data.Data;
-									
+
 									data.map(function(item) {
-										let getCurrentDateTime = new Date(item.time * 1000);
-										let y = getCurrentDateTime.getUTCFullYear();
+										const getCurrentDateTime = new Date(item.time * 1000);
+										const y = getCurrentDateTime.getUTCFullYear();
 										let m = getCurrentDateTime.getUTCMonth();
-										let day = getCurrentDateTime.getUTCDate();
+										const day = getCurrentDateTime.getUTCDate();
 										m = m + 1;
-										let mm = (m <= 9 ) ? ('0' + m) : m;
-										let dd = (day <= 9 ) ? ('0' + day) : day;
-										var currentDateTime = y + '-' + mm + '-' + dd;
+										const mm = (m <= 9 ) ? ('0' + m) : m;
+										const dd = (day <= 9 ) ? ('0' + day) : day;
+										const currentDateTime = y + '-' + mm + '-' + dd;
 										keys.push({date: new Date(item.time * 1000), currentDateTime: currentDateTime, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
 
 										// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
@@ -616,7 +617,7 @@ export class TickerDetailsComponent implements OnInit {
 									objectType.renderVolumeChart(newData);
 									objectType.renderCandleStickChartData(newData);
 									objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
-									objectType.renderCandleStickChartData(newData, 'normal','smachart');
+									objectType.renderCandleStickChartData(newData, 'normal', 'smachart');
 									objectType.renderChart(newData, 'normal', 'smachart');
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
@@ -625,14 +626,14 @@ export class TickerDetailsComponent implements OnInit {
 								if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
 									data = response.data.history;
 									Object.keys(data).map(function (key) {
-										let getCurrentDateTime = new Date(key);
-										let y = getCurrentDateTime.getUTCFullYear();
+										const getCurrentDateTime = new Date(key);
+										const y = getCurrentDateTime.getUTCFullYear();
 										let m = getCurrentDateTime.getUTCMonth();
-										let day = getCurrentDateTime.getUTCDate();
+										const day = getCurrentDateTime.getUTCDate();
 										m = m + 1;
-										let mm = (m <= 9 ) ? ('0' + m) : m;
-										let dd = (day <= 9 ) ? ('0' + day) : day;
-										var currentDateTime = y + '-' + mm + '-' + dd;
+										const mm = (m <= 9 ) ? ('0' + m) : m;
+										const dd = (day <= 9 ) ? ('0' + day) : day;
+										const currentDateTime = y + '-' + mm + '-' + dd;
 										keys.push({date : new Date(key), currentDateTime: currentDateTime, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0))});
 
 										// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
@@ -641,18 +642,18 @@ export class TickerDetailsComponent implements OnInit {
 									keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									});
-									
+
 									newData = keys.slice(objectType.filterModel.searchCriteria);
 									/* candleStickData.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 									}); */
-									
+
 									objectType.chartDataObject = newData;
 									objectType.renderChart(newData);
 									objectType.renderVolumeChart(newData);
 									objectType.renderCandleStickChartData(newData);
 									objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
-									objectType.renderCandleStickChartData(newData, 'normal','smachart');
+									objectType.renderCandleStickChartData(newData, 'normal', 'smachart');
 									objectType.renderChart(newData, 'normal', 'smachart');
 								} else {
 									objectType.tickerDataText = objectType.noChartDataText;
@@ -680,52 +681,52 @@ export class TickerDetailsComponent implements OnInit {
 	}
 
 
-	createAxisAndSeries(field,chart) {
-		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+	createAxisAndSeries(field, chart) {
+		const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.grid.template.location = 0;
 		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 35;
-		
-		let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100-day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200-day SMA: {SMA}`: "")));
 
-		let tooltipText =
-			this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
+		const extraParam = (this.filterModel.searchCriteria === 24) ? (`Volume: {volume}\n`) : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
+
+		const tooltipText =
+			this.dateText + `:` + ` {date}` + `\n` + ((this.shortingTab === '1D') ? this.timeText + `:` + ` {currentDateTime} {shortZone}` + `\n` : '') +
 			this.currencyText + `: {currency}\n` +
-			this.priceText + `: {close}\n`+extraParam;
-		if(field=="value"){
-			let series = chart.series.push(new am4charts.LineSeries());
-			series.dataFields.dateX = "date";
-			series.dataFields.valueY = "close";
+			this.priceText + `: {close}\n` + extraParam;
+		if (field === 'value') {
+			const series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = 'date';
+			series.dataFields.valueY = 'close';
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#00b050");
+			series.stroke = am4core.color('#00b050');
 
 			// let currency=this.chatDetailsCurrency;
 			series.tooltipText = tooltipText;
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
-			series.tooltip.background.fill = am4core.color("#00b050");
-		} else if(field=="chartwithSma"){
-			let series = chart.series.push(new am4charts.LineSeries());
-			series.dataFields.dateX = "date";
-			series.dataFields.valueY = "close";
+			series.tooltip.background.fill = am4core.color('#00b050');
+		} else if (field === 'chartwithSma') {
+			const series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = 'date';
+			series.dataFields.valueY = 'close';
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#00b050");
+			series.stroke = am4core.color('#00b050');
 			series.tooltipText = tooltipText;
 
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
-			series.tooltip.background.fill = am4core.color("#00b050");
-		} else if(field=="sma"){
-			let series = chart.series.push(new am4charts.LineSeries());
-			series.dataFields.dateX = "date";
-			series.dataFields.valueY = "SMA";
+			series.tooltip.background.fill = am4core.color('#00b050');
+		} else if (field === 'sma') {
+			const series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = 'date';
+			series.dataFields.valueY = 'SMA';
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#add8e6");
+			series.stroke = am4core.color('#add8e6');
 
-		} else if(field == 'candle') {
+		} else if (field === 'candle') {
 			const series = chart.series.push(new am4charts.CandlestickSeries());
 			series.dataFields.dateX = 'date';
 			series.dataFields.openValueY = 'open';
@@ -757,26 +758,26 @@ export class TickerDetailsComponent implements OnInit {
 			series.riseFromOpenState.properties.fill = am4core.color('#00b050');
 			series.riseFromOpenState.properties.stroke = am4core.color('#00b050');
 			series.tooltipText =
-			this.dateText+`: {date}\n`+
-			this.currencyText+`: {currency}\n`+
-			this.openText+`: {open}\n`+
-			this.closeText+`: {close}\n`+
+			this.dateText + `: {date}\n` +
+			this.currencyText + `: {currency}\n` +
+			this.openText + `: {open}\n` +
+			this.closeText + `: {close}\n` +
 			this.highText + `: {high}\n` +
-			this.lowText + `: {low}\n`+extraParam;
+			this.lowText + `: {low}\n` + extraParam;
 
 		}
-		if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
+		if (field === 'value' || field === 'chartwithSma' || field === 'sma') {
 			chart.cursor = new am4charts.XYCursor();
 			/* Set Chart Tooltip Dotted Line */
-			chart.cursor.lineX.stroke = am4core.color("#5a7e9e");
+			chart.cursor.lineX.stroke = am4core.color('#5a7e9e');
 			chart.cursor.lineX.strokeWidth = 1.5;
 			chart.cursor.lineX.strokeOpacity = 1;
-			chart.cursor.lineX.strokeDasharray = "";
+			chart.cursor.lineX.strokeDasharray = '';
 
-			chart.cursor.lineY.stroke = am4core.color("#5a7e9e");
+			chart.cursor.lineY.stroke = am4core.color('#5a7e9e');
 			chart.cursor.lineY.strokeWidth = 1;
 			chart.cursor.lineY.strokeOpacity = 1;
-			chart.cursor.lineY.strokeDasharray = "";
+			chart.cursor.lineY.strokeDasharray = '';
 		}
 	}
 
@@ -795,32 +796,32 @@ export class TickerDetailsComponent implements OnInit {
 		dateAxis.renderer.ticks.template.disabled = true;
 		dateAxis.renderer.labels.template.disabled = true;
 		dateAxis.tooltip.disabled = true;
-		if(chartType == 'chartdiv') {
-			this.createAxisAndSeries("value",chart);
+		if (chartType === 'chartdiv') {
+			this.createAxisAndSeries('value', chart);
 		} else {
-			this.createAxisAndSeries("chartwithSma",chart);
-			this.createAxisAndSeries("sma",chart);
+			this.createAxisAndSeries('chartwithSma', chart);
+			this.createAxisAndSeries('sma', chart);
 		}
 
 	}
 
 	renderVolumeChart(data, dataType = 'normal') {
-		
+
 		am4core.useTheme(am4themes_animated);
-		
+
 		const chart = am4core.create('volumechart', am4charts.XYChart);
 		chart.paddingRight = 20;
 
 		chart.data = data;
-		let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-		categoryAxis.dataFields.category = "currentDateTime";
+		const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = 'currentDateTime';
 		categoryAxis.renderer.grid.template.strokeOpacity = 0;
 		categoryAxis.renderer.labels.template.disabled = true;
 		categoryAxis.renderer.cellStartLocation = 0.2;
 		categoryAxis.renderer.cellEndLocation = 0.8;
 		categoryAxis.tooltip.disabled = true;
 
-		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.inside = true;
 		valueAxis.renderer.labels.template.fillOpacity = 0;
 		valueAxis.renderer.grid.template.strokeOpacity = 0;
@@ -831,21 +832,21 @@ export class TickerDetailsComponent implements OnInit {
 	    valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
-		//debugger;
-		let series = chart.series.push(new am4charts.ColumnSeries);
-		series.dataFields.valueY = "volume";
-		series.dataFields.categoryX = "currentDateTime";
-		series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
+		// debugger;
+		const series = chart.series.push(new am4charts.ColumnSeries);
+		series.dataFields.valueY = 'volume';
+		series.dataFields.categoryX = 'currentDateTime';
+		series.tooltipText = this.dateText + `:` + ` {date}` + `\n` +
 			this.currencyText + `: {currency}\n` +
 			this.volumeText + `: {volume}`;
 		// series.tooltip.pointerOrientation = "vertical";
 		series.tooltip.dy = - 6;
 		series.columnsContainer.zIndex = 100;
 
-		let columnTemplate = series.columns.template;
+		const columnTemplate = series.columns.template;
 		columnTemplate.width = am4core.percent(50);
 		columnTemplate.height = am4core.percent(50);
-		columnTemplate.fill = am4core.color("#364451");
+		columnTemplate.fill = am4core.color('#364451');
 		columnTemplate.maxHeight = 100;
 		columnTemplate.maxWidth = 13;
 		// columnTemplate.column.cornerRadius(60, 60, 10, 10);
@@ -872,7 +873,7 @@ export class TickerDetailsComponent implements OnInit {
 		// Themes begin
 		am4core.useTheme(am4themes_animated);
 		// Themes end
-		const chart = am4core.create((chartType == 'candleStick') ? 'candlechart' : 'candleSma', am4charts.XYChart);
+		const chart = am4core.create((chartType === 'candleStick') ? 'candlechart' : 'candleSma', am4charts.XYChart);
 		chart.paddingRight = 10;
 		chart.data = data;
 		chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd';
@@ -887,12 +888,12 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
-		if(chartType == 'candleStick') {
-			this.createAxisAndSeries("candle",chart);
+		if (chartType === 'candleStick') {
+			this.createAxisAndSeries('candle', chart);
 		} else {
 
-			this.createAxisAndSeries("sma",chart);
-			this.createAxisAndSeries("candle",chart);
+			this.createAxisAndSeries('sma', chart);
+			this.createAxisAndSeries('candle', chart);
 		}
 
 
@@ -1176,27 +1177,27 @@ export class TickerDetailsComponent implements OnInit {
 	 // debugger;
   	this.loadingBar.start();
 	this.getChartData(this.num, this.type, this.indMap);
-	
+
 	if (this.filterModel.graphDisplay) {
-		//debugger;
+		// debugger;
 		document.getElementById('chartdiv').style.display = 'none';
 		document.getElementById('smachart').style.display = 'none';
-		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
-			//debugger;
+		if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+			// debugger;
 			document.getElementById('candleSma').style.display = 'none';
 			document.getElementById('candlechart').style.display = 'flex';
 		} else {
-			//debugger;
+			// debugger;
 			document.getElementById('candlechart').style.display = 'none';
 			document.getElementById('candleSma').style.display = 'flex';
 		}
 
 	} else {
-		//debugger;
+		// debugger;
 		document.getElementById('candlechart').style.display = 'none';
 		document.getElementById('chartdiv').style.display = 'flex';
 		document.getElementById('candleSma').style.display = 'none';
-		if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
+		if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
 			document.getElementById('smachart').style.display = 'none';
 			document.getElementById('chartdiv').style.display = 'flex';
 		} else {
@@ -1204,19 +1205,19 @@ export class TickerDetailsComponent implements OnInit {
 			document.getElementById('smachart').style.display = 'flex';
 		}
 	}
-	if(this.filterModel.searchCriteria == 0) {
+	if (this.filterModel.searchCriteria === 0) {
 		document.getElementById('volumechart').style.display = 'none';
 		document.getElementById('smachart').style.display = 'none';
 		document.getElementById('candleSma').style.display = 'none';
-	} else if(this.filterModel.searchCriteria == 24) {
+	} else if (this.filterModel.searchCriteria === 24) {
 		document.getElementById('volumechart').style.display = 'flex';
 						} else {
-		const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
+		const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
 
 		this.smaChartData = smaData;
-		this.renderChart(this.chartDataObject, 'normal', "smachart");
-		this.renderCandleStickChartData(this.chartDataObject, 'normal', "candleSma");
-		if(!this.filterModel.graphDisplay) {
+		this.renderChart(this.chartDataObject, 'normal', 'smachart');
+		this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
+		if (!this.filterModel.graphDisplay) {
 			document.getElementById('candleSma').style.display = 'none';
 			document.getElementById('smachart').style.display = 'flex';
 		} else {
@@ -1239,8 +1240,8 @@ export class TickerDetailsComponent implements OnInit {
 
 
   getSMAData(data, SMAType) {
-	  
-	  let extraSMA   = this.getExtraSMA();
+
+	  const extraSMA   = this.getExtraSMA();
 	const SMAData = [];
 	SMAType = parseInt(SMAType);
 	SMAType = (data.length >= SMAType) ? SMAType : data.length;
@@ -1251,12 +1252,12 @@ export class TickerDetailsComponent implements OnInit {
 		const loopcount = data.length - SMAType + 1;
 		let count = 0;
 		for ( let i = 0; i <= loopcount; i++) {
-			
+
 
 			let smaTotal = 0;
 			const nextLoop = SMAType + i;
 			for ( let j = i; j <= nextLoop; j++ ) {
-				
+
 
 				if (data[j] !== undefined) {
 					smaTotal = smaTotal + parseFloat(data[j].close.replace(',', ''));
@@ -1272,14 +1273,14 @@ export class TickerDetailsComponent implements OnInit {
 				// 	}
 				// }
 				const chartItemVal = this.chartDataObject[count];
-				if(this.chartDataObject[count] != undefined && SMAType > 0){
+				if (this.chartDataObject[count] !== undefined && SMAType > 0) {
 					chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
-					
+
 					this.chartDataObject[count] = chartItemVal;
 					SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
 				}
-				if(this.chartDataObject[count] === undefined) {
-					
+				if (this.chartDataObject[count] === undefined) {
+
 				}
 			}
 			count++;

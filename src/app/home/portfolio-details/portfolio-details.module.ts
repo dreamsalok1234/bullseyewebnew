@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortfolioDetailsRoutingModule } from './portfolio-details-routing.module';
-import { PortfolioDetailsComponent } from './portfolio-details.component';
+// import { PortfolioDetailsComponent } from './portfolio-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     imports: [
 		FormsModule,
 		ReactiveFormsModule ,
 		CommonModule,
-		TranslateModule, 
+		TranslateModule,
 		PortfolioDetailsRoutingModule,
 		NgbModule
 	],
-    declarations: [PortfolioDetailsComponent]
+    declarations: []
 })
 export class PortfolioDetailsModule {}

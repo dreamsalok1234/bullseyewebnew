@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TickerDetailsRoutingModule } from './ticker-details-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TickerDetailsComponent } from './ticker-details.component';
+// import { TickerDetailsComponent } from './ticker-details.component';
 
 @NgModule({
     imports: [
@@ -15,6 +15,6 @@ import { TickerDetailsComponent } from './ticker-details.component';
 		TickerDetailsRoutingModule,
 		NgbModule
 	],
-    declarations: [TickerDetailsComponent]
+    declarations: []
 })
 export class TickerDetailsModule {}
