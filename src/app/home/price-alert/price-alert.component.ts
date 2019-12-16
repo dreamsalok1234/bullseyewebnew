@@ -60,8 +60,9 @@ export class PriceAlertComponent implements OnInit {
   tickerNameReq = 'Ticker name is required';
   processingTxt = 'Processing...';
   noPriceAlertText = 'No price alerts set.';
-  title='BullsEye Investors | Price Alert';
+  title = 'BullsEye Investors | Price Alert';
   targetPriceisRequiredMsg="Target Price is required!";
+  currentTime = new Date();
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -92,14 +93,15 @@ export class PriceAlertComponent implements OnInit {
     }
 
     this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
-	
+
 	if (!this.profileInfo.isProAccount){
 		localStorage.setItem("proActive","false");
 		this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
 		this.router.navigate(['/account-settings']));
 	}
-	else
+	else {
 		localStorage.setItem("proActive","");
+	}
     /* Set Language Translator */
     this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
     this.translate.setDefaultLang('en');
@@ -124,7 +126,7 @@ export class PriceAlertComponent implements OnInit {
     this.translate.get('Nopricealertsset').subscribe(value => {
       this.noPriceAlertText = value;
     });
-	this.translate.get('TargetPriceisRequired').subscribe(value => { 
+	this.translate.get('TargetPriceisRequired').subscribe(value => {
 		this.targetPriceisRequiredMsg=value;
 	});
 	try {
@@ -146,8 +148,8 @@ export class PriceAlertComponent implements OnInit {
     });
     /* Create Auto complete*/
     /* const objectType = this;
-    this.ticker.valueChanges.subscribe(term => {      
-      
+    this.ticker.valueChanges.subscribe(term => {
+
     }); */
   }
   get i() {
@@ -156,12 +158,12 @@ export class PriceAlertComponent implements OnInit {
   valuechange($event){
 	  const objectType = this;
 	  setTimeout(function() {
-		var term=objectType.investmentForm.controls['ticker'].value;
+		let term=objectType.investmentForm.controls['ticker'].value;
         if (term !== '' && objectType.res === false && objectType.resTickerAutoComp === false) {
           objectType.loadingBar.start();
           objectType.res = true;
           objectType.commonService.getTickerList(term, objectType.stockType, function(err, response) {
-            
+
             if (err) {
             }
             if (response.statusCode === 200) {
@@ -177,10 +179,10 @@ export class PriceAlertComponent implements OnInit {
         }
       }, 500);
   }
-  setTagetValueWith3Digit(){
+  setTagetValueWith3Digit() {
 	  if(this.investmentForm.controls['amount'].value !== '') {
-		 let amt=parseFloat(this.investmentForm.controls['amount'].value);
-		 this.investmentForm.controls['amount'].setValue(amt.toFixed(3))
+		 const amt=parseFloat(this.investmentForm.controls['amount'].value);
+		 this.investmentForm.controls['amount'].setValue(amt.toFixed(3));
 	  }
   }
   priceAlertList() {
@@ -198,7 +200,7 @@ export class PriceAlertComponent implements OnInit {
         });
       }
       if (response.statusCode === 200) {
-		  
+
         if (response.data.data !== undefined && response.data.data.length > 0) {
           objectType.itemList = response.data.data;
           objectType.processing = false;
@@ -274,9 +276,9 @@ export class PriceAlertComponent implements OnInit {
       if (response.statusCode === 200) {
          objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
          objectType.investmentForm.reset();
-		 objectType.priceAlertList()
+		 objectType.priceAlertList();
 		 objectType.modalService.dismissAll();
-		 
+
         /*------------------ ReLoad Page ---------------------*/
       } else {
         objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
@@ -306,12 +308,13 @@ export class PriceAlertComponent implements OnInit {
   toggleActive(i) {
 	this.tickerList=[];
 	this.activeTab=this.activeTab2='';
-	if(i==1)
-		this.activeTab='active';
-	else
-		this.activeTab2='active';
-    //this.activeTab = !this.activeTab ? 'active' : '';
-    this.stockType = i === 1 ? this.stockText : this.cryptoText;
+	if(i===1) {
+		this.activeTab = 'active';
+	} else {
+		this.activeTab2 = 'active';
+	}
+    // this.activeTab = !this.activeTab ? 'active' : '';
+    this.stockType = i === 1 ? 'Stock' : 'Cryptocurrency';
   }
   deleteInvestmentItem(content, keyIndex) {
     this.investmentForm.reset();
@@ -367,17 +370,18 @@ export class PriceAlertComponent implements OnInit {
   }
 
   editPriceAlert(addpricealert,keyIndex) {
-	this.tickerList=[];
-	this.tickerName="";
+	this.tickerList = [];
+	this.tickerName = '';
 	this.investmentForm.reset();
     this.alertId = '';
     const priceAlert = this.itemList[keyIndex];
     this.tickerId = priceAlert.tickerId;
     this.stockType = priceAlert.tickerType;
-	this.toggleActive((this.stockType.toLowerCase()=='stock')?1:2);
+	this.toggleActive((this.stockType.toLowerCase() === 'stock') ? 1 :2);
     this.tickerName = priceAlert.name;
-	if (this.tickerName !== undefined && this.tickerName !== '')
-      this.investmentForm.controls['ticker'].setValue(this.tickerName +' ('+priceAlert.symbol+')');
+	if (this.tickerName !== undefined && this.tickerName !== '') {
+      this.investmentForm.controls['ticker'].setValue(this.tickerName +' (' + priceAlert.symbol + ')');
+	}
     this.investmentForm.controls['expiryDate'].setValue({ year: 2019, month: 10, day: 25 });
     this.investmentForm.controls['currency'].setValue(priceAlert.currency);
     this.investmentForm.controls['compare'].setValue(priceAlert.alertType);
@@ -393,7 +397,7 @@ export class PriceAlertComponent implements OnInit {
     );
   }
   addPriceAlert(addpricealert) {
-	this.tickerName="";
+	this.tickerName = '';
 	this.investmentForm.reset();
 	this.investmentForm.controls['compare'].setValue('>');
 	this.investmentForm.controls['currency'].setValue(this.profileInfo.baseCurrency);
@@ -407,8 +411,8 @@ export class PriceAlertComponent implements OnInit {
     );
   }
   checkTargetValidation() {
-	 let amt= this.investmentForm.controls['amount'].value;
-	 if(amt !== '') {
+	 const amt = this.investmentForm.controls['amount'].value;
+	 if (amt !== '') {
 		 if (!(/^\d+[.,]?\d{0,3}$/g.test(amt))) {
 		     const a = amt.split('.');
 			  this.investmentForm.controls['amount'].setValue(a[0] + '.' + a[1].substring(0, 3));

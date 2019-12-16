@@ -86,16 +86,17 @@ export class ProdialogComponent {
     this.DAYSLEFT = data.DAYSLEFT;
     this.isProRemainDays = data.isProRemainDays;
     this.isAddPro = data.isAddPro;
+    this.subCancelBtn = data.subCancelBtn;
+    this.isSubsChecked = data.isSubsChecked;
+    this.btnText = data.btnText;
+    this.totalSubsPlanDays = data.totalSubsPlanDays;
 
 
   }
 
 
   ngOnInit() {
-    // this.meta.removeTag('name=title');
-    // this.meta.removeTag('name=description');
-    // this.titleService.setTitle(this.title);
-      /* Get All Static Currency*/
+
       try {
         this.curr_array = this.commonService.getCurrency();
       } catch (error) {}
@@ -115,39 +116,23 @@ export class ProdialogComponent {
 
     this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
       this.translate.setDefaultLang('en');
-      const browserLang =
-        this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '' && this.profileInfo.defaultLanguage != null
-          ? this.profileInfo.defaultLanguage
-          : 'en';
+      const browserLang = this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '' && this.profileInfo.defaultLanguage != null ? this.profileInfo.defaultLanguage : 'en';
     this.dectLanguage = browserLang;
       this.accessToken = localStorage.getItem('userAccessToken');
       this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
+        'https://bullseyeinvestors.live/tester/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
       );
     if (this.profileInfo.img !== '' && this.profileInfo.img !== undefined) {
       this.fileUrl = this.profileInfo.img;
     }
 
-      /* if (this.profileInfo.isProAccount) {
-        this.isAddPro = false;
-        this.isProRemainDays = true;
-        this.totalRemainingDays =
-        this.profileInfo.remainingDays !== undefined && this.profileInfo.remainingDays != null ? this.profileInfo.remainingDays : 0;
-      } else {
-        this.isProRemainDays = false;
-        this.isAddPro = true;
-      } */
+
       /*  Set Language Translator */
-
-
       this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
       this.refreshTranslation();
 
-
-
-
-
       const objectTypeNew = this;
+
     }
 
     refreshTranslation() {
@@ -209,8 +194,7 @@ export class ProdialogComponent {
 		}, (reason) => {
 		  this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 		});
-		// debugger;
-		// this.newclass = 'ffgfdg';
+
 
     }
 
@@ -241,6 +225,7 @@ export class ProdialogComponent {
           });
         }
         if (response.statusCode === 200) {
+            // tslint:disable-next-line: max-line-length
             objectType.toastr.successToastr(objectType.autorenewalstatuschanged, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
         // objectType.activePro='closed';
             objectType.modalService.dismissAll();
@@ -319,7 +304,7 @@ export class ProdialogComponent {
         window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank');
       } else {
         this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+          'https://bullseyeinvestors.live/tester/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
         );
         this.isProRemainDays = false;
         this.isAddPro = true;

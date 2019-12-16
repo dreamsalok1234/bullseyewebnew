@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <h2>{{ portfolioName }}</h2>
+		
         <span></span>
         <div class="buttons_grp">
           <button style="margin-left: 0" [routerLink]="['/market-search']">
@@ -173,7 +174,8 @@
                       <li>{{ 'Concentration' | translate }}</li>
                       <li>{{ 'Risk' | translate }}</li>
                       <li>{{ 'Potential' | translate }}</li>
-                      <li>{{ 'Opportunity' | translate }}</li>
+                      <!-- <li>{{ 'Opportunity' | translate }}</li> -->
+                      <li>{{ 'riskMetric' | translate }}</li>
                     </ul>
                   </div>
                   <div class="body_div">
@@ -183,20 +185,21 @@
                         {{ riskItem.symbol }}
                       </li>
                       <li *ngIf="riskItem.concentration=='N/A'">{{riskItem.concentration}}</li>
-					  <li *ngIf="riskItem.concentration!='N/A'">{{ math.round(riskItem.concentration) | number }}%</li>
-					  <li *ngIf="riskItem.riskText=='N/A'">{{riskItem.riskText}}</li>
+                      <li *ngIf="riskItem.concentration!='N/A'">
+                        <div class="progress-circle progress-{{ math.round(riskItem.concentration) | number }} loader-{{ ((math.round(riskItem.concentration)) <= 9)?'success':(((math.round(riskItem.concentration) > 9 && math.round(riskItem.concentration) <=24))?'warning':(((math.round(riskItem.concentration) > 24 && math.round(riskItem.concentration) <=100))?'danger':'')) }} small">
+                          <span>{{ math.round(riskItem.concentration) | number }}</span>
+                        </div>
+                      </li>
+					            <li *ngIf="riskItem.riskText=='N/A'">{{riskItem.riskText}}</li>
                       <li *ngIf="riskItem.riskText!='N/A'">
                         <div class="risklow" *ngIf="riskItem.riskText == 'Low'">
-                          <span></span>
+                          <div class="progress-circle progress-25 small loader-success"><span>L</span></div>
                         </div>
                         <div class="riskmidium" *ngIf="riskItem.riskText == 'Medium'">
-                          <span></span>
-                          <span></span>
+                          <div class="progress-circle progress-50 small loader-warning"><span>M</span></div>
                         </div>
                         <div class="riskhigh" *ngIf="riskItem.riskText == 'High'">
-                          <span></span>
-                          <span></span>
-                          <span></span>
+                          <div class="progress-circle progress-75 small loader-danger"><span>H</span></div>
                         </div>
                         <div
                           class="riskdefault"
@@ -206,16 +209,13 @@
 					  <li *ngIf="riskItem.potentialText=='N/A'">{{riskItem.potentialText}}</li>
                       <li *ngIf="riskItem.potentialText!='N/A'">
                         <div class="potenlow" *ngIf="riskItem.potentialText == 'Low'">
-                          <span></span>
+                          <div class="progress-circle progress-25 small loader-danger"><span>L</span></div>
                         </div>
                         <div class="potenmidium" *ngIf="riskItem.potentialText == 'Medium'">
-                          <span></span>
-                          <span></span>
+                          <div class="progress-circle progress-50 small loader-warning"><span>M</span></div>
                         </div>
                         <div class="potenhigh" *ngIf="riskItem.potentialText == 'High'">
-                          <span></span>
-                          <span></span>
-                          <span></span>
+                          <div class="progress-circle progress-75 small loader-success"><span>H</span></div>
                         </div>
 
                         <div
@@ -223,8 +223,13 @@
                           *ngIf="riskItem.potentialText != 'High' && riskItem.potentialText != 'Medium' && riskItem.potentialText != 'Low'"
                         ></div>
                       </li>
-					  <li *ngIf="riskItem.opportunity=='N/A'">{{ riskItem.opportunity }}</li>
-                      <li *ngIf="riskItem.opportunity!='N/A'">{{ math.round(riskItem.opportunity) }}%</li>
+					            <!-- <li *ngIf="riskItem.opportunity=='N/A'">{{ riskItem.opportunity }}</li>
+                      <li *ngIf="riskItem.opportunity!='N/A'">{{ math.round(riskItem.opportunity) }}%</li> -->
+                      <li>
+                        <img *ngIf="riskItem.liquidityFlag=='1'" class="liquidity-flag" src="assets/images/ic_green_exclamation.png">
+                        <img *ngIf="riskItem.liquidityFlag=='2'" class="liquidity-flag" src="assets/images/ic_green_right.png">
+                        <span *ngIf="riskItem.liquidityFlag !='1' && riskItem.liquidityFlag !='2'" >N/A</span>
+                      </li>
                     </ul>
                     <ul class="processing" *ngIf="riskItemProcessing">
                       <li>

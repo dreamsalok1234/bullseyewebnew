@@ -75,32 +75,32 @@ export class AccountSettingsComponent implements OnInit {
   accessToken = '';
   totalRemainingDays = 0;
   totalSubsPlanDays = 0;
-  totalDisplayPer=0;
+  totalDisplayPer = 0;
   isAddPro = false;
   isProRemainDays = false;
   AccountbasecurrencysuccessfullyupdatedText = 'Account base currency successfully updated';
-  areYouSureWantToRenewOn="Are you sure you want to turn auto-renewal on?";
-  areYouSureWantToRenewOff="Are you sure you want to turn auto-renewal off?";
-  areYouSureWantToCancel="Are you sure you want to cancel subscription?";
-  Areyousureyouwanttodeleteaccount="Are you sure you want to delete your account?";
-  DAYSLEFT="DAYS LEFT";
-  DAYLEFT="DAY LEFT";
-  isSubsChecked=false;
+  areYouSureWantToRenewOn = 'Are you sure you want to turn auto-renewal on?';
+  areYouSureWantToRenewOff = 'Are you sure you want to turn auto-renewal off?';
+  areYouSureWantToCancel = 'Are you sure you want to cancel subscription?';
+  Areyousureyouwanttodeleteaccount = 'Are you sure you want to delete your account?';
+  DAYSLEFT = 'DAYS LEFT';
+  DAYLEFT = 'DAY LEFT';
+  isSubsChecked = false;
   modelText = '';
-  btnText='Yes';
-  btnYes='Yes';
-  btnNo='No';
-  autoRenewalBtn='Yes';
-  autRenewalInd =0;
-  title='Account Setting';
-  UploadFile='Choose New Image';
-  autorenewalstatuschanged="Auto-renewal status changed.";
-  subscriptionplansuccessfullycancelled="Subscription plan successfully cancelled.";
+  btnText = 'Yes';
+  btnYes = 'Yes';
+  btnNo = 'No';
+  autoRenewalBtn = 'Yes';
+  autRenewalInd = 0;
+  title = 'Account Setting';
+  UploadFile = 'Choose New Image';
+  autorenewalstatuschanged = 'Auto-renewal status changed.';
+  subscriptionplansuccessfullycancelled = 'Subscription plan successfully cancelled.';
   uploadBtnText = 'Update';
   uploadSubmitBtnText = '';
   fileUploadProcessing = false;
-  subCancelBtn =true;
-  dectLanguage ='en';
+  subCancelBtn = true;
+  dectLanguage = 'en';
   constructor(
     private commonService: CommonService,
     private authService: AuthService,
@@ -148,7 +148,7 @@ export class AccountSettingsComponent implements OnInit {
 	this.dectLanguage = browserLang;
     this.accessToken = localStorage.getItem('userAccessToken');
     this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
+      'https://bullseyeinvestors.live/tester/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
     );
 	if (this.profileInfo.img !== '' && this.profileInfo.img !== undefined) {
     this.fileUrl = this.profileInfo.img;
@@ -268,7 +268,7 @@ export class AccountSettingsComponent implements OnInit {
     }
   }
 
-  refreshTranslation(){
+  refreshTranslation() {
 
     this.translate.get('Somethingwentwrong').subscribe(value => {
       this.defaulterrSomethingMsg = value;
@@ -644,7 +644,7 @@ export class AccountSettingsComponent implements OnInit {
           if (Object.keys(response.data.data).length > 0) {
 			 if (response.data.data.isProAccount === response.data.data.isTrailVersion) {
 				  objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
-					  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+					  'https://bullseyeinvestors.live/tester/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 					);
 					objectType.isProRemainDays = false;
 					objectType.isAddPro = true;
@@ -656,6 +656,7 @@ export class AccountSettingsComponent implements OnInit {
           objectType.btnText = objectType.autoRenewalBtn;
 				//  setTimeout(() => {
 
+		      objectType.profileInfo.isProAccount = response.data.data.isProAccount;
 					 objectType.totalSubsPlanDays =
 				  (response.data.data.totalDays !== undefined && response.data.data.totalDays != null) ? response.data.data.totalDays : 0;
 					 objectType.totalRemainingDays =
@@ -663,19 +664,29 @@ export class AccountSettingsComponent implements OnInit {
 				  objectType.totalDisplayPer = Math.round((objectType.totalRemainingDays / objectType.totalSubsPlanDays) * 100);
         // }, 200);
 
-        const langText = (objectType.totalRemainingDays>1)?objectType.DAYSLEFT :objectType.DAYLEFT;
+        const langText = (objectType.totalRemainingDays > 1) ? objectType.DAYSLEFT : objectType.DAYLEFT;
         const dialogConfig = new MatDialogConfig();
 
-        dialogConfig.data = {totalRemainingDays: objectType.totalRemainingDays, totalDisplayPer: objectType.totalDisplayPer, DAYSLEFT: langText, isProRemainDays: objectType.isProRemainDays, isAddPro: objectType.isAddPro };
+        dialogConfig.data = {
+          totalRemainingDays: objectType.totalRemainingDays,
+          totalDisplayPer: objectType.totalDisplayPer,
+          DAYSLEFT: langText,
+          isProRemainDays: objectType.isProRemainDays,
+          isAddPro: objectType.isAddPro,
+          subCancelBtn: objectType.subCancelBtn,
+          isSubsChecked: objectType.isSubsChecked,
+          btnText: objectType.btnText,
+          totalSubsPlanDays: objectType.totalSubsPlanDays
+        };
         // dialogConfig.height = '400px';
         dialogConfig.width = '650px';
         dialogConfig.maxWidth = '100%';
         dialogConfig.maxHeight = 'none';
         const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe(value => {
-          console.log(`Dialog sent: ${value}`);
-        });
+        // dialogRef.afterClosed().subscribe(value => {
+        //   console.log(`Dialog sent: ${value}`);
+        // });
 
 
 
@@ -683,8 +694,17 @@ export class AccountSettingsComponent implements OnInit {
 
 		  } else {
 				objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
-				  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
-				);
+          'https://bullseyeinvestors.live/tester/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+          );
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {totalRemainingDays: false, totalDisplayPer: 0, DAYSLEFT: '', isProRemainDays: 0, isAddPro: true };
+
+        dialogConfig.width = '650px';
+        dialogConfig.maxWidth = '100%';
+        dialogConfig.maxHeight = 'none';
+        const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);
+
+
 				objectType.isProRemainDays = false;
 				objectType.isAddPro = true;
 		   }
@@ -810,7 +830,7 @@ export class AccountSettingsComponent implements OnInit {
 		  this.modalService.dismissAll();
 		 window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank'); } else {
 		  this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-			  'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+			  'https://bullseyeinvestors.live/tester/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 		  );
 		  this.isProRemainDays = false;
 		  this.isAddPro = true;
