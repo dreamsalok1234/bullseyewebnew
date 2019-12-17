@@ -175,7 +175,7 @@
                       <li>{{ 'Risk' | translate }}</li>
                       <li>{{ 'Potential' | translate }}</li>
                       <!-- <li>{{ 'Opportunity' | translate }}</li> -->
-                      <li>{{ 'riskMetric' | translate }}</li>
+                      <li>{{ 'liquidity' | translate }}</li>
                     </ul>
                   </div>
                   <div class="body_div">
@@ -185,37 +185,37 @@
                         {{ riskItem.symbol }}
                       </li>
                       <li *ngIf="riskItem.concentration=='N/A'">{{riskItem.concentration}}</li>
-                      <li *ngIf="riskItem.concentration!='N/A'">
-                        <div class="progress-circle progress-{{ math.round(riskItem.concentration) | number }} loader-{{ ((math.round(riskItem.concentration)) <= 9)?'success':(((math.round(riskItem.concentration) > 9 && math.round(riskItem.concentration) <=24))?'warning':(((math.round(riskItem.concentration) > 24 && math.round(riskItem.concentration) <=100))?'danger':'')) }} small">
+                      <li *ngIf="riskItem.concentration!='N/A'" class="concentration-box">
+                        <div class="progress-circle progress-{{ math.round(riskItem.concentration) | number }} small">
                           <span>{{ math.round(riskItem.concentration) | number }}</span>
                         </div>
                       </li>
 					            <li *ngIf="riskItem.riskText=='N/A'">{{riskItem.riskText}}</li>
-                      <li *ngIf="riskItem.riskText!='N/A'">
+                      <li *ngIf="riskItem.riskText!='N/A'" class="risk-box">
                         <div class="risklow" *ngIf="riskItem.riskText == 'Low'">
-                          <div class="progress-circle progress-25 small loader-success"><span>L</span></div>
+                          <div class="progress-circle progress-25 small"><span>L</span></div>
                         </div>
                         <div class="riskmidium" *ngIf="riskItem.riskText == 'Medium'">
-                          <div class="progress-circle progress-50 small loader-warning"><span>M</span></div>
+                          <div class="progress-circle progress-50 small"><span>M</span></div>
                         </div>
                         <div class="riskhigh" *ngIf="riskItem.riskText == 'High'">
-                          <div class="progress-circle progress-75 small loader-danger"><span>H</span></div>
+                          <div class="progress-circle progress-75 small"><span>H</span></div>
                         </div>
                         <div
                           class="riskdefault"
                           *ngIf="riskItem.riskText != 'High' && riskItem.riskText != 'Medium' && riskItem.riskText != 'Low'"
                         ></div>
                       </li>
-					  <li *ngIf="riskItem.potentialText=='N/A'">{{riskItem.potentialText}}</li>
-                      <li *ngIf="riskItem.potentialText!='N/A'">
+					            <li *ngIf="riskItem.potentialText=='N/A'">{{riskItem.potentialText}}</li>
+                      <li *ngIf="riskItem.potentialText!='N/A'"  class="potential-box">
                         <div class="potenlow" *ngIf="riskItem.potentialText == 'Low'">
-                          <div class="progress-circle progress-25 small loader-danger"><span>L</span></div>
+                          <div class="progress-circle progress-25 small"><span>L</span></div>
                         </div>
                         <div class="potenmidium" *ngIf="riskItem.potentialText == 'Medium'">
-                          <div class="progress-circle progress-50 small loader-warning"><span>M</span></div>
+                          <div class="progress-circle progress-50 small"><span>M</span></div>
                         </div>
                         <div class="potenhigh" *ngIf="riskItem.potentialText == 'High'">
-                          <div class="progress-circle progress-75 small loader-success"><span>H</span></div>
+                          <div class="progress-circle progress-75 small"><span>H</span></div>
                         </div>
 
                         <div
@@ -264,7 +264,7 @@
                       <li>
                         {{ riskItem.symbol }}
                       </li>
-                      <li>{{ (riskItem.alphaMarketSymbol != null)?riskItem.alphaMarketSymbol:'N/A' }}</li>
+                      <li>{{ (riskItem.cryptoMarket != null)?riskItem.cryptoMarket:'N/A' }}</li>
 					  <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
 					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
 					  <li
@@ -281,7 +281,7 @@
                       
                         {{
                           riskItem.alphaWChange != 'N/A' && riskItem.alphaWChange != ''
-                            ? math.round(riskItem.alphaWChange) + '%'
+                            ? formatNumber(math.round(riskItem.alphaWChange)) + '%'
                             : riskItem.alphaWChange
                         }}
                       </li>
@@ -298,7 +298,7 @@
                       >
                         {{
                           riskItem.alphaChange != 'N/A' && riskItem.alphaChange != ''
-                            ? math.round(riskItem.alphaChange) + '%'
+                            ? formatNumber(math.round(riskItem.alphaChange)) + '%'
                             : riskItem.alphaChange
                         }}
                       </li>
@@ -315,7 +315,7 @@
                       >
                         {{
                           riskItem.alpha6MChange != 'N/A' && riskItem.alpha6MChange != ''
-                            ? math.round(riskItem.alpha6MChange) + '%'
+                            ? formatNumber(math.round(riskItem.alpha6MChange)) + '%'
                             : riskItem.alpha6MChange
                         }}
                       </li>
@@ -332,7 +332,7 @@
                       >
                         {{
                           riskItem.alpha1YChange != 'N/A' && riskItem.alpha1YChange != ''
-                            ? math.round(riskItem.alpha1YChange) + '%'
+                            ? formatNumber(math.round(riskItem.alpha1YChange)) + '%'
                             : riskItem.alpha1YChange
                         }}
                       </li>

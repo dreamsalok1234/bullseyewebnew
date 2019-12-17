@@ -125,9 +125,9 @@ export class DashboardComponent implements OnInit {
 		} 
 		catch (error) {}
 		
-    	//this.watchListCurrency = this.profileInfo.watchListCurrency;
-    	//this.model.currentCurrency = this.watchListCurrency;
-		//this.model.currentCurrency = this.profileInfo.baseCurrency;
+    	// this.watchListCurrency = this.profileInfo.watchListCurrency;
+    	// this.model.currentCurrency = this.watchListCurrency;
+		// this.model.currentCurrency = this.profileInfo.baseCurrency;
 		
 		
 		this.watchListCurrency = this.profileInfo.baseCurrency;
@@ -135,8 +135,9 @@ export class DashboardComponent implements OnInit {
 		this.priceAlert={'currentCurrency': this.watchListCurrency, 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol' : '', 'compare' : '>', 'expiryDate' : '','tickerIcon':''};
 		this.portfolioForm.currentCurrency=this.watchListCurrency;
 		this.priceAlert.currentCurrency =this.profileInfo.baseCurrency;
-    	if (this.profileInfo.isProAccount)
+    	if (this.profileInfo.isProAccount) {
     		this.disabledCurrency = false;
+     }
 		else{
 			let newKeys =[];
 			const objectType = this;
@@ -168,7 +169,7 @@ export class DashboardComponent implements OnInit {
           			objectType.portfolioList = response.data[0].portfolioList;
 						}
 				  if (response.data[1].status === true) {
-					  
+
 						}
           			objectType.watchlist = response.data[1].watchList;
           		if (response.data[2].status === true) {
@@ -484,9 +485,9 @@ export class DashboardComponent implements OnInit {
 	    this.loadingBar.start();
 	    const objectType = this;
 	    const formData = {"currentOrderNo": previousIndex +1 , "newOrderNo": currentIndex+1, "watchlistId" : this.watchlist[currentIndex].watchlistId};
-	   	
+
 	    this.watchListService.changeWatchListOrder(formData, function(err, response) {
-	      
+
 	      objectType.loading = false;
 	      objectType.loadingBar.stop();
 	      if ( err ) {
@@ -513,9 +514,9 @@ export class DashboardComponent implements OnInit {
 	    this.loadingBar.start();
 	    const objectType = this;
 	    const formData = {'currentOrderNo': previousIndex + 1 , 'newOrderNo': currentIndex + 1, 'portfolioId' : this.portfolioList[currentIndex].portfolioId};
-	   	
+
 	    this.portfolioService.changeWatchListOrder(formData, function(err, response) {
-	      
+
 	      objectType.loading = false;
 	      objectType.loadingBar.stop();
 	      if ( err ) {

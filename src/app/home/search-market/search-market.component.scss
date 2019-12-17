@@ -425,9 +425,11 @@ li.gain_green b {
 }
 
 .body_div {
-  max-height: 560px;
-  overflow-y: auto;
-  height: 100%;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+div#Performance .body_div {
+  max-height: 231px;
 }
 // .stats_table {
 //   margin-bottom: 10%;
@@ -612,9 +614,10 @@ ul {
     height: 55px;
   }
   ul.stats_body li {
-    font-size: 15px;
-    padding: 8px 5px;
-  }
+    font-size: 14px;
+    padding: 8px 3px;
+    height: 40px;
+}
   .body_div ul.stats_body .gain_green {
     a {
       color: #fff;
@@ -697,6 +700,7 @@ ul {
   }
   .pop_filters a {
     height: 30px;
+    margin-bottom: 5px;
   }
   .pop_filters a img {
     width: 20px;
@@ -914,3 +918,4 @@ ul {
 }
 @media (min-width: 1400px) and (max-width: 1599px) {
 }
+

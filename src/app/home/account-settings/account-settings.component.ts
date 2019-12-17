@@ -682,6 +682,7 @@ export class AccountSettingsComponent implements OnInit {
         dialogConfig.width = '650px';
         dialogConfig.maxWidth = '100%';
         dialogConfig.maxHeight = 'none';
+        dialogConfig.panelClass = 'custom-modalbox';
         const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);
 
         // dialogRef.afterClosed().subscribe(value => {

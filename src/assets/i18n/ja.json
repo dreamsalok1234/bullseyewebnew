@@ -264,5 +264,6 @@
 	"GraphAnaTitle": "グラフ分析",
 	"SocialMedia": "ソーシャルメディア",
 	"Price": "価格",
-	"riskMetric": "リスク指標"
+	"riskMetric": "リスク指標",
+	"liquidity": "流動性"
 }

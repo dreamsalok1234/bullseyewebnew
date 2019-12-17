@@ -264,5 +264,6 @@
 	"GraphAnaTitle": "그래프 분석",
 	"SocialMedia": "소셜 미디어",
 	"Price": "가격",
-	"riskMetric": "위험 지표"
+	"riskMetric": "위험 지표",
+	"liquidity": "유동성"
 }
