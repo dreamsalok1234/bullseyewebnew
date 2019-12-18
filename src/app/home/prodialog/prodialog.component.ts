@@ -296,6 +296,7 @@ export class ProdialogComponent {
     });
     }
     gotoUpgradeUrl() {
+      this.dialogRef.updateSize('1100px');
       const objectType = this;
 
       if (!this.subCancelBtn) {

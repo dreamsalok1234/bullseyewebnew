@@ -93,10 +93,10 @@ export class AccountSettingsComponent implements OnInit {
   autoRenewalBtn = 'Yes';
   autRenewalInd = 0;
   title = 'Account Setting';
-  UploadFile = 'Choose New Image';
+  UploadFile = 'Change Image';
   autorenewalstatuschanged = 'Auto-renewal status changed.';
   subscriptionplansuccessfullycancelled = 'Subscription plan successfully cancelled.';
-  uploadBtnText = 'Update';
+  uploadBtnText = 'Save';
   uploadSubmitBtnText = '';
   fileUploadProcessing = false;
   subCancelBtn = true;
@@ -700,7 +700,7 @@ export class AccountSettingsComponent implements OnInit {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {totalRemainingDays: false, totalDisplayPer: 0, DAYSLEFT: '', isProRemainDays: 0, isAddPro: true };
 
-        dialogConfig.width = '650px';
+        dialogConfig.width = '1100px';
         dialogConfig.maxWidth = '100%';
         dialogConfig.maxHeight = 'none';
         const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);

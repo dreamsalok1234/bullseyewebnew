@@ -500,6 +500,7 @@ ul {
         font-size: 15px;
       }
     }
+    
     &.active {
       background: #00b050;
       justify-content: center;
@@ -617,6 +618,9 @@ ul {
     font-size: 14px;
     padding: 8px 3px;
     height: 40px;
+}
+ul.stats_body li.performance-item {
+  font-size: 13px!important;
 }
   .body_div ul.stats_body .gain_green {
     a {

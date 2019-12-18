@@ -9,7 +9,7 @@ import { CommonService } from '../../_services/common.service';
 import { ChatService } from '../../_services/chat.service';
 import { TickerService } from '../../_services/ticker.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-//import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+// import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 /* Imports */
 import * as am4core from "@amcharts/amcharts4/core";
@@ -134,21 +134,21 @@ export class ChatDetailsComponent implements OnInit {
 				if(this.activeRoute.snapshot.params.ctsymbol!=localStorage.getItem('chatSymbol') || this.activeRoute.snapshot.params.ctname!=localStorage.getItem('chatName'))
 					this.router.navigate(['/chat']);
 			}
-			else
+			else {
 				this.router.navigate(['/chat']);
+			}
 		}
 		else {
 			this.router.navigate(['/chat']);
 		}
-		
-		
+
+
 		this.profileInfo = JSON.parse(localStorage.getItem("userProfileInfo"));
 		if (!this.profileInfo.isProAccount){
 			localStorage.setItem("proActive","false");
 			this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
 			this.router.navigate(['/account-settings']));
-		}
-		else {
+		} else {
 			localStorage.setItem("proActive","");
 		}
 		 /* Set Language Translator */
@@ -223,12 +223,12 @@ export class ChatDetailsComponent implements OnInit {
 
 		this.totalPage = this.currentPage = 0;
 		/* Set Mata Tag*/
-		//this.title=""+this.chatName+" Chat | "+this.chatSymbol+" | Live "+this.chatType+" Market Prices & Chat | Bullseye Investors";
+		// this.title=""+this.chatName+" Chat | "+this.chatSymbol+" | Live "+this.chatType+" Market Prices & Chat | BullsEye Investors";
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
 		this.title="BullsEye Investors | Chat"+" | "+localStorage.getItem("chatName")+" | "+localStorage.getItem("chatSymbol");
 		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: ''+this.chatName+' chat for private investors. Share your views with other '+this.chatSymbol+' investors in the Bullseye Community using the Bullseye Investors web, iOS and Android platforms. Track live prices and set alerts directly to your device.'});
+		this.meta.addTag({name: 'description', content: ''+this.chatName+' chat for private investors. Share your views with other '+this.chatSymbol+' investors in the BullsEye Community using the BullsEye Investors web, iOS and Android platforms. Track live prices and set alerts directly to your device.'});
 		this.translate.get('Entermessagehere').subscribe(value => {
 
 			this.enterNewMessageText=value;
@@ -256,7 +256,7 @@ export class ChatDetailsComponent implements OnInit {
 			}
 		});
 
-		var objectNtype=this;
+		const objectNtype=this;
 		setTimeout(() => {
 			objectNtype.translate.get('Date').subscribe(value => {
 				objectNtype.dateText=value;
@@ -630,8 +630,7 @@ export class ChatDetailsComponent implements OnInit {
 				max = arr[i];
 									}
 		}
-	}
-	else{
+	} else {
 		for (let i=0 ; i<arr.length ; i++) {
 			if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high)) {
 				max = arr[i];
@@ -647,7 +646,6 @@ export class ChatDetailsComponent implements OnInit {
 
 		objectType.searchSearchText = objectType.processingTxt;
 		objectType.loadingBar.start();
-		debugger;
 		this.tickerService.getTickerDetails(this.tickerId, function(err, response) {
 
 			if ( err ) {
@@ -700,9 +698,9 @@ export class ChatDetailsComponent implements OnInit {
 			objectType.tickerDataText = '';
 			const keys = [];
 			const candleStickData = [];
-			let data = [];
-			let max = objectType.getMinMax(response.data.Data, 'high', 'high');
-			let min = objectType.getMinMax(response.data.Data, 'low', 'low');
+			const data = [];
+			const max = objectType.getMinMax(response.data.Data, 'high', 'high');
+			const min = objectType.getMinMax(response.data.Data, 'low', 'low');
 
 			objectType.cryptoMaxValue = max.high;
 			objectType.cryptoMinValue = min.low;
@@ -720,10 +718,10 @@ export class ChatDetailsComponent implements OnInit {
 	});
 }
 
-getExtraSMA(){
+getExtraSMA() {
 	// setting date range in sma case
 	let limit = 0;
-	if(this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200){
+	if(this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200) {
 		if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 			switch (this.filterModel.searchCriteria) {
 				case "50": {
@@ -814,7 +812,7 @@ getChartData(num, type, clickind) {
 							let dataTimeZone = response.data.timezone_name;
 							Object.keys(data).map(function (key) {
 								const currentDateTime = new Date(key);
-								let shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
+								const shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
 								keys.push({ date: new Date(key), shortZone: shortZone, currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
 
 								// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
@@ -895,13 +893,13 @@ getChartData(num, type, clickind) {
 								data = response.data.Data;
 
 								data.map(function(item) {
-									let currentDateTime = new Date(item.time * 1000);
-									let y = currentDateTime.getUTCFullYear();
+									const currentDateTime = new Date(item.time * 1000);
+									const y = currentDateTime.getUTCFullYear();
 									let m = currentDateTime.getUTCMonth();
-									let day = currentDateTime.getUTCDate();
+									const day = currentDateTime.getUTCDate();
 									m = m + 1;
-									let mm = (m <= 9 ) ? ('0' + m) : m;
-									let dd = (day <= 9 ) ? ('0' + day) : day;
+									const mm = (m <= 9 ) ? ('0' + m) : m;
+									const dd = (day <= 9 ) ? ('0' + day) : day;
 									keys.push({date: new Date(item.time * 1000), currentDateTime: y + '-' + mm + '-' + dd, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
 
 									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
@@ -925,13 +923,13 @@ getChartData(num, type, clickind) {
 							if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
 								data = response.data.history;
 								Object.keys(data).map(function (key) {
-									let currentDateTime = new Date(key);
-									let y = currentDateTime.getUTCFullYear();
+									const currentDateTime = new Date(key);
+									const y = currentDateTime.getUTCFullYear();
 									let m = currentDateTime.getUTCMonth();
-									let day = currentDateTime.getUTCDate();
+									const day = currentDateTime.getUTCDate();
 									m = m + 1;
-									let mm = (m <= 9 ) ? ('0' + m) : m;
-									let dd = (day <= 9 ) ? ('0' + day) : day;
+									const mm = (m <= 9 ) ? ('0' + m) : m;
+									const dd = (day <= 9 ) ? ('0' + day) : day;
 									keys.push({date : new Date(key), currentDateTime: y + '-' + mm + '-' + dd, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0))});
 
 									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
@@ -994,8 +992,8 @@ createAxisAndSeries(field,chart) {
 		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 		this.currencyText + `: {currency}\n` +
 		this.priceText + `: {close}\n`+extraParam;
-	if(field=="value"){
-		let series = chart.series.push(new am4charts.LineSeries());
+	if(field=="value") {
+		const series = chart.series.push(new am4charts.LineSeries());
 		series.dataFields.dateX = "date";
 		series.dataFields.valueY = "close";
 		series.strokeWidth = 1.5;
@@ -1006,8 +1004,8 @@ createAxisAndSeries(field,chart) {
 		/* Set Chart Tooltip Style */
 		series.tooltip.getFillFromObject = false;
 		series.tooltip.background.fill = am4core.color("#00b050");
-	} else if(field=="chartwithSma"){
-		let series = chart.series.push(new am4charts.LineSeries());
+	} else if(field=="chartwithSma") {
+		const series = chart.series.push(new am4charts.LineSeries());
 		series.dataFields.dateX = "date";
 		series.dataFields.valueY = "close";
 		series.strokeWidth = 1.5;
@@ -1017,8 +1015,8 @@ createAxisAndSeries(field,chart) {
 		/* Set Chart Tooltip Style */
 		series.tooltip.getFillFromObject = false;
 		series.tooltip.background.fill = am4core.color("#00b050");
-	} else if(field=="sma"){
-		let series = chart.series.push(new am4charts.LineSeries());
+	} else if(field=="sma") {
+		const series = chart.series.push(new am4charts.LineSeries());
 		series.dataFields.dateX = "date";
 		series.dataFields.valueY = "SMA";
 		series.strokeWidth = 1.5;
@@ -1109,7 +1107,7 @@ renderVolumeChart(data, dataType = 'normal') {
 	chart.paddingRight = 20;
 
 	chart.data = data;
-	let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+	const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 	categoryAxis.dataFields.category = "currentDateTime";
 	categoryAxis.renderer.grid.template.strokeOpacity = 0;
 	categoryAxis.renderer.labels.template.disabled = true;
@@ -1117,7 +1115,7 @@ renderVolumeChart(data, dataType = 'normal') {
 	categoryAxis.renderer.cellEndLocation = 0.8;
 	categoryAxis.tooltip.disabled = true;
 
-	let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+	const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 	valueAxis.renderer.inside = true;
 	valueAxis.renderer.labels.template.fillOpacity = 0;
 	valueAxis.renderer.grid.template.strokeOpacity = 0;
@@ -1128,7 +1126,7 @@ renderVolumeChart(data, dataType = 'normal') {
 	valueAxis.renderer.grid.template.disabled = true;
 	valueAxis.renderer.ticks.template.disabled = true;
 	valueAxis.renderer.labels.template.disabled = true;
-	let series = chart.series.push(new am4charts.ColumnSeries);
+	const series = chart.series.push(new am4charts.ColumnSeries);
 	series.dataFields.valueY = "volume";
 	series.dataFields.categoryX = "currentDateTime";
 	series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
@@ -1138,7 +1136,7 @@ renderVolumeChart(data, dataType = 'normal') {
 	series.tooltip.dy = - 6;
 	series.columnsContainer.zIndex = 100;
 
-	let columnTemplate = series.columns.template;
+	const columnTemplate = series.columns.template;
 	columnTemplate.width = am4core.percent(50);
 	columnTemplate.height = am4core.percent(50);
 	columnTemplate.fill = am4core.color("#364451");
@@ -1264,7 +1262,7 @@ setChartActionType(actionType) {
 
 getSMAData(data, SMAType) {
 
-	let extraSMA   = this.getExtraSMA();
+	const extraSMA   = this.getExtraSMA();
   const SMAData = [];
   SMAType = parseInt(SMAType);
   SMAType = (data.length >= SMAType) ? SMAType : data.length;
@@ -1296,13 +1294,13 @@ getSMAData(data, SMAType) {
 			  // 	}
 			  // }
 			  const chartItemVal = this.chartDataObject[count];
-			  if(this.chartDataObject[count] != undefined && SMAType > 0){
+			  if(this.chartDataObject[count] !== undefined && SMAType > 0) {
 				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
 
 				  this.chartDataObject[count] = chartItemVal;
 				  SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
 			  }
-			  if(this.chartDataObject[count] === undefined) {
+			  if (this.chartDataObject[count] === undefined) {
 
 			  }
 		  }

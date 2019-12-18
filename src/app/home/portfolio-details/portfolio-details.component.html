@@ -114,13 +114,13 @@
                       <li>{{ valueItem.currentPrice | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.3-3' }}</li>
                       <li>{{ valueItem.bookCostVal | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0-0' }}</li>
                       <li>{{ valueItem.investmentmarketcalcost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0-0' }}</li>
-                      <li [ngClass]="valueItem.performance == 0 ? 'zeroactive' : valueItem.performance > 0 ? 'active' : 'inactive'">
+                      <li class="performance-item" [ngClass]="valueItem.performance == 0 ? 'zeroactive' : valueItem.performance > 0 ? 'active' : 'inactive'">
                         <span>
                           <i class="fa fa-caret-up" aria-hidden="true" *ngIf="valueItem.performance > 0"></i>
                           <i class="fa fa-caret-down" aria-hidden="true" *ngIf="valueItem.performance < 0"></i>
                           <i class="fa fa-caret-left" aria-hidden="true" *ngIf="valueItem.performance == 0"></i>
                           <i class="fa fa-caret-right" aria-hidden="true" *ngIf="valueItem.performance == 0"></i>
-                          {{ math.round(valueItem.performance) }}%
+                          {{ formatNumber(math.round(valueItem.performance)) }}%
                         </span>
                       </li>
                       <li class="toggle_actions">
@@ -264,7 +264,7 @@
                       <li>
                         {{ riskItem.symbol }}
                       </li>
-                      <li>{{ (riskItem.cryptoMarket != null)?riskItem.cryptoMarket:'N/A' }}</li>
+                      <li>{{ (riskItem.alphaMarketSymbol != null)?riskItem.alphaMarketSymbol:'N/A' }}</li>
 					  <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
 					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
 					  <li

@@ -3068,3 +3068,19 @@ ul.stats_body:hover {
 		}
 	}
 }
+
+button.close {
+  color: #fff!important;
+  background-color: #868e96!important;
+  border-color: #868e96!important;
+  opacity: 1!important;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: none;
+  border: 0;
+  padding: 5px 10px!important;
+  margin: 0px 0px 0px 0 !important;
+}
+button.close:hover {
+  color: white;
+}

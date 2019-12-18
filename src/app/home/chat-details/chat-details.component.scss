@@ -222,7 +222,8 @@ a.back_arrow {
           align-items: center;
           display: flex;
           flex-basis: 0;
-          flex-grow: 1;
+          flex-grow: 1;          
+          border-radius: 5px;
           span {
             color: #00b050;
             font-size: 30px;
@@ -540,8 +541,8 @@ span.inve_icon {
     font-size: 25px;
   }
   .stock_list .tab-pane ul li div.inactive span {
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 6px 7px;
+    font-size: 22px;
   }
   .stock_list .tab-pane ul li div {
     align-items: center;
@@ -565,8 +566,8 @@ span.inve_icon {
     font-size: 30px;
   }
   .stock_list .tab-pane ul li div.inactive span {
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 7px 7px;
+    font-size: 24px;
   }
   .stock_list .tab-pane ul li div {
     align-items: center;

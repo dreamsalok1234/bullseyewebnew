@@ -25,9 +25,9 @@ export class SignupComponent implements OnInit {
 	countryCode = '+1';
 	loading = false;
 	title = 'BullsEye Investors | Account Registration';
-	termsconditionCheck:boolean=false;
+	termsconditionCheck=false;
     constructor(private translate: TranslateService, private authService: AuthService, private _fb: FormBuilder,  vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager,private titleService: Title,private meta: Meta) {
-        //this.toastr.setRootViewContainerRef(vcr);
+        // this.toastr.setRootViewContainerRef(vcr);
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -35,14 +35,14 @@ export class SignupComponent implements OnInit {
 		this.show = false;
 		this.btnText='Register';
 		this.showBtnText="Show";
-		
+
     }
-    ngOnInit() { 
+    ngOnInit() {
 	    this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: 'Register your Bullseye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
-		this._initForm(); localStorage.removeItem('userInfo'); 
+		this.meta.addTag({name: 'description', content: 'Register your BullsEye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
+		this._initForm(); localStorage.removeItem('userInfo');
 	}
 
     private _initForm(): void {
@@ -84,32 +84,35 @@ export class SignupComponent implements OnInit {
             return;
         }
         const formData = {"firstname" : this.registerForm.controls.firstName.value, "lastname": this.registerForm.controls.lastName.value, "username" : this.registerForm.controls.userName.value, "phoneNumber": this.registerForm.controls.phone.value, "country_code":this.countryCode, "password": this.registerForm.controls.password.value,"verify_type" : ""};
-		if(this.btnText =="Processing...")
+		if(this.btnText =="Processing...") {
 			return ;
+		}
         this.btnText="Processing...";
 		var objectType = this;
 		this.loading =true;
-		this.authService.signup(formData, function(err, response){ 
+		this.authService.signup(formData, function(err, response){
 		 	objectType.btnText='Register';
 			objectType.loading = false;
-			if( err )
+			if( err ) {
 			  objectType.toastr.errorToastr("Something Going Wrong",null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+			}
 			if( response.statusCode == 200 ) {
 				localStorage.setItem("otpVerificationKey", response.data.verificationToken);
 				localStorage.setItem("userInfo", JSON.stringify(formData));
 				objectType.toastr.successToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
 				objectType.router.navigate(['/verification']);
 			}
-			else 
-			  objectType.toastr.errorToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
+			else {
+			  objectType.toastr.errorToastr(response.data.message,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+			}
 		});
-		
+
 	}
 	telInputObject(obj) {
 	    /*console.log(obj);
 	    obj.intlTelInput('setCountry', 'us');*/
 	  }
-	getNumber(obj){
+	getNumber(obj) {
 
 	}
 	hasError(event: any): void {
@@ -129,7 +132,7 @@ export class SignupComponent implements OnInit {
 	    return true;
 	}
 	onCountryChange(obj) {
-		this.countryCode = '+'+obj.dialCode;
+		this.countryCode = '+' + obj.dialCode;
 	}
 
 }

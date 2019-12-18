@@ -688,7 +688,7 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
-		valueAxis.renderer.minWidth = 35;
+		valueAxis.renderer.minWidth = 5;
 
 		const extraParam = (this.filterModel.searchCriteria === 24) ? (`Volume: {volume}\n`) : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
 
