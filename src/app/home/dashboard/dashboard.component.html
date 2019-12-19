@@ -102,10 +102,10 @@
 							<li>
 								<h5>{{(getCurrencyValue(watchlistitem)=='' || getCurrencyValue(watchlistitem)==0 || getCurrencyValue(watchlistitem)==null)? 'N/A' : (getCurrencyValue(watchlistitem) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
 								</h5>
+							{{getCurrencyMarketValue(watchlistitem,'marketCap')}}
 								<h6>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}
 								</h6>
 							</li>
-							{{getCurrencyMarketValue(watchlistitem,'marketCap')}}
 							<!-- <li>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li> -->
 							<li class=""
 								[ngClass]="((watchlistitem.changePct==0)?'zeroactive':(watchlistitem.changePct>0)?'active':'inactive')">

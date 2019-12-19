@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
 	deleteType = '';
 	modelText = '';
     math = Math;
-	tickerMarketCapData = {};
+	tickerMarketCapData: any;
 	imgUrl ='';
 	portfolioEditInd=0;
 	showBannerIcon=false;
