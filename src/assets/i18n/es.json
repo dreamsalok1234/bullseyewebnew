@@ -264,6 +264,18 @@
 	"GraphAnaTitle": "Grafika Analitiko",
 	"SocialMedia": "Sociaj Amaskomunikiloj",
 	"Price": "Precio",
-	"riskMetric": "Riska Metriko",
-	"liquidity": "Liquidez"
+	"liquidity": "Liquidez",
+	"prediction": "Predicción",
+	"AddPricePrediction": "Agregar predicción de precios",
+	"pricePrediction": "predicción de precios",
+	"priceRequired": "Precio requerido",
+	"openPricePrediction": "Predicción de precio abierto",
+	"predictionHistory": "Historial de predicción de precios",
+	"date": "Fecha",
+	"confirm": "Confirmar",
+	"berps": "BERPs",
+	"deviation": "Desviación",
+	"bullseyeChatboard": "BullsEye Charla",
+	"dateisrequired" : "Se requiere fecha",
+	"predictionAlreadyLockedin" : "La predicción de precios ya está bloqueada!"
 }

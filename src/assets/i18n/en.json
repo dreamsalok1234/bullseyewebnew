@@ -258,7 +258,19 @@
 	"GraphAnaTitle": "Graph Analytics",
 	"SocialMedia": "Social Media",
 	"Price": "Price",
-	"riskMetric": "Risk Metric",
-	"liquidity": "Liquidity"
+	"liquidity": "Liquidity",
+	"prediction": "Prediction",
+	"AddPricePrediction": "Add Price Prediction",
+	"pricePrediction": "Price Prediction",
+	"priceRequired": "Price required",
+	"openPricePrediction": "Open Price Prediction",
+	"predictionHistory": "Price Prediction History",
+	"date": "Date",
+	"confirm": "Confirm",
+	"berps": "BERPs",
+	"deviation": "Deviation",
+	"bullseyeChatboard": "BullsEye Chat",
+	"dateisrequired" : "Date is required",
+	"predictionAlreadyLockedin" : "Price prediction already locked-in!"
 	
 }

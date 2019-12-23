@@ -3084,3 +3084,7 @@ button.close {
 button.close:hover {
   color: white;
 }
+
+.modal-index .cdk-overlay-container {
+    z-index: 999999 !important;
+}

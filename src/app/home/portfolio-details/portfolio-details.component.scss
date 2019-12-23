@@ -286,9 +286,18 @@ a.back_arrow {
 //   }
 // }
 
-img.liquidity-flag {
-  max-width: 30px;
+ul.stats_body.liquidity-section li {
+  padding: 4px 10px 0px 10px!important;
+  min-height: 42px;
 }
+img.liquidity-flag {
+  max-width: 21px;
+  margin-bottom: 1px;
+}
+span.liquidity {
+  font-size: 11px;
+}
+li.liquidity-box {flex-direction: column;}
 
 .tabs_pills li.nav-item.active a {
   background-color: #00b050 !important;

@@ -68,8 +68,9 @@ export class DashboardComponent implements OnInit {
 		this.meta.removeTag('name=description');
 		
 		 /* Check Token */
-		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) 
+		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) { 
 			this.router.navigate(['/login']);
+		}
 		else{
 			if(this.activeRoute.snapshot.queryParams){
 				if(this.activeRoute.snapshot.params.username!=undefined && this.activeRoute.snapshot.params.username!=null){
@@ -79,8 +80,9 @@ export class DashboardComponent implements OnInit {
 				else
 					this.router.navigate(['/login']);
 			}
-			else
+			else {
 				this.router.navigate(['/login']);
+			}
 		}
 		this.title="BullsEye Investors | Home | "+localStorage.getItem('loginUserName');
 		this.titleService.setTitle(this.title);
@@ -91,57 +93,56 @@ export class DashboardComponent implements OnInit {
 		this.translate.setDefaultLang('en');
 		const browserLang = (this.profileInfo.defaultLanguage!=undefined && this.profileInfo.defaultLanguage!='')?this.profileInfo.defaultLanguage:'en';
 		this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
-		this.translate.get('Somethingwentwrong').subscribe(value => { 
+		this.translate.get('Somethingwentwrong').subscribe(value => {
 			this.defaulterrSomethingMsg=value;
 		});
-		this.translate.get('Confirm').subscribe(value => { 
+		this.translate.get('Confirm').subscribe(value => {
 			this.confirmMsg=value;
 		});
-		this.translate.get('Areyousurewant').subscribe(value => { 
+		this.translate.get('Areyousurewant').subscribe(value => {
 			this.areYouSureMsg=value;
 		});
-		this.translate.get('Processing...').subscribe(value => { 
+		this.translate.get('Processing...').subscribe(value => {
 			this.processingTxt=value;
 		});
-		this.translate.get('TargetPriceisRequired').subscribe(value => { 
+		this.translate.get('TargetPriceisRequired').subscribe(value => {
 			this.targetPriceisRequiredMsg=value;
 		});
-		this.translate.get('ExpiryDateisrequired').subscribe(value => { 
+		this.translate.get('ExpiryDateisrequired').subscribe(value => {
 			this.expiryDateisRequiredMsg=value;
 		});
-		this.translate.get('Areyousureyouwanttoremoveportfolio').subscribe(value => { 
+		this.translate.get('Areyousureyouwanttoremoveportfolio').subscribe(value => {
 			this.areYoueSurePortfolioMsg=value;
 		});
-		this.translate.get('Areyousureyouwanttoremovewatchlist').subscribe(value => { 
+		this.translate.get('Areyousureyouwanttoremovewatchlist').subscribe(value => {
 			this.areYoueSureWatchlistMsg=value;
 		});
-		this.translate.get('Priceto3decimalplaces').subscribe(value => { 
+		this.translate.get('Priceto3decimalplaces').subscribe(value => {
 			this.PriceTo3DecimalPlacesMsg=value;
 		});
 		/* Get All Static Currency*/
 		try {
 			this.currencyList = this.commonService.getCurrency();
 			this.currencyItemList = this.currencyList;
-		} 
+		}
 		catch (error) {}
-		
+
     	// this.watchListCurrency = this.profileInfo.watchListCurrency;
     	// this.model.currentCurrency = this.watchListCurrency;
 		// this.model.currentCurrency = this.profileInfo.baseCurrency;
-		
-		
+
+
 		this.watchListCurrency = this.profileInfo.baseCurrency;
 		this.model.currentCurrency = this.watchListCurrency;
-		this.priceAlert={'currentCurrency': this.watchListCurrency, 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol' : '', 'compare' : '>', 'expiryDate' : '','tickerIcon':''};
+		this.priceAlert= {'currentCurrency': this.watchListCurrency, 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol' : '', 'compare' : '>', 'expiryDate' : '','tickerIcon':''};
 		this.portfolioForm.currentCurrency=this.watchListCurrency;
 		this.priceAlert.currentCurrency =this.profileInfo.baseCurrency;
     	if (this.profileInfo.isProAccount) {
     		this.disabledCurrency = false;
-     }
-		else{
+     } else {
 			let newKeys =[];
 			const objectType = this;
-			this.currencyList.map(function(item){
+			this.currencyList.map(function(item) {
 				if(item.name ==objectType.watchListCurrency) {
 					return newKeys.push({name:item.name,symbol:item.symbol});
 				}
@@ -149,7 +150,7 @@ export class DashboardComponent implements OnInit {
 			this.currencyList=newKeys;
 		}
 		const objectNType = this;
-		setTimeout(function(){
+		setTimeout(function() {
 			objectNType.getPageContent();
 		},1000);
     	// this.getPageContent();
@@ -202,9 +203,9 @@ export class DashboardComponent implements OnInit {
 
 	   if (finalPrice > 1000000) {
 		    let douValue = finalPrice / 1000000;
-            let  sy = "m";
+            let  sy = 'm';
             if (douValue > 1000) {
-                sy = "b";
+                sy = 'b';
                 douValue = douValue / 1000;
             }
 			this.tickerMarketCapData = {amount : (douValue), text : sy};
@@ -324,7 +325,7 @@ export class DashboardComponent implements OnInit {
     } else {
         this.portfolioError.name = false;
     }
-    const formData = {"name" : this.portfolioForm.name, "type": this.portfolioForm.type, "currency" : this.portfolioForm.currentCurrency, "portfolioId": this.portfolioForm.portfolioId};
+    const formData = {'name' : this.portfolioForm.name, 'type': this.portfolioForm.type, 'currency' : this.portfolioForm.currentCurrency, 'portfolioId': this.portfolioForm.portfolioId};
     const objectType = this;
     this.loading =true;
     this.loadingBar.start();
@@ -484,7 +485,7 @@ export class DashboardComponent implements OnInit {
 		this.loading = true;
 	    this.loadingBar.start();
 	    const objectType = this;
-	    const formData = {"currentOrderNo": previousIndex +1 , "newOrderNo": currentIndex+1, "watchlistId" : this.watchlist[currentIndex].watchlistId};
+	    const formData = {'currentOrderNo': previousIndex +1 , 'newOrderNo': currentIndex+1, 'watchlistId' : this.watchlist[currentIndex].watchlistId};
 
 	    this.watchListService.changeWatchListOrder(formData, function(err, response) {
 
@@ -535,4 +536,16 @@ export class DashboardComponent implements OnInit {
 	    });
 
 	}
+
+	formatNumber(num) {
+		const numNew=num.toString();
+		if(numNew.indexOf('.') > -1) {
+			const vSplitValue =numNew.split('.');
+			const v =vSplitValue[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+			return v + '.' + vSplitValue[1];
+		} else {
+			return numNew.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+		}
+  	}
+
 }

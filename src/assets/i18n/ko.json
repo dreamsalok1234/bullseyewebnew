@@ -264,6 +264,18 @@
 	"GraphAnaTitle": "그래프 분석",
 	"SocialMedia": "소셜 미디어",
 	"Price": "가격",
-	"riskMetric": "위험 지표",
-	"liquidity": "유동성"
+	"liquidity": "유동성",
+	"prediction": "예측",
+	"AddPricePrediction": "가격 예측 추가",
+	"pricePrediction": "가격 예측",
+	"priceRequired": "필요한 가격",
+	"openPricePrediction": "공개 가격 예측",
+	"predictionHistory": "가격 예측 내역",
+	"date": "데이트",
+	"confirm": "확인",
+	"berps": "BERPs",
+	"deviation": "일탈",
+	"bullseyeChatboard": "BullsEye 잡담",
+	"dateisrequired" : "날짜가 필요합니다",
+	"predictionAlreadyLockedin" : "가격 예측은 이미 고정되어 있습니다!"
 }

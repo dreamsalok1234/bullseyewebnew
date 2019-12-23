@@ -264,6 +264,18 @@
 	"GraphAnaTitle": "グラフ分析",
 	"SocialMedia": "ソーシャルメディア",
 	"Price": "価格",
-	"riskMetric": "リスク指標",
-	"liquidity": "流動性"
+	"liquidity": "流動性",
+	"prediction": "予測",
+	"AddPricePrediction": "価格予測を追加",
+	"pricePrediction": "価格予測",
+	"priceRequired": "必要な価格",
+	"openPricePrediction": "オープン価格予測",
+	"predictionHistory": "価格予測履歴",
+	"date": "日付",
+	"confirm": "確認",
+	"berps": "BERPs",
+	"deviation": "偏差",
+	"bullseyeChatboard": "BullsEye チャット",
+	"dateisrequired" : "日付が必要です",
+	"predictionAlreadyLockedin" : "価格予測は既にロックインされています!"
 }

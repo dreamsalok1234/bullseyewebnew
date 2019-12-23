@@ -265,6 +265,18 @@
 	"GraphAnaTitle": "ग्राफ विश्लेषिकी",
 	"SocialMedia": "सामाजिक मीडिया",
 	"Price": "कीमत",
-	"riskMetric": "जोखिम मीट्रिक",
-	"liquidity": "लिक्विडिटी"
+	"liquidity": "लिक्विडिटी",
+	"prediction": "भविष्यवाणी",
+	"AddPricePrediction": "मूल्य पूर्वानुमान जोड़ें",
+	"pricePrediction": "मूल्य पूर्वानुमान",
+	"priceRequired": "मूल्य की आवश्यकता",
+	"openPricePrediction": "खुली कीमत की भविष्यवाणी",
+	"predictionHistory": "मूल्य भविष्यवाणी इतिहास",
+	"date": "दिनांक",
+	"confirm": "पुष्टि करें",
+	"berps": "BERPs",
+	"deviation": "विचलन",
+	"bullseyeChatboard": "BullsEye चैट",
+	"dateisrequired" : "दिनांक की आवश्यकता है",
+	"predictionAlreadyLockedin" : "मूल्य भविष्यवाणी पहले से ही लॉक-इन है!"
 }

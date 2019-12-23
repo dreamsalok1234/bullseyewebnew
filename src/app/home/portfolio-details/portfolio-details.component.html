@@ -180,7 +180,7 @@
                   </div>
                   <div class="body_div">
                     <!--<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,riskItem.shortTerm,riskItem.mediumTerm,riskItem.longTerm,riskItem.voladility,riskItem.fundamentals,riskItem.alphaMarketId,riskItem.investmentId,riskItem.potentialId)">-->
-					<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,i)">
+					            <ul class="stats_body liquidity-section" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,i)">
                       <li>
                         {{ riskItem.symbol }}
                       </li>
@@ -225,10 +225,11 @@
                       </li>
 					            <!-- <li *ngIf="riskItem.opportunity=='N/A'">{{ riskItem.opportunity }}</li>
                       <li *ngIf="riskItem.opportunity!='N/A'">{{ math.round(riskItem.opportunity) }}%</li> -->
-                      <li>
+                      <li class="liquidity-box">
                         <img *ngIf="riskItem.liquidityFlag=='1'" class="liquidity-flag" src="assets/images/ic_green_exclamation.png">
                         <img *ngIf="riskItem.liquidityFlag=='2'" class="liquidity-flag" src="assets/images/ic_green_right.png">
                         <span *ngIf="riskItem.liquidityFlag !='1' && riskItem.liquidityFlag !='2'" >N/A</span>
+                        <span *ngIf="riskItem.liquidityFlag =='1' || riskItem.liquidityFlag =='2'" class="liquidity">{{ riskItem.liquidity | number:'1.0-3' }}%</span>
                       </li>
                     </ul>
                     <ul class="processing" *ngIf="riskItemProcessing">

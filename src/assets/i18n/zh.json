@@ -264,6 +264,18 @@
 	"GraphAnaTitle": "图分析",
 	"SocialMedia": "社交媒体",
 	"Price": "价钱",
-	"riskMetric": "风险指标",
-	"liquidity": "流动性"
+	"liquidity": "流動性",
+	"prediction": "預測",
+	"AddPricePrediction": "添加價格預測",
+	"pricePrediction": "價格預測",
+	"priceRequired": "所需價格",
+	"openPricePrediction": "開盤價格預測",
+	"predictionHistory": "價格預測歷史",
+	"date": "日期",
+	"confirm": "確認",
+	"berps": "BERPs",
+	"deviation": "偏差",
+	"bullseyeChatboard": "BullsEye 聊天室",
+	"dateisrequired" : "日期为必填项",
+	"predictionAlreadyLockedin" : "价格预测已锁定!"
 }

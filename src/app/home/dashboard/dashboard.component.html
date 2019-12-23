@@ -7,6 +7,9 @@
 					<img [src]="imgUrl" alt="" style="max-width:100%" alt="Profile image" />
 				</span>
 			</h2>
+			<button type="button" class="btn berps-btn {{profileInfo.berps >= 0 ?'btn-success':'btn-danger'}}" [routerLink]="['/price-prediction']">
+				{{ ((profileInfo.berps >= 0)?'+':'') + formatNumber(profileInfo.berps | number:'1.2-2')  }}
+			</button>
 		</div>
 	</div>
 </div>
