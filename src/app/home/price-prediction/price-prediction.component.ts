@@ -54,7 +54,8 @@ export class PricePredictionComponent implements OnInit {
   closeProcessingTxt = 'Processing...';
   title = 'BullsEye Investors | Price Prediction';
   targetPriceisRequiredMsg = 'Target Price is required!';
-  noPricePredictionText = 'No Prediction Found';
+  noPricePredictionText = 'No price prediction found.';
+  noPricePredictionHistoryText = 'No price prediction history found.';
   currentTime = new Date();
   isPagination = false;
   currentPage = 0;
@@ -66,6 +67,8 @@ export class PricePredictionComponent implements OnInit {
   pageNo = 1;
   sharingText = '';
   sharingTicker = '';
+  predictionStartDate = new Date();
+  predictionStartDateFrom = {year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate()};
 
   constructor(
     private translate: TranslateService,
@@ -84,6 +87,8 @@ export class PricePredictionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
+    this.predictionStartDateFrom = {year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate()};
     this.document.body.classList.add('modal-index');
     this.meta.removeTag('name=title');
     this.meta.removeTag('name=description');
@@ -132,6 +137,12 @@ export class PricePredictionComponent implements OnInit {
     });
     this.translate.get('TargetPriceisRequired').subscribe(value => {
       this.targetPriceisRequiredMsg = value;
+    });
+    this.translate.get('noPricePredictionText').subscribe(value => {
+      this.noPricePredictionText = value;
+    });
+    this.translate.get('noPricePredictionHistoryText').subscribe(value => {
+      this.noPricePredictionHistoryText = value;
     });
     try {
       this.currencyList = this.commonService.getCurrency();
@@ -244,7 +255,7 @@ export class PricePredictionComponent implements OnInit {
           objectType.closeProcessing = false;
         } else {
           objectType.isPagination = false;
-          objectType.closeProcessingTxt = objectType.noPricePredictionText;
+          objectType.closeProcessingTxt = objectType.noPricePredictionHistoryText;
         }
         if (objectType.pageNo === 1) {
           objectType.prevLoading = true;
@@ -455,7 +466,7 @@ export class PricePredictionComponent implements OnInit {
 
   sharePrediction(content, ticker, currency, prediction, date) {
     prediction = this.returnCurrSymbol(currency) + this.formatNumber(this.formatNumberDecimalPlaces(prediction, 3));
-    this.sharingText = 'My prediction for ' + ticker + ' is ' + prediction + ' for date ' + date + '';
+    this.sharingText = 'My price prediction is for ' + ticker + ' to be ' + prediction + ' on ' + date + '';
     this.sharingTicker = ticker;
     this.modalService.open(content, { windowClass: 'sharemodal', size: 'lg' }).result.then(
       result => {
@@ -471,7 +482,7 @@ export class PricePredictionComponent implements OnInit {
     const objectType = this;
     this.loading = true;
     this.loadingBar.start();
-    this.chatService.share(objectType.sharingTicker, objectType.sharingText,  function (err, response) {
+    this.chatService.share(objectType.sharingTicker, objectType.sharingText, function (err, response) {
       objectType.loading = false;
       objectType.loadingBar.stop();
       if (err) {
@@ -488,6 +499,26 @@ export class PricePredictionComponent implements OnInit {
         objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
       }
     });
+  }
+
+
+  goToChatDetails(chatBoardId, chatName, chatSymbol, chatImage, chatPrice, chatCurrency, stockType) {
+    // (chatBoardId, chatName, chatSymbol, chatImage, chatPrice, chatCurrency, favouriteId,change_pct,volume)
+    if (chatBoardId > 0) {
+      localStorage.setItem('chatBoardId', chatBoardId);
+      localStorage.setItem('chatName', chatName);
+      localStorage.setItem('chatSymbol', chatSymbol);
+      localStorage.setItem('chatImage', (chatImage === '') ? '../assets/images/not-found.png' : chatImage);
+      localStorage.setItem('chatPrice', chatPrice);
+      localStorage.setItem('chatCurrency', chatCurrency);
+      localStorage.setItem('chatType', stockType);
+      // localStorage.setItem('chatChangeType', (change_pct=='' || change_pct==null)?0:change_pct);
+      // localStorage.setItem('favouriteId', ((favouriteId !== undefined && favouriteId !== '' && favouriteId !== null) ? favouriteId : 0));
+      this.router.navigate(['/chat/' + chatSymbol + '/' + chatName]);
+    } else {
+      this.toastr.errorToastr(this.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+    }
+
   }
 
 

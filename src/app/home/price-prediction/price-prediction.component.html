@@ -5,8 +5,7 @@
         <div class="add-price">
           <div class="add_price_alert">
             <span class="predictionHistory">{{ 'predictionHistory' | translate }}</span>
-            <a href="javascript:" (click)="addPricePrediction(addpriceprediction)"><i class="fa fa-plus" aria-hidden="true"></i>
-		          {{ 'AddPricePrediction' | translate }} </a>
+            <a href="javascript:" (click)="addPricePrediction(addpriceprediction)"  title="{{ 'AddPricePrediction' | translate }}"><i class="fa fa-plus" aria-hidden="true"></i> </a>
           </div>
           <a href="javascript:" onclick="history.go(-1); return false;"
           title="{{ 'Back' | translate }}" class="back_arrow">
@@ -67,7 +66,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label>{{ 'prediction' | translate }}</label>
+              <label>{{ 'predictedMarketPrice' | translate }}</label>
               <input class="form-control amount" type="text" formControlName="amount" autocomplete="off"
                 (keypress)="numberOnly($event)" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" />
               <div *ngIf="submitted && i.amount.errors" class="alert alert-dange error">
@@ -75,10 +74,10 @@
               </div>
             </div>
             <div class="form-group">
-              <label>{{ 'date' | translate }}</label>
+              <label>{{ 'byWhen' | translate }}</label>
               <div class="input-group datepicker-input">
                 <input class="form-control" placeholder="yyyy-mm-dd" formControlName="predictionForDate" ngbDatepicker
-                  #d="ngbDatepicker" [minDate]="{year: this.currentTime.getFullYear(), month: this.currentTime.getMonth()+1, day: this.currentTime.getDate()+7}" readonly />
+                  #d="ngbDatepicker" [minDate]="predictionStartDateFrom" readonly />
                 <button class="input-group-addon" (click)="d.toggle()" type="button">
                   <span class="fa fa-calendar"></span>
                 </button>
@@ -99,7 +98,7 @@
       
     <ng-template #share let-modal>
       <div class="modal-header alert_header">
-        <h4 class="modal-title" id="modal-basic-title">{{ 'Share' | translate }}</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{ 'chooseYourPlatform' | translate }}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -130,20 +129,34 @@
     </ng-template>
 
       <div class="stats_table">
-        <div class="head_div">
+        <!-- <div class="head_div">
           <ul class="stats_head">
             <li>{{ 'Ticker' | translate }}</li>
-            <li>{{ 'prediction' | translate }}</li>
+            <li>{{ 'Ticker' | translate }}</li>
+            <li>{{ 'predictedPrice' | translate }}</li>
+            <li>{{ 'date' | translate }}</li>
             <li>{{ 'date' | translate }}</li>
             <li>{{ 'Actions' | translate }}</li>
           </ul>
-        </div>
+        </div> -->
         <div class="body_div">
           <ul class="stats_body" *ngFor="let item of itemList; let i = index;">
-            <li>{{ item.symbol }}</li>
+            <li class="ticker-detail">
+              <div class="icon_name">
+                <img src="assets/images/logo.png" *ngIf="item.tickerUrl == undefined || item.tickerUrl.length == 0">
+                <img  src="{{item.tickerUrl}}" *ngIf="item.tickerUrl != undefined && item.tickerUrl.length > 0">	
+                <h3>{{item.name}}</h3>
+              </div>
+            </li>
+            <li>{{ item.currentPrice | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
             <li>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
+            <li>{{ (item.currentPrice - item.prediction) > 0? '+':'' }}{{ (item.currentPrice - item.prediction) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
             <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
             <li>
+              <button class="btn share-btn-icon" title="{{ 'Chat' | translate }}"
+                (click)="goToChatDetails(item.chatBoardId, item.name, item.symbol, item.tickerUrl, item.currentPrice, item.currentCurrency, item.type)" >
+                <i class="fa fa-commenting-o" aria-hidden="true"></i>
+              </button>
               <button class="btn share-btn-icon" title="{{ 'Share' | translate }}"
                 (click)="sharePrediction(share, item.symbol, item.currency, item.prediction, item.predictionForDate)" >
                 <i class="fa fa-share-alt-square" aria-hidden="true"></i>
@@ -177,18 +190,24 @@
       ></ngb-pagination>
     </div>  
     <div class="stats_table">
-      <div class="head_div">
+      <!-- <div class="head_div">
         <ul class="stats_head">
           <li>{{ 'Ticker' | translate }}</li>
-          <li>{{ 'prediction' | translate }}</li>
+          <li>{{ 'predictedPrice' | translate }}</li>
           <li>{{ 'date' | translate }}</li>
           <li>{{ 'deviation' | translate }}</li>
           <li>{{ 'berps' | translate }}</li>
         </ul>
-      </div>
+      </div> -->
       <div class="body_div">
         <ul class="stats_body" *ngFor="let item of closedItemList; let i = index;">
-          <li>{{ item.symbol }}</li>
+          <li class="ticker-detail">
+            <div class="icon_name">
+              <img src="assets/images/logo.png" *ngIf="item.tickerUrl == undefined || item.tickerUrl.length == 0">
+              <img  src="{{item.tickerUrl}}" *ngIf="item.tickerUrl != undefined && item.tickerUrl.length > 0">	
+              <h3>{{item.name}}</h3>
+            </div>
+          </li>
           <li>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
           <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
           <li>{{ formatNumber(formatNumberDecimalPlaces(item.deviation, 3)) }}</li>

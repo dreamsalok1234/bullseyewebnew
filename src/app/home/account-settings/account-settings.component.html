@@ -55,6 +55,12 @@
             </li>
             <li>
               <h3>
+                <a href="javascript:" [routerLink]="['/price-prediction']"><img
+                    src="assets/images/ic_price_prediction.png" />{{ 'marketPredictedPrice' | translate }}</a>
+              </h3>
+            </li>
+            <li>
+              <h3>
                 <!-- [routerLink]="['/bullseye-pro']" -->
                 <a href="javascript:" (click)="bullseyePro()"><img
                     [src]="bproIcon" />{{ 'BullseyePro' | translate }}</a>
