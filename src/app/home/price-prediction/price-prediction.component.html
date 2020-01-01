@@ -5,7 +5,7 @@
         <div class="add-price">
           <div class="add_price_alert">
             <span class="predictionHistory">{{ 'predictionHistory' | translate }}</span>
-            <a href="javascript:" (click)="addPricePrediction(addpriceprediction)"  title="{{ 'AddPricePrediction' | translate }}"><i class="fa fa-plus" aria-hidden="true"></i> </a>
+            <a href="javascript:" (click)="addPricePrediction(addpriceprediction)"  title="{{ 'AddPricePrediction' | translate }}" class="btn-prediction"><img src="../../assets/images/target.png"> </a>
           </div>
           <a href="javascript:" onclick="history.go(-1); return false;"
           title="{{ 'Back' | translate }}" class="back_arrow">
@@ -116,11 +116,11 @@
             <label for="usr">{{ 'ViaSocialMedia' | translate }}</label>
             <ul>
               <li>
-                <a href="https://www.facebook.com/sharer.php?u=https://bullseyeinvestors.app/signup&quote={{sharingText}}" target="_blank"><i
+                <a href="https://www.facebook.com/sharer.php?u=https://bullseyeinvestors.app/signup&quote={{sharingWithHashText}}" target="_blank"><i
                     class="fa fa-facebook-square" aria-hidden="true"></i></a>
               </li>
               <li>
-                <a href="https://twitter.com/intent/tweet?url=https://bullseyeinvestors.app/signup&text={{sharingText}}" target="_blank"><i
+                <a href="https://twitter.com/intent/tweet?url=https://bullseyeinvestors.app/signup&text={{sharingWithHashText}}" target="_blank"><i
                     class="fa fa-twitter-square" aria-hidden="true"></i></a>
               </li>
             </ul>

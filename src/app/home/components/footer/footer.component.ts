@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class FooterComponent implements OnInit {
 	profileInfo: any;
-	getFullYear: number = ''; // new Date().getFullYear();
+	getFullYear: number = new Date().getFullYear();
 	constructor(private translate: TranslateService, public router: Router) {
 		/* Check Token */
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null)) {

@@ -66,9 +66,10 @@ export class PricePredictionComponent implements OnInit {
   pageSize = 10;
   pageNo = 1;
   sharingText = '';
+  sharingWithHashText = '';
   sharingTicker = '';
   predictionStartDate = new Date();
-  predictionStartDateFrom = {year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate()};
+  predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
 
   constructor(
     private translate: TranslateService,
@@ -88,7 +89,11 @@ export class PricePredictionComponent implements OnInit {
 
   ngOnInit() {
     this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
-    this.predictionStartDateFrom = {year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate()};
+    this.predictionStartDateFrom = {
+      year: this.predictionStartDate.getFullYear(),
+      month: this.predictionStartDate.getMonth() + 1,
+      day: this.predictionStartDate.getDate()
+    };
     this.document.body.classList.add('modal-index');
     this.meta.removeTag('name=title');
     this.meta.removeTag('name=description');
@@ -465,8 +470,9 @@ export class PricePredictionComponent implements OnInit {
   }
 
   sharePrediction(content, ticker, currency, prediction, date) {
-    prediction = this.returnCurrSymbol(currency) + this.formatNumber(this.formatNumberDecimalPlaces(prediction, 3));
+    prediction = currency + this.formatNumber(this.formatNumberDecimalPlaces(prediction, 3));
     this.sharingText = 'My price prediction is for ' + ticker + ' to be ' + prediction + ' on ' + date + '';
+    this.sharingWithHashText = 'My price prediction is for ' + ticker + ' to be ' + prediction + ' on ' + date + '&hashtag=#' + ticker + '';
     this.sharingTicker = ticker;
     this.modalService.open(content, { windowClass: 'sharemodal', size: 'lg' }).result.then(
       result => {

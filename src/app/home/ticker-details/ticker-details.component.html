@@ -30,7 +30,7 @@
               src="assets/images/ticksetting.png" alt="Risk indicators setting" /></button>
           <button (click)="addToWatchList()" [ngClass]="[watchListId == 0 ? 'addToWlist' : 'alreadyAdded']" title="{{ 'Watchlist' | translate }}"><i
               class="fa fa-star" aria-hidden="true"></i></button>
-          <button (click)="addPricePrediction(addpriceprediction)" class="{{isPredictionLocked?'alreadyAdded':''}}" title="{{ 'AddPricePrediction' | translate }}"><i class="fa fa-plus" aria-hidden="true"></i>
+          <button (click)="addPricePrediction(addpriceprediction)" class="{{isPredictionLocked?'alreadyAdded':''}}" title="{{ 'AddPricePrediction' | translate }}"  *ngIf="this.profileInfo.isProAccount"><img src="../../assets/images/target.png">
                 </button>
           <button (click)="open(content)"><i class="fa fa-bell" aria-hidden="true" title="{{ 'PriceAlert' | translate }}"></i></button>
           <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}"

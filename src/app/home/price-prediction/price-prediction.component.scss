@@ -86,9 +86,9 @@ a.sharetochatboard-icon img{
   padding: 7px 8px;
 }
 
-.add_price_alert a i{
-  margin-right: 0px;
-}
+// .add_price_alert a i{
+//   margin-right: 0px;
+// }
 .icon_name {
   display: flex;
   align-items: center;
@@ -109,4 +109,8 @@ a.sharetochatboard-icon img{
 ul.stats_body li.ticker-detail {
   text-align: left;
   justify-content: flex-start !important;
+  min-width: 170px !important;
+}
+a.btn-prediction img {
+  width: 21px;
 }
