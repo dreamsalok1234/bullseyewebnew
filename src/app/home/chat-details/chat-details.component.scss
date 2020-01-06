@@ -245,7 +245,7 @@ a.back_arrow {
             }
           }
           &.inactive {
-            background-color: #ff0000;
+            background-color: red;
             span {
               color: #fff;
               i {
@@ -1216,7 +1216,7 @@ ul.blurTdetails + .data_fatch i {
 .checkbox-custom-label{font-size: 15px;}
 .value_change ul li{padding: 5px}
 .value_change ul li h3{font-size: 15px;}
-div#chartdiv,div#bookchart,div#candlechart,div#volumechart,div#smachart, ,div#candleSma{height: 320px; padding-top: 35px;}
+div#chartdiv,div#bookchart,div#candlechart,div#volumechart,div#smachart,div#candleSma{height: 320px; padding-top: 35px;}
 
 }
 span.berps-box {
@@ -1224,4 +1224,11 @@ span.berps-box {
   color: white;
   padding: 2px 3px;
   border-radius: 5px;
+}
+
+.post_msg_list{
+  max-height: 475px;
+}
+.bg-danger {
+  background-color: red !important;
 }

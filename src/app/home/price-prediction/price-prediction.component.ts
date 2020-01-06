@@ -469,10 +469,10 @@ export class PricePredictionComponent implements OnInit {
     return parseFloat(num).toFixed(decimalplaces);
   }
 
-  sharePrediction(content, ticker, currency, prediction, date) {
-    prediction = currency + this.formatNumber(this.formatNumberDecimalPlaces(prediction, 3));
-    this.sharingText = 'My price prediction is for ' + ticker + ' to be ' + prediction + ' on ' + date + '';
-    this.sharingWithHashText = 'My price prediction is for ' + ticker + ' to be ' + prediction + ' on ' + date + '&hashtag=#' + ticker + '';
+  sharePrediction(content, ticker, tickerName, currency, prediction, date) {
+    prediction = currency + ' ' + this.formatNumber(this.formatNumberDecimalPlaces(prediction, 3));
+    this.sharingText = encodeURI( 'My price prediction is for ' + tickerName + ' to be ' + prediction + ' on ' + date + '' );
+    this.sharingWithHashText = encodeURI( 'My price prediction is for ' + tickerName + ' to be ' + prediction + ' on ' + date + '. Make your price prediction by registering your BullsEye Pro account here&hashtag=#' + ticker );
     this.sharingTicker = ticker;
     this.modalService.open(content, { windowClass: 'sharemodal', size: 'lg' }).result.then(
       result => {

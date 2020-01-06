@@ -53,13 +53,17 @@
         </div>
         <div class="paginate" *ngIf="!chatListCheck">
           <ngb-pagination
-            [collectionSize]="totalPage"
+            [collectionSize]="totalRecords"
             [rotate]="true"
             [(page)]="currentPage"
             size="sm"
             (pageChange)="onPageChange(currentPage)"
-          >
-          </ngb-pagination>
+            aria-label="Default pagination"
+            [maxSize]="5"
+            [rotate]="true"
+            [boundaryLinks]="true"
+            [pageSize]="pageSize"
+          ></ngb-pagination>
         </div>
       </div>
     </div>

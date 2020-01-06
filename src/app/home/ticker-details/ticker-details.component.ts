@@ -106,7 +106,7 @@ export class TickerDetailsComponent implements OnInit {
 	shortingTab = '1D';
 	shortZone = 'GMT';
 	currentTime = new Date();
-	isPredictionLocked = 0;
+	isPredictionLocked = 1;
 	predictionStartDate = new Date();
 	predictionStartDateFrom = {year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate()};
 
@@ -128,7 +128,7 @@ export class TickerDetailsComponent implements OnInit {
 	ngOnInit() {
 		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
 		this.predictionStartDateFrom = {year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate()};
-		
+
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
 
@@ -328,8 +328,8 @@ export class TickerDetailsComponent implements OnInit {
 					if (response.data[0].status === true && response.data[0].historyData.currentDayData !== undefined && Object.keys(response.data[0].historyData.currentDayData).length > 0) {
 
 						objectType.tickerListData = response.data[0].historyData.currentDayData;
+						objectType.isPredictionLocked = parseInt(objectType.tickerListData.isPredictionLocked);
 						if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
-							objectType.isPredictionLocked = objectType.tickerListData.isPredictionLocked;
 							if (objectType.cryptoMaxValue !== 0) {
 								objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
 								objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
@@ -472,7 +472,7 @@ export class TickerDetailsComponent implements OnInit {
 		return limit;
 	}
 	getChartData(num, type, clickind) {
-		// debugger;
+		//
 		const objectType = this;
 		this.activeTab = 'active';
 		this.indMap = clickind;
@@ -846,7 +846,7 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
-		// debugger;
+
 		const series = chart.series.push(new am4charts.ColumnSeries);
 		series.dataFields.valueY = 'volume';
 		series.dataFields.categoryX = 'currentDateTime';
@@ -1188,26 +1188,26 @@ export class TickerDetailsComponent implements OnInit {
 	}
 
 	filterExchangeItem() {
-		// debugger;
+
 		this.loadingBar.start();
 		this.getChartData(this.num, this.type, this.indMap);
 
 		if (this.filterModel.graphDisplay) {
-			// debugger;
+
 			document.getElementById('chartdiv').style.display = 'none';
 			document.getElementById('smachart').style.display = 'none';
 			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
-				// debugger;
+
 				document.getElementById('candleSma').style.display = 'none';
 				document.getElementById('candlechart').style.display = 'flex';
 			} else {
-				// debugger;
+
 				document.getElementById('candlechart').style.display = 'none';
 				document.getElementById('candleSma').style.display = 'flex';
 			}
 
 		} else {
-			// debugger;
+
 			document.getElementById('candlechart').style.display = 'none';
 			document.getElementById('chartdiv').style.display = 'flex';
 			document.getElementById('candleSma').style.display = 'none';
@@ -1308,6 +1308,7 @@ export class TickerDetailsComponent implements OnInit {
 
 
 	addPricePrediction(template) {
+
 		if (this.isPredictionLocked) {
 			this.toastr.errorToastr(this.predictionAlreadyLockedin, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 			return false;

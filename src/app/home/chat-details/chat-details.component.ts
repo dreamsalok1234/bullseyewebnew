@@ -31,8 +31,9 @@ export class ChatDetailsComponent implements OnInit {
 	currentPage = 0;
 	totalPage=0;
     loading = false;
-	pageSize=10;
+	pageSize=5;
 	pageNo=1;
+	totalRecords = 0;
 	chatCurrency='USD';
 	chatDetailsCurrency='USD';
 	currencyItemList:any=[];
@@ -131,20 +132,20 @@ export class ChatDetailsComponent implements OnInit {
 		
 		if(this.activeRoute.snapshot.queryParams){
 			if(this.activeRoute.snapshot.params.ctsymbol!=undefined && this.activeRoute.snapshot.params.ctsymbol!=null && this.activeRoute.snapshot.params.ctname!=undefined && this.activeRoute.snapshot.params.ctname!=null){
-				if(this.activeRoute.snapshot.params.ctsymbol!=localStorage.getItem('chatSymbol') || this.activeRoute.snapshot.params.ctname!=localStorage.getItem('chatName'))
+				if(this.activeRoute.snapshot.params.ctsymbol!=localStorage.getItem('chatSymbol') || this.activeRoute.snapshot.params.ctname!=localStorage.getItem('chatName')) {
 					this.router.navigate(['/chat']);
+				}
 			}
 			else {
 				this.router.navigate(['/chat']);
 			}
-		}
-		else {
+		} else {
 			this.router.navigate(['/chat']);
 		}
 
 
 		this.profileInfo = JSON.parse(localStorage.getItem("userProfileInfo"));
-		if (!this.profileInfo.isProAccount){
+		if (!this.profileInfo.isProAccount) {
 			localStorage.setItem("proActive","false");
 			this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
 			this.router.navigate(['/account-settings']));
@@ -218,7 +219,7 @@ export class ChatDetailsComponent implements OnInit {
 		this.userId = this.profileInfo.userId;
 		this.btnText = this.sendText;
 		this.placeholderImageUrl = '../assets/images/user-not-found.png';
-		this.pageSize = 10;
+		this.pageSize = 5;
 		this.chatListCheck = true;
 
 		this.totalPage = this.currentPage = 0;
@@ -332,6 +333,7 @@ export class ChatDetailsComponent implements OnInit {
 				if (objectType.pageNo === 1) { objectType.totalPage = response.data.totalPage; }
 				objectType.chatList = response.data.data;
 				if (objectType.chatList.length > 0) {
+					objectType.totalRecords = response.data.totalRecords;
 					objectType.searchText = '';
 					objectType.chatListCheck = false;
 
@@ -809,7 +811,7 @@ getChartData(num, type, clickind) {
 						if (response.data.intraday !== undefined && Object.keys(response.data.intraday).length > 0) {
 
 							data = response.data.intraday;
-							let dataTimeZone = response.data.timezone_name;
+							const dataTimeZone = response.data.timezone_name;
 							Object.keys(data).map(function (key) {
 								const currentDateTime = new Date(key);
 								const shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
@@ -864,7 +866,7 @@ getChartData(num, type, clickind) {
 
 				const num = parseInt(this.num);
 				let limit = (this.type === 'M') ? (num * 30) : (num * 365);
-				let extraSMA   = this.getExtraSMA();
+				const extraSMA   = this.getExtraSMA();
 				limit = limit+extraSMA;
 
 				d.setDate(d.getDate() - limit);
@@ -978,7 +980,7 @@ getChartData(num, type, clickind) {
 
 createAxisAndSeries(field,chart) {
 
-	let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+	const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 	valueAxis.renderer.grid.template.location = 0;
 	valueAxis.renderer.grid.template.disabled = true;
 	valueAxis.renderer.ticks.template.disabled = true;
@@ -986,41 +988,41 @@ createAxisAndSeries(field,chart) {
 	valueAxis.tooltip.disabled = true;
 	valueAxis.renderer.minWidth = 35;
 
-	let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100-day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200-day SMA: {SMA}`: "")));
+	const extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100-day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200-day SMA: {SMA}`: "")));
 
-	let tooltipText =
+	const tooltipText =
 		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 		this.currencyText + `: {currency}\n` +
 		this.priceText + `: {close}\n`+extraParam;
-	if(field=="value") {
+	if(field=='value') {
 		const series = chart.series.push(new am4charts.LineSeries());
-		series.dataFields.dateX = "date";
-		series.dataFields.valueY = "close";
+		series.dataFields.dateX = 'date';
+		series.dataFields.valueY = 'close';
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color("#00b050");
+		series.stroke = am4core.color('#00b050');
 
 		// let currency=this.chatDetailsCurrency;
 		series.tooltipText = tooltipText;
 		/* Set Chart Tooltip Style */
 		series.tooltip.getFillFromObject = false;
-		series.tooltip.background.fill = am4core.color("#00b050");
-	} else if(field=="chartwithSma") {
+		series.tooltip.background.fill = am4core.color('#00b050');
+	} else if(field=='chartwithSma') {
 		const series = chart.series.push(new am4charts.LineSeries());
-		series.dataFields.dateX = "date";
-		series.dataFields.valueY = "close";
+		series.dataFields.dateX = 'date';
+		series.dataFields.valueY = 'close';
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color("#00b050");
+		series.stroke = am4core.color('#00b050');
 		series.tooltipText = tooltipText;
 
 		/* Set Chart Tooltip Style */
 		series.tooltip.getFillFromObject = false;
-		series.tooltip.background.fill = am4core.color("#00b050");
-	} else if(field=="sma") {
+		series.tooltip.background.fill = am4core.color('#00b050');
+	} else if(field=='sma') {
 		const series = chart.series.push(new am4charts.LineSeries());
-		series.dataFields.dateX = "date";
-		series.dataFields.valueY = "SMA";
+		series.dataFields.dateX = 'date';
+		series.dataFields.valueY = 'SMA';
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color("#add8e6");
+		series.stroke = am4core.color('#add8e6');
 
 	} else if(field == 'candle') {
 		const series = chart.series.push(new am4charts.CandlestickSeries());
@@ -1065,15 +1067,15 @@ createAxisAndSeries(field,chart) {
 	if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
 		chart.cursor = new am4charts.XYCursor();
 		/* Set Chart Tooltip Dotted Line */
-		chart.cursor.lineX.stroke = am4core.color("#5a7e9e");
+		chart.cursor.lineX.stroke = am4core.color('#5a7e9e');
 		chart.cursor.lineX.strokeWidth = 1.5;
 		chart.cursor.lineX.strokeOpacity = 1;
-		chart.cursor.lineX.strokeDasharray = "";
+		chart.cursor.lineX.strokeDasharray = '';
 
-		chart.cursor.lineY.stroke = am4core.color("#5a7e9e");
+		chart.cursor.lineY.stroke = am4core.color('#5a7e9e');
 		chart.cursor.lineY.strokeWidth = 1;
 		chart.cursor.lineY.strokeOpacity = 1;
-		chart.cursor.lineY.strokeDasharray = "";
+		chart.cursor.lineY.strokeDasharray = '';
 	}
 }
 
@@ -1093,10 +1095,10 @@ renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
 	dateAxis.renderer.labels.template.disabled = true;
 	dateAxis.tooltip.disabled = true;
 	if(chartType == 'chartdiv') {
-		this.createAxisAndSeries("value",chart);
+		this.createAxisAndSeries('value',chart);
 	} else {
-		this.createAxisAndSeries("chartwithSma",chart);
-		this.createAxisAndSeries("sma",chart);
+		this.createAxisAndSeries('chartwithSma',chart);
+		this.createAxisAndSeries('sma',chart);
 	}
 
 }
@@ -1108,7 +1110,7 @@ renderVolumeChart(data, dataType = 'normal') {
 
 	chart.data = data;
 	const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-	categoryAxis.dataFields.category = "currentDateTime";
+	categoryAxis.dataFields.category = 'currentDateTime';
 	categoryAxis.renderer.grid.template.strokeOpacity = 0;
 	categoryAxis.renderer.labels.template.disabled = true;
 	categoryAxis.renderer.cellStartLocation = 0.2;
@@ -1127,8 +1129,8 @@ renderVolumeChart(data, dataType = 'normal') {
 	valueAxis.renderer.ticks.template.disabled = true;
 	valueAxis.renderer.labels.template.disabled = true;
 	const series = chart.series.push(new am4charts.ColumnSeries);
-	series.dataFields.valueY = "volume";
-	series.dataFields.categoryX = "currentDateTime";
+	series.dataFields.valueY = 'volume';
+	series.dataFields.categoryX = 'currentDateTime';
 	series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
 		this.currencyText + `: {currency}\n` +
 		this.volumeText + `: {volume}`;
@@ -1139,7 +1141,7 @@ renderVolumeChart(data, dataType = 'normal') {
 	const columnTemplate = series.columns.template;
 	columnTemplate.width = am4core.percent(50);
 	columnTemplate.height = am4core.percent(50);
-	columnTemplate.fill = am4core.color("#364451");
+	columnTemplate.fill = am4core.color('#364451');
 	columnTemplate.maxHeight = 100;
 	columnTemplate.maxWidth = 13;
 	// columnTemplate.column.cornerRadius(60, 60, 10, 10);
@@ -1182,11 +1184,11 @@ renderCandleStickChartData(data, dataType = 'normal', chartType = 'candleStick')
 	valueAxis.renderer.labels.template.disabled = true;
 	valueAxis.tooltip.disabled = true;
 	if(chartType == 'candleStick') {
-		this.createAxisAndSeries("candle",chart);
+		this.createAxisAndSeries('candle',chart);
 	} else {
 
-		this.createAxisAndSeries("sma",chart);
-		this.createAxisAndSeries("candle",chart);
+		this.createAxisAndSeries('sma',chart);
+		this.createAxisAndSeries('candle',chart);
 	}
 
 
@@ -1234,9 +1236,9 @@ filterExchangeItem() {
 	  const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
 
 	  this.smaChartData = smaData;
-	  this.renderChart(this.chartDataObject, 'normal', "smachart");
-	  this.renderCandleStickChartData(this.chartDataObject, 'normal', "candleSma");
-	  if(!this.filterModel.graphDisplay) {
+	  this.renderChart(this.chartDataObject, 'normal', 'smachart');
+	  this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
+	  if (!this.filterModel.graphDisplay) {
 		  document.getElementById('candleSma').style.display = 'none';
 		  document.getElementById('smachart').style.display = 'flex';
 	  } else {
@@ -1294,7 +1296,7 @@ getSMAData(data, SMAType) {
 			  // 	}
 			  // }
 			  const chartItemVal = this.chartDataObject[count];
-			  if(this.chartDataObject[count] !== undefined && SMAType > 0) {
+			  if (this.chartDataObject[count] !== undefined && SMAType > 0) {
 				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
 
 				  this.chartDataObject[count] = chartItemVal;

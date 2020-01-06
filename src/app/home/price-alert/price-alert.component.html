@@ -106,7 +106,7 @@
         </div>
       </ng-template>
       <div class="stats_table">
-        <div class="head_div">
+        <!-- <div class="head_div">
           <ul class="stats_head">
             <li>{{ 'Ticker' | translate }}</li>
             <li>{{ 'Condition' | translate }}</li>
@@ -114,10 +114,19 @@
             <li>{{ 'ExpiryDate' | translate }}</li>
             <li>{{ 'Actions' | translate }}</li>
           </ul>
-        </div>
+        </div> -->
         <div class="body_div">
-          <ul class="stats_body" *ngFor="let item of itemList; let i = index;">
-            <li>{{ item.symbol }}</li>
+          <ul class="stats_body price-alert-box" *ngFor="let item of itemList; let i = index;">
+            
+						<li><span class="ticker_img" style="max-width:30px">
+                <img [src]="item.tickerUrl" alt="" style="max-width:100%"
+                  onError="this.src='assets/images/logo.png';" alt="ticker image" />
+              </span>
+              <div>
+                <h5>{{item.name}}</h5>
+                <h6>{{item.symbol}}</h6>
+              </div>
+            </li>
             <li>{{ item.alertType}}</li>
             <li>{{ item.alertAmount | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
             <li>{{ item.expiryDate | date: 'dd/MM/yyyy'  }}</li>

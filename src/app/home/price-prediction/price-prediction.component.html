@@ -1,12 +1,11 @@
 <div class="top-title enquiry search_market">
   <div class="row">
     <div class="col-md-12">
-      <h2>{{ 'openPricePrediction' | translate }}
+      <h2>
+        <button type="button" class="btn berps-btn {{profileInfo.berps >= 0 ?'btn-success':'btn-danger'}}" [routerLink]="['/price-prediction']"  *ngIf="this.profileInfo.isProAccount">
+        {{ ((profileInfo.berps >= 0)?'+':'') + formatNumber(profileInfo.berps | number:'1.2-2')  }}
+      </button>
         <div class="add-price">
-          <div class="add_price_alert">
-            <span class="predictionHistory">{{ 'predictionHistory' | translate }}</span>
-            <a href="javascript:" (click)="addPricePrediction(addpriceprediction)"  title="{{ 'AddPricePrediction' | translate }}" class="btn-prediction"><img src="../../assets/images/target.png"> </a>
-          </div>
           <a href="javascript:" onclick="history.go(-1); return false;"
           title="{{ 'Back' | translate }}" class="back_arrow">
             <span><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>
@@ -96,39 +95,47 @@
         </div>
       </ng-template>
       
-    <ng-template #share let-modal>
-      <div class="modal-header alert_header">
-        <h4 class="modal-title" id="modal-basic-title">{{ 'chooseYourPlatform' | translate }}</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body share-body">
-        <div class="form-group">
-          <label for="usr">{{ 'bullseyeChatboard' | translate }}</label>
-          <ul>
-            <li>
-              <a href="javascript:" (click)="sharetochatboard()" class="sharetochatboard-icon"><img src="../../assets/images/logo-small.png"></a>
-            </li>
-          </ul>
+      <ng-template #share let-modal>
+        <div class="modal-header alert_header">
+          <h4 class="modal-title" id="modal-basic-title">{{ 'chooseYourPlatform' | translate }}</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body share-body">
           <div class="form-group">
-            <label for="usr">{{ 'ViaSocialMedia' | translate }}</label>
+            <label for="usr">{{ 'bullseyeChatboard' | translate }}</label>
             <ul>
               <li>
-                <a href="https://www.facebook.com/sharer.php?u=https://bullseyeinvestors.app/signup&quote={{sharingWithHashText}}" target="_blank"><i
-                    class="fa fa-facebook-square" aria-hidden="true"></i></a>
-              </li>
-              <li>
-                <a href="https://twitter.com/intent/tweet?url=https://bullseyeinvestors.app/signup&text={{sharingWithHashText}}" target="_blank"><i
-                    class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                <a href="javascript:" (click)="sharetochatboard()" class="sharetochatboard-icon"><img src="../../assets/images/logo-small.png"></a>
               </li>
             </ul>
           </div>
-      </div>
-    </ng-template>
+            <div class="form-group">
+              <label for="usr">{{ 'ViaSocialMedia' | translate }}</label>
+              <ul>
+                <li>
+                  <a href="https://www.facebook.com/sharer.php?u=https://bullseyeinvestors.app/signup&quote={{sharingWithHashText}}" target="_blank"><i
+                      class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=https://bullseyeinvestors.app/signup&text={{sharingWithHashText}}" target="_blank"><i
+                      class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                </li>
+              </ul>
+            </div>
+        </div>
+      </ng-template>
 
-      <div class="stats_table">
+      <h2>{{ 'openPricePrediction' | translate }}
+        <div class="add-price">
+          <div class="add_price_alert">
+            <a href="javascript:" (click)="addPricePrediction(addpriceprediction)"  title="{{ 'AddPricePrediction' | translate }}" class="btn-prediction"><img src="../../assets/images/target.png"> </a>
+          </div>
+        </div>
+      </h2>
+
+      <div class="stats_table prediction-table">
         <!-- <div class="head_div">
           <ul class="stats_head">
             <li>{{ 'Ticker' | translate }}</li>
@@ -150,7 +157,7 @@
             </li>
             <li>{{ item.currentPrice | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
             <li>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
-            <li>{{ (item.currentPrice - item.prediction) > 0? '+':'' }}{{ (item.currentPrice - item.prediction) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
+            <li>{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
             <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
             <li>
               <button class="btn share-btn-icon" title="{{ 'Chat' | translate }}"
@@ -158,7 +165,7 @@
                 <i class="fa fa-commenting-o" aria-hidden="true"></i>
               </button>
               <button class="btn share-btn-icon" title="{{ 'Share' | translate }}"
-                (click)="sharePrediction(share, item.symbol, item.currency, item.prediction, item.predictionForDate)" >
+                (click)="sharePrediction(share, item.symbol, item.name, returnCurrSymbol(item.currency), item.prediction, item.predictionForDate)" >
                 <i class="fa fa-share-alt-square" aria-hidden="true"></i>
               </button>
             </li>
@@ -175,21 +182,15 @@
       </div>
     </div>
 	 <div class="col-lg-6">
-    <div class="news-nav hidden-sm-down" *ngIf="isPagination">
-      <ngb-pagination
-        [collectionSize]="totalRecords"
-        [rotate]="true"
-        [(page)]="currentPage"
-        size="sm"
-        (pageChange)="onPageChange(currentPage)"
-        aria-label="Default pagination"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        [pageSize]="pageSize"
-      ></ngb-pagination>
-    </div>  
-    <div class="stats_table">
+      <h2>{{ 'predictionHistory' | translate }}
+        <!-- <div class="add-price">
+            <a href="javascript:" onclick="history.go(-1); return false;"
+            title="{{ 'Back' | translate }}" class="back_arrow">
+              <span><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>
+            </a>
+        </div> -->
+      </h2>
+    <div class="stats_table prediction-table">
       <!-- <div class="head_div">
         <ul class="stats_head">
           <li>{{ 'Ticker' | translate }}</li>
@@ -210,8 +211,8 @@
           </li>
           <li>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
           <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
-          <li>{{ formatNumber(formatNumberDecimalPlaces(item.deviation, 3)) }}</li>
-          <li>{{ formatNumber(formatNumberDecimalPlaces(item.berps, 3)) }}</li>
+          <li>{{ formatNumber(formatNumberDecimalPlaces(item.deviation, 0)) }}%</li>
+          <li><p class="btn berps-btn {{item.berps >= 0 ?'btn-success':'btn-danger'}}">{{ formatNumber(formatNumberDecimalPlaces(item.berps, 3)) }}</p></li>
         </ul>
         <ul class="processing" *ngIf="closeProcessing">
           <li>
@@ -221,25 +222,20 @@
       </div>
     </div>
     
-    <div *ngIf="isPagination" class="prev_next">
-      <button
-        class="btn btn-success prev_news"
-        title="{{ 'Prev' | translate }}"
-        [disabled]="prevLoading"
-        (click)="changePagination(0)"
-        type="button"
-      >
-        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-      </button>
-      <button
-        class="btn btn-success next_news"
-        title="{{ 'Next' | translate }}"
-        [disabled]="nextLoading"
-        (click)="changePagination(1)"
-        type="button"
-      >
-        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-      </button>
+    
+    <div class="news-nav hidden-sm-down" *ngIf="isPagination">
+      <ngb-pagination
+        [collectionSize]="totalRecords"
+        [rotate]="true"
+        [(page)]="currentPage"
+        size="sm"
+        (pageChange)="onPageChange(currentPage)"
+        aria-label="Default pagination"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        [pageSize]="pageSize"
+      ></ngb-pagination>
     </div>
     </div>
 	
