@@ -607,12 +607,13 @@ ul.blurTdetails + .data_fatch i {
 @media (min-width: 1024px) and (max-width: 1199px) {
 .stats_list li{min-height: 150px;}
 .buttons_grp select{
-  padding: 5px 15px;
+  padding: 6px 15px;
   font-size: 15px;
 }
 .stats_list li img {
     width: 60px;
 }
+.buttons_grp button{padding: 5px 9px}
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
 .stats_list li{min-height: 175px;}
@@ -620,7 +621,7 @@ ul.blurTdetails + .data_fatch i {
 .candle_stick ul li{height: auto; padding: 5px 15px;  font-size: 15px;}
 .candle_stick ul li input{font-size: 15px;}
 .tabs_pills .nav-pills .nav-link{height: auto; padding: 5px 15px; font-size: 15px;}
-.buttons_grp button{height: auto; padding: 5px 15px;  font-size: 15px;}
+.buttons_grp button{height: auto; padding: 8px 10px; font-size: 14px;}
 .buttons_grp button i{font-size: 20px;}
 .checkbox-custom-label{font-size: 15px;}
 .value_change ul li{padding: 5px}

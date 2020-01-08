@@ -278,6 +278,7 @@
 	"marketPredictedPrice": "Market Price Predictions",
 	"noPricePredictionText": "You have no market price predictions open.",
 	"noPricePredictionHistoryText": "You have no historic price predictions.",
-	"chooseYourPlatform": "Choose your platform"
+	"chooseYourPlatform": "Choose your platform",
+	"BERPscore": "BERP score:"
 	
 }

@@ -472,7 +472,8 @@ export class PricePredictionComponent implements OnInit {
   sharePrediction(content, ticker, tickerName, currency, prediction, date) {
     prediction = currency + ' ' + this.formatNumber(this.formatNumberDecimalPlaces(prediction, 3));
     this.sharingText = encodeURI( 'My price prediction is for ' + tickerName + ' to be ' + prediction + ' on ' + date + '' );
-    this.sharingWithHashText = encodeURI( 'My price prediction is for ' + tickerName + ' to be ' + prediction + ' on ' + date + '. Make your price prediction by registering your BullsEye Pro account here&hashtag=#' + ticker );
+    // tslint:disable-next-line: max-line-length
+    this.sharingWithHashText = encodeURI( 'My price prediction is for ' + tickerName + ' to be ' + prediction + ' on ' + date + '. What do you think? Make your price prediction by registering your BullsEye Pro account here:' ) + '&hashtag=#' + ticker;
     this.sharingTicker = ticker;
     this.modalService.open(content, { windowClass: 'sharemodal', size: 'lg' }).result.then(
       result => {

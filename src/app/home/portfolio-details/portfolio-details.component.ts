@@ -53,7 +53,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	isCollapsed = true;
 	num="";
 	type="";
-	indMap=0;
+	indMap=2;
 	portGraphDataText="";
 	hideme = {};
 	defaulterrSomethingMsg='Something went wrong';
@@ -173,7 +173,7 @@ export class PortfolioDetailsComponent implements OnInit {
 			});
 			objectNtype.getPortfolioDetails();
 			/* Chart Call */
-			objectNtype.getChartData(1,'month',0);
+			objectNtype.getChartData(6,'month',2);
 		},500);
 	}
 	get f() { return this.investmentForm.controls; }

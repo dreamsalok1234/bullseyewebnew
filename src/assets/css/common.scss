@@ -1550,7 +1550,7 @@ th.mat-header-cell {
 }
 
 .modal {
-    z-index: 99999;
+    z-index: 999999;
 }
 
 .modal .pro-modal-content {
@@ -3086,5 +3086,9 @@ button.close:hover {
 }
 
 .modal-index .cdk-overlay-container {
-    z-index: 999999 !important;
+    z-index: 9999999 !important;
+}
+
+.prodialog-page .modal {
+  z-index: 9999999 !important;
 }
