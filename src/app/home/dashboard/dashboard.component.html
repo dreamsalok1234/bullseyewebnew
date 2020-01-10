@@ -209,7 +209,7 @@
 	<ng-template #pricealert let-c="close" let-d="dismiss">
 		<div class="modal-header alert_header">
 			<h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
-			<button type="button" class="btn btn-secondary" (click)="c('Close click')">
+			<button type="button" class="btn btn-secondary close" (click)="c('Close click')">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
@@ -271,7 +271,7 @@
 	<ng-template #editportfolio let-c="close" let-d="dismiss">
 		<div class="modal-header alert_header">
 			<h4 class="modal-title">{{ 'UpdatePortfolio' | translate }}</h4>
-			<button type="button" class="btn btn-secondary" (click)="c('Close click')">
+			<button type="button" class="btn btn-secondary close" (click)="c('Close click')">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>

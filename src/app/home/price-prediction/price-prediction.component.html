@@ -27,7 +27,7 @@
       <ng-template #addpriceprediction let-c="close" let-d="dismiss">
         <div class="modal-header ">
           <h4 class="modal-title">{{ 'pricePrediction' | translate }}</h4>          
-          <button type="button" class="btn btn-secondary btn-close" (click)="c('Close click')">
+          <button type="button" class="btn btn-secondary btn-close close" (click)="c('Close click')">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -158,9 +158,9 @@
                 <h3>{{item.name}}</h3>
               </div>
             </li>
-            <li>{{ item.currentPrice | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
+            <!-- <li>{{ item.currentPrice | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li> -->
             <li><b>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</b></li>
-            <li>{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
+            <li><p class="btn berps-btn {{(item.differencePer >= 0 && item.differencePer <= 20) ?'btn-success':'btn-danger'}}">{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</p></li>
             <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
             <li>
               <button class="btn share-btn-icon" title="{{ 'Chat' | translate }}"
@@ -212,10 +212,10 @@
               <h3>{{item.name}}</h3>
             </div>
           </li>
-          <li>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
+          <li><b>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</b></li>
+          <li>{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
           <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
-          <li>{{ formatNumber(formatNumberDecimalPlaces(item.deviation, 2)) }}%</li>
-          <li><p class="btn berps-btn {{item.berps >= 0 ?'btn-success':'btn-danger'}}">{{ formatNumber(formatNumberDecimalPlaces(item.berps, 3)) }}</p></li>
+          <li><p class="btn berps-btn {{item.berps >= 0 ?'btn-success':'btn-danger'}}">{{ formatNumber(formatNumberDecimalPlaces(item.berps, 2)) }}</p></li>
         </ul>
         <ul class="processing" *ngIf="closeProcessing">
           <li>

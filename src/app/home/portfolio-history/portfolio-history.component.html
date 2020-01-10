@@ -85,7 +85,7 @@
     <div class="modal-header alert_header">
       <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='buy'">{{ 'Buy' | translate }}</h4>
     <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='sell'">{{ 'Sell' | translate }}</h4>
-      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

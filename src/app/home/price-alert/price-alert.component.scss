@@ -478,10 +478,17 @@ ul {
       margin: 0;
       font-size: 15px;
       font-weight: bold;
+      text-transform: capitalize;
     }
     h6 {
       margin: 0;
       font-size: 13px;
     }
   }
+}
+b.alert-type {
+  padding: 3px 11px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 900;
 }
