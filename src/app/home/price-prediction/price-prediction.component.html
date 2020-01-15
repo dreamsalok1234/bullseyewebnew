@@ -118,11 +118,11 @@
               <label for="usr">{{ 'ViaSocialMedia' | translate }}</label>
               <ul>
                 <li>
-                  <a href="https://www.facebook.com/sharer.php?u=https://bullseyeinvestors.app/signup&quote={{sharingWithHashText}}" target="_blank"><i
+                  <a href="https://www.facebook.com/sharer.php?u=https://bullseyeinvestors.app/register-account&quote={{sharingWithHashText}}" target="_blank"><i
                       class="fa fa-facebook-square" aria-hidden="true"></i></a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/intent/tweet?url=https://bullseyeinvestors.app/signup&text={{sharingWithHashText}}" target="_blank"><i
+                  <a href="https://twitter.com/intent/tweet?url=https://bullseyeinvestors.app/register-account&text={{sharingWithHashText}}" target="_blank"><i
                       class="fa fa-twitter-square" aria-hidden="true"></i></a>
                 </li>
               </ul>
@@ -160,7 +160,7 @@
             </li>
             <!-- <li>{{ item.currentPrice | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li> -->
             <li><b>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</b></li>
-            <li><p class="btn berps-btn {{(item.differencePer >= 0 && item.differencePer <= 20) ?'btn-success':'btn-danger'}}">{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</p></li>
+            <li><p class="btn berps-btn {{(item.differencePer <= 20) ?'btn-success':'btn-danger'}}">{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</p></li>
             <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
             <li>
               <button class="btn share-btn-icon" title="{{ 'Chat' | translate }}"

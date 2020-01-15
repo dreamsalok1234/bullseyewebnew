@@ -108,7 +108,7 @@ export class TickerDetailsComponent implements OnInit {
 	currentTime = new Date();
 	isPredictionLocked = 1;
 	predictionStartDate = new Date();
-	predictionStartDateFrom = {year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate()};
+	predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
 
 	constructor(
 		private translate: TranslateService,
@@ -127,7 +127,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	ngOnInit() {
 		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
-		this.predictionStartDateFrom = {year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate()};
+		this.predictionStartDateFrom = { year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate() };
 
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
@@ -329,6 +329,7 @@ export class TickerDetailsComponent implements OnInit {
 
 						objectType.tickerListData = response.data[0].historyData.currentDayData;
 						objectType.isPredictionLocked = parseInt(objectType.tickerListData.isPredictionLocked);
+						objectType.watchListId = parseInt(objectType.tickerListData.isAddedToWatchList);
 						if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 							if (objectType.cryptoMaxValue !== 0) {
 								objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;

@@ -460,8 +460,8 @@ ul {
     .add_price_alert{justify-content: center}
     .add_price_alert a{font-size: 12px;}
     button.btn.btn-secondary.btn-close {
-    padding: 0px 8px;
-}
+      padding: 0px 8px;
+  }
 }
 .stats_body.price-alert-box {
   li {
@@ -473,6 +473,9 @@ ul {
     }
     &:first-child {
       flex-grow: 1.3;
+    }
+    &:nth-child(2) {
+      flex-grow: 0.3;
     }
     h5 {
       margin: 0;
@@ -487,8 +490,12 @@ ul {
   }
 }
 b.alert-type {
-  padding: 3px 11px;
-  border-radius: 50px;
-  font-size: 18px;
-  font-weight: 900;
+  padding: 0px 10px;
+  border-radius: 26px;
+  font-size: 22px;
+}
+
+ul.stats_body.price-alert-box li:last-child {
+  justify-content: flex-end !important;
+  padding-right: 10px;
 }
