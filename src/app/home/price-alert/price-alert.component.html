@@ -127,7 +127,7 @@
                 <h6>{{item.symbol}}</h6>
               </div>
             </li>
-            <li><b class="alert-type  {{item.alertType == '>' ?'bg-success':'bg-danger'}}">{{ item.alertType}}</b></li>
+            <li><b class="alert-type  {{item.alertType == '>' ?'bg-success':'bg-danger'}}"><i class="fa {{ (item.alertType == '>')?'fa-angle-right':'fa-angle-left'}}" aria-hidden="true"></i></b></li>
             <li>{{ item.alertAmount | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li>
             <li>{{ item.expiryDate | date: 'dd/MM/yyyy'  }}</li>
             <li>

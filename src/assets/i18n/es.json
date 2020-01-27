@@ -277,5 +277,13 @@
 	"deviation": "Desviación",
 	"bullseyeChatboard": "BullsEye Charla",
 	"dateisrequired" : "Se requiere fecha",
-	"predictionAlreadyLockedin" : "La predicción de precios ya está bloqueada!"
+	"predictionAlreadyLockedin" : "La predicción de precios ya está bloqueada!",
+	"predictedMarketPrice": "Precio de mercado previsto",
+	"byWhen": "Por cuando",
+	"predictedPrice": "Precio previsto",
+	"marketPredictedPrice": "Predicciones de precios de mercado",
+	"noPricePredictionText": "No tiene predicciones de precios de mercado abiertas.",
+	"noPricePredictionHistoryText": "No tienes predicciones históricas de precios.",
+	"chooseYourPlatform": "Elige tu plataforma",
+	"BERPscore": "Puntaje BERP:"
 }

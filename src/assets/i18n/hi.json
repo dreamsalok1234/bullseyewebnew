@@ -278,5 +278,13 @@
 	"deviation": "विचलन",
 	"bullseyeChatboard": "BullsEye चैट",
 	"dateisrequired" : "दिनांक की आवश्यकता है",
-	"predictionAlreadyLockedin" : "मूल्य भविष्यवाणी पहले से ही लॉक-इन है!"
+	"predictionAlreadyLockedin" : "मूल्य भविष्यवाणी पहले से ही लॉक-इन है!",
+	"predictedMarketPrice": "अनुमानित बाजार मूल्य",
+	"byWhen": "कब तक",
+	"predictedPrice": "अनुमानित कीमत",
+	"marketPredictedPrice": "बाजार मूल्य की भविष्यवाणी",
+	"noPricePredictionText": "आपके पास कोई बाजार मूल्य पूर्वानुमान नहीं खुला है।",
+	"noPricePredictionHistoryText": "आपके पास कोई ऐतिहासिक मूल्य पूर्वानुमान नहीं है।",
+	"chooseYourPlatform": "अपना मंच चुनें",
+	"BERPscore": "BERP स्कोर:"
 }

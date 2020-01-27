@@ -277,5 +277,13 @@
 	"deviation": "偏差",
 	"bullseyeChatboard": "BullsEye チャット",
 	"dateisrequired" : "日付が必要です",
-	"predictionAlreadyLockedin" : "価格予測は既にロックインされています!"
+	"predictionAlreadyLockedin" : "価格予測は既にロックインされています!",
+	"predictedMarketPrice": "予測市場価格",
+	"byWhen": "いつまでに",
+	"predictedPrice": "予測価格",
+	"marketPredictedPrice": "市場価格予測",
+	"noPricePredictionText": "市場価格の予測は開いていません。",
+	"noPricePredictionHistoryText": "過去の価格予測はありません。",
+	"chooseYourPlatform": "プラットフォームを選択してください",
+	"BERPscore": "BERPスコア:"
 }

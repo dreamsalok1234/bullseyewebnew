@@ -277,5 +277,13 @@
 	"deviation": "일탈",
 	"bullseyeChatboard": "BullsEye 잡담",
 	"dateisrequired" : "날짜가 필요합니다",
-	"predictionAlreadyLockedin" : "가격 예측은 이미 고정되어 있습니다!"
+	"predictionAlreadyLockedin" : "가격 예측은 이미 고정되어 있습니다!",
+	"predictedMarketPrice": "예상 시장 가격",
+	"byWhen": "언제까지",
+	"predictedPrice": "예상 가격",
+	"marketPredictedPrice": "시장 가격 예측",
+	"noPricePredictionText": "시장 가격 예측이 열려 있지 않습니다.",
+	"noPricePredictionHistoryText": "역사적인 가격 예측이 없습니다.",
+	"chooseYourPlatform": "플랫폼을 선택하십시오",
+	"BERPscore": "BERP 점수:"
 }
