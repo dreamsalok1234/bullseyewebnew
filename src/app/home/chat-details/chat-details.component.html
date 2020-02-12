@@ -170,7 +170,7 @@
               <span class="user_img"><img src="{{placeholderImageUrl}}" style="max-width: 80px;" *ngIf="chat.img == undefined || chat.img.length == 0 || chat.img == ''" title="user image not found">
               <img src="{{chat.img}}" style="max-width: 80px;" *ngIf="chat.img != undefined && chatImage.length > 0"></span>
               <h3>                
-                {{ chat.username }} | <span>{{ chat.totalMessage }} </span>| <span class="berps-box {{profileInfo.berps >= 0 ?'bg-success':'bg-danger'}}">{{ ((profileInfo.berps >= 0)?'+':'') + formatNumber(chat.berps | number:'1.2-2')  }}</span>
+                {{ chat.username }} | <span>{{ chat.totalMessage }} </span>| <span class="berps-box {{chat.berps >= 0 ?'bg-success':'bg-danger'}}">{{ ((chat.berps >= 0)?'+':'') + formatNumber(chat.berps | number:'1.2-2')  }}</span>
               </h3>
             </div>
           </li>

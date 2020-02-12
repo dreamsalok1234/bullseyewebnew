@@ -120,7 +120,7 @@ export class ProdialogComponent {
     this.dectLanguage = browserLang;
     this.accessToken = localStorage.getItem('userAccessToken');
     this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://bullseyeinvestors.live/tester/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
+      'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
     );
     if (this.profileInfo.img !== '' && this.profileInfo.img !== undefined) {
       this.fileUrl = this.profileInfo.img;
@@ -308,7 +308,7 @@ export class ProdialogComponent {
       window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank');
     } else {
       this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        'https://bullseyeinvestors.live/tester/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+        'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
       );
       this.isProRemainDays = false;
       this.isAddPro = true;

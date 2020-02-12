@@ -148,7 +148,7 @@ export class AccountSettingsComponent implements OnInit {
 	this.dectLanguage = browserLang;
     this.accessToken = localStorage.getItem('userAccessToken');
     this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://bullseyeinvestors.live/tester/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
+      'https://bullseyeinvestors.live/subscription?accessToken=' + this.accessToken + '&language=' + this.dectLanguage
     );
 	if (this.profileInfo.img !== '' && this.profileInfo.img !== undefined) {
     this.fileUrl = this.profileInfo.img;
@@ -644,7 +644,7 @@ export class AccountSettingsComponent implements OnInit {
           if (Object.keys(response.data.data).length > 0) {
 			 if (response.data.data.isProAccount === response.data.data.isTrailVersion) {
 				  objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
-					  'https://bullseyeinvestors.live/tester/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+					  'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 					);
 					objectType.isProRemainDays = false;
 					objectType.isAddPro = true;
@@ -695,7 +695,7 @@ export class AccountSettingsComponent implements OnInit {
 
 		  } else {
 				objectType.subscriptionUrl = objectType.sanitizer.bypassSecurityTrustResourceUrl(
-          'https://bullseyeinvestors.live/tester/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+          'https://bullseyeinvestors.live/subscription?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
           );
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {totalRemainingDays: false, totalDisplayPer: 0, DAYSLEFT: '', isProRemainDays: 0, isAddPro: true };
@@ -831,7 +831,7 @@ export class AccountSettingsComponent implements OnInit {
 		  this.modalService.dismissAll();
 		 window.open('https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions', '_blank'); } else {
 		  this.subscriptionUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-			  'https://bullseyeinvestors.live/tester/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
+			  'https://bullseyeinvestors.live/subscription/upgrade?accessToken=' + objectType.accessToken + '&language=' + objectType.dectLanguage
 		  );
 		  this.isProRemainDays = false;
 		  this.isAddPro = true;
