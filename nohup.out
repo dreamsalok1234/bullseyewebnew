@@ -1,0 +1,127 @@
+
+> BullsEye@7.0.0 start /opt/bullseyewebnew
+> ng serve --ssl true --port 443 --host 0.0.0.0 --disableHostCheck true
+
+WARNING: This is a simple server for use in testing or debugging Angular applications
+locally. It hasn't been reviewed for security issues.
+
+Binding this server to an open connection can result in compromising your application or
+computer. Using a different host than the one passed to the "--host" flag might result in
+websocket connection issues. You might need to use "--disableHostCheck" if that's the
+case.
+WARNING: Running a server with --disable-host-check is a security risk. See https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a for more information.
+** Angular Live Development Server is listening on 0.0.0.0:443, open your browser on https://localhost:443/ **
+[34mℹ[39m [90m｢wdm｣[39m: wait until bundle finished: /home/Ashok
+
+Date: 2019-10-10T15:42:36.805Z
+Hash: f24ee5a42c704d28fb8c
+Time: 39368ms
+chunk {access-denied-access-denied-module} access-denied-access-denied-module.js, access-denied-access-denied-module.js.map (access-denied-access-denied-module) 7.37 kB  [rendered]
+chunk {account-settings-account-settings-module} account-settings-account-settings-module.js, account-settings-account-settings-module.js.map (account-settings-account-settings-module) 207 kB  [rendered]
+chunk {bullseye-pro-bullseye-pro-module} bullseye-pro-bullseye-pro-module.js, bullseye-pro-bullseye-pro-module.js.map (bullseye-pro-bullseye-pro-module) 58.8 kB  [rendered]
+chunk {canvg} canvg.js, canvg.js.map (canvg) 103 kB  [rendered]
+chunk {change-password-change-password-module} change-password-change-password-module.js, change-password-change-password-module.js.map (change-password-change-password-module) 47.2 kB  [rendered]
+chunk {change-user-password-change-user-password-module} change-user-password-change-user-password-module.js, change-user-password-change-user-password-module.js.map (change-user-password-change-user-password-module) 34.1 kB  [rendered]
+chunk {chat-chat-module} chat-chat-module.js, chat-chat-module.js.map (chat-chat-module) 76.9 kB  [rendered]
+chunk {chat-details-chat-details-module} chat-details-chat-details-module.js, chat-details-chat-details-module.js.map (chat-details-chat-details-module) 2.96 MB  [rendered]
+chunk {common} common.js, common.js.map (common) 11.7 kB  [rendered]
+chunk {dashboard-dashboard-module} dashboard-dashboard-module.js, dashboard-dashboard-module.js.map (dashboard-dashboard-module) 174 kB  [rendered]
+chunk {default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b} default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b.js, default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b.js.map (default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b) 573 kB  [rendered]
+chunk {default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4} default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4.js, default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4.js.map (default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4) 3.75 MB  [rendered]
+chunk {default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2} default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2.js, default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2.js.map (default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2) 17.7 kB  [rendered]
+chunk {default~dashboard-dashboard-module~search-market-search-market-module} default~dashboard-dashboard-module~search-market-search-market-module.js, default~dashboard-dashboard-module~search-market-search-market-module.js.map (default~dashboard-dashboard-module~search-market-search-market-module) 168 kB  [rendered]
+chunk {default~home-home-module~portfolio-details-portfolio-details-module} default~home-home-module~portfolio-details-portfolio-details-module.js, default~home-home-module~portfolio-details-portfolio-details-module.js.map (default~home-home-module~portfolio-details-portfolio-details-module) 208 kB  [rendered]
+chunk {default~home-home-module~ticker-details-ticker-details-module} default~home-home-module~ticker-details-ticker-details-module.js, default~home-home-module~ticker-details-ticker-details-module.js.map (default~home-home-module~ticker-details-ticker-details-module) 298 kB  [rendered]
+chunk {default~investment-investment-module~price-alert-price-alert-module} default~investment-investment-module~price-alert-price-alert-module.js, default~investment-investment-module~price-alert-price-alert-module.js.map (default~investment-investment-module~price-alert-price-alert-module) 1.93 MB  [rendered]
+chunk {enquiry-enquiry-module} enquiry-enquiry-module.js, enquiry-enquiry-module.js.map (enquiry-enquiry-module) 24 kB  [rendered]
+chunk {forgot-forgot-module} forgot-forgot-module.js, forgot-forgot-module.js.map (forgot-forgot-module) 52.8 kB  [rendered]
+chunk {home-home-module} home-home-module.js, home-home-module.js.map (home-home-module) 121 kB  [rendered]
+chunk {investment-investment-module} investment-investment-module.js, investment-investment-module.js.map (investment-investment-module) 49.8 kB  [rendered]
+chunk {login-login-module} login-login-module.js, login-login-module.js.map (login-login-module) 53.7 kB  [rendered]
+chunk {main} main.js, main.js.map (main) 246 kB [initial] [rendered]
+chunk {news-news-module} news-news-module.js, news-news-module.js.map (news-news-module) 87.5 kB  [rendered]
+chunk {not-found-not-found-module} not-found-not-found-module.js, not-found-not-found-module.js.map (not-found-not-found-module) 9.52 kB  [rendered]
+chunk {pdfmake} pdfmake.js, pdfmake.js.map (pdfmake) 3.08 MB  [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 406 kB [initial] [rendered]
+chunk {portfolio-details-portfolio-details-module} portfolio-details-portfolio-details-module.js, portfolio-details-portfolio-details-module.js.map (portfolio-details-portfolio-details-module) 4.67 kB  [rendered]
+chunk {portfolio-history-portfolio-history-module} portfolio-history-portfolio-history-module.js, portfolio-history-portfolio-history-module.js.map (portfolio-history-portfolio-history-module) 151 kB  [rendered]
+chunk {portfolio-portfolio-module} portfolio-portfolio-module.js, portfolio-portfolio-module.js.map (portfolio-portfolio-module) 29.5 kB  [rendered]
+chunk {price-alert-price-alert-module} price-alert-price-alert-module.js, price-alert-price-alert-module.js.map (price-alert-price-alert-module) 170 kB  [rendered]
+chunk {privacy-policy-privacy-policy-module} privacy-policy-privacy-policy-module.js, privacy-policy-privacy-policy-module.js.map (privacy-policy-privacy-policy-module) 68.4 kB  [rendered]
+chunk {privacy-privacy-module} privacy-privacy-module.js, privacy-privacy-module.js.map (privacy-privacy-module) 55.4 kB  [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 11.8 kB [entry] [rendered]
+chunk {scripts} scripts.js, scripts.js.map (scripts) 393 kB [entry] [rendered]
+chunk {search-market-search-market-module} search-market-search-market-module.js, search-market-search-market-module.js.map (search-market-search-market-module) 128 kB  [rendered]
+chunk {server-error-server-error-module} server-error-server-error-module.js, server-error-server-error-module.js.map (server-error-server-error-module) 7.28 kB  [rendered]
+chunk {signup-signup-module} signup-signup-module.js, signup-signup-module.js.map (signup-signup-module) 58.3 kB  [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 1.33 MB [initial] [rendered]
+chunk {terms-service-terms-service-module} terms-service-terms-service-module.js, terms-service-terms-service-module.js.map (terms-service-terms-service-module) 68.8 kB  [rendered]
+chunk {terms-terms-module} terms-terms-module.js, terms-terms-module.js.map (terms-terms-module) 49.6 kB  [rendered]
+chunk {ticker-details-ticker-details-module} ticker-details-ticker-details-module.js, ticker-details-ticker-details-module.js.map (ticker-details-ticker-details-module) 7.94 kB  [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 6.3 MB [initial] [rendered]
+chunk {verification-verification-module} verification-verification-module.js, verification-verification-module.js.map (verification-verification-module) 55.7 kB  [rendered]
+chunk {xlsx} xlsx.js, xlsx.js.map (xlsx) 1.13 MB  [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2019-12-07T11:06:04.893Z - Hash: f24ee5a42c704d28fb8c - Time: 8391ms
+45 unchanged chunks
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2019-12-07T11:06:38.722Z - Hash: 8c4b9884c5ebba29668c - Time: 1015ms
+45 unchanged chunks
+
+ERROR in Source file not found: '/opt/bullseyewebnew/src/app/_services/global.service.ts'.
+[34mℹ[39m [90m｢wdm｣[39m: Failed to compile.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2019-12-07T11:06:40.612Z - Hash: 257a260f690645edfb70 - Time: 1558ms
+44 unchanged chunks
+chunk {main} main.js, main.js.map (main) 246 kB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+ERROR in src/app/_services/auth.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/chat.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/common.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/investment.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/news.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/portfolio.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/ticker.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/watchlist.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/app.module.ts(13,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/change-password/change-password.module.ts(6,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/forgot/forgot.module.ts(9,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/home/home.module.ts(20,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/login/login.module.ts(8,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/signup/signup.module.ts(9,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/verification/verification.module.ts(8,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2019-12-09T13:50:39.536Z - Hash: f24ee5a42c704d28fb8c - Time: 4530ms
+44 unchanged chunks
+chunk {main} main.js, main.js.map (main) 246 kB [initial] [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+[34mℹ[39m [90m｢wdm｣[39m: Compiling...
+
+Date: 2019-12-09T13:50:40.670Z - Hash: f24ee5a42c704d28fb8c - Time: 888ms
+45 unchanged chunks
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+ERROR in src/app/_services/auth.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/chat.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/common.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/investment.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/news.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/portfolio.service.ts(5,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/ticker.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/_services/watchlist.service.ts(4,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/app.module.ts(13,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/change-password/change-password.module.ts(6,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/forgot/forgot.module.ts(9,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/home/home.module.ts(20,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/login/login.module.ts(8,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/signup/signup.module.ts(9,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+src/app/verification/verification.module.ts(8,31): error TS2306: File '/opt/bullseyewebnew/src/app/_services/global.service.ts' is not a module.
+
