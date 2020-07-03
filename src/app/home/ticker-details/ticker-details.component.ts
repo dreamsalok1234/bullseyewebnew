@@ -436,7 +436,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	getExtraSMA() {
 		// setting date range in sma case
-		let limit = 0;
+		let limit = (this.filterModel.searchCriteria == 24)?24:0;
 		if (this.filterModel.searchCriteria === 50 || this.filterModel.searchCriteria === 100 || this.filterModel.searchCriteria === 200) {
 			if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 				switch (this.filterModel.searchCriteria) {
@@ -523,16 +523,14 @@ export class TickerDetailsComponent implements OnInit {
 								objectType.tickerDataText = objectType.noChartDataText;
 							}
 						} else if (objectType.tickerType.toLowerCase() === 'stock') {
-							if (response.data.intraday !== undefined && Object.keys(response.data.intraday).length > 0) {
 
-								data = response.data.intraday;
+							if (response.data !== undefined && Object.keys(response.data).length > 0) {
+								data = response.data.reduce((agg, val) => {	agg[val.time] = val;	return agg; }, {});
 								const dataTimeZone = response.data.timezone_name;
 								Object.keys(data).map(function (key) {
 									const currentDateTime = new Date(key);
-									const shortZone = currentDateTime.toLocaleTimeString('en-us', { timeZoneName: 'short', timeZone: dataTimeZone }).split(' ')[2];
-									keys.push({ date: new Date(key), shortZone: shortZone, currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
-
-									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
+									// const shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
+									keys.push({ date: new Date(key), shortZone: 'GMT', currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
 
 								});
 
@@ -568,6 +566,7 @@ export class TickerDetailsComponent implements OnInit {
 					objectType.loadingBar.stop();
 				});
 			} else {
+				
 				this.shortingTab = '1M';
 				/* Current Date */
 				const d = new Date();
@@ -638,8 +637,9 @@ export class TickerDetailsComponent implements OnInit {
 								objectType.tickerDataText = objectType.noChartDataText;
 							}
 						} else if (objectType.tickerType.toLowerCase() === 'stock') {
-							if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
-								data = response.data.history;
+
+							if (response.data !== undefined && Object.keys(response.data).length > 0) {
+								data = response.data.reduce((agg, val) => {	agg[val.date] = val;	return agg; }, {});
 								Object.keys(data).map(function (key) {
 									const getCurrentDateTime = new Date(key);
 									const y = getCurrentDateTime.getUTCFullYear();
@@ -705,7 +705,7 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 5;
 
-		const extraParam = (this.filterModel.searchCriteria === 24) ? (`Volume: {volume}\n`) : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
+		const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab !== '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
 
 		const tooltipText =
 			this.dateText + `:` + ` {date}` + `\n` + ((this.shortingTab === '1D') ? this.timeText + `:` + ` {currentDateTime} {shortZone}` + `\n` : '') +

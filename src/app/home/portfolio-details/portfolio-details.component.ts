@@ -80,18 +80,18 @@ export class PortfolioDetailsComponent implements OnInit {
 	currencyPriceList = {};
 	stockExchangeType: [];
 	criteriaFilter = [{ 'key': 'high', 'value': 'Top 10 by 24 Hour Change' }, { 'key': 'low', 'value': 'Bottom 10 by 24 Hour Change' }, { 'key': 'market_cap', 'value': 'Top 10 by Market Capitalisation' }];
-	graphFilter:number = 0;
+	graphFilter = 0;
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
     ngOnInit() {
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
-		
+
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem("portfolioId") == '' || localStorage.getItem("portfolioId") == undefined || localStorage.getItem("portfolioId") == null) && (localStorage.getItem("portfolioCurrency") == '' || localStorage.getItem("portfolioCurrency") == undefined || localStorage.getItem("portfolioCurrency")==null) && (localStorage.getItem("portfolioType") == '' || localStorage.getItem("portfolioType") == undefined || localStorage.getItem("portfolioType") == null)  && (localStorage.getItem("portfolioName") == '' || localStorage.getItem("portfolioName") == undefined || localStorage.getItem("portfolioName") == null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
     		this.router.navigate(['/login']);
 		}
-		
-		
+
+
 		if(this.activeRoute.snapshot.queryParams){
 			if(this.activeRoute.snapshot.params.pname!=undefined && this.activeRoute.snapshot.params.pname!=null && this.activeRoute.snapshot.params.username!=undefined && this.activeRoute.snapshot.params.username!=null){
 				if(this.activeRoute.snapshot.params.pname!=localStorage.getItem('portfolioName') || this.activeRoute.snapshot.params.username!=localStorage.getItem('loginUserName')) {
@@ -101,8 +101,7 @@ export class PortfolioDetailsComponent implements OnInit {
 			else {
 				this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
 			}
-		}
-		else {
+		} else {
 			this.router.navigate(['/home/'+localStorage.getItem('loginUserName')]);
 		}
 
@@ -147,7 +146,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		  this.currencyItemList = this.currencyList;
 	    } catch (error) {}
 		let objectNtype=this;
-		this.currencyList.map(function(item){
+		this.currencyList.map(function(item) {
 			if(item.name==localStorage.getItem("portfolioCurrency")) {
 				objectNtype.symbol=item.symbol;
 			}
@@ -158,7 +157,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		this.portfolioType=localStorage.getItem("portfolioType");
 		this.portfolioName=localStorage.getItem("portfolioName");
 		this.showTabList(1);
-		setTimeout(function(){
+		setTimeout(function() {
 			objectNtype.translate.get('Date').subscribe(value => {
 				objectNtype.dateText=value;
 			});
@@ -177,20 +176,18 @@ export class PortfolioDetailsComponent implements OnInit {
 		},500);
 	}
 	get f() { return this.investmentForm.controls; }
-	showTabList(i){
+	showTabList(i) {
 		this.indMenu=i;
 		this.showValueList=this.showRiskList=this.showPerformanceList =false;
 		if(i==1) {
 			this.showValueList=true;
-		}
-		else if(i==2) {
+		} else if(i==2) {
 			this.showRiskList=true;
-							}
-		else {
+							} else {
 			this.showPerformanceList=true;
 							}
 	}
-	setHoldingValue(v){
+	setHoldingValue(v) {
 		let input=this.investmentForm.controls.holding.value;
 		input=(input!=null && input!='' && input!=undefined)?input:0;
 		input=(input.toString().indexOf(",")>-1)?input.replace(/,/g, ""):input;
@@ -198,7 +195,7 @@ export class PortfolioDetailsComponent implements OnInit {
 
 		this.investmentForm.controls["holding"].setValue((v.toLowerCase()=='stock')?(this.formatNumber(input)):(this.formatNumber(input.toFixed(6))));
 	}
-	calculateBookingCost(v){
+	calculateBookingCost(v) {
 		let bookCost=this.investmentForm.controls.bookingCost.value;
 		if(bookCost!="" && bookCost!=undefined && bookCost!=null){
 			bookCost=(bookCost.indexOf(",")>-1)?bookCost.replace(/,/g, ""):bookCost;
@@ -207,8 +204,7 @@ export class PortfolioDetailsComponent implements OnInit {
 				bookCost=decimalPos[0]+"."+decimalPos[1];
 				// this.investmentForm.controls["bookingCost"].setValue(bookCost);
 			}
-		}
-		else {
+		} else {
 			bookCost="0";
 		}
 
@@ -220,11 +216,10 @@ export class PortfolioDetailsComponent implements OnInit {
 		input=(input==null)?'':input;
 		if(v.toLowerCase()=='stock'){
 
-		}
-		else{
+		} else {
 			const reg=/^\d*(?:[.,]\d{1,6})?$/;
 			// var convertValue=parseFloat(input);
-			if (!reg.test(input)){
+			if (!reg.test(input)) {
 				e.preventDefault();
 				let decimalPos = input.split('.');
 				let value=decimalPos[0]+"."+decimalPos[1].substring(0,6);
@@ -253,13 +248,12 @@ export class PortfolioDetailsComponent implements OnInit {
 					if (response.data[1].status === true) {
 						objectType.currencyPriceList = response.data[1].data;
 					}
-					if(response.data[0].status == true){
+					if(response.data[0].status == true) {
 
 						if(response.data[0].tickerList!= undefined && response.data[0].tickerList.length>0) {
 							objectType.valueItemProcessing=false;
 					        objectType.valueList=response.data[0].tickerList;
-						}
-						else {
+						} else {
 							objectType.processingTxtOfList=objectType.noRecord;
 						}
 
@@ -271,8 +265,9 @@ export class PortfolioDetailsComponent implements OnInit {
 								let check=false;
 								performanceArray.map(function(pitem){
 									if(pitem.tickerId==item.tickerId){
-										if(item.type.toLowerCase() == 'cryptocurrency')
+										if(item.type.toLowerCase() == 'cryptocurrency') {
 											pitem.alphaMarketSymbol = item.cryptoMarket;
+										}
 										newDataArray.push(pitem);
 										check=true;
 									}
@@ -309,8 +304,7 @@ export class PortfolioDetailsComponent implements OnInit {
 						});
 						objectType.riskList=newDataArray;
 							// objectType.riskList=response.data.performanceIndicator;
-						}
-						else{
+						} else {
 						    if(response.data[0].tickerList!= undefined && response.data[0].tickerList.length>0){
 								objectType.riskItemProcessing=false;
 								let newDataArray=[];
@@ -345,16 +339,14 @@ export class PortfolioDetailsComponent implements OnInit {
 									);
 								});
 								objectType.riskList=newDataArray;
-							}
-							else {
+							} else {
 								objectType.processingTxtOfList =objectType.noRecord;
 										}
 						}
 
 						objectType.totalMarketVal=(response.data[0].totalMarketVal!=undefined)?Math.round((response.data[0].totalMarketVal)):0;
 						objectType.portfolioChanges=(response.data[0].performance!=undefined)?response.data[0].performance:0;
-					}
-					else {
+					} else {
 						objectType.processingTxtOfList=objectType.noRecord;
 					}
 				} else {
@@ -405,15 +397,15 @@ export class PortfolioDetailsComponent implements OnInit {
 					objectType.currencyPriceList = response.data[1].data;
 				}
 				if(response.data[0]!=undefined && response.data[0]!=null && response.data[0]!="") {
-					if(objectType.investDetails.type.toLowerCase()=='crypto' || objectType.investDetails.type.toLowerCase()=='cryptocurrency'){
+					if(objectType.investDetails.type.toLowerCase()=='crypto' || objectType.investDetails.type.toLowerCase()=='cryptocurrency') {
 						Object.keys(response.data[0]).forEach(function (key,value) {
 							objectType.investDetails.currentTickerPrice=response.data[0][key];
 						});
 					} else {
 						let currentPrice=0;
-						if((response.data[0]["data"][0].price!=undefined && response.data[0]["data"][0].price!=null && response.data[0]["data"][0].price!="")) {
-							currentPrice=(response.data[0]["data"][0].price!=undefined && response.data[0]["data"][0].price!=null && response.	data[0]["data"][0].price!="")?response.data[0]["data"][0].price:0;
-							currentPrice=objectType.getCurrencyValue(currentPrice,response.data[0]["data"][0].currency,objectType.portfolioCurrency,'price');
+						if((response.data[0]["data"].close!=undefined && response.data[0]["data"].close!=null && response.data[0]["data"].close!="")) {
+							currentPrice=(response.data[0]["data"].close!=undefined && response.data[0]["data"].close!=null && response.data[0]["data"].close!="")?response.data[0]["data"].close:0;
+							currentPrice=objectType.getCurrencyValue(objectType.investDetails.currency,objectType.portfolioCurrency,'price');
 
 						}
 						objectType.investDetails.currentTickerPrice=currentPrice;
@@ -670,8 +662,7 @@ export class PortfolioDetailsComponent implements OnInit {
 					if (response.data[1].status === true) {
 						objectType.currencyPriceList = response.data[1].data;
 					}
-					if (response.data[0].status === true)
-					{
+					if (response.data[0].status === true) {
 						if(response.data[0].historyData.graphData.length>0 && response.data[0].historyData.graphData !=undefined){
 							data=response.data[0].historyData.graphData;
 							data.map(function(item) {
@@ -680,12 +671,10 @@ export class PortfolioDetailsComponent implements OnInit {
 							});
 							objectType.renderChart(keys,"value");
 							objectType.renderChart(keys,"cost");
-						}
-						else {
+						} else {
 							objectType.portGraphDataText=objectType.noChartDataText;
 						}
-					}
-					else {
+					} else {
 						objectType.portGraphDataText=objectType.noChartDataText;
 					}
 				} else {
@@ -708,10 +697,10 @@ export class PortfolioDetailsComponent implements OnInit {
 	/* Render Chart Data */
 	renderChart(data,type) {
 		am4core.useTheme(am4themes_animated);
-		let chart = am4core.create((type=='value')?"chartdiv":"bookchart", am4charts.XYChart);
+		const chart = am4core.create((type=='value')?"chartdiv":"bookchart", am4charts.XYChart);
 		chart.paddingRight = 20;
 		chart.data = data;
-		let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+		const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 		dateAxis.renderer.grid.template.location = 0;
 		dateAxis.renderer.grid.template.disabled = true;
 		dateAxis.renderer.ticks.template.disabled = true;
@@ -732,19 +721,19 @@ export class PortfolioDetailsComponent implements OnInit {
 
 	}
 	createAxisAndSeries(field,chart) {
-		let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.grid.template.location = 0;
 		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 5;
-		if(field=="value") {
-			let series = chart.series.push(new am4charts.LineSeries());
-			series.dataFields.dateX = "date";
-			series.dataFields.valueY = "value";
+		if(field=='value') {
+			const series = chart.series.push(new am4charts.LineSeries());
+			series.dataFields.dateX = 'date';
+			series.dataFields.valueY = 'value';
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#00b050");
+			series.stroke = am4core.color('#00b050');
 
 			// let currency=this.chatDetailsCurrency;
 			series.tooltipText =
@@ -753,19 +742,19 @@ export class PortfolioDetailsComponent implements OnInit {
 			this.chartValue+`: {value}`;
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
-			series.tooltip.background.fill = am4core.color("#00b050");
-		} else if(field=="valuebookcost") {
+			series.tooltip.background.fill = am4core.color('#00b050');
+		} else if(field==='valuebookcost') {
 			const series = chart.series.push(new am4charts.LineSeries());
-			series.dataFields.dateX = "date";
-			series.dataFields.valueY = "value";
+			series.dataFields.dateX = 'date';
+			series.dataFields.valueY = 'value';
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#00b050");
-		} else if(field=="bookcost") {
+			series.stroke = am4core.color('#00b050');
+		} else if(field==='bookcost') {
 			const series = chart.series.push(new am4charts.LineSeries());
-			series.dataFields.dateX = "date";
-			series.dataFields.valueY = "cost";
+			series.dataFields.dateX = 'date';
+			series.dataFields.valueY = 'cost';
 			series.strokeWidth = 1.5;
-			series.stroke = am4core.color("#ff0000");
+			series.stroke = am4core.color('#ff0000');
 			series.tooltipText =
 			this.dateText+`: {date}\n`+
 			this.currencyText+`: {currency}\n`+
@@ -774,24 +763,24 @@ export class PortfolioDetailsComponent implements OnInit {
 
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
-			series.tooltip.background.fill = am4core.color("#00b050");
+			series.tooltip.background.fill = am4core.color('#00b050');
 		}
 		chart.cursor = new am4charts.XYCursor();
 		/* Set Chart Tooltip Dotted Line */
-		chart.cursor.lineX.stroke = am4core.color("#5a7e9e");
+		chart.cursor.lineX.stroke = am4core.color('#5a7e9e');
 		chart.cursor.lineX.strokeWidth = 1.5;
 		chart.cursor.lineX.strokeOpacity = 1;
-		chart.cursor.lineX.strokeDasharray = "";
+		chart.cursor.lineX.strokeDasharray = '';
 
-		chart.cursor.lineY.stroke = am4core.color("#5a7e9e");
+		chart.cursor.lineY.stroke = am4core.color('#5a7e9e');
 		chart.cursor.lineY.strokeWidth = 1;
 		chart.cursor.lineY.strokeOpacity = 1;
-		chart.cursor.lineY.strokeDasharray = "";
+		chart.cursor.lineY.strokeDasharray = '';
 	}
 	/* toggle me action*/
 	toggleMe(i) {
 		Object.keys(this.hideme).forEach(h => {
-			if(h!=i) {
+			if(h!==i) {
 				this.hideme[h] = false;
 			}
 		});
@@ -800,24 +789,24 @@ export class PortfolioDetailsComponent implements OnInit {
    goToTickerDetails(tickerId,tickerCurrency,tickerType,tickerName,tickerSymbol,watchlistId,keyIndex) {
 
 	  const tickerDetailsValue = this.riskList[keyIndex];
-	  if (tickerId > 0 && (tickerCurrency!="" && tickerCurrency!=undefined) && (tickerType!="" && tickerType!=undefined) && Object.keys(tickerDetailsValue).length>0)  {
-		localStorage.setItem("tickerId",tickerId);
-		localStorage.setItem("tickerCurrency",tickerCurrency);
-		localStorage.setItem("tickerType",tickerType);
-		localStorage.setItem("tickerName",tickerName);
-		localStorage.setItem("tickerSymbol",tickerSymbol);
+	  if (tickerId > 0 && (tickerCurrency!=='' && tickerCurrency!==undefined) && (tickerType!=='' && tickerType!==undefined) && Object.keys(tickerDetailsValue).length>0)  {
+		localStorage.setItem('tickerId',tickerId);
+		localStorage.setItem('tickerCurrency',tickerCurrency);
+		localStorage.setItem('tickerType',tickerType);
+		localStorage.setItem('tickerName',tickerName);
+		localStorage.setItem('tickerSymbol',tickerSymbol);
 
-		localStorage.setItem("shortTerm",(tickerDetailsValue.shortTerm==undefined || tickerDetailsValue.shortTerm=="N/A" || tickerDetailsValue.shortTerm=="0")?"":tickerDetailsValue.shortTerm);
-		localStorage.setItem("mediumTerm",(tickerDetailsValue.mediumTerm==undefined || tickerDetailsValue.mediumTerm=="N/A" || tickerDetailsValue.mediumTerm=="0")?"":tickerDetailsValue.mediumTerm);
-		localStorage.setItem("longTerm",(tickerDetailsValue.longTerm==undefined || tickerDetailsValue.longTerm=="N/A" || tickerDetailsValue.longTerm=="0")?"":tickerDetailsValue.longTerm);
-		localStorage.setItem("voladility",(tickerDetailsValue.voladility==undefined || tickerDetailsValue.voladility=="N/A" || tickerDetailsValue.voladility=="0")?"":tickerDetailsValue.voladility);
-		localStorage.setItem("fundamentals",(tickerDetailsValue.fundamentals==undefined || tickerDetailsValue.fundamentals=="N/A" || tickerDetailsValue.fundamentals=="0")?"":tickerDetailsValue.fundamentals);
-		localStorage.setItem("alphaMarketId",(tickerDetailsValue.alphaMarketId==undefined || tickerDetailsValue.alphaMarketId=="N/A" || tickerDetailsValue.alphaMarketId=="0")?"":tickerDetailsValue.alphaMarketId);
-		localStorage.setItem("investmentId",(tickerDetailsValue.investmentId==undefined || tickerDetailsValue.investmentId=="N/A" || tickerDetailsValue.investmentId=="0")?"":tickerDetailsValue.investmentId);
-		localStorage.setItem("potentialId",(tickerDetailsValue.potentialId==undefined || tickerDetailsValue.potentialId=="N/A" || tickerDetailsValue.potentialId=="0")?"":tickerDetailsValue.potentialId);
-		localStorage.setItem("pageTickerRequest",'portfolio-details');
+		localStorage.setItem('shortTerm',(tickerDetailsValue.shortTerm===undefined || tickerDetailsValue.shortTerm==='N/A' || tickerDetailsValue.shortTerm==='0')?'':tickerDetailsValue.shortTerm);
+		localStorage.setItem('mediumTerm',(tickerDetailsValue.mediumTerm===undefined || tickerDetailsValue.mediumTerm==='N/A' || tickerDetailsValue.mediumTerm==='0')?'':tickerDetailsValue.mediumTerm);
+		localStorage.setItem('longTerm',(tickerDetailsValue.longTerm===undefined || tickerDetailsValue.longTerm==='N/A' || tickerDetailsValue.longTerm==='0')?'':tickerDetailsValue.longTerm);
+		localStorage.setItem('voladility',(tickerDetailsValue.voladility===undefined || tickerDetailsValue.voladility==='N/A' || tickerDetailsValue.voladility==='0')?'':tickerDetailsValue.voladility);
+		localStorage.setItem('fundamentals',(tickerDetailsValue.fundamentals===undefined || tickerDetailsValue.fundamentals==='N/A' || tickerDetailsValue.fundamentals==='0')?'':tickerDetailsValue.fundamentals);
+		localStorage.setItem('alphaMarketId',(tickerDetailsValue.alphaMarketId===undefined || tickerDetailsValue.alphaMarketId==='N/A' || tickerDetailsValue.alphaMarketId==='0')?'':tickerDetailsValue.alphaMarketId);
+		localStorage.setItem('investmentId',(tickerDetailsValue.investmentId===undefined || tickerDetailsValue.investmentId==='N/A' || tickerDetailsValue.investmentId==='0')?'':tickerDetailsValue.investmentId);
+		localStorage.setItem('potentialId',(tickerDetailsValue.potentialId===undefined || tickerDetailsValue.potentialId==='N/A' || tickerDetailsValue.potentialId==='0')?'':tickerDetailsValue.potentialId);
+		localStorage.setItem('pageTickerRequest','portfolio-details');
 
-		localStorage.setItem("watchlistId",(watchlistId=="")?"0":watchlistId);
+		localStorage.setItem('watchlistId',(watchlistId==='')?'0':watchlistId);
 		this.router.navigate(['/investment/'+tickerSymbol+'/'+tickerName]);
     } else {
 		this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
@@ -826,7 +815,7 @@ export class PortfolioDetailsComponent implements OnInit {
    /*Return Currency Symbol*/
    returnCurrSymbol(v) {
 	  let cur=v;
-	  v=(v=='GBX')?'GBP':v;
+	  v=(v==='GBX')?'GBP':v;
 	  this.currencyItemList.map(function(item) {
 			if(item.name===v) {
 				cur = item.symbol;
@@ -859,14 +848,14 @@ export class PortfolioDetailsComponent implements OnInit {
    }
    numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
-      return (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))?false:true;
+      return (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) ? false :true;
    }
    formatNumber(num) {
-		const numNew=num.toString()
-		if(numNew.indexOf('.') > -1) {
-			const vSplitValue =numNew.split('.');
-			const v =vSplitValue[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-			return v+'.' + vSplitValue[1];
+		const numNew = num.toString();
+		if (numNew.indexOf('.') > -1) {
+			const vSplitValue = numNew.split('.');
+			const v = vSplitValue[0].toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+			return v + '.' + vSplitValue[1];
 		} else {
 			return numNew.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 		}

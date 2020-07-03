@@ -1,0 +1,6 @@
+{
+    "https://www.worldtradingdata.com/api/v1/": {
+        "target": "https://www.worldtradingdata.com/api/v1/",
+        "secure": false
+    }
+}
