@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col-md-12">
         <h2>{{ portfolioName }}</h2>
-		
         <span></span>
         <div class="buttons_grp">
-          <button style="margin-left: 0" [routerLink]="['/market-search']">
-            <span style="margin-right: 5px;"><img src="../assets/images/search-market-icon.png" alt="search-market-icon"/></span>
-            {{ 'SearchMarkets' | translate }}
+          <button style="margin-left: 0;" [routerLink]="['/market-search']">
+            <span style="margin-right: 5px;"><img src="../assets/images/search-market-icon.png"
+                alt="search-market-icon" /></span>
+            {{ "SearchMarkets" | translate }}
           </button>
           <button title="{{ 'ViewHistory' | translate }}" (click)="gotoPortfolioHistory()">
             <img src="../assets/images/timer.png" alt="timer" class="img-fluid" />
@@ -16,7 +16,8 @@
           <button title="{{ 'AddInvestment' | translate }}" (click)="addInvestment()">
             <img src="../assets/images/plus.png" alt="plus" class="img-fluid" />
           </button>
-          <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}" onclick="history.go(-1); return false;">
+          <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}"
+            onclick="history.go(-1); return false;">
             <span>
               <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
             </span>
@@ -44,8 +45,12 @@
               <input type="button" value="2Y" />
             </li>
           </ul>
-          <div id="chartdiv" style="display:none">{{ portGraphDataText }}</div>
-          <div id="bookchart" style="display:flex">{{ portGraphDataText }}</div>
+          <div id="chartdiv" style="display: none;">
+            {{ portGraphDataText }}
+          </div>
+          <div id="bookchart" style="display: flex;">
+            {{ portGraphDataText }}
+          </div>
         </div>
         <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
           <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
@@ -56,20 +61,24 @@
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2>{{ 'GraphAnaTitle' | translate }}</h2>
-              <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+              <h2>{{ "GraphAnaTitle" | translate }}</h2>
+              <button (click)="activeFilter = !activeFilter" class="custom-btn">
+                x
+              </button>
             </div>
             <div class="form-group">
-              <label>{{ 'GraphDisplay' | translate }}</label>
-              <select class="form-control" name="exchangeId" [(ngModel)]="graphFilter" >
+              <label>{{ "GraphDisplay" | translate }}</label>
+              <select class="form-control" name="exchangeId" [(ngModel)]="graphFilter">
                 <option value="0">Both</option>
                 <option value="1">Portfolio Market Value</option>
                 <option value="2">Portfolio Book Cost</option>
               </select>
-            </div>           
-        
+            </div>
+
             <div class="actions_to">
-              <button class="custom-btn" (click)="showHideChart(graphFilter)">{{ 'Apply' | translate }}</button>
+              <button class="custom-btn" (click)="showHideChart(graphFilter)">
+                {{ "Apply" | translate }}
+              </button>
             </div>
           </div>
         </div>
@@ -78,14 +87,23 @@
         <div class="tabs_value_chg">
           <div class="tabs_pills">
             <ul class="nav nav-pills" role="tablist">
-              <li class="nav-item" [ngClass]="indMenu == 1 ? 'active' : ''" (click)="showTabList(1)" *ngIf="this.profileInfo.isProAccount">
-                <a class="nav-link">{{ 'value' | translate }}</a>
+              <li class="nav-item" [ngClass]="indMenu == 1 ? 'active' : ''" (click)="showTabList(1)"
+                *ngIf="this.profileInfo.isProAccount">
+                <a class="nav-link">{{ "Market" }}</a>
               </li>
-              <li class="nav-item" [ngClass]="indMenu == 2 ? 'active' : ''" (click)="showTabList(2)" *ngIf="this.profileInfo.isProAccount">
-                <a class="nav-link">{{ 'riskrewards' | translate }}</a>
+              <!-- <li class="nav-item" [ngClass]="indMenu == 4 ? 'active' : ''" (click)="showTabList(4)" *ngIf="this.profileInfo.isProAccount">
+                                <a class="nav-link">{{ "Profile" }}</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="indMenu == 5 ? 'active' : ''" (click)="showTabList(5)" *ngIf="this.profileInfo.isProAccount">
+                                <a class="nav-link">{{ "Fundamentals" }}</a>
+                            </li> -->
+              <li class="nav-item" [ngClass]="indMenu == 2 ? 'active' : ''" (click)="showTabList(2)"
+                *ngIf="this.profileInfo.isProAccount">
+                <a class="nav-link">{{ "Risk" }}</a>
               </li>
-              <li class="nav-item" [ngClass]="indMenu == 3 ? 'active' : ''" (click)="showTabList(3)" *ngIf="this.profileInfo.isProAccount">
-                <a class="nav-link">{{ 'Performance' | translate }}</a>
+              <li class="nav-item" [ngClass]="indMenu == 3 ? 'active' : ''" (click)="showTabList(3)"
+                *ngIf="this.profileInfo.isProAccount">
+                <a class="nav-link">{{ "Performance" | translate }}</a>
               </li>
             </ul>
             <!-- Tab panes -->
@@ -95,13 +113,13 @@
                 <div class="stats_table">
                   <div class="head_div one">
                     <ul class="stats_head">
-                      <li>{{ 'Ticker' | translate }}</li>
-                      <li>{{ 'Units' | translate }}</li>
-                      <li>{{ 'MarketPrice' | translate }}</li>
-                      <li>{{ 'BookCost' | translate }}</li>
-                      <li>{{ 'MarketValue' | translate }}</li>
-                      <li>{{ 'Change' | translate }}</li>
-                      <li>{{ 'Actions' | translate }}</li>
+                      <li>{{ "Ticker" | translate }}</li>
+                      <li>{{ "Units" | translate }}</li>
+                      <li>{{ "MarketPrice" | translate }}</li>
+                      <li>{{ "BookCost" | translate }}</li>
+                      <li>{{ "MarketValue" | translate }}</li>
+                      <li>{{ "Change" | translate }}</li>
+                      <li>{{ "Actions" | translate }}</li>
                     </ul>
                   </div>
                   <div class="body_div">
@@ -109,12 +127,28 @@
                       <li>
                         {{ valueItem.symbol }}
                       </li>
-                      <li *ngIf="portfolioType.toLowerCase() == 'stock'">{{ valueItem.noOfUnits | number: '1.0-0' }}</li>
-                      <li *ngIf="portfolioType.toLowerCase() == 'cryptocurrency'">{{ valueItem.noOfUnits | number: '1.6-6' }}</li>
-                      <li>{{ valueItem.currentPrice | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.3-3' }}</li>
-                      <li>{{ valueItem.bookCostVal | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0-0' }}</li>
-                      <li>{{ valueItem.investmentmarketcalcost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0-0' }}</li>
-                      <li class="performance-item" [ngClass]="valueItem.performance == 0 ? 'zeroactive' : valueItem.performance > 0 ? 'active' : 'inactive'">
+                      <li *ngIf="portfolioType.toLowerCase() == 'stock'">
+                        {{ valueItem.noOfUnits | number: "1.0-0" }}
+                      </li>
+                      <li *ngIf="portfolioType.toLowerCase() == 'cryptocurrency'">
+                        {{ valueItem.noOfUnits | number: "1.6-6" }}
+                      </li>
+                      <li>
+                        {{ valueItem.currentPrice | currency : returnCurrSymbol(portfolioCurrency) : "symbol" : "1.3-3" }}
+                      </li>
+                      <li>
+                        {{ valueItem.bookCostVal | currency : returnCurrSymbol(portfolioCurrency) : "symbol" : "1.0-0" }}
+                      </li>
+                      <li>
+                        {{ valueItem.investmentmarketcalcost | currency : returnCurrSymbol(portfolioCurrency) : "symbol" : "1.0-0" }}
+                      </li>
+                      <li class="performance-item" [ngClass]="
+                                                valueItem.performance == 0
+                                                  ? 'zeroactive'
+                                                  : valueItem.performance > 0
+                                                  ? 'active'
+                                                  : 'inactive'
+                                              ">
                         <span>
                           <i class="fa fa-caret-up" aria-hidden="true" *ngIf="valueItem.performance > 0"></i>
                           <i class="fa fa-caret-down" aria-hidden="true" *ngIf="valueItem.performance < 0"></i>
@@ -126,31 +160,45 @@
                       <li class="toggle_actions">
                         <ul class="submenus" id="collapseExample">
                           <li class="dropdown-item">
-                            <a href="javascript:void(0);" (click)="goToTickerDetails(valueItem.tickerId, portfolioCurrency, valueItem.type, valueItem.name, valueItem.symbol, 0,i)" title="{{ 'View' | translate }}">
+                            <a href="javascript:void(0);" (click)="
+                                                          goToTickerDetails(
+                                                            valueItem.tickerId,
+                                                            portfolioCurrency,
+                                                            valueItem.type,
+                                                            valueItem.name,
+                                                            valueItem.symbol,
+                                                            0,
+                                                            i
+                                                          )
+                                                        " title="{{ 'View' | translate }}">
                               <i class="fa fa-eye" aria-hidden="true"></i>
                             </a>
                           </li>
                           <li class="dropdown-item">
-                            <a href="javascript:void(0);" (click)="priceAlertPopup(pricealert, i)" title="{{ 'PriceAlert' | translate }}">
+                            <a href="javascript:void(0);" (click)="priceAlertPopup(pricealert, i)"
+                              title="{{ 'PriceAlert' | translate }}">
                               <i class="fa fa-bell" aria-hidden="true"></i>
                             </a>
                           </li>
                           <li class="dropdown-item">
-                            <a href="javascript:void(0);" (click)="setUpPopupItem(content, 'Buy', i)" title="{{ 'Buy' | translate }}">
+                            <a href="javascript:void(0);" (click)="setUpPopupItem(content, 'Buy', i)"
+                              title="{{ 'Buy' | translate }}">
                               <i class="fa fa-plus-square" aria-hidden="true"></i>
                             </a>
                           </li>
                           <li class="dropdown-item">
-                            <a href="javascript:void(0);" (click)="setUpPopupItem(content, 'Sell', i)" title="{{ 'Sell' | translate }}">
-                              <i class="fa fa-minus-square" aria-hidden="true"></i
-                            ></a>
+                            <a href="javascript:void(0);" (click)="setUpPopupItem(content, 'Sell', i)"
+                              title="{{ 'Sell' | translate }}">
+                              <i class="fa fa-minus-square" aria-hidden="true"></i></a>
                           </li>
                           <li class="dropdown-item">
-                            <a
-                              href="javascript:void(0);"
-                              (click)="deleteInvestmentItem(deleteInvestment, 'Delete', i)"
-                              title="{{ 'Remove' | translate }}"
-                            >
+                            <a href="javascript:void(0);" (click)="
+                                                            deleteInvestmentItem(
+                                                              deleteInvestment,
+                                                              'Delete',
+                                                              i
+                                                            )
+                                                          " title="{{ 'Remove' | translate }}">
                               <i class="fa fa-times" aria-hidden="true"></i>
                             </a>
                           </li>
@@ -170,66 +218,82 @@
                 <div class="stats_table">
                   <div class="head_div one">
                     <ul class="stats_head">
-                      <li>{{ 'Ticker' | translate }}</li>
-                      <li>{{ 'Concentration' | translate }}</li>
-                      <li>{{ 'Risk' | translate }}</li>
-                      <li>{{ 'Potential' | translate }}</li>
+                      <li>{{ "Ticker" | translate }}</li>
+                      <li>{{ "Concentration" | translate }}</li>
+                      <li>{{ "Risk" | translate }}</li>
+                      <li>{{ "Potential" | translate }}</li>
                       <!-- <li>{{ 'Opportunity' | translate }}</li> -->
-                      <li>{{ 'liquidity' | translate }}</li>
+                      <li>{{ "liquidity" | translate }}</li>
                     </ul>
                   </div>
                   <div class="body_div">
                     <!--<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,riskItem.shortTerm,riskItem.mediumTerm,riskItem.longTerm,riskItem.voladility,riskItem.fundamentals,riskItem.alphaMarketId,riskItem.investmentId,riskItem.potentialId)">-->
-					            <ul class="stats_body liquidity-section" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,i)">
-                      <li>
-                        {{ riskItem.symbol }}
-                      </li>
-                      <li *ngIf="riskItem.concentration=='N/A'">{{riskItem.concentration}}</li>
-                      <li *ngIf="riskItem.concentration!='N/A'" class="concentration-box">
-                        <div class="progress-circle progress-{{ math.round(riskItem.concentration) | number }} small">
-                          <span>{{ math.round(riskItem.concentration) | number }}</span>
+                    <ul class="stats_body liquidity-section" *ngFor="let riskItem of riskList; let i = index"
+                      (click)="goToTickerDetails(riskItem.tickerId,portfolioCurrency,riskItem.type,riskItem.name,riskItem.symbol,0,i)">
+                      <li>{{ riskItem.symbol }}</li>
+                      <li *ngIf="riskItem.concentration == 'N/A'"> {{ riskItem.concentration }}</li>
+                      <li *ngIf="riskItem.concentration != 'N/A'" class="concentration-box">
+                        <div class="progress-circle progress-{{ math.round(riskItem.concentration) | number}} small">
+                          <span>{{ math.round(riskItem.concentration) | number}}</span>
                         </div>
                       </li>
-					            <li *ngIf="riskItem.riskText=='N/A'">{{riskItem.riskText}}</li>
-                      <li *ngIf="riskItem.riskText!='N/A'" class="risk-box">
+                      <li *ngIf="riskItem.riskText == 'N/A'">
+                        {{ riskItem.riskText }}
+                      </li>
+                      <li *ngIf="riskItem.riskText != 'N/A'" class="risk-box">
                         <div class="risklow" *ngIf="riskItem.riskText == 'Low'">
-                          <div class="progress-circle progress-25 small"><span>L</span></div>
+                          <div class="progress-circle progress-25 small">
+                            <span>L</span>
+                          </div>
                         </div>
                         <div class="riskmidium" *ngIf="riskItem.riskText == 'Medium'">
-                          <div class="progress-circle progress-50 small"><span>M</span></div>
+                          <div class="progress-circle progress-50 small">
+                            <span>M</span>
+                          </div>
                         </div>
                         <div class="riskhigh" *ngIf="riskItem.riskText == 'High'">
-                          <div class="progress-circle progress-75 small"><span>H</span></div>
+                          <div class="progress-circle progress-75 small">
+                            <span>H</span>
+                          </div>
                         </div>
-                        <div
-                          class="riskdefault"
-                          *ngIf="riskItem.riskText != 'High' && riskItem.riskText != 'Medium' && riskItem.riskText != 'Low'"
-                        ></div>
+                        <div class="riskdefault"
+                          *ngIf=" riskItem.riskText != 'High' && riskItem.riskText != 'Medium' && riskItem.riskText != 'Low' ">
+                        </div>
                       </li>
-					            <li *ngIf="riskItem.potentialText=='N/A'">{{riskItem.potentialText}}</li>
-                      <li *ngIf="riskItem.potentialText!='N/A'"  class="potential-box">
+                      <li *ngIf="riskItem.potentialText == 'N/A'">
+                        {{ riskItem.potentialText }}
+                      </li>
+                      <li *ngIf="riskItem.potentialText != 'N/A'" class="potential-box">
                         <div class="potenlow" *ngIf="riskItem.potentialText == 'Low'">
-                          <div class="progress-circle progress-25 small"><span>L</span></div>
+                          <div class="progress-circle progress-25 small">
+                            <span>L</span>
+                          </div>
                         </div>
                         <div class="potenmidium" *ngIf="riskItem.potentialText == 'Medium'">
-                          <div class="progress-circle progress-50 small"><span>M</span></div>
+                          <div class="progress-circle progress-50 small">
+                            <span>M</span>
+                          </div>
                         </div>
                         <div class="potenhigh" *ngIf="riskItem.potentialText == 'High'">
-                          <div class="progress-circle progress-75 small"><span>H</span></div>
+                          <div class="progress-circle progress-75 small">
+                            <span>H</span>
+                          </div>
                         </div>
 
-                        <div
-                          class="potendefault"
-                          *ngIf="riskItem.potentialText != 'High' && riskItem.potentialText != 'Medium' && riskItem.potentialText != 'Low'"
-                        ></div>
+                        <div class="potendefault"
+                          *ngIf=" riskItem.potentialText != 'High' && riskItem.potentialText != 'Medium' && riskItem.potentialText != 'Low' ">
+                        </div>
                       </li>
-					            <!-- <li *ngIf="riskItem.opportunity=='N/A'">{{ riskItem.opportunity }}</li>
-                      <li *ngIf="riskItem.opportunity!='N/A'">{{ math.round(riskItem.opportunity) }}%</li> -->
+                      <!-- <li *ngIf="riskItem.opportunity=='N/A'">{{ riskItem.opportunity }}</li>
+                                              <li *ngIf="riskItem.opportunity!='N/A'">{{ math.round(riskItem.opportunity) }}%</li> -->
                       <li class="liquidity-box">
-                        <img *ngIf="riskItem.liquidityFlag=='1'" class="liquidity-flag" src="assets/images/ic_green_exclamation.png">
-                        <img *ngIf="riskItem.liquidityFlag=='2'" class="liquidity-flag" src="assets/images/ic_green_right.png">
-                        <span *ngIf="riskItem.liquidityFlag !='1' && riskItem.liquidityFlag !='2'" >N/A</span>
-                        <span *ngIf="riskItem.liquidityFlag =='1' || riskItem.liquidityFlag =='2'" class="liquidity">{{ riskItem.liquidity | number:'1.0-3' }}%</span>
+                        <img *ngIf="riskItem.liquidityFlag == '1'" class="liquidity-flag"
+                          src="assets/images/ic_green_exclamation.png" />
+                        <img *ngIf="riskItem.liquidityFlag == '2'" class="liquidity-flag"
+                          src="assets/images/ic_green_right.png" />
+                        <span *ngIf=" riskItem.liquidityFlag != '1' && riskItem.liquidityFlag != '2' ">N/A</span>
+                        <span *ngIf=" riskItem.liquidityFlag == '1' || riskItem.liquidityFlag == '2' "
+                          class="liquidity">{{ riskItem.liquidity | number: "1.0-3" }}%</span>
                       </li>
                     </ul>
                     <ul class="processing" *ngIf="riskItemProcessing">
@@ -246,96 +310,50 @@
                   <div class="head_div">
                     <ul class="stats_head">
                       <div class="ticker">
-                        <li>{{ 'Ticker' | translate }}</li>
-                        <li>{{ 'BenchMark' | translate }}</li>
+                        <li>{{ "Ticker" | translate }}</li>
+                        <li>{{ "BenchMark" | translate }}</li>
                       </div>
                       <div class="ticker-bottom">
-                        <li>{{ 'Alpha' | translate }}</li>
+                        <li>{{ "Alpha" | translate }}</li>
                         <div class="ticker2">
-                          <li>{{ '1W' | translate }}</li>
-                          <li>{{ '1M' | translate }}</li>
-                          <li>{{ '6M' | translate }}</li>
-                          <li>{{ '1Y' | translate }}</li>
+                          <li>{{ "1W" | translate }}</li>
+                          <li>{{ "1M" | translate }}</li>
+                          <li>{{ "6M" | translate }}</li>
+                          <li>{{ "1Y" | translate }}</li>
                         </div>
                       </div>
                     </ul>
                   </div>
                   <div class="body_div">
-                    <ul class="stats_body" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,i)">
+                    <ul class="stats_body" *ngFor="let riskItem of riskList; let i = index"
+                      (click)=" goToTickerDetails( riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0, i ) ">
                       <li>
                         {{ riskItem.symbol }}
                       </li>
-                      <li>{{ (riskItem.alphaMarketSymbol != null)?riskItem.alphaMarketSymbol:'N/A' }}</li>
-					  <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
-					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
-					  <li
-                        [ngClass]="riskItem.isTemp == '0' && riskItem.isTemp != undefined ?'':
-                          riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == ''
-                            ? 'nactive'
-                            : riskItem.alphaWChange > 0
-                            ? 'active'
-                            : riskItem.alphaWChange == 0
-                            ? 'zeroactive'
-                            : 'inactive'
-                        "
-                      >
-                      
+                      <li>
                         {{
-                          riskItem.alphaWChange != 'N/A' && riskItem.alphaWChange != ''
-                            ? formatNumber(math.round(riskItem.alphaWChange)) + '%'
-                            : riskItem.alphaWChange
-                        }}
+                                                    riskItem.alphaMarketShortName != null
+                                                      ? riskItem.alphaMarketShortName
+                                                      : "N/A"
+                                                  }}
+                      </li>
+                      <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
+                                      <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
+                      <li
+                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == '' ? 'nactive' : riskItem.alphaWChange > 0 ? 'active' : riskItem.alphaWChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alphaWChange != "N/A" && riskItem.alphaWChange != "" ? formatNumber(math.round(riskItem.alphaWChange)) + "%" : riskItem.alphaWChange }}
                       </li>
                       <li
-                        [ngClass]="
-                          riskItem.isTemp == '0' && riskItem.isTemp != undefined ?'':riskItem.alphaChange == 'N/A' || riskItem.alphaChange == ''
-                            ? 'nactive'
-                            : riskItem.alphaChange > 0
-                            ? 'active'
-                            : riskItem.alphaChange == 0
-                            ? 'zeroactive'
-                            : 'inactive'
-                        "
-                      >
-                        {{
-                          riskItem.alphaChange != 'N/A' && riskItem.alphaChange != ''
-                            ? formatNumber(math.round(riskItem.alphaChange)) + '%'
-                            : riskItem.alphaChange
-                        }}
+                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaChange == 'N/A' || riskItem.alphaChange == '' ? 'nactive' : riskItem.alphaChange > 0 ? 'active' : riskItem.alphaChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alphaChange != "N/A" && riskItem.alphaChange != "" ? formatNumber(math.round(riskItem.alphaChange)) + "%" : riskItem.alphaChange }}
                       </li>
                       <li
-                        [ngClass]="
-                          riskItem.isTemp == '0' && riskItem.isTemp != undefined ?'':riskItem.alpha6MChange == 'N/A' || riskItem.alpha6MChange == ''
-                            ? 'nactive'
-                            : riskItem.alpha6MChange > 0
-                            ? 'active'
-                            : riskItem.alpha6MChange == 0
-                            ? 'zeroactive'
-                            : 'inactive'
-                        "
-                      >
-                        {{
-                          riskItem.alpha6MChange != 'N/A' && riskItem.alpha6MChange != ''
-                            ? formatNumber(math.round(riskItem.alpha6MChange)) + '%'
-                            : riskItem.alpha6MChange
-                        }}
+                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha6MChange == 'N/A' || riskItem.alpha6MChange == '' ? 'nactive' : riskItem.alpha6MChange > 0 ? 'active' : riskItem.alpha6MChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alpha6MChange != "N/A" && riskItem.alpha6MChange != "" ? formatNumber(math.round(riskItem.alpha6MChange)) + "%" : riskItem.alpha6MChange }}
                       </li>
                       <li
-                        [ngClass]="
-                          riskItem.isTemp == '0' && riskItem.isTemp != undefined ?'':riskItem.alpha1YChange == 'N/A' || riskItem.alpha1YChange == 'nactive'
-                            ? 'nactive'
-                            : riskItem.alpha1YChange > 0
-                            ? 'active'
-                            : riskItem.alpha1YChange == 0
-                            ? 'zeroactive'
-                            : 'inactive'
-                        "
-                      >
-                        {{
-                          riskItem.alpha1YChange != 'N/A' && riskItem.alpha1YChange != ''
-                            ? formatNumber(math.round(riskItem.alpha1YChange)) + '%'
-                            : riskItem.alpha1YChange
-                        }}
+                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha1YChange == 'N/A' || riskItem.alpha1YChange == 'nactive' ? 'nactive' : riskItem.alpha1YChange > 0 ? 'active' : riskItem.alpha1YChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alpha1YChange != "N/A" && riskItem.alpha1YChange != "" ? formatNumber(math.round(riskItem.alpha1YChange)) + "%" : riskItem.alpha1YChange }}
                       </li>
                     </ul>
                     <ul class="processing" *ngIf="riskItemProcessing">
@@ -352,13 +370,11 @@
             <ul>
               <li>
                 <h3>
-                  {{ 'PortfolioMarketValue' | translate }}<br />{{
-                    totalMarketVal | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0'
-                  }}
+                  {{ "PortfolioMarketValue" | translate }}<br />{{ totalMarketVal | currency : returnCurrSymbol(portfolioCurrency) : "symbol" : "1.0" }}
                 </h3>
               </li>
-              <li [ngClass]="portfolioChanges == 0 ? 'zeroactive' : portfolioChanges > 0 ? 'active' : 'inactive'">
-                <h3>{{ 'PortfolioChange' | translate }}</h3>
+              <li [ngClass]=" portfolioChanges == 0 ? 'zeroactive' : portfolioChanges > 0 ? 'active' : 'inactive' ">
+                <h3>{{ "PortfolioChange" | translate }}</h3>
                 <span>
                   <i class="fa fa-caret-up" aria-hidden="true" *ngIf="portfolioChanges > 0"></i>
                   <i class="fa fa-caret-down" aria-hidden="true" *ngIf="portfolioChanges < 0"></i>
@@ -383,185 +399,144 @@
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='buy'">{{ 'Buy' | translate }}</h4>
-	  <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='sell'">{{ 'Sell' | translate }}</h4>
+      <h4 class="modal-title" *ngIf="modelHeading.toLowerCase() == 'buy'">
+        {{ "Buy" | translate }}
+      </h4>
+      <h4 class="modal-title" *ngIf="modelHeading.toLowerCase() == 'sell'">
+        {{ "Sell" | translate }}
+      </h4>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-	<!-- Buy Form-->
-      <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price" *ngIf="modelHeading=='Buy'">
+      <!-- Buy Form-->
+      <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price"
+        *ngIf="modelHeading == 'Buy'">
         <div class="form-group">
-          <label for="Portfolio">{{ 'Ticker' | translate }}</label>
-          <input type="text" formControlName="ticker" class="form-control" placeholder="{{ 'Ticker' | translate }}" readonly />
+          <label for="Portfolio">{{ "Ticker" | translate }}</label>
+          <input type="text" formControlName="ticker" class="form-control" placeholder="{{ 'Ticker' | translate }}"
+            readonly />
           <div [ngClass]="tickerError == '' ? '' : 'alert alert-dange'" class="error danger">
             <div>{{ tickerError }}</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="Portfolio">{{ 'UnitsBought' | translate }}</label>
-          <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsBought' | translate }}"
-            maxlength="28"
-            (keyup)="calculateMarketPrice('Stock')"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-			(blur)="setHoldingValue('Stock')"
-            (keypress)="numberOnlyForHold($event)"
-			*ngIf="portfolioType.toLowerCase()=='stock'"
-			value="{{holdingUnit | number:'1.0-0'}}"
-          />
-		  <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsBought' | translate }}"
-            maxlength="28"
-			(keyup)="calculateMarketPrice('Cryptocurrency')"
-			(keypress)="numberOnly($event)"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-            (blur)="setHoldingValue('Cryptocurrency')" 
-			*ngIf="portfolioType.toLowerCase()=='cryptocurrency'"
-          />
+          <label for="Portfolio">{{ "UnitsBought" | translate }}</label>
+          <input type="text" formControlName="holding" class="form-control"
+            placeholder="{{ 'UnitsBought' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Stock')"
+            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Stock')"
+            (keypress)="numberOnlyForHold($event)" *ngIf="portfolioType.toLowerCase() == 'stock'"
+            value="{{ holdingUnit | number: '1.0-0' }}" />
+          <input type="text" formControlName="holding" class="form-control"
+            placeholder="{{ 'UnitsBought' | translate }}" maxlength="28"
+            (keyup)="calculateMarketPrice('Cryptocurrency')" (keypress)="numberOnly($event)"
+            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Cryptocurrency')"
+            *ngIf="portfolioType.toLowerCase() == 'cryptocurrency'" />
           <div *ngIf="submitted && f.holding.errors" class="alert alert-dange">
-            <div *ngIf="f.holding.errors.required">{{ 'UnitsBoughtisrequired' | translate }}</div>
+            <div *ngIf="f.holding.errors.required">
+              {{ "UnitsBoughtisrequired" | translate }}
+            </div>
           </div>
         </div>
-        <div class="form-group"  [ngClass]="showBookingSymbol ? 'bookingCost':''">
-          <label for="Portfolio">{{ 'BookingCost' | translate }}</label>
+        <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost' : ''">
+          <label for="Portfolio">{{ "BookingCost" | translate }}</label>
           <div class="span_input">
-		  <span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span>
-          <input
-            type="text"
-            matInput
-            formControlName="bookingCost"
-            class="form-control"
-            autocomplete="off"
-			maxlength="35"
-            placeholder="{{ 'BookingCost' | translate }}"
-            (keyup)="calculateMarketPrice(portfolioType)"
-            [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }"
-			(blur)="calculateBookingCost('buy')"
-            (keypress)="numberOnly($event)"
-          />
+            <span class="symbol" *ngIf="showBookingSymbol">{{ symbol }}</span>
+            <input type="text" matInput formControlName="bookingCost" class="form-control" autocomplete="off"
+              maxlength="35" placeholder="{{ 'BookingCost' | translate }}" (keyup)="calculateMarketPrice(portfolioType)"
+              [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }" (blur)="calculateBookingCost('buy')"
+              (keypress)="numberOnly($event)" />
           </div>
           <div *ngIf="submitted && f.bookingCost.errors" class="alert alert-dange">
-            <div *ngIf="f.bookingCost.required">{{ 'BookingCostisrequired' | translate }}</div>
+            <div *ngIf="f.bookingCost.required">
+              {{ "BookingCostisrequired" | translate }}
+            </div>
           </div>
         </div>
-        <div class="form-group" [ngClass]="showMarketSymbol ? 'marketValue':''">
-          <label for="Portfolio">{{ 'MarketValue' | translate }}</label>
+        <div class="form-group" [ngClass]="showMarketSymbol ? 'marketValue' : ''">
+          <label for="Portfolio">{{ "MarketValue" | translate }}</label>
           <div class="span_input">
-		  <span class="symbol" *ngIf="showMarketSymbol">{{symbol}}</span>
-          <input
-            type="text"
-            formControlName="marketValue"
-            class="form-control"
-            placeholder="{{ 'MarketValue' | translate }}"
-            autocomplete="off"
-            [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }"
-            (keypress)="numberOnly($event)"
-            readonly
-          />
+            <span class="symbol" *ngIf="showMarketSymbol">{{ symbol }}</span>
+            <input type="text" formControlName="marketValue" class="form-control"
+              placeholder="{{ 'MarketValue' | translate }}" autocomplete="off"
+              [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }" (keypress)="numberOnly($event)"
+              readonly />
           </div>
           <div *ngIf="submitted && f.marketValue.errors" class="alert alert-dange">
-            <div *ngIf="f.marketValue.required">{{ 'MarketValueisrequired' | translate }}</div>
+            <div *ngIf="f.marketValue.required">
+              {{ "MarketValueisrequired" | translate }}
+            </div>
           </div>
         </div>
         <div class="form-group">
           <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio">
-            <i class="fa fa-plus"></i>{{ 'ConfirmBuy' | translate }}
+            <i class="fa fa-plus"></i>{{ "ConfirmBuy" | translate }}
           </button>
         </div>
       </form>
-	  <!-- Sell Form-->
-	  <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price" *ngIf="modelHeading=='Sell'">
+      <!-- Sell Form-->
+      <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price"
+        *ngIf="modelHeading == 'Sell'">
         <div class="form-group">
-          <label for="Portfolio">{{ 'Ticker' | translate }}</label>
-          <input type="text" formControlName="ticker" class="form-control" placeholder="{{ 'Ticker' | translate }}" readonly />
+          <label for="Portfolio">{{ "Ticker" | translate }}</label>
+          <input type="text" formControlName="ticker" class="form-control" placeholder="{{ 'Ticker' | translate }}"
+            readonly />
           <div [ngClass]="tickerError == '' ? '' : 'alert alert-dange'" class="error danger">
             <div>{{ tickerError }}</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="Portfolio">{{ 'UnitsSold' | translate }}</label>
-          <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsSold' | translate }}"
-            maxlength="28"
-            (keyup)="calculateMarketPrice('Stock')"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-			(blur)="setHoldingValue('Stock')"
-            (keypress)="numberOnlyForHold($event)"
-			*ngIf="portfolioType.toLowerCase()=='stock'"
-			value="{{holdingUnit | number:'1.0-0'}}"
-          />
-		  <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsSold' | translate }}"
-            maxlength="28"
-			(keyup)="calculateMarketPrice('Cryptocurrency')"
-			(keypress)="numberOnly($event)"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-            (blur)="setHoldingValue('Cryptocurrency')" 
-			*ngIf="portfolioType.toLowerCase()=='cryptocurrency'"
-          />
+          <label for="Portfolio">{{ "UnitsSold" | translate }}</label>
+          <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsSold' | translate }}"
+            maxlength="28" (keyup)="calculateMarketPrice('Stock')"
+            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Stock')"
+            (keypress)="numberOnlyForHold($event)" *ngIf="portfolioType.toLowerCase() == 'stock'"
+            value="{{ holdingUnit | number: '1.0-0' }}" />
+          <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsSold' | translate }}"
+            maxlength="28" (keyup)="calculateMarketPrice('Cryptocurrency')" (keypress)="numberOnly($event)"
+            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Cryptocurrency')"
+            *ngIf="portfolioType.toLowerCase() == 'cryptocurrency'" />
           <div *ngIf="submitted && f.holding.errors" class="alert alert-dange">
-            <div *ngIf="f.holding.errors.required">{{ 'UnitsSoldisrequired' | translate }}</div>
+            <div *ngIf="f.holding.errors.required">
+              {{ "UnitsSoldisrequired" | translate }}
+            </div>
           </div>
         </div>
-         <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost':''">
-          <label for="Portfolio">{{ 'SellPrice' | translate }}</label>
-          <div class="span_input"> 
-		      <span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span>
-          <input
-            type="text"
-            matInput
-            formControlName="bookingCost"
-            class="form-control"
-			maxlength="35"
-            autocomplete="off"
-            placeholder="{{ 'SellPrice' | translate }}"
-            (keyup)="calculateMarketPrice(portfolioType)"
-            [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }"
-			(blur)="calculateBookingCost('sell')"
-            (keypress)="numberOnly($event)"
-          />
+        <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost' : ''">
+          <label for="Portfolio">{{ "SellPrice" | translate }}</label>
+          <div class="span_input">
+            <span class="symbol" *ngIf="showBookingSymbol">{{ symbol }}</span>
+            <input type="text" matInput formControlName="bookingCost" class="form-control" maxlength="35"
+              autocomplete="off" placeholder="{{ 'SellPrice' | translate }}"
+              (keyup)="calculateMarketPrice(portfolioType)"
+              [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }" (blur)="calculateBookingCost('sell')"
+              (keypress)="numberOnly($event)" />
           </div>
           <div *ngIf="submitted && f.bookingCost.errors" class="alert alert-dange">
-            <div *ngIf="f.bookingCost.required">{{ 'SellPriceisrequired' | translate }}</div>
+            <div *ngIf="f.bookingCost.required">
+              {{ "SellPriceisrequired" | translate }}
+            </div>
           </div>
         </div>
-         <div class="form-group" [ngClass]="showMarketSymbol ? 'marketValue':''">
-          <label for="Portfolio">{{ 'SellValue' | translate }}</label>
+        <div class="form-group" [ngClass]="showMarketSymbol ? 'marketValue' : ''">
+          <label for="Portfolio">{{ "SellValue" | translate }}</label>
           <div class="span_input">
-		  <span class="symbol" *ngIf="showMarketSymbol">{{symbol}}</span>	
-          <input
-            type="text"
-            formControlName="marketValue"
-            class="form-control"
-            placeholder="{{ 'SellValue' | translate }}"
-            autocomplete="off"
-            [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }"
-            (keypress)="numberOnly($event)"
-            readonly
-          />
+            <span class="symbol" *ngIf="showMarketSymbol">{{ symbol }}</span>
+            <input type="text" formControlName="marketValue" class="form-control"
+              placeholder="{{ 'SellValue' | translate }}" autocomplete="off"
+              [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }" (keypress)="numberOnly($event)"
+              readonly />
           </div>
           <div *ngIf="submitted && f.marketValue.errors" class="alert alert-dange">
-            <div *ngIf="f.marketValue.required">{{ 'SellValueisrequired' | translate }}</div>
+            <div *ngIf="f.marketValue.required">
+              {{ "SellValueisrequired" | translate }}
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio">
-            <i class="fa fa-plus"></i>{{ 'ConfirmSell' | translate }}
-          </button>
+          <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio"> <i
+              class="fa fa-plus"></i>{{ "ConfirmSell" | translate }} </button>
         </div>
       </form>
     </div>
@@ -571,17 +546,15 @@
 <div class="card-body">
   <ng-template #deleteInvestment let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title">{{ 'DeleteInvestment' | translate }}</h4>
-      <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <h4 class="modal-title">{{ "DeleteInvestment" | translate }}</h4>
+      <button type="button" class="btn btn-secondary close" (click)="c('Close click')"> <span
+          aria-hidden="true">&times;</span> </button>
     </div>
     <div class="modal-body">
-      <p>{{ 'AreyousuretoDelete?' | translate }}</p>
-      <a href="javascript:void(0);" class="btn btn-danger" (click)="DeleteInvestment()" style="margin-right: 10px;">{{
-        'Yes' | translate
-      }}</a>
-      <a href="javascript:void(0);" class="btn btn-success" (click)="c('Close click')">{{ 'No' | translate }}</a>
+      <p>{{ "AreyousuretoDelete?" | translate }}</p>
+      <a href="javascript:void(0);" class="btn btn-danger" (click)="DeleteInvestment()"
+        style="margin-right: 10px;">{{ "Yes" | translate }}</a>
+      <a href="javascript:void(0);" class="btn btn-success" (click)="c('Close click')">{{ "No" | translate }}</a>
     </div>
   </ng-template>
 </div>
@@ -589,77 +562,60 @@
 <div class="card-body">
   <ng-template #pricealert let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
+      <h4 class="modal-title">{{ "PriceAlert" | translate }}</h4>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-	  <h3>
-	     <span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}"  class="img-fluid"/></span>
-		{{ priceAlert.tickerName }}
-	  </h3>
+      <h3>
+        <span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}" class="img-fluid" /></span>
+        {{ priceAlert.tickerName }}
+      </h3>
       <form class="form-inline form_price" (submit)="setPriceAlert()">
-		<div class="form-group">
-          <label>{{ 'Condition' | translate }}</label>
+        <div class="form-group">
+          <label>{{ "Condition" | translate }}</label>
           <select class="form-control" name="compare" [(ngModel)]="priceAlert.compare" #compare="ngModel">
-            <option value=">">{{ 'GreaterThan' | translate }}</option>
-            <option value="<">{{ 'LessThan' | translate }}</option>
+            <option value=">">{{ "GreaterThan" | translate }}</option>
+            <option value="<">{{ "LessThan" | translate }}</option>
           </select>
         </div>
-		 <div class="form-group">
-          <label>{{ 'Currency' | translate }}</label>
-          <select
-            class="form-control"
-            (change)="ChangeCurrency()"
-            name="currentCurrency"
-            [(ngModel)]="priceAlert.currentCurrency"
-            #currentCurrency="ngModel"
-          >
-            <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }} </option>
+        <div class="form-group">
+          <label>{{ "Currency" | translate }}</label>
+          <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency"
+            [(ngModel)]="priceAlert.currentCurrency" #currentCurrency="ngModel">
+            <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}
+            </option>
           </select>
         </div>
         <div class="form-group target_price">
-          <label>{{ 'TargetPrice' | translate }}</label>
-		  <span>{{returnCurrSymbol(priceAlertCurrency)}}</span>
-          <input
-            class="form-control amount"
-            type="text"
-            name="amount"
-            [(ngModel)]="priceAlert.amount"
-            #amount="ngModel"
-            autocomplete="off"
-            (keypress)="numberOnly($event)"
-			maxlength="10"
-			(blur)="setTagetValueWith3Digit()"
-            (keyup)="checkTargetValidation()"
-          />
-          <div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
+          <label>{{ "TargetPrice" | translate }}</label>
+          <span>{{ returnCurrSymbol(priceAlertCurrency) }}</span>
+          <input class="form-control amount" type="text" name="amount" [(ngModel)]="priceAlert.amount" #amount="ngModel"
+            autocomplete="off" (keypress)="numberOnly($event)" maxlength="10" (blur)="setTagetValueWith3Digit()"
+            (keyup)="checkTargetValidation()" />
+          <div class="error danger" *ngIf="priceAlertError.amount">
+            {{ targetPriceisRequiredMsg }}
+          </div>
         </div>
         <div class="form-group">
-          <label>{{ 'ExpiryDate' | translate }}</label>
+          <label>{{ "ExpiryDate" | translate }}</label>
           <div class="input-group datepicker-input">
-            <input
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              [(ngModel)]="priceAlert.expiryDate"
-              ngbDatepicker
-              #d="ngbDatepicker"
-              readonly
-            />
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate"
+              ngbDatepicker #d="ngbDatepicker" readonly />
             <button class="input-group-addon" (click)="d.toggle()" type="button">
               <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
               <span class="fa fa-calendar"></span>
             </button>
-            <div class="error danger" *ngIf="priceAlertError.expiryDate">{{ 'ExpiryDateRequired!' | translate }}</div>
+            <div class="error danger" *ngIf="priceAlertError.expiryDate">
+              {{ "ExpiryDateRequired!" | translate }}
+            </div>
           </div>
         </div>
-        
-       
+
         <div class="form-group">
           <button class="btn btn-success" type="submit">
-            {{ 'Submit' | translate }}
+            {{ "Submit" | translate }}
           </button>
         </div>
       </form>

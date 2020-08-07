@@ -233,7 +233,6 @@ export class CommonService {
 
   /* Get Ticker Data By 3Party */
   getTicker1DDataListByType(chatSymbol, type, currency, limit, callback) {
-    debugger;
     this.responseItem = { data: {}, statusCode: 200 };
     let apiName = '';
     if (type.toLowerCase() === 'crypto' || type.toLowerCase() === 'cryptocurrency') {
@@ -299,6 +298,31 @@ export class CommonService {
       marketPriceAPI, currencyListAPI
     )
       .subscribe(data => {
+        try {
+          this.responseItem.data = data;
+        } catch (error) {
+          this.responseItem.data = { message: 'Something went wrong', status: false };
+          this.responseItem.statusCode = 403;
+        }
+        return callback(null, this.responseItem);
+      },
+        error => {
+          try {
+            this.responseItem.data = JSON.parse(error.error);
+          } catch (err) {
+            this.responseItem.data = { message: 'Something went wrong', status: false };
+          }
+          this.responseItem.statusCode = error.status;
+          return callback(null, this.responseItem);
+
+        });
+  }
+  getTickerFundamentals(symbol, callback) {
+    let apiName = '';
+    apiName = 'https://eodhistoricaldata.com/api/fundamentals/' + symbol;
+    apiName += '?api_token=5eaec3c477c806.71359499&fmt=json';
+    this.responseItem = { data: {}, statusCode: 200 };
+    this.globalService.callPostApi('auths/curlme', {url: apiName}, false).subscribe(data => {
         try {
           this.responseItem.data = data;
         } catch (error) {

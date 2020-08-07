@@ -1,106 +1,90 @@
 <div class="top-title enquiry search_market">
-  <div class="row">
-    <div class="col-md-12">
-      <h2>
-        {{ 'SearchMarkets' | translate
-        }}<a href="javascript:" onclick="history.go(-1); return false;" title="{{ 'Back' | translate }}" class="back_arrow">
-          <span>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                {{ 'SearchMarkets' | translate }}
+                <a href="javascript:" onclick="history.go(-1); return false;" title="{{ 'Back' | translate }}" class="back_arrow">
+                    <span>
             <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
           </span>
-        </a>
-      </h2>
+                </a>
+            </h2>
+        </div>
     </div>
-  </div>
-  <div class="row stock_list">
-    <div class="col-lg-5">
-      <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:" (click)="toggleActive(1)" [ngClass]="activeTab ? '' : 'active'">{{
+    <div class="row stock_list">
+        <div class="col-lg-5">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:" (click)="toggleActive(1)" [ngClass]="activeTab ? '' : 'active'">{{
             'NewStocks' | translate
           }}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javascript:" (click)="toggleActive(2)" [ngClass]="activeTab ? 'active' : ''">{{
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:" (click)="toggleActive(2)" [ngClass]="activeTab ? 'active' : ''">{{
             'Cryptocurrency' | translate
           }}</a>
-        </li>
-      </ul>
-      <div class="filters">
-        <div class="form-group ticker_search">
-          <label>{{ 'SearchbyTicker' | translate }}</label>
-          <div class="search_filt">
-            <input
-              class="form-control"
-              type="text"
-			  autocomplete="off"
-              placeholder="{{ 'Entertickerhere' | translate }}"
-              name="keywords"
-              (change)="filterExchangeItem()"
-			  (keyup)="checkAndRemoveList()"
-              [(ngModel)]="model.keywords"
-              #keywords="ngModel"
-            />
-            <button class="btn btn-success" (click)="filterExchangeItem()" type="submit"><i class="fa fa-search"></i></button>
-          </div>
-        </div>
-        <div class="form-group currency_filt">
-          <label>{{ 'Currency' | translate }}</label>
-          <select
-            class="form-control"
-            (change)="ChangeCurrency()"
-            name="currentCurrency"
-            [(ngModel)]="model.currentCurrency"
-            #currentCurrency="ngModel"
-          >
+                </li>
+            </ul>
+            <div class="filters">
+                <div class="form-group ticker_search">
+                    <label>{{ 'SearchbyTicker' | translate }}</label>
+                    <div class="search_filt">
+                        <input class="form-control" type="text" autocomplete="off" placeholder="{{ 'Entertickerhere' | translate }}" name="keywords" (change)="filterExchangeItem()" (keyup)="checkAndRemoveList()" [(ngModel)]="model.keywords" #keywords="ngModel" />
+                        <button class="btn btn-success" (click)="filterExchangeItem()" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="form-group currency_filt">
+                    <label>{{ 'Currency' | translate }}</label>
+                    <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency" [(ngModel)]="model.currentCurrency" #currentCurrency="ngModel">
             <option value="">{{ 'SelectCurrency' | translate }}</option>
             <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}</option>
           </select>
-        </div>
-        <div class="pop_filters">
-          <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img src="assets/images/filter.png"/></a>
-          <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
-            <div class="title_div"><h2>{{ 'Filters' | translate }}</h2>
-            <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+                </div>
+                <div class="pop_filters">
+                    <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img src="assets/images/filter.png" /></a>
+                    <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
+                        <div class="title_div">
+                            <h2>{{ 'SearchMarkets' | translate }}</h2>
+                            <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+                        </div>
+                        <div class="form-group" *ngIf="model.stockType == 'STOCK'">
+                            <label>{{ 'SelectMarket' | translate }}</label>
+                            <select class="form-control" name="exchangeId" [(ngModel)]="model.exchangeId" #exchangeId="ngModel">
+                              <option value="">{{ 'SelectMarket' | translate }}</option>
+                              <option value="{{ exchange.exchangeId }}" *ngFor="let exchange of stockExchangeType">{{ exchange.exchangeName }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'range' | translate }}</label>
+                            <select class="form-control" name="range" [(ngModel)]="model.range" #range="ngModel">
+                              <option value="10" >10</option>
+                              <option value="20" >20</option>
+                              <option value="50" >50 </option>
+                              <option value="100" >100</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'SelectCriteria' | translate }}</label>
+                            <select class="form-control" name="searchCriteria" [(ngModel)]="model.searchCriteria" #searchCriteria="ngModel">
+                              <option value="">{{ 'SelectCriteria' | translate }}</option>
+                              <option value="{{ criteria.key }}" *ngFor="let criteria of criteriaFilter">{{ criteria.value }}</option>
+                            </select>
+                        </div>
+
+                        <div class="actions_to">
+                            <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-			<div class="form-group" *ngIf="model.stockType == 'STOCK'">
-              <label>{{ 'StockMarket' | translate }}</label>
-              <select
-                class="form-control"
-                name="exchangeId"                
-                [(ngModel)]="model.exchangeId"
-                #exchangeId="ngModel"
-              >
-                <option value="">{{ 'SelectMarket' | translate }}</option>
-                <option value="{{ exchange.exchangeId }}" *ngFor="let exchange of stockExchangeType">{{ exchange.exchangeName }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>{{ 'SelectCriteria' | translate }}</label>
-              <select
-                class="form-control"
-                name="searchCriteria"                
-                [(ngModel)]="model.searchCriteria"
-                #searchCriteria="ngModel"
-              >
-                <option value="">{{ 'SelectCriteria' | translate }}</option>
-                <option value="{{ criteria.key }}" *ngFor="let criteria of criteriaFilter">{{ criteria.value }}</option>
-              </select>
-            </div>
-            
-            <div class="actions_to">              
-              <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="advr_big">
+            <!-- <div class="advr_big">
         <img src="assets/images/advrx270.png" class="img-fluid" />
       </div> -->
-    </div>
-    <div class="col-lg-7">
-      <div class="stats_table">
-        <!-- <div class="head_div">
+        </div>
+        <div class="col-lg-7">
+            <div class="stats_table">
+                <!-- <div class="head_div">
           <ul class="stats_head">
             <li>{{ 'Ticker' | translate }}</li>
             <li>{{ 'MarketPrice' | translate }}</li>
@@ -109,30 +93,29 @@
             <li>{{ 'Actions' | translate }}</li>
           </ul>
         </div> -->
-        <div class="body_div">
-          <ul class="stats_body searchlist" *ngFor="let item of itemList; let i = index">
-            <li>
-              <span class="ticker_img" style="max-width:30px">
+                <div class="body_div">
+                    <ul class="stats_body searchlist" *ngFor="let item of itemList; let i = index">
+                        <li>
+                            <span class="ticker_img" style="max-width:30px">
                 <img [src]="item.tickerUrl" alt="" style="max-width:100%" onError="this.src='assets/images/logo.png';"
                   alt="ticker image" />
               </span>
-              <div>
-                <h5>{{item.tickerName}}</h5>
-                <h6>{{ item.symbol }}</h6>
-              </div>             
-              
-              </li>
-            <li>
-              <h5>{{ getCurrencyValue(item) | currency: returnCurrSymbol(model.currentCurrency):'symbol':'1.3-3' }}</h5>
-             <h6>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</h6>
-            
-            </li>
-            {{
-              getCurrencyMarketValue(item, 'marketCap')
-            }}
-			<!-- <li>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li> -->
-            <li class="" [ngClass]="item.changePct == 0 ? 'zeroactive' : item.changePct > 0 ? 'active' : 'inactive'">
-              <span>
+                            <div>
+                                <h5>{{item.tickerName}}</h5>
+                                <h6>{{ item.symbol }}</h6>
+                            </div>
+
+                        </li>
+                        <li>
+                            <h5>{{ getCurrencyValue(item) | currency: returnCurrSymbol(model.currentCurrency):'symbol':'1.3-3' }}</h5>
+                            <h6>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount
+                                | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</h6>
+
+                        </li>
+                        {{ getCurrencyMarketValue(item, 'marketCap') }}
+                        <!-- <li>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(model.currentCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li> -->
+                        <li class="" [ngClass]="item.changePct == 0 ? 'zeroactive' : item.changePct > 0 ? 'active' : 'inactive'">
+                            <span>
                 <i class="fa fa-caret-up" aria-hidden="true" *ngIf="item.changePct > 0"></i>
                 <i class="fa fa-caret-down" aria-hidden="true" *ngIf="item.changePct < 0"></i>
                 <i class="fa fa-caret-left" aria-hidden="true" *ngIf="item.changePct == 0"></i>
@@ -194,71 +177,47 @@
       <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
       <button type="button" class="btn btn-secondary" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <h3><span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}" class="img-fluid" /></span>{{ priceAlert.tickerName }}</h3>
-      <form class="form-inline form_price" (submit)="setPriceAlert()">
-        <div class="form-group">
-          <label>{{ 'Condition' | translate }}</label>
-          <select class="form-control" name="compare" [(ngModel)]="priceAlert.compare" #compare="ngModel">
+                            </button>
+                </div>
+                <div class="modal-body">
+                    <h3><span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}" class="img-fluid" /></span>{{ priceAlert.tickerName }}</h3>
+                    <form class="form-inline form_price" (submit)="setPriceAlert()">
+                        <div class="form-group">
+                            <label>{{ 'Condition' | translate }}</label>
+                            <select class="form-control" name="compare" [(ngModel)]="priceAlert.compare" #compare="ngModel">
             <option value=">">{{ 'GreaterThan' | translate }}</option>
             <option value="<">{{ 'LessThan' | translate }}</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label>{{ 'Currency' | translate }}</label>
-          <select
-            class="form-control"
-            (change)="ChangeCurrency()"
-            name="currentCurrency"
-            [(ngModel)]="priceAlert.currentCurrency"
-            #currentCurrency="ngModel"
-          >
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Currency' | translate }}</label>
+                            <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency" [(ngModel)]="priceAlert.currentCurrency" #currentCurrency="ngModel">
             <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }} </option>
           </select>
-        </div>
-        <div class="form-group">
-          <label>{{ 'TargetPrice' | translate }}</label>
-          <input
-            class="form-control amount"
-            type="text"
-            name="amount"
-            [(ngModel)]="priceAlert.amount"
-            #amount="ngModel"
-            autocomplete="off"
-            (keypress)="numberOnly($event)"
-            maxlength="10"
-            (keyup)="checkTargetValidation()"
-          />
-          <div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
-        </div>
-        <div class="form-group">
-          <label>{{ 'ExpiryDate' | translate }}</label>
-          <div class="input-group datepicker-input">
-            <input
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              [(ngModel)]="priceAlert.expiryDate"
-              ngbDatepicker
-              #d="ngbDatepicker"
-              readonly
-            />
-            <button class="input-group-addon" (click)="d.toggle()" type="button">
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'TargetPrice' | translate }}</label>
+                            <input class="form-control amount" type="text" name="amount" [(ngModel)]="priceAlert.amount" #amount="ngModel" autocomplete="off" (keypress)="numberOnly($event)" maxlength="10" (keyup)="checkTargetValidation()" />
+                            <div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'ExpiryDate' | translate }}</label>
+                            <div class="input-group datepicker-input">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate" ngbDatepicker #d="ngbDatepicker" readonly />
+                                <button class="input-group-addon" (click)="d.toggle()" type="button">
               <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
               <span class="fa fa-calendar"></span>
             </button>
-            <div class="error danger" *ngIf="priceAlertError.expiryDate">{{ expiryDateisRequiredMsg }}</div>
-          </div>
-        </div>
+                                <div class="error danger" *ngIf="priceAlertError.expiryDate">{{ expiryDateisRequiredMsg }}</div>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-          <button class="btn btn-success" type="submit">
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">
             {{ 'Submit' | translate }}
           </button>
-        </div>
-      </form>
-    </div>
-  </ng-template>
-</div>
+                        </div>
+                    </form>
+                </div>
+                </ng-template>
+            </div>

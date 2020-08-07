@@ -1,409 +1,485 @@
 <div class="top-title enquiry ticker_detail">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 col-lg-6">
-        <h2>
-          <b>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <h2>
+                    <b>
             <img src="{{ placeholderImageUrl }}" class="img-fluid" style="max-width: 80px"
               *ngIf="tickerListData.tickerUrl == undefined || tickerListData.tickerUrl.length == 0" />
             <img src="{{ tickerListData.tickerUrl }}" class="img-fluid" style="max-width: 80px"
               *ngIf="tickerListData.tickerUrl != undefined && tickerListData.tickerUrl.length > 0" />
             <span>{{ tickerListData.tickerName}}</span>
           </b>
-          <strong>{{(getCurrencyValue(tickerListData.price,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.price,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.price,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.price,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}</strong>
-          <!--<strong>{{ tickerListData.price | currency: returnCurrSymbol(watchListCurrency):'symbol':'1.3-3' }}</strong>-->
-        </h2>
-      </div>
-      <div class="col-md-12 col-lg-6">
-        <div class="buttons_grp">
-          <button style="margin-left: 0" [routerLink]="['/market-search']" class="search_mar" title="{{ 'SearchMarkets' | translate }}">
-            <span style="margin-right: 5px"> <img src="assets/images/search-market-icon.png"
-                alt="search-market-icon" /></span>
-            {{ 'SearchMarkets' | translate }}
-          </button>
-          <select class="btn custom-btn" (change)="ChangeCurrency()" name="currentCurrency"
-            [(ngModel)]="model.currentCurrency" #currentCurrency="ngModel">
-            <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}
-            </option>
-          </select>
-          <button *ngIf="riskEnditiorStatus && this.profileInfo.isProAccount" (click)="openRisk(ic_risk)" title="{{ 'Risk' | translate }}"><img
-              src="assets/images/ticksetting.png" alt="Risk indicators setting" /></button>
-          <button (click)="addToWatchList()" [ngClass]="[watchListId == 0 ? 'addToWlist' : 'alreadyAdded']" title="{{ 'Watchlist' | translate }}"><i
-              class="fa fa-star" aria-hidden="true"></i></button>
-          <button (click)="addPricePrediction(addpriceprediction)" [ngClass]="[isPredictionLocked == 0 ? '' : 'alreadyAdded']" title="{{ 'AddPricePrediction' | translate }}"  *ngIf="this.profileInfo.isProAccount"><img src="../../assets/images/target.png">
-                </button>
-          <button (click)="open(content)"><i class="fa fa-bell" aria-hidden="true" title="{{ 'PriceAlert' | translate }}"></i></button>
-          <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}"
-            onclick="history.go(-1); return false;">
-            <span>
-              <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
-            </span>
-          </a>
+                    <strong>{{(getCurrencyValue(tickerListData.price,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.price,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.price,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.price,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}</strong>
+                    <!--<strong>{{ tickerListData.price | currency: returnCurrSymbol(watchListCurrency):'symbol':'1.3-3' }}</strong>-->
+                </h2>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="buttons_grp">
+                    <button style="margin-left: 0" [routerLink]="['/market-search']" class="search_mar" title="{{ 'SearchMarkets' | translate }}">
+                        <span style="margin-right: 5px"> <img src="assets/images/search-market-icon.png"
+                            alt="search-market-icon" /></span>
+                        {{ 'SearchMarkets' | translate }}
+                    </button>
+                    <select class="btn custom-btn" (change)="ChangeCurrency()" name="currentCurrency" [(ngModel)]="model.currentCurrency" #currentCurrency="ngModel">
+                        <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}
+                        </option>
+                    </select>
+                    <button *ngIf="riskEnditiorStatus && this.profileInfo.isProAccount" (click)="openRisk(ic_risk)" title="{{ 'Risk' | translate }}">
+                        <img src="assets/images/ticksetting.png" alt="Risk indicators setting" />
+                    </button>
+                    <button (click)="addToWatchList()" [ngClass]="[watchListId == 0 ? 'addToWlist' : 'alreadyAdded']" title="{{ 'Watchlist' | translate }}">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    </button>
+                    <button (click)="addPricePrediction(addpriceprediction)" [ngClass]="[isPredictionLocked == 0 ? '' : 'alreadyAdded']" title="{{ 'AddPricePrediction' | translate }}" *ngIf="this.profileInfo.isProAccount"><img src="../../assets/images/target.png">
+                    </button>
+                    <button (click)="open(content)"><i class="fa fa-bell" aria-hidden="true" title="{{ 'PriceAlert' | translate }}"></i></button>
+                    <button *ngIf="chatboardData" [ngClass]="[this.profileInfo.isProAccount ? '' : 'alreadyAdded']" (click)="goToChatDetails(this.profileInfo.isProAccount, chatboardData.chatBoardId,chatboardData.name,chatboardData.symbol,chatboardData.tickerUrl,getCurrencyValue(chatboardData),chatboardData.currency,chatboardData.favouriteId,chatboardData.change_pct,chatboardData.volume);"
+                        title="{{ 'Chat' | translate }}"><i class="fa fa-comments" aria-hidden="true"></i></button>
+                    <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}" onclick="history.go(-1); return false;">
+                        <span> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> </span>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <!--<div class="candle_stick">
-<img src="assets/images/graph.png" alt="graph" class="img-fluid">
-</div>-->
-        <div class="candle_stick">
-          <ul>
-            <li [ngClass]="activeTab && indMap == 0 ? 'active' : ''" (click)="getChartData(1, 'D', 0)">
-              <input type="button" value="1D" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 1 ? 'active' : ''" (click)="getChartData(1, 'M', 1)">
-              <input type="button" value="1M" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 2 ? 'active' : ''" (click)="getChartData(3, 'M', 2)">
-              <input type="button" value="3M" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 3 ? 'active' : ''" (click)="getChartData(6, 'M', 3)">
-              <input type="button" value="6M" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 4 ? 'active' : ''" (click)="getChartData(1, 'Y', 4)">
-              <input type="button" value="1Y" />
-            </li>
-            <li [ngClass]="activeTab && indMap == 5 ? 'active' : ''" (click)="getChartData(2, 'Y', 5)">
-              <input type="button" value="2Y" />
-            </li>
-          </ul>
-          <!-- [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'" -->
-          <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
-          <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
-          <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
-		  <div id="smachart" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
-      <div id="candleSma" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
-        </div>
-        <!-- <div class="main-checkbox" *ngIf="this.profileInfo.isProAccount">
-<input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
-<label for="graphCheckbox" class="checkbox-custom-label">{{ CandlestickText }}</label>
-</div> -->
-        <div class="pop_filters book_cost filter_modal_popup">
-          <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}"><img
-              src="assets/images/search-market-icon.png" /></a>
-          <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
-            <div class="title_div">
-              <h2>{{ 'GraphAnaTitle' | translate }}</h2>
-              <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="candle_stick">
+                    <ul>
+                        <li [ngClass]="activeTab && indMap == 0 ? 'active' : ''" (click)="getChartData(1, 'D', 0)">
+                            <input type="button" value="1D" />
+                        </li>
+                        <li [ngClass]="activeTab && indMap == 1 ? 'active' : ''" (click)="getChartData(1, 'M', 1)">
+                            <input type="button" value="1M" />
+                        </li>
+                        <li [ngClass]="activeTab && indMap == 2 ? 'active' : ''" (click)="getChartData(3, 'M', 2)">
+                            <input type="button" value="3M" />
+                        </li>
+                        <li [ngClass]="activeTab && indMap == 3 ? 'active' : ''" (click)="getChartData(6, 'M', 3)">
+                            <input type="button" value="6M" />
+                        </li>
+                        <li [ngClass]="activeTab && indMap == 4 ? 'active' : ''" (click)="getChartData(1, 'Y', 4)">
+                            <input type="button" value="1Y" />
+                        </li>
+                        <li [ngClass]="activeTab && indMap == 5 ? 'active' : ''" (click)="getChartData(2, 'Y', 5)">
+                            <input type="button" value="2Y" />
+                        </li>
+                    </ul>
+                    <div id="chartdiv" style="display:flex" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
+                    <div id="candlechart" style="display:none" [ngClass]="(chartActionType !='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
+                    <div id="volumechart" style="display:none" [ngClass]="(chartActionType =='graphDisplay')?'lowOpacity':'highOpacity'">{{ tickerDataText }}</div>
+                    <div id="smachart" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
+                    <div id="candleSma" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
+                </div>
+                <div class="pop_filters book_cost filter_modal_popup">
+                    <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}"><img src="assets/images/search-market-icon.png" /></a>
+                    <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
+                        <div class="title_div">
+                            <h2>{{ 'GraphAnaTitle' | translate }}</h2>
+                            <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'GraphDisplay' | translate }}</label>
+                            <select class="form-control" name="graphDisplay" (change)="setChartActionType('graphDisplay');" [(ngModel)]="filterModel.graphDisplay" #graphDisplay="ngModel">
+                                <option value="0">Market Price</option>
+                                <option value="1">Candlestick</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'GraphAnalytics' | translate }}</label>
+                            <select class="form-control" name="searchCriteria" (change)="setChartActionType('searchCriteria');" [(ngModel)]="filterModel.searchCriteria" #searchCriteria="ngModel">
+                                <option value="0">None</option>
+                                <option value="50" *ngIf="shortingTab != '1D'">50-day SMA </option>
+                                <option value="100" *ngIf="shortingTab != '1D'">100-day SMA </option>
+                                <option value="200" *ngIf="shortingTab != '1D'">200-day SMA </option>
+                                <option value="24">Volume </option>
+                            </select>
+                        </div>
+                        <div class="actions_to">
+                            <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-              <label>{{ 'GraphDisplay' | translate }}</label>
-              <select class="form-control" name="graphDisplay" (change) ="setChartActionType('graphDisplay');" [(ngModel)]="filterModel.graphDisplay"
-                #graphDisplay="ngModel">
-                <option value="0">Market Price</option>
-                <option value="1">Candlestick</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>{{ 'GraphAnalytics' | translate }}</label>
-              <select class="form-control" name="searchCriteria" (change) ="setChartActionType('searchCriteria');" [(ngModel)]="filterModel.searchCriteria"
-                #searchCriteria="ngModel">
-                <option value="0">None</option>
-                <option value="50" *ngIf="shortingTab != '1D'">50-day SMA </option>
-                <option value="100" *ngIf="shortingTab != '1D'">100-day SMA </option>
-                <option value="200" *ngIf="shortingTab != '1D'">200-day SMA </option>
-                <option value="24">Volume </option>
-              </select>
-            </div>
-            <div class="actions_to">
-              <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <ul class="stats_list {{ processingText }}">
-          <li>
-            <img src="assets/images/supply.png" alt="supply" />
-            <h3>{{ getCurrencyMarketValueOld(tickerListData.supply) }}</h3>
-            <h4>{{ 'Supply' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/24h_change.png" alt="24h_change" *ngIf="tickerListData.changePct < 0" />
-            <img src="assets/images/24h_change_green.png" alt="24h_change" *ngIf="tickerListData.changePct >= 0" />
-            <h3>{{ tickerListData.changePct | number: '1.2-2' }}%</h3>
-            <h4>{{ '24HChange' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/24h_high.png" alt="24h_high" />
-            <h3>
-              {{(getCurrencyValue(tickerListData.High24,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.High24,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.High24,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.High24,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
-            </h3>
-            <h4>{{ '24HHIGH' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/52W_high.png" alt="52W_high" />
-            <h3>
-              {{(getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
-            </h3>
+            <div class="col-lg-6">
+                <div class="custom-tab-content {{ processingText }}">
+                    <ul class="stats_list" *ngIf="activeCustomTab === 0">
+                        <li>
+                            <img src="assets/images/supply.png" alt="supply" />
+                            <h3>{{ getCurrencyMarketValueOld(tickerListData.supply) }}</h3>
+                            <h4>{{ 'Supply' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/24h_change.png" alt="24h_change" *ngIf="tickerListData.changePct < 0" />
+                            <img src="assets/images/24h_change_green.png" alt="24h_change" *ngIf="tickerListData.changePct >= 0" />
+                            <h3>{{ tickerListData.changePct | number: '1.2-2' }}%</h3>
+                            <h4>{{ '24HChange' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/24h_high.png" alt="24h_high" />
+                            <h3>
+                                {{(getCurrencyValue(tickerListData.High24,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.High24,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.High24,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.High24,tickerListData.currency,false)
+                                | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
+                            </h3>
+                            <h4>{{ '24HHIGH' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/52W_high.png" alt="52W_high" />
+                            <h3>
+                                {{(getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.WHigh52,tickerListData.currency,false)
+                                | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
+                            </h3>
 
-            <h4>{{ '52W HIGH' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/market_cap.png" alt="market_cap" />
-            {{getCurrencyMarketValue(tickerListData.marketCap,tickerListData.currency,'marketCap')}}
-            <h3>
-              {{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? '0' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}
-            </h3>
-            <!--<h3>{{ marketCapData | currency: returnCurrSymbol(watchListCurrency):'symbol':'1.2-2' }}{{ currencyType }}</h3>-->
-            <h4>{{ 'MarketCap' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/24h_vol.png" alt="24h_vol" />
-            <h3>{{getCurrencyMarketValueOld(tickerListData.volume)}}</h3>
+                            <h4>{{ '52W HIGH' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/market_cap.png" alt="market_cap" /> {{getCurrencyMarketValue(tickerListData.marketCap,tickerListData.currency,'marketCap')}}
+                            <h3>
+                                {{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? '0' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount
+                                | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}
+                            </h3>
+                            <!--<h3>{{ marketCapData | currency: returnCurrSymbol(watchListCurrency):'symbol':'1.2-2' }}{{ currencyType }}</h3>-->
+                            <h4>{{ 'MarketCap' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/24h_vol.png" alt="24h_vol" />
+                            <h3>{{getCurrencyMarketValueOld(tickerListData.volume)}}</h3>
 
-            <h4>{{ '24HVolume' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/24h_low.png" alt="24h_change" />
-            <h3>
-              {{(getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.Low24,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
-            </h3>
-            <h4>{{ '24HLOW' | translate }}</h4>
-          </li>
-          <li>
-            <img src="assets/images/52W_low.png" alt="52W_low" />
-            <h3>
-              {{(getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false) | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
-            </h3>
-            <h4>{{ '52W LOW' | translate }}</h4>
-          </li>
-        </ul>
-        <div class="data_fatch">
-          <div class="loader"><i></i><i></i><i></i><i></i><i></i></div>
+                            <h4>{{ '24HVolume' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/24h_low.png" alt="24h_change" />
+                            <h3>
+                                {{(getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.Low24,tickerListData.currency,false)
+                                | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
+                            </h3>
+                            <h4>{{ '24HLOW' | translate }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/52W_low.png" alt="52W_low" />
+                            <h3>
+                                {{(getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.WLow52,tickerListData.currency,false)
+                                | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.3-3')}}
+                            </h3>
+                            <h4>{{ '52W LOW' | translate }}</h4>
+                        </li>
+                    </ul>
+                    <div class="stats_list fundamental-desc" *ngIf="activeCustomTab === 1">
+                        <div class="row p-3">
+                            <div class="col-md-3">
+                                <b>Sector :</b>
+                            </div>
+                            <div class="col-md-9">
+                                <span>{{ fundamentalsData.General.Sector || '' }}</span>
+                            </div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col-md-3">
+                                <b>Industry :</b>
+                            </div>
+                            <div class="col-md-9">
+                                <span>{{ fundamentalsData.General.Industry || '' }}</span>
+                            </div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col-md-3">
+                                <b>Description :</b>
+                            </div>
+                            <div class="col-md-9">
+                                <span>
+                                    {{fundamentalDesc}}
+                                    <a href="javascript:" class="SeeMore"  *ngIf="fundamentalsData.General.Description.length>50" (click)="showMore()"> {{showLess_More}}</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col-md-3">
+                                <b>Address :</b>
+                            </div>
+                            <div class="col-md-9">
+                                <span>{{ fundamentalsData.General.Address || '' }}</span>
+                            </div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col-md-3">
+                                <b>Officers :</b>
+                            </div>
+                            <div class="col-md-9">
+                                <span *ngFor="let officer of fundamentalsOfficers">{{ officer.Name + ' ( ' + officer.Title + ' ), ' || '' }}<br/></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="stats_list" *ngIf="activeCustomTab === 2">
+                        <li>
+                            <img src="assets/images/fscalyearend.png" alt="Fiscal Year End" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The term ‘fiscal year-end’ refers to the completion of a one-year or 12-month accounting period. The fiscal year is the period used for calculating annual financial statements. A company's fiscal year may differ from the calendar year, and may not close on December 31 due to the nature of a company's needs."></i>
+                            <h3>{{ fundamentalsData.General.FiscalYearEnd || '' }}</h3>
+                            <h4>{{ 'Fiscal Year End' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/revenue.png" alt="Revenue" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="TTM revenue refers to a company's revenue over the trailing twelve months (TTM) of operations. This financial measure is sometimes overlooked by buyers who are focused more on a company's profitability and ability to generate EBITDA."></i>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.RevenueTTM) || '' }}</h3>
+                            <h4>{{ 'Revenue (12M)' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/ebitda.png" alt="EBITDA" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="A company's earnings before interest, taxes, depreciation, and amortization is an accounting measure calculated using a company's earnings, before interest expenses, taxes, depreciation, and amortisation are subtracted, as a proxy for a company's current operating profitability."></i>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.EBITDA) || '' }}</h3>
+                            <h4>{{ 'EBITDA' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/grossprofit.png" alt="Gross Profit" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The TTM gross profit is the trailing 12 months of profit over total revenues for a company. The trailing 12 months' gross profit allows owners and investors to observe any recent profit trends. It is most useful when the TTM does not coincide with the fiscal year."></i>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.GrossProfitTTM) || '' }}</h3>
+
+                            <h4>{{ 'Gross Profit (12M)' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/profitmargin.png" alt="Profit Margin" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The profit margin is a ratio of a company's profit (sales minus all expenses) divided by its revenue. The profit margin ratio compares profit to sales and tells you how well the company is handling its finances overall. It's always expressed as a percentage."></i>
+                            <h3>{{ getNumberInPercentage(fundamentalsData.Highlights.ProfitMargin) || '0'}}%</h3>
+                            <h4>{{ 'Profit Margin' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/peratio.png" alt="PE Ratio" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The price-earnings ratio, also known as P/E ratio, P/E, or PER, is the ratio of a company's share price to the company's earnings per share. The ratio is used for valuing companies and to find out whether they are overvalued or undervalued."></i>
+                            <h3>{{ fundamentalsData.Highlights.PERatio | number:'1.1-3' || ''}}</h3>
+
+                            <h4>{{ 'PE Ratio' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/dividendyield.png" alt="Dividend Yield" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The dividend yield of a share is the dividend per share, divided by the price per share. It is also a company's total annual dividend payments divided by its market capitalisation, assuming the number of shares is constant. It is often expressed as a percentage. "></i>
+                            <h3>{{ getNumberInPercentage(fundamentalsData.Highlights.DividendYield) || '0'}}%</h3>
+                            <h4>{{ 'Dividend Yield' }}</h4>
+                        </li>
+                        <li>
+                            <img src="assets/images/earningspershare.png" alt="Earnings Per Share" />
+                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="Earnings per share (EPS) is calculated as a company's profit divided by the outstanding shares of its common stock. It is common for a company to report EPS that is adjusted for extraordinary items and potential share dilution. The higher a company's EPS, the more profitable it is considered."></i>
+                            <h3>{{ fundamentalsData.Highlights.EarningsShare | number:'1.1-3' || ''}}</h3>
+                            <h4>{{ 'Earnings Per Share' }}</h4>
+                        </li>
+                    </ul>
+                    <div class="data_fatch">
+                        <div class="loader"><i></i><i></i><i></i><i></i><i></i></div>
+                    </div>
+                </div>
+                <div class="custom-tab-items" *ngIf="fundamentalsData">
+                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab == 0" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                    <p>{{customTabs[activeCustomTab]}}</p>
+                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab === (customTabs.length - 1)" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- <div class="col-lg-12">
-<div class="advr_hori">
-<img src="assets/images/advr1.png" alt="advr" class="img-fluid" />
-</div>
-</div> -->
     </div>
-  </div>
 </div>
 
 <!-- add_assets modal-->
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header alert_header">
-    <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
-    <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
+    <div class="modal-header alert_header">
+        <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
+        <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="modal-body">
-    <h3>
-      <span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}" class="img-fluid" /></span>
-      {{ priceAlert.tickerName }}
-    </h3>
-    <form class="form-inline form_price filters" (submit)="setPriceAlert()">
-      <div class="form-group">
-        <label>{{ 'Condition' | translate }}</label>
-        <select class="form-control" name="compare" [(ngModel)]="priceAlert.compare" #compare="ngModel">
+    </div>
+    <div class="modal-body">
+        <h3>
+            <span class="ticker_img"><img src="{{ priceAlert.tickerIcon }}" class="img-fluid" /></span> {{ priceAlert.tickerName }}
+        </h3>
+        <form class="form-inline form_price filters" (submit)="setPriceAlert()">
+            <div class="form-group">
+                <label>{{ 'Condition' | translate }}</label>
+                <select class="form-control" name="compare" [(ngModel)]="priceAlert.compare" #compare="ngModel">
           <option value=">">{{ 'GreaterThan' | translate }}</option>
           <option value="<">{{ 'LessThan' | translate }}</option>
         </select>
-      </div>
-      <div class="form-group">
-        <label>{{ 'Currency' | translate }}</label>
-        <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency"
-          [(ngModel)]="priceAlert.currentCurrency" #currentCurrency="ngModel">
+            </div>
+            <div class="form-group">
+                <label>{{ 'Currency' | translate }}</label>
+                <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency" [(ngModel)]="priceAlert.currentCurrency" #currentCurrency="ngModel">
           <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}
           </option>
         </select>
-      </div>
-      <div class="form-group">
-        <label>{{ 'TargetPrice' | translate }}</label>
-        <input class="form-control amount" type="text" name="amount" [(ngModel)]="priceAlert.amount" #amount="ngModel"
-          autocomplete="off" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()"
-          (keypress)="numberOnly($event)" />
-        <div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
-      </div>
-      <div class="form-group">
-        <label>{{ 'ExpiryDate' | translate }}</label>
-        <div class="input-group datepicker-input">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate"
-            ngbDatepicker #d="ngbDatepicker" readonly />
-          <button class="input-group-addon" (click)="d.toggle()" type="button">
+            </div>
+            <div class="form-group">
+                <label>{{ 'TargetPrice' | translate }}</label>
+                <input class="form-control amount" type="text" name="amount" [(ngModel)]="priceAlert.amount" #amount="ngModel" autocomplete="off" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" (keypress)="numberOnly($event)" />
+                <div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
+            </div>
+            <div class="form-group">
+                <label>{{ 'ExpiryDate' | translate }}</label>
+                <div class="input-group datepicker-input">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate" ngbDatepicker #d="ngbDatepicker" readonly />
+                    <button class="input-group-addon" (click)="d.toggle()" type="button">
             <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
             <span class="fa fa-calendar"></span>
           </button>
-          <div class="error danger" *ngIf="priceAlertError.expiryDate">{{ 'ExpiryDateRequired!' | translate }}</div>
-        </div>
-      </div>
+                    <div class="error danger" *ngIf="priceAlertError.expiryDate">{{ 'ExpiryDateRequired!' | translate }}</div>
+                </div>
+            </div>
 
-      <div class="form-group">
-        <button class="btn btn-success" type="submit">
+            <div class="form-group">
+                <button class="btn btn-success" type="submit">
           {{ 'Submit' | translate }}
         </button>
-      </div>
-    </form>
-  </div>
+            </div>
+        </form>
+    </div>
 </ng-template>
+<!-- price prediction modal-->
 <ng-template #addpriceprediction let-c="close" let-d="dismiss">
-  <div class="modal-header alert_header">
-    <h4 class="modal-title">{{ 'pricePrediction' | translate }}</h4>
-    <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
+    <div class="modal-header alert_header">
+        <h4 class="modal-title">{{ 'pricePrediction' | translate }}</h4>
+        <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="modal-body">
-    <h3>
-      <span class="ticker_img"><img src="{{ predictionForm.tickerIcon }}" class="img-fluid" /></span>
-      {{ predictionForm.tickerName }}
-    </h3>
-    <form class="form-inline form_price filters" (submit)="setPricePrediction()">
-      <div class="form-group">
-        <label>{{ 'Currency' | translate }}</label>
-        <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency"
-          [(ngModel)]="predictionForm.currentCurrency" #currentCurrency="ngModel">
+    </div>
+    <div class="modal-body">
+        <h3>
+            <span class="ticker_img"><img src="{{ predictionForm.tickerIcon }}" class="img-fluid" /></span> {{ predictionForm.tickerName }}
+        </h3>
+        <form class="form-inline form_price filters" (submit)="setPricePrediction()">
+            <div class="form-group">
+                <label>{{ 'Currency' | translate }}</label>
+                <select class="form-control" (change)="ChangeCurrency()" name="currentCurrency" [(ngModel)]="predictionForm.currentCurrency" #currentCurrency="ngModel">
           <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}
           </option>
         </select>
-      </div>
-      <div class="form-group">
-        <label>{{ 'predictedMarketPrice' | translate }}</label>
-        <input class="form-control amount" type="text" name="amount" [(ngModel)]="predictionForm.amount" #amount="ngModel"
-          autocomplete="off" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()"
-          (keypress)="numberOnly($event)" />
-        <div class="error danger" *ngIf="predictionFormError.amount">{{ priceRequired }}</div>
-      </div>
-      <div class="form-group">
-        <label>{{ 'byWhen' | translate }}</label>
-        <div class="input-group datepicker-input">
-          <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="predictionForm.predictionForDate" name="predictionForDate" [minDate]="predictionStartDateFrom"
-            ngbDatepicker #d="ngbDatepicker" readonly />
-          <button class="input-group-addon" (click)="d.toggle()" type="button">
+            </div>
+            <div class="form-group">
+                <label>{{ 'predictedMarketPrice' | translate }}</label>
+                <input class="form-control amount" type="text" name="amount" [(ngModel)]="predictionForm.amount" #amount="ngModel" autocomplete="off" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" (keypress)="numberOnly($event)" />
+                <div class="error danger" *ngIf="predictionFormError.amount">{{ priceRequired }}</div>
+            </div>
+            <div class="form-group">
+                <label>{{ 'byWhen' | translate }}</label>
+                <div class="input-group datepicker-input">
+                    <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="predictionForm.predictionForDate" name="predictionForDate" [minDate]="predictionStartDateFrom" ngbDatepicker #d="ngbDatepicker" readonly />
+                    <button class="input-group-addon" (click)="d.toggle()" type="button">
             <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
             <span class="fa fa-calendar"></span>
           </button>
-          <div class="error danger" *ngIf="predictionFormError.predictionForDate">{{ 'dateisrequired!' | translate }}</div>
-        </div>
-      </div>
+                    <div class="error danger" *ngIf="predictionFormError.predictionForDate">{{ 'dateisrequired!' | translate }}</div>
+                </div>
+            </div>
 
-      <div class="form-group">
-        <label _ngcontent-c5="" class="ng-tns-c5-1">&nbsp;</label>
-        <button class="btn btn-success" type="submit">
+            <div class="form-group">
+                <label _ngcontent-c5="" class="ng-tns-c5-1">&nbsp;</label>
+                <button class="btn btn-success" type="submit">
           {{ 'Submit' | translate }}
         </button>
-      </div>
-    </form>
-  </div>
+            </div>
+        </form>
+    </div>
 </ng-template>
-
 <!-- ic_risk -->
 <ng-template #ic_risk let-c="close" let-d="dismiss">
-  <div class="modal-header alert_header">
-    <h4 class="modal-title">Risk Indicators</h4>
-    <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
+    <div class="modal-header alert_header">
+        <h4 class="modal-title">Risk Indicators</h4>
+        <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="modal-body">
-    <h3>
-      <span class="ticker_img"><img src="{{ riskPerformanceArray.tickerIcon }}" class="img-fluid" /></span>
-      {{ riskPerformanceArray.tickerName }}
-    </h3>
-    <form class="form-inline form_price filters" (submit)="setRiskIndicators()">
-      <div class="potential">
-        <h4>
-          {{ 'Potential' | translate }}
-          <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-          <p>
-            {{ 'For each time-horizon please state the expected financial return profile for your investment. This is your subjective assessment based on the value of your initial investment.' | translate }}
-          </p>
-        </h4>
-        <div class="f_group_hold">
-          <div class="form-group">
-            <label>{{ 'Short Term' | translate }}</label>
-            <select class="form-control" name="potentialST" [(ngModel)]="riskPerformanceArray.potentialST"
-              #potentialST="ngModel">
+    </div>
+    <div class="modal-body">
+        <h3>
+            <span class="ticker_img"><img src="{{ riskPerformanceArray.tickerIcon }}" class="img-fluid" /></span> {{ riskPerformanceArray.tickerName }}
+        </h3>
+        <form class="form-inline form_price filters" (submit)="setRiskIndicators()">
+            <div class="potential">
+                <h4>
+                    {{ 'Potential' | translate }}
+                    <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    <p>
+                        {{ 'For each time-horizon please state the expected financial return profile for your investment. This is your subjective assessment based on the value of your initial investment.' | translate }}
+                    </p>
+                </h4>
+                <div class="f_group_hold">
+                    <div class="form-group">
+                        <label>{{ 'Short Term' | translate }}</label>
+                        <select class="form-control" name="potentialST" [(ngModel)]="riskPerformanceArray.potentialST" #potentialST="ngModel">
               <option value="1">{{ 'Low' | translate }}</option>
               <option value="2">{{ 'Moderate' | translate }}</option>
               <option value="3">{{ 'High' | translate }}</option>
             </select>
-          </div>
-          <div class="form-group">
-            <label>Medium Term</label>
-            <select class="form-control" name="potentialMT" [(ngModel)]="riskPerformanceArray.potentialMT"
-              #potentialMT="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label>Medium Term</label>
+                        <select class="form-control" name="potentialMT" [(ngModel)]="riskPerformanceArray.potentialMT" #potentialMT="ngModel">
               <option value="1">{{ 'Low' | translate }}</option>
               <option value="2">{{ 'Moderate' | translate }}</option>
               <option value="3">{{ 'High' | translate }}</option>
             </select>
-          </div>
-          <div class="form-group">
-            <label>Long Term</label>
-            <select class="form-control" name="potentialLT" [(ngModel)]="riskPerformanceArray.potentialLT"
-              #potentialLT="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label>Long Term</label>
+                        <select class="form-control" name="potentialLT" [(ngModel)]="riskPerformanceArray.potentialLT" #potentialLT="ngModel">
               <option value="1">{{ 'Low' | translate }}</option>
               <option value="2">{{ 'Moderate' | translate }}</option>
               <option value="3">{{ 'High' | translate }}</option>
             </select>
-          </div>
-        </div>
-      </div>
-      <div class="potential risk">
-        <h4>
-          {{ 'Risk' | translate }}
-          <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-          <p>
-            {{ ' Risk is assessed on a scale of Low – Medium – High and is calculated using the combined ratings chosen for volatility and fundamentals. For example, if fundamentals are strong and volatility is low, the risk rating for the investment is low.' | translate }}
-          </p>
-        </h4>
-        <div class="f_group_hold">
-          <div class="form-group">
-            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-            <p>
-              {{ 'Please choose the most relevant option for the investment based on its historic performance. This is subjective to you and is not quantified.' | translate }}
-            </p>
-            <label>{{ 'Volatility' | translate }}</label>
-            <select class="form-control" name="riskVolality" [(ngModel)]="riskPerformanceArray.riskVolality"
-              #riskVolality="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div class="potential risk">
+                <h4>
+                    {{ 'Risk' | translate }}
+                    <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    <p>
+                        {{ ' Risk is assessed on a scale of Low – Medium – High and is calculated using the combined ratings chosen for volatility and fundamentals. For example, if fundamentals are strong and volatility is low, the risk rating for the investment is low.' | translate
+                        }}
+                    </p>
+                </h4>
+                <div class="f_group_hold">
+                    <div class="form-group">
+                        <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                        <p>
+                            {{ 'Please choose the most relevant option for the investment based on its historic performance. This is subjective to you and is not quantified.' | translate }}
+                        </p>
+                        <label>{{ 'Volatility' | translate }}</label>
+                        <select class="form-control" name="riskVolality" [(ngModel)]="riskPerformanceArray.riskVolality" #riskVolality="ngModel">
               <option value="3">{{ 'Low' | translate }}</option>
               <option value="2">{{ 'Moderate' | translate }}</option>
               <option value="1">{{ 'High' | translate }}</option>
             </select>
-          </div>
-          <div class="form-group">
-            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-            <p>
-              {{ 'Please rate the strength of the investment fundamentals. Fundamentals vary between investments based on the industry and stage of development. This is subjective to you and is not quantified.' | translate }}
-            </p>
-            <label>{{ 'Fundamentals' | translate }}</label>
-            <select class="form-control" name="riskFundamentals" [(ngModel)]="riskPerformanceArray.riskFundamentals"
-              #riskFundamentals="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                        <p>
+                            {{ 'Please rate the strength of the investment fundamentals. Fundamentals vary between investments based on the industry and stage of development. This is subjective to you and is not quantified.' | translate }}
+                        </p>
+                        <label>{{ 'Fundamentals' | translate }}</label>
+                        <select class="form-control" name="riskFundamentals" [(ngModel)]="riskPerformanceArray.riskFundamentals" #riskFundamentals="ngModel">
               <option value="1">{{ 'Weak' | translate }}</option>
               <option value="2">{{ 'Medium' | translate }}</option>
               <option value="3">{{ 'Strong' | translate }}</option>
             </select>
-          </div>
-        </div>
-      </div>
-      <div class="potential banchmark">
-        <h4>{{ 'Benchmark Index' | translate }}</h4>
-        <div class="f_group_hold">
-          <div class="form-group">
-            <div class="compt">
-              <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-              <p>
-                {{ 'Please choose the most appropriate benchmark index for your investment. The benchmark chosen will be used to measure your investment’s performance relative to the benchmark (known as ‘alpha’) over varying time horizons.' | translate }}
-              </p>
+                    </div>
+                </div>
             </div>
-            <select class="form-control" name="benkMarchIndex" [(ngModel)]="riskPerformanceArray.benkMarchIndex"
-              #benkMarchIndex="ngModel">
+            <div class="potential banchmark">
+                <h4>{{ 'Benchmark Index' | translate }}</h4>
+                <div class="f_group_hold">
+                    <div class="form-group">
+                        <div class="compt">
+                            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <p>
+                                {{ 'Please choose the most appropriate benchmark index for your investment. The benchmark chosen will be used to measure your investment’s performance relative to the benchmark (known as ‘alpha’) over varying time horizons.' | translate }}
+                            </p>
+                        </div>
+                        <select class="form-control" name="benkMarchIndex" [(ngModel)]="riskPerformanceArray.benkMarchIndex" #benkMarchIndex="ngModel">
               <option value="">{{ 'Select Benchmark' | translate }}</option>
               <option value="{{bench.alphaMarketId}}" *ngFor="let bench of benkMarchList; let i = index;">
                 {{bench.tickerName}}</option>
             </select>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-success" type="submit">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" type="submit">
               {{saveRiskBtnText}}
             </button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </ng-template>

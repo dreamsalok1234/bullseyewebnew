@@ -67,7 +67,8 @@ export class TickerDetailsComponent implements OnInit {
 	defaulterrSomethingMsg = 'Something went wrong';
 	processingTxt = 'Processing...';
 	CandlestickText = 'Candlestick';
-	noChartDataText = 'No chart data available.';
+	noChartDataText = 'Graph data unavailable. Please try again later.';
+	graphDataUnavailable='Graph data unavailable. Please try again later.';
 	title = 'BullsEye Investors | Investment Details';
 	tickerNIcon = '../assets/images/not-found.png';
 	targetPriceisRequiredMsg = 'Target Price is required!';
@@ -109,7 +110,14 @@ export class TickerDetailsComponent implements OnInit {
 	isPredictionLocked = 1;
 	predictionStartDate = new Date();
 	predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
-
+	chatboardData: any;
+	activeCustomTab = 0;
+	customTabs = ['Market', 'Profile', 'Fundamentals'];
+	fundamentalsData: any;
+	showLess_More = 'Show More';
+	paasValueOn_SeeMoreBtn =false;
+	fundamentalDesc = '';
+	fundamentalsOfficers = [];
 	constructor(
 		private translate: TranslateService,
 		private commonService: CommonService,
@@ -123,7 +131,6 @@ export class TickerDetailsComponent implements OnInit {
 		private meta: Meta,
 		private activeRoute: ActivatedRoute,
 	) { }
-
 
 	ngOnInit() {
 		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
@@ -184,8 +191,11 @@ export class TickerDetailsComponent implements OnInit {
 		this.translate.get('Candlestick').subscribe(value => {
 			this.CandlestickText = value;
 		});
-		this.translate.get('Nochartdataavailable').subscribe(value => {
-			this.noChartDataText = value;
+		// this.translate.get('Nochartdataavailable').subscribe(value => {
+		// 	this.noChartDataText = value;
+		// });
+		this.translate.get('graphDataUnavailable').subscribe(value => {
+			this.noChartDataText = this.graphDataUnavailable = value;
 		});
 		this.translate.get('TargetPriceisRequired').subscribe(value => {
 			this.targetPriceisRequiredMsg = value;
@@ -271,7 +281,10 @@ export class TickerDetailsComponent implements OnInit {
 			}
 
 			objectNtype.filterExchangeItem();
+			objectNtype.getChatboard();
 		}, 1000);
+
+
 
 	}
 	getCurrencyMarketValueOld(finalPrice) {
@@ -344,6 +357,7 @@ export class TickerDetailsComponent implements OnInit {
 							objectType.tickerNIcon = response.data[0].historyData.currentDayData.tickerUrl;
 						}
 					}
+					objectType.getTickerFundamentals();
 				} else {
 					objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 					objectType.searchSearchText = response.data.message;
@@ -436,7 +450,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	getExtraSMA() {
 		// setting date range in sma case
-		let limit = (this.filterModel.searchCriteria == 24)?24:0;
+		let limit = (this.filterModel.searchCriteria === 24) ? 24 : 0;
 		if (this.filterModel.searchCriteria === 50 || this.filterModel.searchCriteria === 100 || this.filterModel.searchCriteria === 200) {
 			if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 				switch (this.filterModel.searchCriteria) {
@@ -490,8 +504,8 @@ export class TickerDetailsComponent implements OnInit {
 				this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
 
 					if (err) {
-						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
-						objectType.tickerDataText = objectType.defaulterrSomethingMsg;
+						objectType.toastr.errorToastr(objectType.graphDataUnavailable, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+						objectType.tickerDataText = objectType.graphDataUnavailable;
 					}
 					if (response.statusCode === 200) {
 						objectType.tickerDataText = '';
@@ -566,7 +580,7 @@ export class TickerDetailsComponent implements OnInit {
 					objectType.loadingBar.stop();
 				});
 			} else {
-				
+
 				this.shortingTab = '1M';
 				/* Current Date */
 				const d = new Date();
@@ -595,8 +609,8 @@ export class TickerDetailsComponent implements OnInit {
 
 				this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, limit, dateFrom, dateTo, function (err, response) {
 					if (err) {
-						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
-						objectType.tickerDataText = objectType.defaulterrSomethingMsg;
+						objectType.toastr.errorToastr(objectType.graphDataUnavailable, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+						objectType.tickerDataText = objectType.graphDataUnavailable;
 					}
 					if (response.statusCode === 200) {
 						objectType.tickerDataText = '';
@@ -1188,6 +1202,7 @@ export class TickerDetailsComponent implements OnInit {
 		});
 	}
 
+
 	filterExchangeItem() {
 
 		this.loadingBar.start();
@@ -1379,6 +1394,121 @@ export class TickerDetailsComponent implements OnInit {
 			}
 		});
 	}
+
+	getChatboard() {
+		const objectType = this;
+		if (this.tickerId > 0) {
+			this.tickerService.getTickerChatboard(this.tickerId, function (err, response) {
+				if (response.statusCode === 200) {
+					if (response.data && response.data.data) {
+						objectType.chatboardData = response.data['data'];
+					}
+				}
+			});
+		}
+	}
+
+	goToChatDetails(isProAccount, chatBoardId, chatName, chatSymbol, chatImage, chatPrice, chatCurrency, favouriteId, change_pct, volume) {
+		if (!isProAccount) {
+			return;
+		}
+		if (chatBoardId > 0) {
+			localStorage.setItem('chatBoardId', chatBoardId);
+			localStorage.setItem('chatName', chatName);
+			localStorage.setItem('chatSymbol', chatSymbol);
+			localStorage.setItem('chatImage', (chatImage === '') ? this.chatboardData.tickerUrl : chatImage);
+			localStorage.setItem('chatPrice', chatPrice);
+			localStorage.setItem('chatCurrency', chatCurrency);
+			localStorage.setItem('chatType', this.chatboardData.stockType);
+			localStorage.setItem('chatChangeType', (change_pct === '' || change_pct == null) ? 0 : change_pct);
+			localStorage.setItem('favouriteId', ((favouriteId !== undefined && favouriteId !== '' && favouriteId !== null) ? favouriteId : 0));
+			this.router.navigate(['/chat/' + chatSymbol + '/' + chatName]);
+		} else {
+			this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+		}
+
+	}
+
+	
+	selectCustomTabs(sign) {
+		if (sign === '-'){
+			if (this.activeCustomTab > 0){
+				--this.activeCustomTab;
+			}else {
+				return;
+			}
+
+		}else{			
+			if (this.activeCustomTab < (this.customTabs.length - 1)){
+				++this.activeCustomTab;
+			}else {
+				return;
+			}
+		}
+	}
+
+	getTickerFundamentals() {
+		const objectType = this;
+		if (this.tickerType == 'Stock' && this.tickerSymbol !== '') {
+			this.commonService.getTickerFundamentals(this.tickerSymbol, function (err, response) {
+				if (response.statusCode === 200) {
+					objectType.fundamentalsData = response.data.data;
+					if (objectType.fundamentalsData.General.Officers){
+						if (objectType.fundamentalsData.General.Officers[0]){
+							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[0]);
+						}
+						if (objectType.fundamentalsData.General.Officers[1]){
+							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[1]);
+						}
+						if (objectType.fundamentalsData.General.Officers[2]){
+							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[2]);
+						}
+						if (objectType.fundamentalsData.General.Officers[3]){
+							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[3]);
+						}
+						if (objectType.fundamentalsData.General.Officers[4]){
+							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[4]);
+						}
+					}
+					if (objectType.fundamentalsData.General.Description.length>50){
+						objectType.paasValueOn_SeeMoreBtn = true;
+						objectType.fundamentalDesc = objectType.fundamentalsData.General.Description.slice(0, 50) + '...';
+					}
+				}
+			});
+		}
+	}
+
+	getNumberInMillion(finalPrice) {
+		finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
+		if (finalPrice > 1000000) {
+			let douValue = finalPrice / 1000000;
+			return this.formatNumber(douValue.toFixed(0)) + 'm';
+		} else {
+			finalPrice = parseInt(finalPrice);
+			return this.formatNumber(finalPrice);
+		}
+	}
+	getNumberInPercentage(finalPrice) {
+		finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
+		if (finalPrice > 0) {
+			let douValue = finalPrice * 100;
+			return this.formatNumber(douValue.toFixed(2));
+		}		
+		return this.formatNumber(finalPrice);
+	}
+	showMore(){
+		if(this.paasValueOn_SeeMoreBtn){
+		  this.showLess_More = " SEE LESS";
+		  this.fundamentalDesc = this.fundamentalsData.General.Description;
+		  this.paasValueOn_SeeMoreBtn = false;	
+		}else{
+		  this.showLess_More = "SEE MORE";
+		  this.fundamentalDesc = this.fundamentalsData.General.Description.slice(0, 50) + '...';
+		  this.paasValueOn_SeeMoreBtn = true;	
+		}	
+	  }
+
 
 
 }

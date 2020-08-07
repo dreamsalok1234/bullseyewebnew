@@ -18,7 +18,7 @@ import { Title, Meta } from '@angular/platform-browser';
 export class SearchMarketComponent implements OnInit {
   closeResult: string;
   newsForm: FormGroup;
-  model: any = { 'currentCurrency': 'USD', 'searchCriteria': '', 'exchangeId': '', 'stockType': 'STOCK', 'keywords': '' };
+  model: any = { 'currentCurrency': 'USD', 'searchCriteria': '', 'exchangeId': '', 'stockType': 'STOCK', 'keywords': '', 'range': 10 };
   priceAlert: any = { 'currentCurrency': 'USD', 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol': '', 'compare': '>', 'expiryDate': '', 'tickerIcon': '' };
   priceAlertError: any = { 'amount': false, 'expiryDate': false };
   datepicker: any;
@@ -41,7 +41,7 @@ export class SearchMarketComponent implements OnInit {
   activeTab2 = 'active';
   curr_array = ['USD', 'SGD', 'INR', 'KD', 'AUD'];
   selectCurr = 'USD';
-  criteriaFilter = [{ 'key': 'high', 'value': 'Top 10 by 24 Hour Change' }, { 'key': 'low', 'value': 'Bottom 10 by 24 Hour Change' }, { 'key': 'market_cap', 'value': 'Top 10 by Market Capitalisation' }];
+  criteriaFilter = [{ 'key': 'high', 'value': 'Risers' }, { 'key': 'low', 'value': 'Fallers' }, { 'key': 'market_cap', 'value': 'Market Capitalisation' }];
   stockExchangeType: [];
   currencyPriceList = {};
   tickerMarketCapData = {};
@@ -280,6 +280,7 @@ export class SearchMarketComponent implements OnInit {
     if (this.model.keywords !== '') {
       queryString += (queryString !== '') ? '&keyword=' + this.model.keywords : '?keyword=' + this.model.keywords;
     }
+    this.pageSize =  this.model.range;
     queryString += (queryString !== '') ? '&startIndex=' + this.pageNo + '&pageSize=' + this.pageSize : '?startIndex=' + this.pageNo + '&pageSize=' + this.pageSize;
 
     objectType.processing = true;

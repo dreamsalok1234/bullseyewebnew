@@ -177,15 +177,15 @@ export class PortfolioDetailsComponent implements OnInit {
 	}
 	get f() { return this.investmentForm.controls; }
 	showTabList(i) {
-		this.indMenu=i;
-		this.showValueList=this.showRiskList=this.showPerformanceList =false;
-		if(i==1) {
-			this.showValueList=true;
-		} else if(i==2) {
-			this.showRiskList=true;
-							} else {
-			this.showPerformanceList=true;
-							}
+		this.indMenu = i;
+		this.showValueList = this.showRiskList = this.showPerformanceList = false;
+		if (i == 1) {
+			this.showValueList = true;
+		} else if (i == 2) {
+			this.showRiskList = true;
+		} else {
+			this.showPerformanceList = true;
+		}
 	}
 	setHoldingValue(v) {
 		let input=this.investmentForm.controls.holding.value;

@@ -77,13 +77,14 @@ export class ChatDetailsComponent implements OnInit {
 	defaulterrSomethingMsg='Something went wrong';
 	processingTxt='Processing...';
 	NoChatText="Why not be the first to post here?";
-	AreYouAddYourFav="Are you sure want to add in your favourites list ?";
+	AreYouAddYourFav="Add <ticker> to your favourites?";
 	deleteMsgText="Are you sure want to delete message ?";
 	deleteFavMsgText ="Are you sure want to remove from your favourites ?";
 	sendText="Send";
 	yesText="Yes";
 	CandlestickText="Candlestick";
 	noChartDataText="No chart data available.";
+	graphDataUnavailable="Graph data unavailable. Please try again later.";
 	title='BullsEye Investors | Chat';
 	enterNewMessageText="Enter message here...";
 	editorConfig:any=[];
@@ -186,6 +187,9 @@ export class ChatDetailsComponent implements OnInit {
 		});
 		this.translate.get('Candlestick').subscribe(value => {
 			this.CandlestickText=value;
+		});
+		this.translate.get('graphDataUnavailable').subscribe(value => {
+			this.graphDataUnavailable=value;
 		});
 
 		try {
@@ -324,8 +328,8 @@ export class ChatDetailsComponent implements OnInit {
 		objectType.loadingBar.start();
 		this.chatService.getChatDetails(this.chatBoardId,this.timestampData,this.pageSize,this.pageNo,function(err, response) {
 			if( err ) {
-			  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
-			  objectType.searchText = objectType.defaulterrSomethingMsg;
+			  objectType.toastr.errorToastr(objectType.graphDataUnavailable,null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+			  objectType.searchText = objectType.graphDataUnavailable;
 			}
 			if ( response.statusCode === 200 ) {
 
@@ -377,7 +381,7 @@ export class ChatDetailsComponent implements OnInit {
 		this.favouriteId = parseInt(favouriteId);
 		this.messageId = 0;
 		this.btnText = this.yesText;
-		this.modelText = (this.favouriteId === 0) ? this.AreYouAddYourFav : this.deleteFavMsgText;
+		this.modelText = (this.favouriteId === 0) ? this.AreYouAddYourFav.replace('<ticker>', this.tickerName) : this.deleteFavMsgText;
         this.modalService.open(favcontent).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
@@ -774,8 +778,8 @@ getChartData(num, type, clickind) {
 			this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
 
 				if (err) {
-					objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
-					objectType.tickerDataText = objectType.defaulterrSomethingMsg;
+					objectType.toastr.errorToastr(objectType.graphDataUnavailable, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+					objectType.tickerDataText = objectType.graphDataUnavailable;
 				}
 				if (response.statusCode === 200) {
 					objectType.tickerDataText = '';
@@ -877,8 +881,8 @@ getChartData(num, type, clickind) {
 
 				this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, limit, dateFrom, dateTo, function(err, response) {
 					if ( err ) {
-					objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-					objectType.tickerDataText = objectType.defaulterrSomethingMsg;
+					objectType.toastr.errorToastr(objectType.graphDataUnavailable, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+					objectType.tickerDataText = objectType.graphDataUnavailable;
 					}
 					if ( response.statusCode === 200 ) {
 						objectType.tickerDataText = '';
