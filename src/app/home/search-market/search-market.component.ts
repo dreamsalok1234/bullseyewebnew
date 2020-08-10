@@ -42,9 +42,9 @@ export class SearchMarketComponent implements OnInit {
   curr_array = ['USD', 'SGD', 'INR', 'KD', 'AUD'];
   selectCurr = 'USD';
   criteriaFilter = [{ 'key': 'high', 'value': 'Risers' }, { 'key': 'low', 'value': 'Fallers' }, { 'key': 'market_cap', 'value': 'Market Capitalisation' }];
-  stockExchangeType: [];
+  stockExchangeType:any;
   currencyPriceList = {};
-  tickerMarketCapData = {};
+  tickerMarketCapData:any = { amount: 0, text: '' };
   profileInfo: any;
   defaulterrSomethingMsg = 'Something went wrong';
   stockText = 'Stocks';
@@ -62,6 +62,7 @@ export class SearchMarketComponent implements OnInit {
   title = 'BullsEye Investors | Search Markets';
   Chooseyourdefaultcurrency = 'Choose your default currency';
   disabledCurrency = true;
+  defaultMarket:any;
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -145,12 +146,12 @@ export class SearchMarketComponent implements OnInit {
     this.priceAlert.currentCurrency = this.profileInfo.baseCurrency;
     this._initForm();
     this.placeholderImageUrl = '../assets/images/not-found.png';
+    this.model.searchCriteria = 'market_cap';
     const objectNType = this;
     setTimeout(function () {
       objectNType.searchMarketData();
     }, 1000);
 
-    // this.model.currentCurrency = this.curr_array[0];
   }
 
   toggleActive(i) {
@@ -158,10 +159,10 @@ export class SearchMarketComponent implements OnInit {
     this.reStockType = (i === 1) ? this.stockType : this.cryptoText;
     this.model.stockType = (i === 1) ? this.stockType.toUpperCase() : this.cryptoText;
 
-    this.model.exchangeId = '';
-    this.model.searchCriteria = '';
+    this.model.exchangeId = this.defaultMarket.exchangeId;
+    this.model.searchCriteria = 'market_cap';
 
-    this.searchMarketData(this.model.stockType);
+    this.filterExchangeItem();
   }
 
   private _initForm(): void {
@@ -174,7 +175,6 @@ export class SearchMarketComponent implements OnInit {
   }
 
   searchMarketData(stockTypeData = 'STOCK') {
-
     this.processingTxtOfList = this.processingTxt;
     const objectType = this;
 
@@ -189,6 +189,10 @@ export class SearchMarketComponent implements OnInit {
           objectType.stockExchangeType = response.data[0].data.exchangeList.market;
           objectType.itemList = response.data[0].data.exchangeList.stockList;
           objectType.processing = false;
+          if(objectType.stockExchangeType && !objectType.model.exchangeId){
+            objectType.defaultMarket = objectType.stockExchangeType.find(element => element.exchangeName == "London Stock Exchange");
+            objectType.model.exchangeId = objectType.defaultMarket.exchangeId;
+          }
         }
         if (response.data[1].status === true) {
           objectType.currencyPriceList = response.data[1].data;
@@ -199,6 +203,7 @@ export class SearchMarketComponent implements OnInit {
 
     });
   }
+
   getCurrencyValue(itemData, key = 'price') {
     const price = (key === 'price') ? itemData.price : itemData.marketCap;
     const keyType = (key === 'price') ? false : true;

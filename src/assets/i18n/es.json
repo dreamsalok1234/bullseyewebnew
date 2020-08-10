@@ -87,7 +87,7 @@
     "Chat": "Charla",
     "SearchResult": "Resultados de la búsqueda",
     "Favourites": "favoritos",
-    "Areyousurewanttoremovefav?": "¿Seguro que quieres eliminarlo de tus favoritos?",
+    "Areyousurewanttoremovefav?": "¿Está seguro de que desea eliminar <ticker> de sus favoritos?",
     "NoFavTicker": "Actualmente no tienes favoritos. Intenta buscar tus favoritos usando la barra de búsqueda.",
     "NoSearchRecordChangeParameter": "No se han encontrado resultados. Por favor, cambie los parámetros de búsqueda.",
 
@@ -287,6 +287,26 @@
     "chooseYourPlatform": "Elige tu plataforma",
     "BERPscore": "Puntaje BERP:",
     "graphDataUnavailable": "Datos del gráfico no disponibles. Por favor, inténtelo de nuevo más tarde.",
-    "range": "Rango"
+    "range": "Rango",
+    "sortBy": "Ordenar por",
+    "fiscalYearEnd": "Fin de año fiscal",
+    "fiscalYearEndInfo": "El término 'fin de año fiscal' se refiere a la finalización de un período contable de un año o 12 meses. El año fiscal es el período utilizado para calcular los estados financieros anuales. El año fiscal de una empresa puede diferir del año calendario y es posible que no se cierre el 31 de diciembre debido a la naturaleza de las necesidades de la empresa.",
+    "revenue12M": "Ingresos (12M)",
+    "revenue12MInfo": "Los ingresos de TTM se refieren a los ingresos de una empresa durante los últimos doce meses (TTM) de operaciones. A veces, los compradores que se centran más en la rentabilidad y la capacidad de generar EBITDA de una empresa pasan por alto esta medida financiera.",
+    "EBITDA": "EBITDA",
+    "EBITDAInfo": "Las ganancias de una empresa antes de intereses, impuestos, depreciación y amortización es una medida contable calculada utilizando las ganancias de una empresa, antes de restar los gastos por intereses, impuestos, depreciación y amortización, como un indicador de la rentabilidad operativa actual de una empresa.",
+    "grossProfit(12M)": "Beneficio bruto (12M)",
+    "grossProfit(12M)Info": "La ganancia bruta de TTM son los últimos 12 meses de ganancia sobre los ingresos totales de una empresa. El beneficio bruto de los últimos 12 meses permite a los propietarios e inversores observar las tendencias de beneficios recientes. Es más útil cuando el TTM no coincide con el año fiscal.",
+    "profitMargin": "Margen de beneficio",
+    "profitMarginInfo": "El margen de beneficio es una proporción de los beneficios de una empresa (ventas menos todos los gastos) dividido por sus ingresos. El índice de margen de beneficio compara los beneficios con las ventas y le indica qué tan bien la empresa está manejando sus finanzas en general. Siempre se expresa como porcentaje.",
+    "PERatio": "Relación P / E",
+    "PERatioInfo": "La relación precio-ganancias, también conocida como relación P / E, P / E o PER, es la relación entre el precio de las acciones de una empresa y las ganancias por acción de la empresa. El ratio se utiliza para valorar empresas y saber si están sobrevaloradas o infravaloradas.",
+    "dividendYield": "Rentabilidad por dividendo",
+    "dividendYieldInfo": "El rendimiento por dividendo de una acción es el dividendo por acción, dividido por el precio por acción. También es el pago de dividendos anual total de una empresa dividido por su capitalización de mercado, asumiendo que el número de acciones es constante. A menudo se expresa como porcentaje.",
+    "earningsPerShare": "Ganancias por acción",
+    "earningsPerShareInfo": "Las ganancias por acción (EPS) se calculan como las ganancias de una empresa divididas por las acciones en circulación de sus acciones ordinarias. Es común que una empresa informe EPS que se ajusta por elementos extraordinarios y dilución potencial de acciones. Cuanto mayor sea el EPS de una empresa, más rentable se considera.",
+    "Market": "Mercado",
+    "Profile": "Perfil",
+    "Fundamentals": "Fundamentos"
 
 }

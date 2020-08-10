@@ -7,7 +7,7 @@
 					<img [src]="imgUrl" alt="" style="max-width:100%" alt="Profile image" />
 				</span>
 				<button type="button" class="btn berps-btn {{profileInfo.berps >= 0 ?'btn-success':'btn-danger'}}" [routerLink]="['/price-prediction']"  *ngIf="this.profileInfo.isProAccount">
-					{{ ((profileInfo.berps >= 0)?'+':'') + formatNumber(profileInfo.berps | number:'1.2-2')  }}
+					{{ ((profileInfo.berps >= 0)?'+':'') + formateBERF(profileInfo.berps)  }}
 				</button>
 			</h2>
 			
@@ -20,8 +20,8 @@
 		<div class="col-md-6 col-lg-6">
 			<div class="portfolio-heading">
 				<h3>{{ 'Portfolios' | translate }}</h3>
-				<button type="button" class="btn custom-btn add-portfolio" (click)="addPortfolio();"><i
-						class="fa fa-plus"></i> {{ 'AddPortfolio' | translate }}</button>
+				<button type="button" class="btn circular-btn" (click)="addPortfolio();"><i
+						class="fa fa-plus"></i></button>
 			</div>
 			<div class="stats_table">
 				<div class="body_div" cdkDropList (cdkDropListDropped)="dropPortfolio($event)" cdkDropListOrientation="vertical">
@@ -85,8 +85,9 @@
 					</select>
 				</div>
 				<div class="right-section">
-					<button type="button" class="btn custom-btn" [routerLink]="['/market-search']"><img
-							src="../../assets/images/search-market-icon.png"> {{ 'SearchMarkets' | translate }}</button>
+					<button type="button" class="btn circular-btn" [routerLink]="['/market-search']">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
 				</div>
 			</div>
 			<div class="wachlist_index">

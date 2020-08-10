@@ -81,6 +81,9 @@ export class PortfolioDetailsComponent implements OnInit {
 	stockExchangeType: [];
 	criteriaFilter = [{ 'key': 'high', 'value': 'Top 10 by 24 Hour Change' }, { 'key': 'low', 'value': 'Bottom 10 by 24 Hour Change' }, { 'key': 'market_cap', 'value': 'Top 10 by Market Capitalisation' }];
 	graphFilter = 0;
+	activeCustomTab = 0;
+
+
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
     ngOnInit() {
@@ -156,7 +159,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		this.portfolioCurrency=localStorage.getItem("portfolioCurrency");
 		this.portfolioType=localStorage.getItem("portfolioType");
 		this.portfolioName=localStorage.getItem("portfolioName");
-		this.showTabList(1);
+
 		setTimeout(function() {
 			objectNtype.translate.get('Date').subscribe(value => {
 				objectNtype.dateText=value;
@@ -176,24 +179,14 @@ export class PortfolioDetailsComponent implements OnInit {
 		},500);
 	}
 	get f() { return this.investmentForm.controls; }
-	showTabList(i) {
-		this.indMenu = i;
-		this.showValueList = this.showRiskList = this.showPerformanceList = false;
-		if (i == 1) {
-			this.showValueList = true;
-		} else if (i == 2) {
-			this.showRiskList = true;
-		} else {
-			this.showPerformanceList = true;
-		}
-	}
+
 	setHoldingValue(v) {
 		let input=this.investmentForm.controls.holding.value;
 		input=(input!=null && input!='' && input!=undefined)?input:0;
 		input=(input.toString().indexOf(",")>-1)?input.replace(/,/g, ""):input;
 		input=(v.toLowerCase()=='stock')?parseInt(input):parseFloat(input);
 
-		this.investmentForm.controls["holding"].setValue((v.toLowerCase()=='stock')?(this.formatNumber(input)):(this.formatNumber(input.toFixed(6))));
+		this.investmentForm.controls["holding"].setValue((v.toLowerCase()=='stock')?(this.formatNumber(input)):(this.formatNumber(input.toFixed(4))));
 	}
 	calculateBookingCost(v) {
 		let bookCost=this.investmentForm.controls.bookingCost.value;
@@ -457,7 +450,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		} else {
 			if(this.holdingUnit.toString().indexOf(".")>-1) {
 				let decimalPos = this.holdingUnit.split('.');
-				this.holdingUnit=(decimalPos[1].length>6)?(decimalPos[0]+"."+decimalPos[1].substring(0,6)):decimalPos[0]+"."+decimalPos[1];
+				this.holdingUnit=(decimalPos[1].length>4)?(decimalPos[0]+"."+decimalPos[1].substring(0,4)):decimalPos[0]+"."+decimalPos[1];
 			}
 
 			this.investmentForm.controls["holding"].setValue(this.formatNumber(this.holdingUnit));
@@ -904,4 +897,21 @@ export class PortfolioDetailsComponent implements OnInit {
 	// 	this.loadingBar.stop();
 
 	// }
+
+	selectCustomTabs(sign) {
+		if (sign === '-'){
+			if (this.activeCustomTab > 0){
+				--this.activeCustomTab;
+			}else {
+				return;
+			}
+
+		}else{			
+			if (this.activeCustomTab < 2){
+				++this.activeCustomTab;
+			}else {
+				return;
+			}
+		}
+	}
 }

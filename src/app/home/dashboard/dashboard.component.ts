@@ -546,6 +546,19 @@ export class DashboardComponent implements OnInit {
 		} else {
 			return numNew.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 		}
-  	}
+	  }
+	    
+	formateBERF(finalPrice) {
+		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
+		if (finalPrice > 1000000) {
+			let douValue = finalPrice / 1000000;
+			return this.formatNumber(douValue.toFixed(1)) + 'm';
+		} else if (finalPrice > 999) {
+			let douValue = finalPrice / 1000;
+			return this.formatNumber(douValue.toFixed(1)) + 'k';
+		} else {
+			return this.formatNumber(parseInt(finalPrice.toFixed(0)));
+		}
+	}
 
 }

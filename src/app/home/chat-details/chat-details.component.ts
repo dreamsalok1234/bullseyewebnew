@@ -79,7 +79,7 @@ export class ChatDetailsComponent implements OnInit {
 	NoChatText="Why not be the first to post here?";
 	AreYouAddYourFav="Add <ticker> to your favourites?";
 	deleteMsgText="Are you sure want to delete message ?";
-	deleteFavMsgText ="Are you sure want to remove from your favourites ?";
+	deleteFavMsgText ="Are you sure you want to remove <investment name> from your favourites?";
 	sendText="Send";
 	yesText="Yes";
 	CandlestickText="Candlestick";
@@ -381,7 +381,7 @@ export class ChatDetailsComponent implements OnInit {
 		this.favouriteId = parseInt(favouriteId);
 		this.messageId = 0;
 		this.btnText = this.yesText;
-		this.modelText = (this.favouriteId === 0) ? this.AreYouAddYourFav.replace('<ticker>', this.tickerName) : this.deleteFavMsgText;
+		this.modelText = ((this.favouriteId === 0) ? this.AreYouAddYourFav : this.deleteFavMsgText).replace('<ticker>', this.tickerName);
         this.modalService.open(favcontent).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
@@ -782,6 +782,7 @@ getChartData(num, type, clickind) {
 					objectType.tickerDataText = objectType.graphDataUnavailable;
 				}
 				if (response.statusCode === 200) {
+					document.getElementById('volumechart').style.display = 'none';
 					objectType.tickerDataText = '';
 					const keys = [];
 					const candleStickData = [];
@@ -890,6 +891,9 @@ getChartData(num, type, clickind) {
 						const candleStickData = [];
 						let data = [];
 						let newData = [];
+						if (objectType.filterModel.searchCriteria === 24) {
+							document.getElementById('volumechart').style.display = 'flex';
+						}
 						if(objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 							if (response.data.Data !== undefined && response.data.Data.length > 0) {
 								data = response.data.Data;

@@ -5,7 +5,7 @@
         <div class="berp-score">
           {{ 'BERPscore' | translate }}
           <button type="button" class="btn berps-btn {{profileInfo.berps >= 0 ?'btn-success':'btn-danger'}}" [routerLink]="['/price-prediction']"  *ngIf="this.profileInfo.isProAccount">
-          {{ ((profileInfo.berps >= 0)?'+':'') + formatNumber(profileInfo.berps | number:'1.2-2')  }}
+          {{ ((profileInfo.berps >= 0)?'+':'') + formateBERF(profileInfo.berps)  }}
           </button>
         </div>
         <div class="add-price">
@@ -214,9 +214,9 @@
           </li>
           <li><b>{{ item.prediction | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</b></li>
           <!-- <li>{{ (item.difference) > 0? '+':'' }}{{ (item.difference) | currency: returnCurrSymbol(item.currency):'symbol':'1.3-3' }}</li> -->
-          <li><p class="btn berps-btn {{(item.deviation <= 20 && item.deviation >= -20) ?'btn-success':'btn-danger'}}">{{ (item.deviation) > 0? '+':'' }}{{ formatNumber(formatNumberDecimalPlaces(item.deviation, 2)) }} %</p></li>
+          <li><p class="btn berps-btn {{(item.deviation <= 20 && item.deviation >= -20) ?'btn-success':'btn-danger'}}">{{ (item.deviation) > 0? '+':'' }}{{ formatNumber(formatNumberDecimalPlaces(item.deviation, 0)) }} %</p></li>
           <li>{{ item.predictionForDate | date: 'dd/MM/yyyy'  }}</li>
-          <li><p class="btn berps-btn {{item.berps >= 0 ?'btn-success':'btn-danger'}}">{{ formatNumber(formatNumberDecimalPlaces(item.berps, 2)) }}</p></li>
+          <li><p class="btn berps-btn {{item.berps >= 0 ?'btn-success':'btn-danger'}}">{{item.berps > 0 ? '+':''}}{{ formatNumber(formatNumberDecimalPlaces(item.berps, 1)) }}</p></li>
         </ul>
         <ul class="processing" *ngIf="closeProcessing">
           <li>

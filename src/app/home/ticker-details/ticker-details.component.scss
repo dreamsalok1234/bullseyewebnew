@@ -699,6 +699,7 @@ ul.blurTdetails+.data_fatch i {
 .custom-tab-items {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 15px;
 }
 
 .custom-tab-items p {
@@ -715,7 +716,7 @@ ul.blurTdetails+.data_fatch i {
 .text-helper {
     color: white;
     position: absolute;
-    right: 5px;
+    left: 5px;
     top: 5px;
 }
 
@@ -724,7 +725,11 @@ ul.blurTdetails+.data_fatch i {
 }
 
 a.SeeMore {
-    color: #00b050;
+    color: #ffffff;
+    background-color: #00b050;
+    padding: 0 5px;
+    border-radius: 15px;
+    font-size: 21px;
 }
 
 .custom-tab-content {

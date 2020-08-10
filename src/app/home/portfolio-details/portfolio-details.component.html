@@ -86,29 +86,17 @@
       <div class="col-lg-7">
         <div class="tabs_value_chg">
           <div class="tabs_pills">
-            <ul class="nav nav-pills" role="tablist">
-              <li class="nav-item" [ngClass]="indMenu == 1 ? 'active' : ''" (click)="showTabList(1)"
-                *ngIf="this.profileInfo.isProAccount">
-                <a class="nav-link">{{ "Market" }}</a>
-              </li>
-              <!-- <li class="nav-item" [ngClass]="indMenu == 4 ? 'active' : ''" (click)="showTabList(4)" *ngIf="this.profileInfo.isProAccount">
-                                <a class="nav-link">{{ "Profile" }}</a>
-                            </li>
-                            <li class="nav-item" [ngClass]="indMenu == 5 ? 'active' : ''" (click)="showTabList(5)" *ngIf="this.profileInfo.isProAccount">
-                                <a class="nav-link">{{ "Fundamentals" }}</a>
-                            </li> -->
-              <li class="nav-item" [ngClass]="indMenu == 2 ? 'active' : ''" (click)="showTabList(2)"
-                *ngIf="this.profileInfo.isProAccount">
-                <a class="nav-link">{{ "Risk" }}</a>
-              </li>
-              <li class="nav-item" [ngClass]="indMenu == 3 ? 'active' : ''" (click)="showTabList(3)"
-                *ngIf="this.profileInfo.isProAccount">
-                <a class="nav-link">{{ "Performance" | translate }}</a>
-              </li>
-            </ul>
+            
+            <div class="custom-tab-items">
+              <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab == 0" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+              <p *ngIf="activeCustomTab === 0">{{'Market' | translate}}</p>
+              <p *ngIf="activeCustomTab === 1">{{'Risk' | translate}}</p>
+              <p *ngIf="activeCustomTab === 2">{{'Performance' | translate}}</p>
+              <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab === 2" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
             <!-- Tab panes -->
-            <div class="tab-content">
-              <div id="value" *ngIf="showValueList">
+            <div class="tab-content" *ngIf="this.profileInfo.isProAccount">
+              <div id="value" *ngIf="activeCustomTab === 0">
                 <br *ngIf="this.profileInfo.isProAccount" />
                 <div class="stats_table">
                   <div class="head_div one">
@@ -131,7 +119,7 @@
                         {{ valueItem.noOfUnits | number: "1.0-0" }}
                       </li>
                       <li *ngIf="portfolioType.toLowerCase() == 'cryptocurrency'">
-                        {{ valueItem.noOfUnits | number: "1.6-6" }}
+                        {{ valueItem.noOfUnits | number: "1.4-4" }}
                       </li>
                       <li>
                         {{ valueItem.currentPrice | currency : returnCurrSymbol(portfolioCurrency) : "symbol" : "1.3-3" }}
@@ -213,7 +201,7 @@
                   </div>
                 </div>
               </div>
-              <div id="risk&rewards" *ngIf="showRiskList">
+              <div id="risk&rewards" *ngIf="activeCustomTab === 1">
                 <br />
                 <div class="stats_table">
                   <div class="head_div one">
@@ -304,7 +292,7 @@
                   </div>
                 </div>
               </div>
-              <div id="Performance" *ngIf="showPerformanceList">
+              <div id="Performance" *ngIf="activeCustomTab === 2">
                 <br />
                 <div class="stats_table">
                   <div class="head_div">

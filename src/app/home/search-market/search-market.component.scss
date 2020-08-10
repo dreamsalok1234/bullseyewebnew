@@ -921,3 +921,22 @@ ul.stats_body li.performance-item {
 @media (min-width: 1400px) and (max-width: 1599px) {
 }
 
+h2.pop-head {
+  display: block !important;
+}
+
+.tick-cross-icon {font-size: 45px;}
+
+.actions_to_pop {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions_to_pop .custom-btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  margin-left: 15px;
+}
+

@@ -1,5 +1,5 @@
 {
-    "Welcome": "Welcome",
+    "Welcome": "Hello",
     "Portfolios": "Portfolios",
     "AddPortfolio": "Add Portfolio",
     "Portfolio": "Portfolio",
@@ -82,7 +82,7 @@
     "Chat": "Chat",
     "SearchResult": "Search Result",
     "Favourites": "Favourites",
-    "Areyousurewanttoremovefav?": "Are you sure you want to remove from your favourites?",
+    "Areyousurewanttoremovefav?": "Are you sure you want to remove <ticker> from your favourites?",
     "NoFavTicker": "No favourite ticker.Search & add favourite in your favourites list.",
     "NoSearchRecordChangeParameter": "No record.Please change the parameter of search.",
 
@@ -281,6 +281,26 @@
     "chooseYourPlatform": "Choose your platform",
     "BERPscore": "BERP score:",
     "graphDataUnavailable": "Graph data unavailable. Please try again later.",
-    "range": "Range"
+    "range": "Range",
+    "sortBy": "Sort By",
+    "fiscalYearEnd": "Fiscal Year End",
+    "fiscalYearEndInfo": "The term ‘fiscal year-end’ refers to the completion of a one-year or 12-month accounting period. The fiscal year is the period used for calculating annual financial statements. A company's fiscal year may differ from the calendar year, and may not close on December 31 due to the nature of a company's needs.",
+    "revenue12M": "Revenue (12M)",
+    "revenue12MInfo": "TTM revenue refers to a company's revenue over the trailing twelve months (TTM) of operations. This financial measure is sometimes overlooked by buyers who are focused more on a company's profitability and ability to generate EBITDA.",
+    "EBITDA": "EBITDA",
+    "EBITDAInfo": "A company's earnings before interest, taxes, depreciation, and amortization is an accounting measure calculated using a company's earnings, before interest expenses, taxes, depreciation, and amortisation are subtracted, as a proxy for a company's current operating profitability.",
+    "grossProfit(12M)": "Gross Profit (12M)",
+    "grossProfit(12M)Info": "The TTM gross profit is the trailing 12 months of profit over total revenues for a company. The trailing 12 months' gross profit allows owners and investors to observe any recent profit trends. It is most useful when the TTM does not coincide with the fiscal year.",
+    "profitMargin": "Profit Margin",
+    "profitMarginInfo": "The profit margin is a ratio of a company's profit (sales minus all expenses) divided by its revenue. The profit margin ratio compares profit to sales and tells you how well the company is handling its finances overall. It's always expressed as a percentage.",
+    "PERatio": "PE Ratio",
+    "PERatioInfo": "The price-earnings ratio, also known as P/E ratio, P/E, or PER, is the ratio of a company's share price to the company's earnings per share. The ratio is used for valuing companies and to find out whether they are overvalued or undervalued.",
+    "dividendYield": "Dividend Yield",
+    "dividendYieldInfo": "The dividend yield of a share is the dividend per share, divided by the price per share. It is also a company's total annual dividend payments divided by its market capitalisation, assuming the number of shares is constant. It is often expressed as a percentage.",
+    "earningsPerShare": "Earnings Per Share",
+    "earningsPerShareInfo": "Earnings per share (EPS) is calculated as a company's profit divided by the outstanding shares of its common stock. It is common for a company to report EPS that is adjusted for extraordinary items and potential share dilution. The higher a company's EPS, the more profitable it is considered.",
+    "Market": "Market",
+    "Profile": "Profile",
+    "Fundamentals": "Fundamentals"
 
 }

@@ -87,7 +87,7 @@
     "Chat": "聊",
     "SearchResult": "搜索结果",
     "Favourites": "收藏夹",
-    "Areyousurewanttoremovefav?": "确定要从收藏夹移除吗？",
+    "Areyousurewanttoremovefav?": "您確定要從收藏夾中刪除<ticker>嗎？",
     "NoFavTicker": "您目前没有任何收藏夹。 尝试使用搜索栏搜索您的收藏夹。",
     "NoSearchRecordChangeParameter": "未找到结果。 请更改搜索参数。",
 
@@ -287,6 +287,26 @@
     "chooseYourPlatform": "选择你的平台",
     "BERPscore": "BERP分数:",
     "graphDataUnavailable": "圖形數據不可用。請稍後再試。",
-    "range": "範圍"
+    "range": "範圍",
+    "sortBy": "排序方式",
+    "fiscalYearEnd": "會計年度結束",
+    "fiscalYearEndInfo": "術語“財政年終”是指完成一個一年或12個月的會計期間。 會計年度是用於計算年度財務報表的期間。 公司的會計年度可能與日曆年度不同，並且由於公司需求的性質，可能不會在12月31日關閉。",
+    "revenue12M": "收入（1200萬）",
+    "revenue12MInfo": "TTM收入是指公司在過去十二個月（TTM）運營中的收入。 有時，購買者會忽略這種財務指標，而購買者則更多地關注公司的盈利能力和產生EBITDA的能力。",
+    "EBITDA": "EBITDA",
+    "EBITDAInfo": "公司的未計利息，稅項，折舊和攤銷前的收益是一種使用公司的收益計算的會計方法，然後減去利息費用，稅項，折舊和攤銷前的收益，作為公司當前經營盈利能力的替代。",
+    "grossProfit(12M)": "毛利（1200萬）",
+    "grossProfit(12M)Info": "TTM的毛利潤是公司連續12個月的利潤佔總收入的比例。 過去12個月的毛利使所有者和投資者可以觀察到任何近期的利潤趨勢。 當TTM與會計年度不一致時，此功能最為有用。",
+    "profitMargin": "利潤率",
+    "profitMarginInfo": "利潤率是公司利潤（銷售額減去所有費用）除以收入的比率。 利潤率將利潤與銷售額進行比較，並告訴您公司整體上如何處理其財務狀況。 它始終以百分比表示。",
+    "PERatio": "市盈率",
+    "PERatioInfo": "市盈率，也稱為市盈率，市盈率或市盈率，是公司股價與公司每股收益之比。 該比率用於對公司進行估值，並確定它們是被高估還是被低估。",
+    "dividendYield": "股息收益率",
+    "dividendYieldInfo": "每股的股息收益率是每股股息除以每股價格。 假設股票數量不變，這也是公司的年度總股息支付額除以其市值。 它通常表示為百分比。",
+    "earningsPerShare": "每股收益",
+    "earningsPerShareInfo": "每股收益（EPS）用公司的利潤除以發行在外的普通股計算。 公司通常會報告針對特殊項目和潛在股份稀釋而調整的每股收益。 公司的EPS越高，則認為它就越有利可圖。",
+    "Market": "市場",
+    "Profile": "個人資料",
+    "Fundamentals": "基本原理"
 
 }

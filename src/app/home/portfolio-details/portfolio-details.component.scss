@@ -1163,3 +1163,24 @@ h1{
     transform: rotate(360deg)
   }
 }
+
+
+// custom tabs
+.custom-tab-items {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: -5px;
+}
+
+.custom-tab-items p {
+  color: white;
+  margin: 5px 0 0 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.btn-rounded {
+  border-radius: 20px;
+}
+.custom-tab-content {
+  min-height: 375px;
+}

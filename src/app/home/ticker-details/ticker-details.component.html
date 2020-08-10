@@ -92,7 +92,7 @@
                                 <option value="50" *ngIf="shortingTab != '1D'">50-day SMA </option>
                                 <option value="100" *ngIf="shortingTab != '1D'">100-day SMA </option>
                                 <option value="200" *ngIf="shortingTab != '1D'">200-day SMA </option>
-                                <option value="24">Volume </option>
+                                <option value="24" *ngIf="shortingTab != '1D'">Volume </option>
                             </select>
                         </div>
                         <div class="actions_to">
@@ -102,6 +102,13 @@
                 </div>
             </div>
             <div class="col-lg-6">
+                <div class="custom-tab-items" *ngIf="fundamentalsData">
+                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab == 0" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                    <p *ngIf="activeCustomTab === 0">{{'Market' | translate}}</p>
+                    <p *ngIf="activeCustomTab === 1">{{'Profile' | translate}}</p>
+                    <p *ngIf="activeCustomTab === 2">{{'Fundamentals' | translate}}</p>
+                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab === 2" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
                 <div class="custom-tab-content {{ processingText }}">
                     <ul class="stats_list" *ngIf="activeCustomTab === 0">
                         <li>
@@ -167,7 +174,7 @@
                     <div class="stats_list fundamental-desc" *ngIf="activeCustomTab === 1">
                         <div class="row p-3">
                             <div class="col-md-3">
-                                <b>Sector :</b>
+                                <b>Sector</b>
                             </div>
                             <div class="col-md-9">
                                 <span>{{ fundamentalsData.General.Sector || '' }}</span>
@@ -175,7 +182,7 @@
                         </div>
                         <div class="row p-3">
                             <div class="col-md-3">
-                                <b>Industry :</b>
+                                <b>Industry</b>
                             </div>
                             <div class="col-md-9">
                                 <span>{{ fundamentalsData.General.Industry || '' }}</span>
@@ -183,18 +190,21 @@
                         </div>
                         <div class="row p-3">
                             <div class="col-md-3">
-                                <b>Description :</b>
+                                <b>Description</b>
                             </div>
                             <div class="col-md-9">
                                 <span>
                                     {{fundamentalDesc}}
-                                    <a href="javascript:" class="SeeMore"  *ngIf="fundamentalsData.General.Description.length>50" (click)="showMore()"> {{showLess_More}}</a>
+                                    <a href="javascript:" class="SeeMore"  *ngIf="fundamentalsData.General.Description.length>50" (click)="showMore()">
+                                        <i class="fa fa-plus-circle" aria-hidden="true" *ngIf="paasValueOn_SeeMoreBtn"></i>
+                                        <i class="fa fa-minus-circle" aria-hidden="true" *ngIf="!paasValueOn_SeeMoreBtn"></i>
+                                    </a>
                                 </span>
                             </div>
                         </div>
                         <div class="row p-3">
                             <div class="col-md-3">
-                                <b>Address :</b>
+                                <b>Address</b>
                             </div>
                             <div class="col-md-9">
                                 <span>{{ fundamentalsData.General.Address || '' }}</span>
@@ -202,7 +212,7 @@
                         </div>
                         <div class="row p-3">
                             <div class="col-md-3">
-                                <b>Officers :</b>
+                                <b>Officers</b>
                             </div>
                             <div class="col-md-9">
                                 <span *ngFor="let officer of fundamentalsOfficers">{{ officer.Name + ' ( ' + officer.Title + ' ), ' || '' }}<br/></span>
@@ -211,64 +221,59 @@
                     </div>
                     <ul class="stats_list" *ngIf="activeCustomTab === 2">
                         <li>
-                            <img src="assets/images/fscalyearend.png" alt="Fiscal Year End" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The term ‘fiscal year-end’ refers to the completion of a one-year or 12-month accounting period. The fiscal year is the period used for calculating annual financial statements. A company's fiscal year may differ from the calendar year, and may not close on December 31 due to the nature of a company's needs."></i>
-                            <h3>{{ fundamentalsData.General.FiscalYearEnd || '' }}</h3>
-                            <h4>{{ 'Fiscal Year End' }}</h4>
+                            <img src="assets/images/fscalyearend.png" alt="{{'fiscalYearEnd' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'fiscalYearEnd')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{ fundamentalsData.General.FiscalYearEnd || '-' }}</h3>
+                            <h4>{{'fiscalYearEnd' | translate}}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/revenue.png" alt="Revenue" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="TTM revenue refers to a company's revenue over the trailing twelve months (TTM) of operations. This financial measure is sometimes overlooked by buyers who are focused more on a company's profitability and ability to generate EBITDA."></i>
-                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.RevenueTTM) || '' }}</h3>
-                            <h4>{{ 'Revenue (12M)' }}</h4>
+                            <img src="assets/images/revenue.png" alt="{{'revenue12M' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'revenue12M')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{(fundamentalsData.Highlights.RevenueTTM && fundamentalsData.General.CurrencySymbol)?fundamentalsData.General.CurrencySymbol:''}}{{ getNumberInMillion(fundamentalsData.Highlights.RevenueTTM) }}</h3>
+                            <h4>{{'revenue12M' | translate}}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/ebitda.png" alt="EBITDA" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="A company's earnings before interest, taxes, depreciation, and amortization is an accounting measure calculated using a company's earnings, before interest expenses, taxes, depreciation, and amortisation are subtracted, as a proxy for a company's current operating profitability."></i>
-                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.EBITDA) || '' }}</h3>
-                            <h4>{{ 'EBITDA' }}</h4>
+                            <img src="assets/images/ebitda.png" alt="{{'EBITDA' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'EBITDA')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{(fundamentalsData.Highlights.EBITDA && fundamentalsData.General.CurrencySymbol)?fundamentalsData.General.CurrencySymbol:''}}{{ getNumberInMillion(fundamentalsData.Highlights.EBITDA) }}</h3>
+                            <h4>{{ 'EBITDA' | translate }}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/grossprofit.png" alt="Gross Profit" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The TTM gross profit is the trailing 12 months of profit over total revenues for a company. The trailing 12 months' gross profit allows owners and investors to observe any recent profit trends. It is most useful when the TTM does not coincide with the fiscal year."></i>
-                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.GrossProfitTTM) || '' }}</h3>
+                            <img src="assets/images/grossprofit.png" alt="{{'grossProfit(12M)' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'grossProfit(12M)')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{(fundamentalsData.Highlights.GrossProfitTTM && fundamentalsData.General.CurrencySymbol)?fundamentalsData.General.CurrencySymbol:''}}{{ getNumberInMillion(fundamentalsData.Highlights.GrossProfitTTM) }}</h3>
 
-                            <h4>{{ 'Gross Profit (12M)' }}</h4>
+                            <h4>{{ 'grossProfit(12M)' | translate }}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/profitmargin.png" alt="Profit Margin" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The profit margin is a ratio of a company's profit (sales minus all expenses) divided by its revenue. The profit margin ratio compares profit to sales and tells you how well the company is handling its finances overall. It's always expressed as a percentage."></i>
-                            <h3>{{ getNumberInPercentage(fundamentalsData.Highlights.ProfitMargin) || '0'}}%</h3>
-                            <h4>{{ 'Profit Margin' }}</h4>
+                            <img src="assets/images/profitmargin.png" alt="{{'profitMargin' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'profitMargin')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{ getNumberInPercentage(fundamentalsData.Highlights.ProfitMargin)}}</h3>
+                            <h4>{{ 'profitMargin' | translate }}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/peratio.png" alt="PE Ratio" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The price-earnings ratio, also known as P/E ratio, P/E, or PER, is the ratio of a company's share price to the company's earnings per share. The ratio is used for valuing companies and to find out whether they are overvalued or undervalued."></i>
-                            <h3>{{ fundamentalsData.Highlights.PERatio | number:'1.1-3' || ''}}</h3>
+                            <img src="assets/images/peratio.png" alt="{{'PERatio' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'PERatio')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{ (fundamentalsData.Highlights.PERatio | number:'1.1-3') || '-'}}</h3>
 
-                            <h4>{{ 'PE Ratio' }}</h4>
+                            <h4>{{ 'PERatio' | translate }}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/dividendyield.png" alt="Dividend Yield" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="The dividend yield of a share is the dividend per share, divided by the price per share. It is also a company's total annual dividend payments divided by its market capitalisation, assuming the number of shares is constant. It is often expressed as a percentage. "></i>
-                            <h3>{{ getNumberInPercentage(fundamentalsData.Highlights.DividendYield) || '0'}}%</h3>
-                            <h4>{{ 'Dividend Yield' }}</h4>
+                            <img src="assets/images/dividendyield.png" alt="{{'dividendYield' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'dividendYield')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{ getNumberInPercentage(fundamentalsData.Highlights.DividendYield)}}</h3>
+                            <h4>{{ 'dividendYield' | translate }}</h4>
                         </li>
                         <li>
-                            <img src="assets/images/earningspershare.png" alt="Earnings Per Share" />
-                            <i class="fa fa-info-circle text-helper" aria-hidden="true" title="Earnings per share (EPS) is calculated as a company's profit divided by the outstanding shares of its common stock. It is common for a company to report EPS that is adjusted for extraordinary items and potential share dilution. The higher a company's EPS, the more profitable it is considered."></i>
-                            <h3>{{ fundamentalsData.Highlights.EarningsShare | number:'1.1-3' || ''}}</h3>
-                            <h4>{{ 'Earnings Per Share' }}</h4>
+                            <img src="assets/images/earningspershare.png" alt="{{'earningsPerShare' | translate}}" />
+                            <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'earningsPerShare')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                            <h3>{{ (fundamentalsData.Highlights.EarningsShare | number:'1.1-3') || '-'}}</h3>
+                            <h4>{{ 'earningsPerShare' | translate }}</h4>
                         </li>
                     </ul>
                     <div class="data_fatch">
                         <div class="loader"><i></i><i></i><i></i><i></i><i></i></div>
                     </div>
-                </div>
-                <div class="custom-tab-items" *ngIf="fundamentalsData">
-                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab == 0" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                    <p>{{customTabs[activeCustomTab]}}</p>
-                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab === (customTabs.length - 1)" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
             </div>
         </div>
@@ -481,5 +486,21 @@
                 </div>
             </div>
         </form>
+    </div>
+</ng-template>
+
+
+<!-- add_assets modal-->
+<ng-template #alertBox let-c="close" let-d="dismiss">
+    <div class="modal-header alert_header">
+        <h4 class="modal-title">{{ alertHeading | uppercase }}</h4>
+        <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            {{ alertDesc }}
+        </p>
     </div>
 </ng-template>

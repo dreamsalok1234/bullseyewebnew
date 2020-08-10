@@ -112,12 +112,14 @@ export class TickerDetailsComponent implements OnInit {
 	predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
 	chatboardData: any;
 	activeCustomTab = 0;
-	customTabs = ['Market', 'Profile', 'Fundamentals'];
 	fundamentalsData: any;
-	showLess_More = 'Show More';
 	paasValueOn_SeeMoreBtn =false;
 	fundamentalDesc = '';
 	fundamentalsOfficers = [];
+	alertHeading = '';
+	alertDesc = '';
+
+	
 	constructor(
 		private translate: TranslateService,
 		private commonService: CommonService,
@@ -487,20 +489,18 @@ export class TickerDetailsComponent implements OnInit {
 		return limit;
 	}
 	getChartData(num, type, clickind) {
-		//
 		const objectType = this;
 		this.activeTab = 'active';
 		this.indMap = clickind;
 		this.tickerDataText = this.processingTxt;
 		this.num = num;
 		this.type = type;
-
+		
 		objectType.loadingBar.start();
 		if (this.tickerType !== '' && this.tickerName !== '' && this.tickerSymbol !== '' && this.tickerDetailsCurrency !== '' && this.num !== '' && this.type !== '') {
 
 			if (this.type === 'D') {
 				this.shortingTab = '1D';
-				// this.filterModel.searchCriteria = 0;
 				this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
 
 					if (err) {
@@ -508,6 +508,7 @@ export class TickerDetailsComponent implements OnInit {
 						objectType.tickerDataText = objectType.graphDataUnavailable;
 					}
 					if (response.statusCode === 200) {
+						document.getElementById('volumechart').style.display = 'none';
 						objectType.tickerDataText = '';
 						const keys = [];
 						const candleStickData = [];
@@ -580,7 +581,6 @@ export class TickerDetailsComponent implements OnInit {
 					objectType.loadingBar.stop();
 				});
 			} else {
-
 				this.shortingTab = '1M';
 				/* Current Date */
 				const d = new Date();
@@ -618,6 +618,10 @@ export class TickerDetailsComponent implements OnInit {
 						const candleStickData = [];
 						let data = [];
 						let newData = [];
+						
+						if (objectType.filterModel.searchCriteria === 24) {
+							document.getElementById('volumechart').style.display = 'flex';
+						}
 						if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 							if (response.data.Data !== undefined && response.data.Data.length > 0) {
 								data = response.data.Data;
@@ -875,7 +879,8 @@ export class TickerDetailsComponent implements OnInit {
 		const columnTemplate = series.columns.template;
 		columnTemplate.width = am4core.percent(50);
 		columnTemplate.height = am4core.percent(50);
-		columnTemplate.fill = am4core.color('#364451');
+		// columnTemplate.fill = am4core.color('#364451');
+		columnTemplate.fill = am4core.color('#6e7071');
 		columnTemplate.maxHeight = 100;
 		columnTemplate.maxWidth = 13;
 		// columnTemplate.column.cornerRadius(60, 60, 10, 10);
@@ -1207,7 +1212,6 @@ export class TickerDetailsComponent implements OnInit {
 
 		this.loadingBar.start();
 		this.getChartData(this.num, this.type, this.indMap);
-
 		if (this.filterModel.graphDisplay) {
 
 			document.getElementById('chartdiv').style.display = 'none';
@@ -1439,7 +1443,7 @@ export class TickerDetailsComponent implements OnInit {
 			}
 
 		}else{			
-			if (this.activeCustomTab < (this.customTabs.length - 1)){
+			if (this.activeCustomTab < 2){
 				++this.activeCustomTab;
 			}else {
 				return;
@@ -1480,34 +1484,46 @@ export class TickerDetailsComponent implements OnInit {
 	}
 
 	getNumberInMillion(finalPrice) {
-		finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
+		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
 		if (finalPrice > 1000000) {
 			let douValue = finalPrice / 1000000;
-			return this.formatNumber(douValue.toFixed(0)) + 'm';
+			return this.formatNumber(douValue.toFixed(2)) + 'm';
 		} else {
-			finalPrice = parseInt(finalPrice);
+			finalPrice = (finalPrice) ? parseInt(finalPrice) : '-';
 			return this.formatNumber(finalPrice);
 		}
 	}
 	getNumberInPercentage(finalPrice) {
-		finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
+		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
 		if (finalPrice > 0) {
 			let douValue = finalPrice * 100;
-			return this.formatNumber(douValue.toFixed(2));
-		}		
-		return this.formatNumber(finalPrice);
+			return this.formatNumber(douValue.toFixed(2)) + '%';
+		}
+		return '-';
 	}
 	showMore(){
 		if(this.paasValueOn_SeeMoreBtn){
-		  this.showLess_More = " SEE LESS";
 		  this.fundamentalDesc = this.fundamentalsData.General.Description;
 		  this.paasValueOn_SeeMoreBtn = false;	
 		}else{
-		  this.showLess_More = "SEE MORE";
 		  this.fundamentalDesc = this.fundamentalsData.General.Description.slice(0, 50) + '...';
 		  this.paasValueOn_SeeMoreBtn = true;	
 		}	
 	  }
+	showAlert(content, obj) {
+		this.translate.get(obj).subscribe(value => {
+			this.alertHeading = value;
+		});
+		this.translate.get(obj+'Info').subscribe(value => {
+			this.alertDesc = value;
+		});
+		this.modalService.open(content).result.then((result) => {
+			this.closeResult = `Closed with: ${result}`;
+		}, (reason) => {
+			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+		});
+		
+	}
 
 
 

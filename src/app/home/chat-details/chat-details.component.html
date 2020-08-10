@@ -216,8 +216,8 @@
           </form>
         </div>
         <div class="modal_footer">
-          <button type="button" class="btn btn-close btn-danger" (click)="c('Close click')" style="margin-right: 5px">{{ 'Close' | translate }}</button>
-          <button type="button" (click)="addMessage()" class="btn btn-send btn-success">{{ btnText }}</button>
+          <button type="button" (click)="addMessage()" class="btn btn-success tick-cross"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+          <button type="button" class="btn btn-danger tick-cross" (click)="c('Close click')"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
         </div>
       </ng-template>
     </div>
