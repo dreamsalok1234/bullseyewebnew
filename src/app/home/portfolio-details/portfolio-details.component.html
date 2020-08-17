@@ -5,10 +5,8 @@
         <h2>{{ portfolioName }}</h2>
         <span></span>
         <div class="buttons_grp">
-          <button style="margin-left: 0;" [routerLink]="['/market-search']">
-            <span style="margin-right: 5px;"><img src="../assets/images/search-market-icon.png"
-                alt="search-market-icon" /></span>
-            {{ "SearchMarkets" | translate }}
+          <button type="button" [routerLink]="['/market-search']">
+            <i class="fa fa-search" aria-hidden="true"></i>
           </button>
           <button title="{{ 'ViewHistory' | translate }}" (click)="gotoPortfolioHistory()">
             <img src="../assets/images/timer.png" alt="timer" class="img-fluid" />
@@ -61,7 +59,10 @@
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2>{{ "GraphAnaTitle" | translate }}</h2>
+              <h2 class="modal-title-analytics">
+                  <img class="head-img" src="../../assets/images/graph-analytics.png">
+                  {{ 'GraphAnaTitle' | translate }}
+              </h2>
               <button (click)="activeFilter = !activeFilter" class="custom-btn">
                 x
               </button>
@@ -75,10 +76,9 @@
               </select>
             </div>
 
-            <div class="actions_to">
-              <button class="custom-btn" (click)="showHideChart(graphFilter)">
-                {{ "Apply" | translate }}
-              </button>
+            <div class="actions_to_pop">
+              <button class="btn custom-btn" (click)="activeFilter = !activeFilter"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+              <button class="btn custom-btn" (click)="showHideChart(graphFilter)"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
@@ -88,11 +88,11 @@
           <div class="tabs_pills">
             
             <div class="custom-tab-items">
-              <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab == 0" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+              <button href="javascript:" class="btn btn-success btn-rounded" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
               <p *ngIf="activeCustomTab === 0">{{'Market' | translate}}</p>
               <p *ngIf="activeCustomTab === 1">{{'Risk' | translate}}</p>
               <p *ngIf="activeCustomTab === 2">{{'Performance' | translate}}</p>
-              <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab === 2" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+              <button href="javascript:" class="btn btn-success btn-rounded" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
             </div>
             <!-- Tab panes -->
             <div class="tab-content" *ngIf="this.profileInfo.isProAccount">
@@ -387,12 +387,8 @@
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title" *ngIf="modelHeading.toLowerCase() == 'buy'">
-        {{ "Buy" | translate }}
-      </h4>
-      <h4 class="modal-title" *ngIf="modelHeading.toLowerCase() == 'sell'">
-        {{ "Sell" | translate }}
-      </h4>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-square head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-square head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -457,10 +453,9 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio">
-            <i class="fa fa-plus"></i>{{ "ConfirmBuy" | translate }}
-          </button>
+        <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" type="submit" [disabled]="loading"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
         </div>
       </form>
       <!-- Sell Form-->
@@ -522,9 +517,9 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio"> <i
-              class="fa fa-plus"></i>{{ "ConfirmSell" | translate }} </button>
+        <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" type="submit" [disabled]="loading"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
         </div>
       </form>
     </div>
@@ -534,15 +529,16 @@
 <div class="card-body">
   <ng-template #deleteInvestment let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title">{{ "DeleteInvestment" | translate }}</h4>
+      <h2 class="pop-head"><i class="fa fa-trash head-icon-1" aria-hidden="true"></i> {{ 'DeleteInvestment' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')"> <span
           aria-hidden="true">&times;</span> </button>
     </div>
     <div class="modal-body">
       <p>{{ "AreyousuretoDelete?" | translate }}</p>
-      <a href="javascript:void(0);" class="btn btn-danger" (click)="DeleteInvestment()"
-        style="margin-right: 10px;">{{ "Yes" | translate }}</a>
-      <a href="javascript:void(0);" class="btn btn-success" (click)="c('Close click')">{{ "No" | translate }}</a>
+      <div class="actions_to_pop">
+        <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+        <button class="btn custom-btn" (click)="DeleteInvestment()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+      </div>
     </div>
   </ng-template>
 </div>
@@ -550,7 +546,7 @@
 <div class="card-body">
   <ng-template #pricealert let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title">{{ "PriceAlert" | translate }}</h4>
+      <h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -601,11 +597,15 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+        </div>
+        <!-- <div class="form-group">
           <button class="btn btn-success" type="submit">
             {{ "Submit" | translate }}
           </button>
-        </div>
+        </div> -->
       </form>
     </div>
   </ng-template>

@@ -284,6 +284,7 @@ export class TickerDetailsComponent implements OnInit {
 
 			objectNtype.filterExchangeItem();
 			objectNtype.getChatboard();
+			objectNtype.getTickerFundamentals();
 		}, 1000);
 
 
@@ -359,7 +360,6 @@ export class TickerDetailsComponent implements OnInit {
 							objectType.tickerNIcon = response.data[0].historyData.currentDayData.tickerUrl;
 						}
 					}
-					objectType.getTickerFundamentals();
 				} else {
 					objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 					objectType.searchSearchText = response.data.message;
@@ -452,8 +452,9 @@ export class TickerDetailsComponent implements OnInit {
 
 	getExtraSMA() {
 		// setting date range in sma case
-		let limit = (this.filterModel.searchCriteria === 24) ? 24 : 0;
-		if (this.filterModel.searchCriteria === 50 || this.filterModel.searchCriteria === 100 || this.filterModel.searchCriteria === 200) {
+		// let limit = (this.filterModel.searchCriteria === 24) ? 24 : 0;
+		let limit = 0;
+		if (this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200) {
 			if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 				switch (this.filterModel.searchCriteria) {
 					case '50': {
@@ -519,7 +520,7 @@ export class TickerDetailsComponent implements OnInit {
 								data = response.data.Data;
 								data.map(function (item) {
 									const currentDateTime = new Date(item.time * 1000);
-									keys.push({ date: new Date(item.time * 1000), shortZone: 'GMT', currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4)) });
+									keys.push({ date: new Date(item.time * 1000), shortZone: 'GMT', currentDateTime: (currentDateTime.getHours() < 10?'0'+currentDateTime.getHours():currentDateTime.getHours()) + ':' + (currentDateTime.getMinutes() < 10?'0'+currentDateTime.getMinutes():currentDateTime.getMinutes()), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4)) });
 
 									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
@@ -545,7 +546,7 @@ export class TickerDetailsComponent implements OnInit {
 								Object.keys(data).map(function (key) {
 									const currentDateTime = new Date(key);
 									// const shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
-									keys.push({ date: new Date(key), shortZone: 'GMT', currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
+									keys.push({ date: new Date(key), shortZone: 'GMT', currentDateTime: (currentDateTime.getHours() < 10?'0'+currentDateTime.getHours():currentDateTime.getHours()) + ':' + (currentDateTime.getMinutes() < 10?'0'+currentDateTime.getMinutes():currentDateTime.getMinutes()), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
 
 								});
 
@@ -675,8 +676,8 @@ export class TickerDetailsComponent implements OnInit {
 								keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 								});
-
-								newData = keys.slice(objectType.filterModel.searchCriteria);
+								
+								newData = (objectType.filterModel.searchCriteria !== 24) ? keys.slice(objectType.filterModel.searchCriteria): keys;
 								/* candleStickData.sort((a, b) => {
 								return <any>new Date(a.date) - <any>new Date(b.date);
 								}); */
@@ -1439,14 +1440,14 @@ export class TickerDetailsComponent implements OnInit {
 			if (this.activeCustomTab > 0){
 				--this.activeCustomTab;
 			}else {
-				return;
+				this.activeCustomTab = 2;
 			}
 
 		}else{			
 			if (this.activeCustomTab < 2){
 				++this.activeCustomTab;
 			}else {
-				return;
+				this.activeCustomTab = 0;
 			}
 		}
 	}
@@ -1485,7 +1486,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	getNumberInMillion(finalPrice) {
 		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
-		if (finalPrice > 1000000) {
+		if (Math.abs(finalPrice) > 1000000) {
 			let douValue = finalPrice / 1000000;
 			return this.formatNumber(douValue.toFixed(2)) + 'm';
 		} else {

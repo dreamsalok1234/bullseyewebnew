@@ -16,11 +16,9 @@
             </div>
             <div class="col-md-12 col-lg-6">
                 <div class="buttons_grp">
-                    <button style="margin-left: 0" [routerLink]="['/market-search']" class="search_mar" title="{{ 'SearchMarkets' | translate }}">
-                        <span style="margin-right: 5px"> <img src="assets/images/search-market-icon.png"
-                            alt="search-market-icon" /></span>
-                        {{ 'SearchMarkets' | translate }}
-                    </button>
+                    <button type="button" [routerLink]="['/market-search']">
+						<i class="fa fa-search" aria-hidden="true"></i>
+					</button>
                     <select class="btn custom-btn" (change)="ChangeCurrency()" name="currentCurrency" [(ngModel)]="model.currentCurrency" #currentCurrency="ngModel">
                         <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">{{ currency.name }}
                         </option>
@@ -75,7 +73,10 @@
                     <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}"><img src="assets/images/search-market-icon.png" /></a>
                     <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
                         <div class="title_div">
-                            <h2>{{ 'GraphAnaTitle' | translate }}</h2>
+                            <h2 class="modal-title-analytics">
+                                <img class="head-img" src="../../assets/images/graph-analytics.png">
+                                {{ 'GraphAnaTitle' | translate }}
+                            </h2>
                             <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
                         </div>
                         <div class="form-group">
@@ -95,19 +96,20 @@
                                 <option value="24" *ngIf="shortingTab != '1D'">Volume </option>
                             </select>
                         </div>
-                        <div class="actions_to">
-                            <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+                        <div class="actions_to_pop">
+                            <button class="btn custom-btn" (click)="activeFilter = !activeFilter"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                            <button class="btn custom-btn"(click)="filterExchangeItem()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="custom-tab-items" *ngIf="fundamentalsData">
-                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab == 0" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                <div class="custom-tab-items">
+                    <button href="javascript:" class="btn btn-success btn-rounded" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                     <p *ngIf="activeCustomTab === 0">{{'Market' | translate}}</p>
                     <p *ngIf="activeCustomTab === 1">{{'Profile' | translate}}</p>
                     <p *ngIf="activeCustomTab === 2">{{'Fundamentals' | translate}}</p>
-                    <button href="javascript:" class="btn btn-success btn-rounded" [disabled]="activeCustomTab === 2" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                    <button href="javascript:" class="btn btn-success btn-rounded" (click)="selectCustomTabs('+')"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
                 <div class="custom-tab-content {{ processingText }}">
                     <ul class="stats_list" *ngIf="activeCustomTab === 0">
@@ -171,7 +173,10 @@
                             <h4>{{ '52W LOW' | translate }}</h4>
                         </li>
                     </ul>
-                    <div class="stats_list fundamental-desc" *ngIf="activeCustomTab === 1">
+                    <div class="stats_list profile-desc text-center" *ngIf="!fundamentalsData && (activeCustomTab === 1 || activeCustomTab === 2)">
+                        <img src="assets/images/spinner.gif" style="width: 50px;">
+                    </div>
+                    <div class="stats_list profile-desc" *ngIf="activeCustomTab === 1 && fundamentalsData">
                         <div class="row p-3">
                             <div class="col-md-3">
                                 <b>Sector</b>
@@ -219,7 +224,7 @@
                             </div>
                         </div>
                     </div>
-                    <ul class="stats_list" *ngIf="activeCustomTab === 2">
+                    <ul class="stats_list fundamental-desc" *ngIf="activeCustomTab === 2 && fundamentalsData">
                         <li>
                             <img src="assets/images/fscalyearend.png" alt="{{'fiscalYearEnd' | translate}}" />
                             <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'fiscalYearEnd')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
@@ -267,7 +272,7 @@
                         <li>
                             <img src="assets/images/earningspershare.png" alt="{{'earningsPerShare' | translate}}" />
                             <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'earningsPerShare')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                            <h3>{{ (fundamentalsData.Highlights.EarningsShare | number:'1.1-3') || '-'}}</h3>
+                            <h3>{{ (fundamentalsData.Highlights.EarningsShare | number:'1.2-2') || '-'}}</h3>
                             <h4>{{ 'earningsPerShare' | translate }}</h4>
                         </li>
                     </ul>
@@ -283,7 +288,7 @@
 <!-- add_assets modal-->
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-        <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
+        <h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
         <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -324,10 +329,9 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <button class="btn btn-success" type="submit">
-          {{ 'Submit' | translate }}
-        </button>
+            <div class="actions_to_pop">
+                <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                <button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
         </form>
     </div>
@@ -335,7 +339,10 @@
 <!-- price prediction modal-->
 <ng-template #addpriceprediction let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-        <h4 class="modal-title">{{ 'pricePrediction' | translate }}</h4>
+        <h4 class="modal-title">
+            <img class="head-img" src="../../assets/images/target.png">
+            {{ 'pricePrediction' | translate }}
+        </h4>
         <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -369,11 +376,9 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label _ngcontent-c5="" class="ng-tns-c5-1">&nbsp;</label>
-                <button class="btn btn-success" type="submit">
-          {{ 'Submit' | translate }}
-        </button>
+            <div class="actions_to_pop">
+                <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                <button class="btn custom-btn"  type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
         </form>
     </div>

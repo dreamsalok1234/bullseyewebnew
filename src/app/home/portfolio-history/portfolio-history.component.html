@@ -50,8 +50,8 @@
           <ul class="stats_body" *ngFor="let portfolioItem of portfolioList; let i = index">
             <li>{{ portfolioItem.symbol }}</li>
             <li>{{ portfolioItem.historyDate }}</li>
-            <li *ngIf="portfolioItem.historyType.toLowerCase() == 'investment' || portfolioItem.historyType.toLowerCase() == 'buy'" class="clr-success">Buy</li>
-            <li *ngIf="portfolioItem.historyType.toLowerCase() != 'investment' &&  portfolioItem.historyType.toLowerCase() != 'buy'" class="clr-warning">{{portfolioItem.historyType}}</li>
+            <li *ngIf="portfolioItem.historyType.toLowerCase() == 'investment' || portfolioItem.historyType.toLowerCase() == 'buy'" class="color-box" style="padding: 5px !important"><span class="active">Buy</span></li>
+            <li *ngIf="portfolioItem.historyType.toLowerCase() != 'investment' &&  portfolioItem.historyType.toLowerCase() != 'buy'" class="color-box" style="padding: 5px !important"><span class="zeroactive">{{portfolioItem.historyType}}</span></li>
             <li>{{ numberWithCommas(portfolioItem.noOfUnits)}}</li>
             <li>
               {{ portfolioItem.bookCost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.2' }}
@@ -83,8 +83,8 @@
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='buy'">{{ 'Buy' | translate }}</h4>
-    <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='sell'">{{ 'Sell' | translate }}</h4>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-square head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-square head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -171,10 +171,9 @@
             <div *ngIf="f.marketValue.required">{{ 'MarketValueisrequired' | translate }}</div>
           </div>
         </div>
-        <div class="form-group">
-          <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio">
-            {{ 'Update Buy' | translate }}
-          </button>
+        <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" type="submit" [disabled]="loading"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
         </div>
       </form>
     <!-- Sell Form-->
@@ -258,10 +257,9 @@
             <div *ngIf="f.marketValue.required">{{ 'SellValueisrequired' | translate }}</div>
           </div>
         </div>
-        <div class="form-group">
-          <button type="submit" [disabled]="loading" class="btn custom-btn add-portfolio">
-            {{ 'Update Sell' | translate }}
-          </button>
+        <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" type="submit" [disabled]="loading"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
         </div>
       </form>
     </div>

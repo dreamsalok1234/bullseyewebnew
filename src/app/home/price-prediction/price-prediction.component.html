@@ -26,7 +26,10 @@
       
       <ng-template #addpriceprediction let-c="close" let-d="dismiss">
         <div class="modal-header ">
-          <h4 class="modal-title">{{ 'pricePrediction' | translate }}</h4>          
+          <h4 class="modal-title">
+              <img class="head-img" src="../../assets/images/target.png">
+              {{ 'pricePrediction' | translate }}
+          </h4>        
           <button type="button" class="btn btn-secondary btn-close close" (click)="c('Close click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -88,11 +91,9 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label>&nbsp;</label>
-              <button class="btn btn-success btn_submit" type="submit">
-                {{ 'confirm' | translate }}
-              </button>
+            <div class="actions_to_pop">
+                <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                <button class="btn custom-btn"  type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
           </form>
         </div>
@@ -100,7 +101,7 @@
       
       <ng-template #share let-modal>
         <div class="modal-header alert_header">
-          <h4 class="modal-title" id="modal-basic-title">{{ 'chooseYourPlatform' | translate }}</h4>
+          <h4 class="pop-head"><i class="fa fa-share-alt-square head-icon" aria-hidden="true"></i> {{ 'chooseYourPlatform' | translate }}</h4>
           <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -234,12 +234,12 @@ export class ChatComponent implements OnInit {
 		}
 	}
 	/*Modal Popup*/
-	open(content, chatBoardId, favouriteId, updateFavtype, ind) {
+	open(content, chatBoardId, favouriteId, updateFavtype, ind, tickerName) {
 		this.ind = ind + 1;
 		this.updateFavtype = updateFavtype;
 		this.chatBoardId = chatBoardId;
 		this.favouriteId = favouriteId;
-		this.modelText = this.favRemoveText;
+		this.modelText = this.favRemoveText.replace('<ticker>', tickerName);
         this.modalService.open(content).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {

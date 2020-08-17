@@ -17,12 +17,12 @@
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link" href="javascript:" (click)="toggleActive(1)" [ngClass]="activeTab ? '' : 'active'">{{
+          <a class="nav-link" href="javascript:" (click)="toggleActive(1)" [ngClass]="activeTab == 1 ? 'active' : ''">{{
             'NewStocks' | translate
           }}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:" (click)="toggleActive(2)" [ngClass]="activeTab ? 'active' : ''">{{
+          <a class="nav-link" href="javascript:" (click)="toggleActive(2)" [ngClass]="activeTab == 2 ? 'active' : ''">{{
             'Cryptocurrency' | translate
           }}</a>
         </li>
@@ -34,7 +34,7 @@
             <input class="form-control" type="text" autocomplete="off" placeholder="{{ 'Entertickerhere' | translate }}"
               name="keywords" (change)="filterExchangeItem()" (keyup)="checkAndRemoveList()"
               [(ngModel)]="model.keywords" #keywords="ngModel" />
-            <button class="btn btn-success" (click)="filterExchangeItem()" type="submit"><i
+            <button class="btn btn-search-input" (click)="filterExchangeItem()" type="submit"><i
                 class="fa fa-search"></i></button>
           </div>
         </div>
@@ -52,7 +52,7 @@
               src="assets/images/filter.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2 class="pop-head"><i class="fa fa-filter" aria-hidden="true"></i> {{ 'SearchMarkets' | translate }}</h2>
+              <h2 class="pop-head"><i class="fa fa-search head-icon" aria-hidden="true"></i> {{ 'SearchMarkets' | translate }}</h2>
               <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
             </div>
             <div class="form-group" *ngIf="model.stockType == 'STOCK'">
@@ -82,8 +82,8 @@
             </div>
 
             <div class="actions_to_pop">
-              <button class="custom-btn" (click)="activeFilter = !activeFilter"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
-              <button class="custom-btn" (click)="filterExchangeItem()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+              <button class="btn custom-btn" (click)="activeFilter = !activeFilter"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+              <button class="btn custom-btn" (click)="filterExchangeItem()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
@@ -126,8 +126,8 @@
 
             </li>
 
-            <li class="" [ngClass]="item.changePct == 0 ? 'zeroactive' : item.changePct > 0 ? 'active' : 'inactive'">
-              <span>
+            <li class="color-box">
+              <span [ngClass]="item.changePct == 0 ? 'zeroactive' : item.changePct > 0 ? 'active' : 'inactive'">
                 <i class="fa fa-caret-up" aria-hidden="true" *ngIf="item.changePct > 0"></i>
                 <i class="fa fa-caret-down" aria-hidden="true" *ngIf="item.changePct < 0"></i>
                 <i class="fa fa-caret-left" aria-hidden="true" *ngIf="item.changePct == 0"></i>
@@ -171,7 +171,7 @@
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-      <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
+      <h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
       <button type="button" class="btn btn-secondary" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -214,10 +214,9 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <button class="btn btn-success" type="submit">
-            {{ 'Submit' | translate }}
-          </button>
+        <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
         </div>
       </form>
     </div>

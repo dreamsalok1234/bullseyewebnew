@@ -33,7 +33,7 @@ export class SearchMarketComponent implements OnInit {
   currencyItemList: any = [];
   placeholderImageUrl: string;
   activeFilter = false;
-  activeTab = '';
+  activeTab = 1;
   processing = true;
   isPagination = false;
   pageSearchResult = false;
@@ -155,7 +155,9 @@ export class SearchMarketComponent implements OnInit {
   }
 
   toggleActive(i) {
-    this.activeTab = (!this.activeTab) ? 'active' : '';
+    if(this.activeTab == i)
+    return;
+    this.activeTab = i;
     this.reStockType = (i === 1) ? this.stockType : this.cryptoText;
     this.model.stockType = (i === 1) ? this.stockType.toUpperCase() : this.cryptoText;
 
@@ -221,7 +223,7 @@ export class SearchMarketComponent implements OnInit {
     const keyType = (key === 'price') ? false : true;
     const currency = itemData.currency;
     const finalPrice = this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.model.currentCurrency, keyType);
-    if (finalPrice > 1000000) {
+    if (Math.abs(finalPrice) > 1000000) {
       let douValue = finalPrice / 1000000;
       let sy = 'm';
       if (douValue > 1000) {

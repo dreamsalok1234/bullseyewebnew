@@ -21,7 +21,8 @@
       
       <ng-template #addpricealert let-c="close" let-d="dismiss">
         <div class="modal-header ">
-          <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>          
+          
+          <h4 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h4>
           <button type="button" class="btn btn-secondary btn-close close" (click)="c('Close click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -96,11 +97,9 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label>&nbsp;</label>
-              <button class="btn btn-success btn_submit" type="submit">
-                {{ 'Submit' | translate }}
-              </button>
+            <div class="actions_to_pop">
+                <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                <button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
           </form>
         </div>
@@ -175,10 +174,10 @@
       <p>{{ 'AreyousuretoDelete?' | translate }}</p>
     </div>
     <div class="modal-footer">
-      <a href="javascript:void(0);" class="btn custom-btn btn-danger"
-        (click)="DeletePriceAlert()">{{ 'Yes' | translate }}</a>
-      <a href="javascript:void(0);" class="btn custom-btn btn-success"
-        (click)="c('Close click')">{{ 'No' | translate }}</a>
+      <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" (click)="DeletePriceAlert()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+      </div>
     </div>
   </ng-template>
 </div>

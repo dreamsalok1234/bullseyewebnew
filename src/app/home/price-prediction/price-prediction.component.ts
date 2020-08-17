@@ -530,12 +530,12 @@ export class PricePredictionComponent implements OnInit {
   	    
 	formateBERF(finalPrice) {
 		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
-		if (finalPrice > 1000000) {
+		if (Math.abs(finalPrice) > 1000000) {
 			let douValue = finalPrice / 1000000;
-			return this.formatNumber(douValue.toFixed(1)) + 'm';
-		} else if (finalPrice > 999) {
+			return this.formatNumber(douValue.toFixed(0)) + 'm';
+		} else if (Math.abs(finalPrice) > 999) {
 			let douValue = finalPrice / 1000;
-			return this.formatNumber(douValue.toFixed(1)) + 'k';
+			return this.formatNumber(douValue.toFixed(0)) + 'k';
 		} else {
 			return this.formatNumber(parseInt(finalPrice.toFixed(0)));
 		}

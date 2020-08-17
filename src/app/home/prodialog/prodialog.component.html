@@ -13,12 +13,16 @@
       <p>{{modelText|translate}}</p>
     </div>
     <div class="modal-footer" *ngIf="autRenewalInd==0 || autRenewalInd==1">
-      <button type="button" class="btn btn-success" (click)="changeAutoRenewal()">{{ btnYes | translate }}</button>
-      <button type="button" class="btn btn-danger" (click)="resetAutoRenewal();">{{ 'No' | translate }}</button>
+      <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="resetAutoRenewal();"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" (click)="changeAutoRenewal()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+      </div>
     </div>
     <div class="modal-footer" *ngIf="autRenewalInd==2">
-      <button type="button" class="btn btn-success" (click)="cancelSubscription()">{{btnText}}</button>
-      <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'No' | translate }}</button>
+      <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="d('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" (click)="cancelSubscription()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+      </div>
     </div>
 	</div>
   </ng-template>
@@ -34,8 +38,10 @@
       <p>{{ 'Areyousureyouwanttochangeyoursubscriptionplan' | translate}}</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="gotoUpgradeUrl()">{{ 'Confirm' | translate }}</button>
-      <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'Cancel' | translate }}</button>
+      <div class="actions_to_pop">
+          <button class="btn custom-btn" (click)="d('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+          <button class="btn custom-btn" (click)="gotoUpgradeUrl()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+      </div>
     </div>
 	</div>
   </ng-template>

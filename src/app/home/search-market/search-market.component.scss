@@ -298,18 +298,15 @@ li.gain_green b {
   margin-top: 10px;
 }
 .pop_filters a {
-  display: flex;
-  width: 100%;
-  text-align: center;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
   background: #00b050;
-  height: 38px;
-  cursor: pointer;
+  border-radius: 30px;
+  width: 37px;
+  height: auto;
+  padding: 8px 10px;
 }
 .pop_filters a img {
-  width: 25px;
+  margin-top: 2px;
+  width: 19px;
 }
 .hideFilter {
   opacity: 0;
@@ -482,11 +479,8 @@ ul {
     color: #fff;
     font-size: 15px;
     font-family: 'SFProDisplay-Regular';
-    //background: #234b6f;
-    //background: #0e243b;
     background: #234b6f;
     padding: 10px;
-    // text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -503,7 +497,7 @@ ul {
       }
     }
     
-    &.active {
+    span.active {
       background: #00b050;
       justify-content: center;
       span {
@@ -526,7 +520,7 @@ ul {
         text-decoration: none;
       }
     }
-    &.inactive {
+    span.inactive {
       background: #ff0000;
       justify-content: center;
       span {
@@ -535,7 +529,7 @@ ul {
         }
       }
     }
-    &.zeroactive {
+    span.zeroactive {
       background: #fff;
       color: #000;
     }
@@ -693,6 +687,10 @@ ul.stats_body li.performance-item {
       font-size: 10px;
     }
   }
+  button.btn-search-input i {
+    font-size: 12px !important;
+    margin-bottom: 1px;
+  }
   .advr_big {
     padding: 10px 0 20px;
     position: static;
@@ -700,13 +698,7 @@ ul.stats_body li.performance-item {
   .showFilter {
     top: 65%;
   }
-  .pop_filters a {
-    height: 30px;
-    margin-bottom: 5px;
-  }
-  .pop_filters a img {
-    width: 20px;
-  }
+
   .table-section .watchlist-heading {
     flex-wrap: wrap;
     .custom-btn {
@@ -925,18 +917,34 @@ h2.pop-head {
   display: block !important;
 }
 
-.tick-cross-icon {font-size: 45px;}
-
-.actions_to_pop {
-  display: flex;
-  justify-content: flex-end;
+.stock_list .nav-tabs .nav-link{  
+  background: #858483;
+  color: #FFFFFF;
+  border-bottom: 2px solid #615B5B;	
 }
 
-.actions_to_pop .custom-btn {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  margin-left: 15px;
+.btn-search-input {  
+  background-color: #111e36;
+  border: 1px solid #446078 !important;
+  border-radius: 0;
+  border-left: 0!important;
+  padding: 0px 5px;
 }
 
+button.btn-search-input i {
+  color: white;
+  background: #0db459;
+  padding: 6px 7px;
+  border-radius: 20px;
+  font-size: 17px;
+  border: 1px solid #19334e;
+}
+
+.head-icon-1 {
+  background: #00b050;
+  color: white;
+  border-radius: 30px;
+  font-size: 20px;
+  padding: 9px 9px;
+  margin-right: 5px;
+}

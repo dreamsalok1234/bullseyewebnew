@@ -106,7 +106,10 @@
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2>{{ 'GraphAnaTitle' | translate }}</h2>
+              <h2 class="modal-title-analytics">
+                  <img class="head-img" src="../../assets/images/graph-analytics.png">
+                  {{ 'GraphAnaTitle' | translate }}
+              </h2>
               <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
             </div>
             <div class="form-group">
@@ -128,8 +131,9 @@
                 <option value="24">Volume </option>
               </select>
             </div>
-            <div class="actions_to">
-              <button class="custom-btn" (click)="filterExchangeItem()">{{ 'Apply' | translate }}</button>
+            <div class="actions_to_pop">
+                <button class="btn custom-btn" (click)="activeFilter = !activeFilter"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                <button class="btn custom-btn"(click)="filterExchangeItem()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>
@@ -248,11 +252,11 @@
           <p>{{ modelText }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-danger" (click)="c('Close click')">{{ 'No' | translate }}</button>
-          <button type="button" class="btn btn-secondary btn-success" *ngIf="messageId == 0" (click)="updateFavouriteTicker('Close click')">
-            {{ btnText }}
-          </button>
-          <button type="button" class="btn btn-secondary btn-success" *ngIf="messageId > 0" (click)="deleteMessage()">{{ btnText }}</button>
+          <div class="actions_to_pop">
+            <button class="btn custom-btn"  (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+            <button class="btn custom-btn" *ngIf="messageId == 0" (click)="updateFavouriteTicker('Close click')"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+            <button class="btn custom-btn" *ngIf="messageId > 0" (click)="deleteMessage()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+          </div>
         </div>
       </ng-template>
     </div>

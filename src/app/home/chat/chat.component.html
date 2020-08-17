@@ -39,7 +39,7 @@
 								<b>{{getCurrencyValue(chat) | currency : returnCurrSymbol(chatCurrency):'symbol':'1.3-3' }}</b>
 							</div>
 							<div class="rate_arrow">
-								<span (click)="open(content,chat.chatBoardId,chat.favouriteId,'deletefavourite',i)" ><i class="fa fa-star" aria-hidden="true"></i></span>
+								<span (click)="open(content,chat.chatBoardId,chat.favouriteId,'deletefavourite',i, chat.name)" ><i class="fa fa-star" aria-hidden="true"></i></span>
 								<span (click)="goToChatDetails(chat.chatBoardId,chat.name,chat.symbol,chat.tickerUrl,getCurrencyValue(chat),chat.currency,chat.favouriteId,chat.change_pct,chat.volume);"><img src="../assets/images/stock_tog.png" alt="" class="img-fluid"></span>
 							</div>
 						</li>	
@@ -99,8 +99,10 @@
 				<p>{{modelText}}</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-danger" (click)="c('Close click')">{{ 'No' | translate }}</button>
-				<button type="button" class="btn btn-secondary btn-success" (click)="updateFavouriteTicker('Close click');">{{btnText}}</button>
+				<div class="actions_to_pop">
+				  <button class="btn custom-btn"  (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+				  <button class="btn custom-btn" (click)="updateFavouriteTicker('Close click');"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+				</div>
 			</div>
 		</ng-template>
 	</div>

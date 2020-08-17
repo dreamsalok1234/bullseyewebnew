@@ -107,7 +107,7 @@
             <li>
               <h3>
                 <a href="javascript:" [routerLink]="['/privacy-policy']"><img
-                    [src]="privIcon" />{{ 'PrivacyPolicy' | translate }}</a>
+                    [src]="termsIcon" />{{ 'PrivacyPolicy' | translate }}</a>
               </h3>
             </li>
             <li>
@@ -127,17 +127,24 @@
         <p>{{modelText|translate}}</p>
       </div>
       <div class="modal-footer" *ngIf="autRenewalInd==0 || autRenewalInd==1">
-        <button type="button" class="btn btn-success" (click)="changeAutoRenewal()">{{ btnYes | translate }}</button>
-        <button type="button" class="btn btn-danger" (click)="resetAutoRenewal();">{{ 'No' | translate }}</button>
+        <div class="actions_to_pop">
+            <button class="btn custom-btn" (click)="resetAutoRenewal();"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+            <button class="btn custom-btn" (click)="changeAutoRenewal()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+        </div>
       </div>
       <div class="modal-footer" *ngIf="autRenewalInd==2">
-        <button type="button" class="btn btn-success" (click)="cancelSubscription()">{{btnText}}</button>
-        <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'No' | translate }}</button>
+        <div class="actions_to_pop">
+            <button class="btn custom-btn" (click)="d('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+            <button class="btn custom-btn" (click)="cancelSubscription()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+        </div>
       </div>
     </ng-template>
     <ng-template #confirmisubupgrade let-c="close" let-d="dismiss">
       <div class="modal-header">
-        <h4 class="modal-title">{{ 'ManageSubscription' | translate }}</h4>
+        <h6 class="modal-title modal-title-analytics">
+            <img class="head-img" src="assets/images/BullsEye-Pro-png">
+            {{ 'ManageSubscription' | translate }}
+        </h6>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -146,14 +153,19 @@
         <p>{{ 'Areyousureyouwanttochangeyoursubscriptionplan' | translate}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="gotoUpgradeUrl()">{{ 'Confirm' | translate }}</button>
-        <button type="button" class="btn btn-danger" (click)="d('Cross click')">{{ 'Cancel' | translate }}</button>
+        <div class="actions_to_pop">
+            <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+            <button class="btn custom-btn" (click)="gotoUpgradeUrl()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+        </div>
       </div>
     </ng-template>
     <ng-template #chgNumber let-c="close" let-d="dismiss" class="phone_changes">
       <div class="phone_changes">
         <div class="modal-header alert_header">
-          <h4 class="modal-title">{{ 'ChangePhoneNumber' | translate }}</h4>
+          <h4 class="modal-title modal-title-analytics">
+              <img class="head-img" src="assets/images/Change-Phone-Number.png">
+              {{ 'ChangePhoneNumber' | translate }}
+          </h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -166,8 +178,11 @@
                 (ng2TelOutput)="getNumber($event)" (intlTelInputObject)="telInputObject($event)"
                 (countryChange)="onCountryChange($event)" (keypress)="numberOnly($event)"
                 [ngClass]="{ 'is-invalid': submitted && p.phone.errors }" />
-              <button type="button" class="btn btn-success" [disabled]="loading"
-                (click)="changePhoneNumber(1)">{{ showBtnText | translate }}</button>
+            </div>
+            <div class="actions_to_pop" *ngIf="phoneNumberOtp">
+                <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                <button class="btn custom-btn" [disabled]="loading"
+            (click)="changePhoneNumber(1)"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
             <div *ngIf="submitted && p.phone.errors" class="alert alert-dange">
               <div *ngIf="p.phone.errors.required" style="color: #ff0024">{{ 'PhoneNumberisrequired' | translate }}
@@ -204,7 +219,10 @@
     <ng-template #updateProfileImage let-c="close" let-d="dismiss" class="update_profile">
       <div class="update_profile">
         <div class="modal-header alert_header">
-          <h6 class="modal-title">{{ 'UploadProfileImage' | translate }}</h6>
+          <h4 class="modal-title modal-title-analytics">
+              <img class="head-img" src="assets/images/profile_img.png">
+              {{ 'UploadProfileImage' | translate }}
+          </h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -217,9 +235,12 @@
               <input id="files" style="visibility:hidden;" type="file" (change)="fileEvent($event)" accept="image/png, image/jpeg, image/jpg">
               </div>
               <div class="update_img">
-                <button (click)="uploadImg($event)"> {{ uploadBtnText  | translate}}</button>
+                <div class="actions_to_pop">
+                    <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                    <button class="btn custom-btn" (click)="uploadImg($event)"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+                </div>
               </div>
-            </div>           
+            </div>          
             <div class="uploaded_img">
               <img [src]="fileUrl" onError="this.src='assets/images/placeholder1.png';" alt="">
             </div>
@@ -229,20 +250,28 @@
     </ng-template>
     <ng-template #delAccount let-d="dismiss" class="update_profile">
       <div class="modal-header alert_header">
-        <h6 class="modal-title">{{ Areyousureyouwanttodeleteaccount | translate }}</h6>
+        <h6 class="modal-title modal-title-analytics">
+            <img class="head-img" src="assets/images/delete_icon.png">
+            {{ Areyousureyouwanttodeleteaccount | translate }}
+        </h6>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success" aria-label="Close">{{ btnYes | translate }}</button>
-        <button type="submit" class="btn btn-danger" aria-label="Close" (click)="d('Cross click')">{{ btnNo | translate }}</button>
+        <div class="actions_to_pop">
+            <button class="btn custom-btn" (click)="d('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+            <button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+        </div>
       </div>
     </ng-template>
     <!-- reco friend -->
     <ng-template #share let-modal>
       <div class="modal-header alert_header">
-        <h4 class="modal-title" id="modal-basic-title">{{ 'ShareBullseye' | translate }}</h4>
+        <h4 class="modal-title modal-title-analytics">
+            <img class="head-img" src="assets/images/recommend-friend.png">
+            {{ 'ShareBullseye' | translate }}
+        </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>

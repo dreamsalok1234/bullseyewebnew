@@ -903,14 +903,14 @@ export class PortfolioDetailsComponent implements OnInit {
 			if (this.activeCustomTab > 0){
 				--this.activeCustomTab;
 			}else {
-				return;
+				this.activeCustomTab = 2;
 			}
 
 		}else{			
 			if (this.activeCustomTab < 2){
 				++this.activeCustomTab;
 			}else {
-				return;
+				this.activeCustomTab = 0;
 			}
 		}
 	}

@@ -28,31 +28,32 @@
               src="assets/images/filter.png" /></a>
           <div class="more_filters scroll-more" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2>{{'NewsFilters' | translate}}</h2>
+              <h2 class="pop-head"><i class="fa fa-filter head-icon" aria-hidden="true"></i> {{ 'NewsFilters' | translate }}</h2>
               <button (click)="activeFilter = !activeFilter" class="custom-btn">x</button>
             </div>
             <div class="form-group">
               <label>{{ 'SelectSource' | translate }}</label>
-			  <ng-multiselect-dropdown
-				  [placeholder]="ChooseSourceText"
-				  [data]="dropdownList"
-				  [(ngModel)]="selectedItems"
-				  [settings]="dropdownSettings"
-				  (onSelect)="onItemSelect($event)"
-				  (onSelectAll)="onSelectAll($event)"
-				  (onDeSelect)="onItemDeSelect($event)"
-				  (onDeSelectAll)="onItemDeSelectAll($event)"
-				  name="sourceItem">
-			 </ng-multiselect-dropdown>
+              <ng-multiselect-dropdown
+                [placeholder]="ChooseSourceText"
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onItemDeSelect($event)"
+                (onDeSelectAll)="onItemDeSelectAll($event)"
+                name="sourceItem">
+              </ng-multiselect-dropdown>
               <!--<select class="form-control" name="sourceItem"  [(ngModel)]="model.sourceItem"
                 #sourceItem="ngModel">
-				<option value="">{{ 'ChooseSource' | translate }}</option>
+				        <option value="">{{ 'ChooseSource' | translate }}</option>
                 <option value="{{ newsFilter.source }}" *ngFor="let newsFilter of newsFilterList">{{ newsFilter.source }}</option>
               </select>-->
             </div>
             
-            <div class="actions_to">
-              <button class="custom-btn" (click)="searchSourceNews()">{{ 'Apply' | translate }}</button>
+            <div class="actions_to_pop">
+              <button class="btn custom-btn" (click)="activeFilter = !activeFilter"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+              <button class="btn custom-btn" (click)="searchSourceNews()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>

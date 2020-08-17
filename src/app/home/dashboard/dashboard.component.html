@@ -36,15 +36,12 @@
 							<h6>{{(portfolioItem.investmentbookcost=='' || portfolioItem.investmentbookcost==0 || portfolioItem.investmentbookcost==null)? 'N/A' : (portfolioItem.investmentbookcost | currency : returnCurrSymbol(portfolioItem.currency):'symbol':'1.0-0')}}
 							</h6>
 						</li>
-						<li class=""
-							[ngClass]="((portfolioItem.performance==0)?'zeroactive':(portfolioItem.performance>0)?'active':'inactive')">
-							<span>
-								<i class="fa fa-caret-up" aria-hidden="true" *ngIf="portfolioItem.performance>0"></i>
-								<i class="fa fa-caret-down" aria-hidden="true" *ngIf="portfolioItem.performance<0"></i>
-								<i class="fa fa-caret-left left-arrow" aria-hidden="true"
-									*ngIf="portfolioItem.performance==0"></i>
-								<i class="fa fa-caret-right" aria-hidden="true"
-									*ngIf="portfolioItem.performance==0"></i>
+						<li class="color-box">
+						  <span [ngClass]="portfolioItem.performance == 0 ? 'zeroactive' : portfolioItem.performance > 0 ? 'active' : 'inactive'">
+								<i class="fa fa-caret-up" aria-hidden="true" *ngIf="portfolioItem.performance > 0"></i>
+								<i class="fa fa-caret-down" aria-hidden="true" *ngIf="portfolioItem.performance < 0"></i>
+								<i class="fa fa-caret-left" aria-hidden="true" *ngIf="portfolioItem.performance == 0"></i>
+								<i class="fa fa-caret-right" aria-hidden="true" *ngIf="portfolioItem.performance == 0"></i>
 								{{math.round(portfolioItem.performance)}}%
 							</span>
 						</li>
@@ -112,18 +109,14 @@
 								</h6>
 							</li>
 							<!-- <li>{{(tickerMarketCapData.amount=='' || tickerMarketCapData.amount==0 || tickerMarketCapData.amount==null)? 'N/A' : ((tickerMarketCapData.text=='')?((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.0-0')):((tickerMarketCapData.amount | currency : returnCurrSymbol(watchListCurrency):'symbol':'1.2-2')))}}{{tickerMarketCapData.text}}</li> -->
-							<li class=""
-								[ngClass]="((watchlistitem.changePct==0)?'zeroactive':(watchlistitem.changePct>0)?'active':'inactive')">
-								<span>
-									<i class="fa fa-caret-up" aria-hidden="true" *ngIf="watchlistitem.changePct>0"></i>
-									<i class="fa fa-caret-down" aria-hidden="true"
-										*ngIf="watchlistitem.changePct<0"></i>
-									<i class="fa fa-caret-left left-arrow" aria-hidden="true"
-										*ngIf="watchlistitem.changePct==0"></i>
-									<i class="fa fa-caret-right" aria-hidden="true"
-										*ngIf="watchlistitem.changePct==0"></i>
-									{{ watchlistitem.changePct | number:'1.2-2'}}%
-								</span>
+
+							<li class="color-box">
+							  <span [ngClass]="watchlistitem.changePct == 0 ? 'zeroactive' : watchlistitem.changePct > 0 ? 'active' : 'inactive'">
+								<i class="fa fa-caret-up" aria-hidden="true" *ngIf="watchlistitem.changePct > 0"></i>
+								<i class="fa fa-caret-down" aria-hidden="true" *ngIf="watchlistitem.changePct < 0"></i>
+								<i class="fa fa-caret-left" aria-hidden="true" *ngIf="watchlistitem.changePct == 0"></i>
+								<i class="fa fa-caret-right" aria-hidden="true" *ngIf="watchlistitem.changePct == 0"></i>
+								{{ watchlistitem.changePct | number: '1.2-2' }}%</span>
 							</li>
 							<li>
 								<div class="action">
@@ -198,9 +191,10 @@
 			<p>{{modelText}}</p>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-success"
-				(click)="deleteItems('Close click',ind,deleteType)">{{btnText}}</button>
-			<button type="button" class="btn btn-danger" (click)="c('Close click')">{{ 'No' | translate }}</button>
+			<div class="actions_to_pop">
+				<button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+				<button class="btn custom-btn" (click)="deleteItems('Close click',ind,deleteType)"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
+			</div>
 		</div>
 	</ng-template>
 </div>
@@ -209,7 +203,7 @@
 <div class="card-body">
 	<ng-template #pricealert let-c="close" let-d="dismiss">
 		<div class="modal-header alert_header">
-			<h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
+			<h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
 			<button type="button" class="btn btn-secondary close" (click)="c('Close click')">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -255,12 +249,9 @@
 							{{ 'ExpiryDateRequired!' | translate }}</div>
 					</div>
 				</div>
-
-
-				<div class="form-group">
-					<button class="btn btn-success" type="submit">
-						{{ 'Submit' | translate }}
-					</button>
+				<div class="actions_to_pop">
+					<button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+					<button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
 				</div>
 			</form>
 		</div>
@@ -271,7 +262,7 @@
 <div class="card-body">
 	<ng-template #editportfolio let-c="close" let-d="dismiss">
 		<div class="modal-header alert_header">
-			<h4 class="modal-title">{{ 'UpdatePortfolio' | translate }}</h4>
+			<h2 class="pop-head"><i class="fa fa-pencil head-icon" aria-hidden="true"></i> {{ 'UpdatePortfolio' | translate }}</h2>
 			<button type="button" class="btn btn-secondary close" (click)="c('Close click')">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -293,10 +284,9 @@
 							{{ currency.name }} </option>
 					</select>
 				</div>
-				<div class="form-group">
-					<button class="btn btn-success" type="submit">
-						{{ 'Submit' | translate }}
-					</button>
+				<div class="actions_to_pop">
+				  <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+				  <button class="btn custom-btn" type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
 				</div>
 			</form>
 		</div>
