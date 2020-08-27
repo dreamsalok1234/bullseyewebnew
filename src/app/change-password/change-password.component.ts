@@ -19,8 +19,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-	  this.meta.removeTag('name=title');
-	  this.meta.removeTag('name=description');
 	  this.titleService.setTitle(this.title);
   }
   onShowHidePassword() {

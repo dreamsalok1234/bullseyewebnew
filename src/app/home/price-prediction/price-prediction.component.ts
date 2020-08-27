@@ -95,8 +95,6 @@ export class PricePredictionComponent implements OnInit {
       day: this.predictionStartDate.getDate()
     };
     this.document.body.classList.add('modal-index');
-    this.meta.removeTag('name=title');
-    this.meta.removeTag('name=description');
     this.titleService.setTitle(this.title);
     /* Check Token */
     if (
@@ -532,12 +530,12 @@ export class PricePredictionComponent implements OnInit {
 		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
 		if (Math.abs(finalPrice) > 1000000) {
 			let douValue = finalPrice / 1000000;
-			return this.formatNumber(douValue.toFixed(0)) + 'm';
+			return this.formatNumber(douValue.toFixed(1)) + 'm';
 		} else if (Math.abs(finalPrice) > 999) {
 			let douValue = finalPrice / 1000;
-			return this.formatNumber(douValue.toFixed(0)) + 'k';
+			return this.formatNumber(douValue.toFixed(1)) + 'k';
 		} else {
-			return this.formatNumber(parseInt(finalPrice.toFixed(0)));
+			return this.formatNumber(parseInt(finalPrice.toFixed(1)));
 		}
 	}
 

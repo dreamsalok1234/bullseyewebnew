@@ -166,7 +166,7 @@
     "SelectCriteria": "基準選択",
     "Accountbasecurrencysuccessfullyupdated": "アカウントの基本通貨が更新されました。",
     "Areyousureyouwanttoremoveportfolio": "ポートフォリオを削除してよろしいですか？",
-    "Areyousureyouwanttoremovewatchlist": "あなたのウォッチリストからこのアイテムを削除してもよろしいですか？",
+    "Areyousureyouwanttoremovewatchlist": "<ticker>をウォッチリストから削除してもよろしいですか？",
     "Priceto3decimalplaces": "価格は小数点以下第3位に設定する必要があります。",
     "unauthorizedReqMsg": "未承認のリクエスト！",
     "areYouSureWantToRenewOn": "自動更新をオンにしてよろしいですか？",
@@ -307,6 +307,7 @@
     "earningsPerShareInfo": "1株当たり利益（EPS）は、会社の利益を普通株式の発行済み株式で割って計算されます。 企業が異常な項目と潜在的な株式希薄化のために調整されたEPSを報告することは一般的です。 企業のEPSが高いほど、収益性が高いと見なされます。",
     "Market": "市場",
     "Profile": "プロフィール",
-    "Fundamentals": "基礎"
+    "Fundamentals": "基礎",
+    "riskIndicators": "リスク指標"
 
 }

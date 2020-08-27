@@ -28,8 +28,6 @@ export class VerificationComponent implements OnInit {
     }
 
     ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
         if(localStorage.getItem('otpVerificationKey') != undefined &&  localStorage.getItem('otpVerificationKey') != '') {
             let userInfoData = JSON.parse(localStorage.getItem('userInfo'));

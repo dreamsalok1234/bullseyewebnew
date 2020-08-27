@@ -38,10 +38,9 @@ export class SignupComponent implements OnInit {
 
     }
     ngOnInit() {
-	    this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
+
 		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: 'Register your BullsEye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
+		// this.meta.addTag({name: 'description', content: 'Register your BullsEye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
 		this._initForm(); localStorage.removeItem('userInfo');
 	}
 

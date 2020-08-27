@@ -60,8 +60,6 @@ export class ChatComponent implements OnInit {
     constructor(private translate: TranslateService, private commonService: CommonService, private chatService: ChatService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private modalService: NgbModal, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta) { }
     ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
 		this._initForm();
 		 /* Check Token */

@@ -123,9 +123,6 @@ export class ChatDetailsComponent implements OnInit {
 	private meta: Meta,private activeRoute: ActivatedRoute,private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
-
 		/* Check Token */
     	if((localStorage.getItem("userProfileInfo") == '' || localStorage.getItem("userProfileInfo") == undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem("userAccessToken") == '' || localStorage.getItem("userAccessToken") == undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem("chatBoardId") == '' || localStorage.getItem("chatBoardId") == undefined || localStorage.getItem("chatBoardId") == null) && (localStorage.getItem("chatPrice") == '' || localStorage.getItem("chatPrice") == undefined || localStorage.getItem("chatPrice") == null) && (localStorage.getItem("chatName") == '' || localStorage.getItem("chatName") == undefined || localStorage.getItem("chatName") == null) && (localStorage.getItem("chatSymbol") == '' || localStorage.getItem("chatSymbol") == undefined || localStorage.getItem("chatSymbol") == null) && (localStorage.getItem("favouriteId") == '' || localStorage.getItem("favouriteId") == undefined || localStorage.getItem("favouriteId") == null) && (localStorage.getItem("chatType") == '' || localStorage.getItem("chatType") == undefined || localStorage.getItem("chatType") == null) && (localStorage.getItem("chatCurrency") == '' || localStorage.getItem("chatCurrency") == undefined || localStorage.getItem("chatCurrency") == null)) {
     		this.router.navigate(['/chat']);
@@ -228,11 +225,9 @@ export class ChatDetailsComponent implements OnInit {
 		this.totalPage = this.currentPage = 0;
 		/* Set Mata Tag*/
 		// this.title=""+this.chatName+" Chat | "+this.chatSymbol+" | Live "+this.chatType+" Market Prices & Chat | BullsEye Investors";
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 		this.title='BullsEye Investors | Chat'+' | '+localStorage.getItem('chatName')+' | '+localStorage.getItem('chatSymbol');
 		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: ''+this.chatName+' chat for private investors. Share your views with other '+this.chatSymbol+' investors in the BullsEye Community using the BullsEye Investors web, iOS and Android platforms. Track live prices and set alerts directly to your device.'});
+		// this.meta.addTag({name: 'description', content: ''+this.chatName+' chat for private investors. Share your views with other '+this.chatSymbol+' investors in the BullsEye Community using the BullsEye Investors web, iOS and Android platforms. Track live prices and set alerts directly to your device.'});
 		this.translate.get('Entermessagehere').subscribe(value => {
 
 			this.enterNewMessageText=value;

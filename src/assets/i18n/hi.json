@@ -166,7 +166,7 @@
     "SelectCriteria": "मानदंड चुनें",
     "Accountbasecurrencysuccessfullyupdated": "खाता आधार मुद्रा सफलतापूर्वक अपडेट की गई।",
     "Areyousureyouwanttoremoveportfolio": "क्या आप वाकई पोर्टफोलियो हटाना चाहते हैं?",
-    "Areyousureyouwanttoremovewatchlist": "क्या आप वाकई इस आइटम को अपनी वॉचलिस्ट से निकालना चाहते हैं",
+    "Areyousureyouwanttoremovewatchlist": "क्या आप वाकई अपनी वॉचलिस्ट से <ticker> हटाना चाहते हैं?",
     "Priceto3decimalplaces": "मूल्य तीन दशमलव स्थानों पर सेट होना चाहिए।",
     "unauthorizedReqMsg": "अनधिकृत अनुरोध!",
     "areYouSureWantToRenewOn": "क्या आप वाकई ऑटो-नवीनीकरण चालू करना चाहते हैं?",
@@ -308,6 +308,7 @@
     "earningsPerShareInfo": "प्रति शेयर आय (ईपीएस) की गणना एक कंपनी के लाभ के रूप में की जाती है जो कि उसके आम स्टॉक के बकाया शेयरों से विभाजित होती है। एक कंपनी के लिए ईपीएस की रिपोर्ट करना सामान्य बात है जो असाधारण वस्तुओं और संभावित शेयर कमजोर पड़ने के लिए समायोजित की जाती है। कंपनी का ईपीएस जितना अधिक होगा, उतना ही लाभदायक माना जाता है।",
     "Market": "बाजार",
     "Profile": "प्रोफ़ाइल",
-    "Fundamentals": "मूलभूत"
+    "Fundamentals": "मूलभूत",
+    "riskIndicators": "जोखिम संकेतक"
 
 }

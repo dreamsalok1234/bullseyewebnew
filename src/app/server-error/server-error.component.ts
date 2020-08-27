@@ -10,8 +10,6 @@ export class ServerErrorComponent implements OnInit {
   constructor(private titleService: Title,private meta: Meta) { }
 
   ngOnInit() {
-	  this.meta.removeTag('name=title');
-	  this.meta.removeTag('name=description');
 	  this.titleService.setTitle(this.title);
   }
 

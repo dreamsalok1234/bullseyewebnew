@@ -87,8 +87,6 @@ export class PortfolioDetailsComponent implements OnInit {
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
     ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem("portfolioId") == '' || localStorage.getItem("portfolioId") == undefined || localStorage.getItem("portfolioId") == null) && (localStorage.getItem("portfolioCurrency") == '' || localStorage.getItem("portfolioCurrency") == undefined || localStorage.getItem("portfolioCurrency")==null) && (localStorage.getItem("portfolioType") == '' || localStorage.getItem("portfolioType") == undefined || localStorage.getItem("portfolioType") == null)  && (localStorage.getItem("portfolioName") == '' || localStorage.getItem("portfolioName") == undefined || localStorage.getItem("portfolioName") == null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
     		this.router.navigate(['/login']);

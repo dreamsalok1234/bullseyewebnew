@@ -77,8 +77,6 @@ export class PriceAlertComponent implements OnInit {
     private meta: Meta
   ) {}
   ngOnInit() {
-    this.meta.removeTag('name=title');
-    this.meta.removeTag('name=description');
     this.titleService.setTitle(this.title);
     /* Check Token */
     if (

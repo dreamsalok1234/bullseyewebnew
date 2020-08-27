@@ -26,8 +26,6 @@ export class EnquiryComponent implements OnInit {
 	constructor(private translate: TranslateService,private authService: AuthService,private _fb: FormBuilder,vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager,private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta) {}
 	ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
 		 /* Check Token */
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null)) 

@@ -166,7 +166,7 @@
     "SelectCriteria": "选择标准",
     "Accountbasecurrencysuccessfullyupdated": "帐户基础货币已成功更新。",
     "Areyousureyouwanttoremoveportfolio": "您确定要删除投资组合吗？",
-    "Areyousureyouwanttoremovewatchlist": "您确定要从关注列表中删除此项吗？",
+    "Areyousureyouwanttoremovewatchlist": "您確定要從監視列表中刪除<ticker>嗎？",
     "Priceto3decimalplaces": "价格应设为小数点后三位。",
     "unauthorizedReqMsg": "未经授权的请求！",
     "areYouSureWantToRenewOn": "您确定要开启自动续订吗？",
@@ -307,6 +307,7 @@
     "earningsPerShareInfo": "每股收益（EPS）用公司的利潤除以發行在外的普通股計算。 公司通常會報告針對特殊項目和潛在股份稀釋而調整的每股收益。 公司的EPS越高，則認為它就越有利可圖。",
     "Market": "市場",
     "Profile": "個人資料",
-    "Fundamentals": "基本原理"
+    "Fundamentals": "基本原理",
+    "riskIndicators": "風險指標"
 
 }

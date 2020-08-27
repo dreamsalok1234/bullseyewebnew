@@ -124,7 +124,7 @@
 										(click)="openAlert(pricealert, i)" title="Setup Price Alert"><i
 											class="fa fa-bell-o"></i></button>
 									<button title="{{ 'Remove' | translate }}" type="button" class="btn delete-button"
-										(click)="open(content, i, 'watchlist')"><i class="fa fa-trash"></i>
+										(click)="open(content, i, 'watchlist', watchlistitem)"><i class="fa fa-trash"></i>
 									</button>
 									<button title="{{ 'View' | translate }}" type="button" class="btn edit-button"
 										(click)="goToTickerDetails(watchlistitem.id,watchlistitem.currency,watchlistitem.type,watchlistitem.tickerName,watchlistitem.symbol,watchlistitem.watchlistId)"><i
@@ -191,10 +191,8 @@
 			<p>{{modelText}}</p>
 		</div>
 		<div class="modal-footer">
-			<div class="actions_to_pop">
-				<button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
-				<button class="btn custom-btn" (click)="deleteItems('Close click',ind,deleteType)"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
-			</div>
+			<button class="btn btn-danger" (click)="c('Close click')">No</button>
+			<button class="btn btn-success" (click)="deleteItems('Close click',ind,deleteType)">Yes</button>
 		</div>
 	</ng-template>
 </div>
@@ -202,7 +200,7 @@
 <!-- add_assets modal-->
 <div class="card-body">
 	<ng-template #pricealert let-c="close" let-d="dismiss">
-		<div class="modal-header alert_header">
+		<div class="modal-header alert_header title_div">
 			<h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
 			<button type="button" class="btn btn-secondary close" (click)="c('Close click')">
 				<span aria-hidden="true">&times;</span>

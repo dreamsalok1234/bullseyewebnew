@@ -166,7 +166,7 @@
     "SelectCriteria": "Criterios de selección",
     "Accountbasecurrencysuccessfullyupdated": "Moneda base de la cuenta actualizada con éxito.",
     "Areyousureyouwanttoremoveportfolio": "¿Estás seguro de que quieres eliminar la cartera?",
-    "Areyousureyouwanttoremovewatchlist": "¿Está seguro de que desea eliminar este elemento de su lista de seguimiento?",
+    "Areyousureyouwanttoremovewatchlist": "¿Está seguro de que desea eliminar <ticker> de su lista de seguimiento?",
     "Priceto3decimalplaces": "El precio debe ser establecer en tres lugares decimales.",
     "unauthorizedReqMsg": "Solicitud no autorizada!",
     "areYouSureWantToRenewOn": "¿Seguro que quieres activar la renovación automática?",
@@ -307,6 +307,7 @@
     "earningsPerShareInfo": "Las ganancias por acción (EPS) se calculan como las ganancias de una empresa divididas por las acciones en circulación de sus acciones ordinarias. Es común que una empresa informe EPS que se ajusta por elementos extraordinarios y dilución potencial de acciones. Cuanto mayor sea el EPS de una empresa, más rentable se considera.",
     "Market": "Mercado",
     "Profile": "Perfil",
-    "Fundamentals": "Fundamentos"
+    "Fundamentals": "Fundamentos",
+    "riskIndicators": "Indicadores de riesgo"
 
 }

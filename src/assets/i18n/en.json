@@ -160,7 +160,7 @@
     "SelectCriteria": "Criteria",
     "Accountbasecurrencysuccessfullyupdated": "Account base currency successfully updated",
     "Areyousureyouwanttoremoveportfolio": "Are you sure you want to delete this portfolio?",
-    "Areyousureyouwanttoremovewatchlist": "Are you sure you want to remove this item from your watchlist?",
+    "Areyousureyouwanttoremovewatchlist": "Are you sure you want to delete <ticker> from your watchlist?",
     "Priceto3decimalplaces": "Target Price should be to 3 decimal place",
     "unauthorizedReqMsg": "Unauthorized Request!",
     "areYouSureWantToRenewOn": "Are you sure you want to turn auto-renewal on?",
@@ -196,7 +196,7 @@
     "Apply": "Apply",
     "Entertickerhere": "Enter ticker here",
     "SelectAll": "Select All",
-    "UnSelectAll": "UnSelect All",
+    "UnSelectAll": "Deselect All",
     "ManageSubscription": "Manage Subscription",
     "Areyousureyouwanttochangeyoursubscriptionplan": "Are you sure you want to change your subscription plan? Any change will be debited or credited back on a pro rata basis.",
     "SearchbyTicker": "Search by Ticker",
@@ -301,6 +301,7 @@
     "earningsPerShareInfo": "Earnings per share (EPS) is calculated as a company's profit divided by the outstanding shares of its common stock. It is common for a company to report EPS that is adjusted for extraordinary items and potential share dilution. The higher a company's EPS, the more profitable it is considered.",
     "Market": "Market",
     "Profile": "Profile",
-    "Fundamentals": "Fundamentals"
+    "Fundamentals": "Fundamentals",
+    "riskIndicators": "Risk Indicators"
 
 }

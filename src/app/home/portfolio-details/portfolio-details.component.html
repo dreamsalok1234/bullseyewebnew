@@ -130,14 +130,8 @@
                       <li>
                         {{ valueItem.investmentmarketcalcost | currency : returnCurrSymbol(portfolioCurrency) : "symbol" : "1.0-0" }}
                       </li>
-                      <li class="performance-item" [ngClass]="
-                                                valueItem.performance == 0
-                                                  ? 'zeroactive'
-                                                  : valueItem.performance > 0
-                                                  ? 'active'
-                                                  : 'inactive'
-                                              ">
-                        <span>
+                      <li class="color-box">
+                        <span [ngClass]=" valueItem.performance == 0 ? 'zeroactive' : valueItem.performance > 0 ? 'active' : 'inactive' ">
                           <i class="fa fa-caret-up" aria-hidden="true" *ngIf="valueItem.performance > 0"></i>
                           <i class="fa fa-caret-down" aria-hidden="true" *ngIf="valueItem.performance < 0"></i>
                           <i class="fa fa-caret-left" aria-hidden="true" *ngIf="valueItem.performance == 0"></i>
@@ -319,29 +313,22 @@
                         {{ riskItem.symbol }}
                       </li>
                       <li>
-                        {{
-                                                    riskItem.alphaMarketShortName != null
-                                                      ? riskItem.alphaMarketShortName
-                                                      : "N/A"
-                                                  }}
+                        {{ riskItem.alphaMarketShortName != null ? riskItem.alphaMarketShortName : "N/A" }}
                       </li>
-                      <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
-                                      <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
-                      <li
-                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == '' ? 'nactive' : riskItem.alphaWChange > 0 ? 'active' : riskItem.alphaWChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alphaWChange != "N/A" && riskItem.alphaWChange != "" ? formatNumber(math.round(riskItem.alphaWChange)) + "%" : riskItem.alphaWChange }}
+                      <li class="color-box">
+                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == '' ? 'nactive' : riskItem.alphaWChange > 0 ? 'active' : riskItem.alphaWChange == 0 ? 'zeroactive' : 'inactive' ">{{ riskItem.alphaWChange != "N/A" && riskItem.alphaWChange != "" ? formatNumber(math.round(riskItem.alphaWChange)) + "%" : riskItem.alphaWChange }}</span>
                       </li>
-                      <li
-                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaChange == 'N/A' || riskItem.alphaChange == '' ? 'nactive' : riskItem.alphaChange > 0 ? 'active' : riskItem.alphaChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alphaChange != "N/A" && riskItem.alphaChange != "" ? formatNumber(math.round(riskItem.alphaChange)) + "%" : riskItem.alphaChange }}
+                      <li class="color-box">
+                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaChange == 'N/A' || riskItem.alphaChange == '' ? 'nactive' : riskItem.alphaChange > 0 ? 'active' : riskItem.alphaChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alphaChange != "N/A" && riskItem.alphaChange != "" ? formatNumber(math.round(riskItem.alphaChange)) + "%" : riskItem.alphaChange }}</span>
                       </li>
-                      <li
-                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha6MChange == 'N/A' || riskItem.alpha6MChange == '' ? 'nactive' : riskItem.alpha6MChange > 0 ? 'active' : riskItem.alpha6MChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alpha6MChange != "N/A" && riskItem.alpha6MChange != "" ? formatNumber(math.round(riskItem.alpha6MChange)) + "%" : riskItem.alpha6MChange }}
+                      <li class="color-box">
+                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha6MChange == 'N/A' || riskItem.alpha6MChange == '' ? 'nactive' : riskItem.alpha6MChange > 0 ? 'active' : riskItem.alpha6MChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alpha6MChange != "N/A" && riskItem.alpha6MChange != "" ? formatNumber(math.round(riskItem.alpha6MChange)) + "%" : riskItem.alpha6MChange }}</span>
                       </li>
-                      <li
-                        [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha1YChange == 'N/A' || riskItem.alpha1YChange == 'nactive' ? 'nactive' : riskItem.alpha1YChange > 0 ? 'active' : riskItem.alpha1YChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alpha1YChange != "N/A" && riskItem.alpha1YChange != "" ? formatNumber(math.round(riskItem.alpha1YChange)) + "%" : riskItem.alpha1YChange }}
+                      <li class="color-box">
+                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha1YChange == 'N/A' || riskItem.alpha1YChange == 'nactive' ? 'nactive' : riskItem.alpha1YChange > 0 ? 'active' : riskItem.alpha1YChange == 0 ? 'zeroactive' : 'inactive' ">
+                        {{ riskItem.alpha1YChange != "N/A" && riskItem.alpha1YChange != "" ? formatNumber(math.round(riskItem.alpha1YChange)) + "%" : riskItem.alpha1YChange }}</span>
                       </li>
                     </ul>
                     <ul class="processing" *ngIf="riskItemProcessing">
@@ -386,7 +373,7 @@
 <!-- add_assets modal-->
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header alert_header">
+    <div class="modal-header alert_header title_div">
       <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-square head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
       <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-square head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
@@ -528,7 +515,7 @@
 <!-- add_assets modal-->
 <div class="card-body">
   <ng-template #deleteInvestment let-c="close" let-d="dismiss">
-    <div class="modal-header alert_header">
+    <div class="modal-header alert_header title_div">
       <h2 class="pop-head"><i class="fa fa-trash head-icon-1" aria-hidden="true"></i> {{ 'DeleteInvestment' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')"> <span
           aria-hidden="true">&times;</span> </button>
@@ -545,7 +532,7 @@
 <!-- add_assets modal-->
 <div class="card-body">
   <ng-template #pricealert let-c="close" let-d="dismiss">
-    <div class="modal-header alert_header">
+    <div class="modal-header alert_header title_div">
       <h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>

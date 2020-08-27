@@ -166,7 +166,7 @@
     "SelectCriteria": "기준 선택",
     "Accountbasecurrencysuccessfullyupdated": "계정 기본 통화가 성공적으로 업데이트되었습니다.",
     "Areyousureyouwanttoremoveportfolio": "포트폴리오를 삭제 하시겠습니까?",
-    "Areyousureyouwanttoremovewatchlist": "주시 목록에서이 항목을 제거 하시겠습니까?",
+    "Areyousureyouwanttoremovewatchlist": "주시 목록에서 <ticker>를 삭제 하시겠습니까?",
     "Priceto3decimalplaces": "가격은 세 자리로 설정해야합니다.",
     "unauthorizedReqMsg": "무단 요청!",
     "areYouSureWantToRenewOn": "자동 갱신을 사용 하시겠습니까?",
@@ -307,6 +307,7 @@
     "earningsPerShareInfo": "주당 순이익 (EPS)은 회사의 이익을 보통주의 발행 주식으로 나눈 값입니다. 회사가 비정상적인 항목과 잠재적 인 주식 희석에 대해 조정 된 EPS를보고하는 것이 일반적입니다. 회사의 EPS가 높을수록 수익성이 더 높은 것으로 간주됩니다.",
     "Market": "시장",
     "Profile": "프로필",
-    "Fundamentals": "기초"
+    "Fundamentals": "기초",
+    "riskIndicators": "위험 지표"
 
 }

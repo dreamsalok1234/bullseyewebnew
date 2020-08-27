@@ -138,8 +138,6 @@ export class TickerDetailsComponent implements OnInit {
 		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
 		this.predictionStartDateFrom = { year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate() };
 
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined || localStorage.getItem('tickerCurrency') == null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
 			this.router.navigate(['/login']);
@@ -1335,7 +1333,6 @@ export class TickerDetailsComponent implements OnInit {
 			return false;
 		}
 
-		this.tickerName = '';
 		this.currentTime = new Date();
 		this.predictionForm.tickerName = this.tickerName;
 		this.predictionForm.symbol = this.tickerSymbol;
@@ -1496,7 +1493,7 @@ export class TickerDetailsComponent implements OnInit {
 	}
 	getNumberInPercentage(finalPrice) {
 		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
-		if (finalPrice > 0) {
+		if (finalPrice) {
 			let douValue = finalPrice * 100;
 			return this.formatNumber(douValue.toFixed(2)) + '%';
 		}

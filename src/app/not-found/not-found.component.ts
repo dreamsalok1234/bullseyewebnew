@@ -11,8 +11,6 @@ export class NotFoundComponent implements OnInit {
   constructor(private titleService: Title,private meta: Meta,public router: Router) { }
 
   ngOnInit() {
-	  this.meta.removeTag('name=title');
-	  this.meta.removeTag('name=description');
 	  this.titleService.setTitle(this.title);
   }
   gotoHomePage(){

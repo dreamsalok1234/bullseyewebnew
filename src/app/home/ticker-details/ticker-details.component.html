@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="custom-tab-items">
+                <div class="custom-tab-items" *ngIf="tickerType.toLowerCase() == 'stock'">
                     <button href="javascript:" class="btn btn-success btn-rounded" (click)="selectCustomTabs('-')"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                     <p *ngIf="activeCustomTab === 0">{{'Market' | translate}}</p>
                     <p *ngIf="activeCustomTab === 1">{{'Profile' | translate}}</p>
@@ -287,7 +287,7 @@
 
 <!-- add_assets modal-->
 <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header alert_header">
+    <div class="modal-header alert_header title_div">
         <h2 class="pop-head"><i class="fa fa-bell head-icon-1" aria-hidden="true"></i> {{ 'PriceAlert' | translate }}</h2>
         <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
@@ -386,7 +386,10 @@
 <!-- ic_risk -->
 <ng-template #ic_risk let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
-        <h4 class="modal-title">Risk Indicators</h4>
+        <h4 class="modal-title">
+            <img class="head-img head-green" src="../../assets/images/ticksetting.png">
+            {{ 'riskIndicators' | translate }}
+        </h4>
         <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -477,16 +480,16 @@
                                 {{ 'Please choose the most appropriate benchmark index for your investment. The benchmark chosen will be used to measure your investment’s performance relative to the benchmark (known as ‘alpha’) over varying time horizons.' | translate }}
                             </p>
                         </div>
-                        <select class="form-control" name="benkMarchIndex" [(ngModel)]="riskPerformanceArray.benkMarchIndex" #benkMarchIndex="ngModel">
-              <option value="">{{ 'Select Benchmark' | translate }}</option>
-              <option value="{{bench.alphaMarketId}}" *ngFor="let bench of benkMarchList; let i = index;">
-                {{bench.tickerName}}</option>
-            </select>
+                        <select class="form-control" name="benkMarchIndex" [(ngModel)]="riskPerformanceArray.benkMarchIndex"
+                            #benkMarchIndex="ngModel">
+                            <option value="">{{ 'Select Benchmark' | translate }}</option>
+                            <option value="{{bench.alphaMarketId}}" *ngFor="let bench of benkMarchList; let i = index;">
+                                {{bench.tickerName}}</option>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-success" type="submit">
-              {{saveRiskBtnText}}
-            </button>
+                    <div class="actions_to_pop">
+                        <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
+                        <button class="btn custom-btn"  type="submit"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>

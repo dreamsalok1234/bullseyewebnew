@@ -35,8 +35,6 @@ export class ForgotComponent implements OnInit {
 		localStorage.removeItem('userProfileInfo');
 		localStorage.removeItem('userAccessToken'); 
 		localStorage.removeItem('userInfo');
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
 	}
 

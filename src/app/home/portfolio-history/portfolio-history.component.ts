@@ -59,8 +59,6 @@ export class PortfolioHistoryComponent implements OnInit {
 	priceAlertCurrency = false;
 	submitted = false;
 	ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
 		/* Check Token */
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') == null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') == null) && (localStorage.getItem('portfolioId') === '' || localStorage.getItem('portfolioId') === undefined || localStorage.getItem('portfolioId') === null) && (localStorage.getItem('portfolioCurrency') === '' || localStorage.getItem('portfolioCurrency') === undefined || localStorage.getItem('portfolioCurrency') == null) && (localStorage.getItem('portfolioType') === '' || localStorage.getItem('portfolioType') === undefined || localStorage.getItem('portfolioType') === null)) {

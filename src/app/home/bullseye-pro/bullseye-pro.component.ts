@@ -46,8 +46,6 @@ export class BullseyeProComponent implements OnInit {
   curr_array = ['USD', 'SGD', 'INR', 'KD', 'AUD'];
   selectCurr = '';
   ngOnInit() {
-	this.meta.removeTag('name=title');
-	this.meta.removeTag('name=description');
 	this.titleService.setTitle(this.title);
     /* Check Token */
     if (

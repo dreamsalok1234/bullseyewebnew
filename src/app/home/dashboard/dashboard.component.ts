@@ -56,17 +56,14 @@ export class DashboardComponent implements OnInit {
 	confirmMsg='Confirm';
 	areYouSureMsg='Are you sure want to remove item ?';
 	areYoueSurePortfolioMsg='Are you sure you want to delete this portfolio?';
-	areYoueSureWatchlistMsg='Are you sure you want to remove this item from your watchlist?';
+	areYoueSureWatchlistMsg='Are you sure you want to delete <ticker> from your watchlist?';
 	processingTxt='Processing...';
 	targetPriceisRequiredMsg="Target Price is required!";
 	expiryDateisRequiredMsg="Expiry Date is required!";
 	PriceTo3DecimalPlacesMsg="Target Price should be to 3 decimal place";
 	criteriaFilter = [{'key': 'high', 'value' : 'Top 10 by 24 Hour Change'}, {'key': 'low', 'value' : 'Bottom 10 by 24 Hour Change'}, {'key': 'market_cap', 'value' : 'Top 10 by Market Capitalisation'}];
     I;
-    ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
-		
+    ngOnInit() {		
 		 /* Check Token */
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) { 
 			this.router.navigate(['/login']);
@@ -281,11 +278,15 @@ export class DashboardComponent implements OnInit {
 
   /*------------------------ Delete Poppup ---------------------------------*/
   /*Modal Popup*/
-  open(content, itemIndex, keyItem) {
+  open(content, itemIndex, keyItem, obj?) {
     this.btnText = this.confirmMsg;
     this.ind = itemIndex;
     this.deleteType = keyItem;
-    this.modelText = (keyItem=='portfolio')?this.areYoueSurePortfolioMsg :this.areYoueSureWatchlistMsg;
+	this.modelText = (keyItem=='portfolio')?this.areYoueSurePortfolioMsg :this.areYoueSureWatchlistMsg;
+	
+	if(obj && obj.tickerName){
+		this.modelText = this.modelText.replace('<ticker>', obj.tickerName);
+	}
 	this.modalService.open(content).result.then((result) => {
 		this.closeResult = `Closed with: ${result}`;
 	}, (reason) => {
@@ -552,12 +553,12 @@ export class DashboardComponent implements OnInit {
 		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
 		if (Math.abs(finalPrice) > 1000000) {
 			let douValue = finalPrice / 1000000;
-			return this.formatNumber(douValue.toFixed(0)) + 'm';
+			return this.formatNumber(douValue.toFixed(1)) + 'm';
 		} else if (Math.abs(finalPrice) > 999) {
 			let douValue = finalPrice / 1000;
-			return this.formatNumber(douValue.toFixed(0)) + 'k';
+			return this.formatNumber(douValue.toFixed(1)) + 'k';
 		} else {
-			return this.formatNumber(parseInt(finalPrice.toFixed(0)));
+			return this.formatNumber(parseInt(finalPrice.toFixed(1)));
 		}
 	}
 

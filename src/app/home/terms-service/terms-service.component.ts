@@ -20,8 +20,6 @@ export class TermsServiceComponent implements OnInit {
 	private meta: Meta){
    }
   ngOnInit() {
-	this.meta.removeTag('name=title');
-	this.meta.removeTag('name=description');
 	this.titleService.setTitle(this.title);
 	 /* Check Token */
 	if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null)) 

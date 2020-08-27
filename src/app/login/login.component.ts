@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     isRemember = false;
     userName = '';
     password = '';
-	title = 'BullsEye Investors | Login';
+	title = 'BullsEye Investors | Web Portal Login | Stocks & Crypto Portfolio Management Platform';
     constructor(
         private translate: TranslateService, private authService: AuthService, private _fb: FormBuilder,  vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager,private loadingBar: LoadingBarService,private titleService: Title,private meta: Meta
         ) {
@@ -35,10 +35,10 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-		this.meta.removeTag('name=title');
-		this.meta.removeTag('name=description');
-		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: 'Login to your BullsEye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
+		// this.meta.removeTag('name=title');
+		// this.meta.removeTag('name=description');
+        this.titleService.setTitle(this.title);
+		this.meta.updateTag({name: 'description', content: 'Track and analyse your stocks and crypto portfolios with BullsEye Investors. Live and historic market prices, portfolio tracking and analysis, price alerts, news and chat. Register your account for free today!'});
 		this.showBtnText='Login';
         this.userName = (localStorage.getItem('cacheUserName')!='' && localStorage.getItem('cacheUserName') != undefined) ? localStorage.getItem('cacheUserName') : ''; 
         this.password = (localStorage.getItem('cachePassword')!='' && localStorage.getItem('cachePassword') != undefined) ? localStorage.getItem('cachePassword') : '';  

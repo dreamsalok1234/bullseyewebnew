@@ -46,7 +46,7 @@ export class NewsComponent implements OnInit {
   dropdownSettings = {};
   ChooseSourceText="Choose Source";
   SelectAllText="Select All";
-  UnSelectAllText="UnSelect All";
+  UnSelectAllText="Deselect All";
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -60,8 +60,6 @@ export class NewsComponent implements OnInit {
 	private meta: Meta
   ) {}
   ngOnInit() {
-	this.meta.removeTag('name=title');
-	this.meta.removeTag('name=description');
 	this.titleService.setTitle(this.title);
      /* Check Token */
 	if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null)) {
@@ -94,10 +92,10 @@ export class NewsComponent implements OnInit {
 	this.translate.get('ChooseSource').subscribe(value => {
 		this.ChooseSourceText = value;
 	});
-	this.translate.get('SelectAllText').subscribe(value => {
+	this.translate.get('SelectAll').subscribe(value => {
 		this.SelectAllText = value;
 	});
-	this.translate.get('UnSelectAllText').subscribe(value => {
+	this.translate.get('UnSelectAll').subscribe(value => {
 		this.UnSelectAllText = value;
 	});
     this.dropdownSettings = {
