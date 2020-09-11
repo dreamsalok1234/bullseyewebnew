@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 			this.router.navigate(['/login']);
 		
 		this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
-		
+		this.profileInfo.isProAccount = parseInt(this.profileInfo.isProAccount);
 		 /* Set Language Translator */
 		this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
 		this.translate.setDefaultLang('en');

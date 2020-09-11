@@ -82,7 +82,10 @@ export class PortfolioDetailsComponent implements OnInit {
 	criteriaFilter = [{ 'key': 'high', 'value': 'Top 10 by 24 Hour Change' }, { 'key': 'low', 'value': 'Bottom 10 by 24 Hour Change' }, { 'key': 'market_cap', 'value': 'Top 10 by Market Capitalisation' }];
 	graphFilter = 0;
 	activeCustomTab = 0;
-
+	SelectMarket = "Market";
+	Book = "Book";
+	currentTime = new Date();
+	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
 
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
@@ -135,6 +138,12 @@ export class PortfolioDetailsComponent implements OnInit {
 		});
 		this.translate.get('Priceto3decimalplaces').subscribe(value => {
 			this.PriceTo3DecimalPlacesMsg=value;
+		});
+		this.translate.get('SelectMarket').subscribe(value => {
+			this.SelectMarket=value;
+		});
+		this.translate.get('Book').subscribe(value => {
+			this.Book=value;
 		});
     	this.investmentForm=this._fb.group({
 			'ticker':['',Validators.required],
@@ -730,7 +739,7 @@ export class PortfolioDetailsComponent implements OnInit {
 			series.tooltipText =
 			this.dateText+`: {date}\n`+
 			this.currencyText+`: {currency}\n`+
-			this.chartValue+`: {value}`;
+			this.SelectMarket+`: {value}`;
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;
 			series.tooltip.background.fill = am4core.color('#00b050');
@@ -749,8 +758,8 @@ export class PortfolioDetailsComponent implements OnInit {
 			series.tooltipText =
 			this.dateText+`: {date}\n`+
 			this.currencyText+`: {currency}\n`+
-			this.valueText+`: {value}\n`+
-			this.costText+`: {cost}`;
+			this.SelectMarket+`: {value}\n`+
+			this.Book+`: {cost}`;
 
 			/* Set Chart Tooltip Style */
 			series.tooltip.getFillFromObject = false;

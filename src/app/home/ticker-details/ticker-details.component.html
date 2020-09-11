@@ -29,10 +29,14 @@
                     <button (click)="addToWatchList()" [ngClass]="[watchListId == 0 ? 'addToWlist' : 'alreadyAdded']" title="{{ 'Watchlist' | translate }}">
                         <i class="fa fa-star" aria-hidden="true"></i>
                     </button>
-                    <button (click)="addPricePrediction(addpriceprediction)" [ngClass]="[isPredictionLocked == 0 ? '' : 'alreadyAdded']" title="{{ 'AddPricePrediction' | translate }}" *ngIf="this.profileInfo.isProAccount"><img src="../../assets/images/target.png">
+                    <button [ngClass]="[' alreadyAdded locked_menu_btn']" title="{{ 'AddPricePrediction' | translate }}" *ngIf="!this.profileInfo.isProAccount">
+                        <img src="../../assets/images/target.png">
                     </button>
-                    <button (click)="open(content)"><i class="fa fa-bell" aria-hidden="true" title="{{ 'PriceAlert' | translate }}"></i></button>
-                    <button *ngIf="chatboardData" [ngClass]="[this.profileInfo.isProAccount ? '' : 'alreadyAdded']" (click)="goToChatDetails(this.profileInfo.isProAccount, chatboardData.chatBoardId,chatboardData.name,chatboardData.symbol,chatboardData.tickerUrl,getCurrencyValue(chatboardData),chatboardData.currency,chatboardData.favouriteId,chatboardData.change_pct,chatboardData.volume);"
+                    <button (click)="addPricePrediction(addpriceprediction)" [ngClass]="[isPredictionLocked == 0 ? '' : 'alreadyAdded']" title="{{ 'AddPricePrediction' | translate }}" *ngIf="this.profileInfo.isProAccount">
+                        <img src="../../assets/images/target.png">
+                    </button>
+                    <button (click)="(this.profileInfo.isProAccount)?open(content):'';" [ngClass]="[(!this.profileInfo.isProAccount) ? ' alreadyAdded locked_menu_btn':'']"><i class="fa fa-bell" aria-hidden="true" title="{{ 'PriceAlert' | translate }}"></i></button>
+                    <button *ngIf="chatboardData" [ngClass]="[(!this.profileInfo.isProAccount) ? ' alreadyAdded locked_menu_btn':'']" (click)="goToChatDetails(this.profileInfo.isProAccount, chatboardData.chatBoardId,chatboardData.name,chatboardData.symbol,chatboardData.tickerUrl,getCurrencyValue(chatboardData),chatboardData.currency,chatboardData.favouriteId,chatboardData.change_pct,chatboardData.volume);"
                         title="{{ 'Chat' | translate }}"><i class="fa fa-comments" aria-hidden="true"></i></button>
                     <a class="back_arrow" href="javascript:" title="{{ 'Back' | translate }}" onclick="history.go(-1); return false;">
                         <span> <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> </span>
@@ -70,7 +74,8 @@
                     <div id="candleSma" style="display:none" [ngClass]="">{{ tickerDataText }}</div>
                 </div>
                 <div class="pop_filters book_cost filter_modal_popup">
-                    <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}"><img src="assets/images/search-market-icon.png" /></a>
+                    <a href="javascript:" title="{{ 'GraphAnaTitle' | translate }}" class="alreadyAdded locked_menu" *ngIf="!this.profileInfo.isProAccount"><img src="assets/images/search-market-icon.png" /></a>
+                    <a href="javascript:" (click)="activeFilter = !activeFilter" title="{{ 'GraphAnaTitle' | translate }}" *ngIf="this.profileInfo.isProAccount"><img src="assets/images/search-market-icon.png"/></a>
                     <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
                         <div class="title_div">
                             <h2 class="modal-title-analytics">
@@ -234,19 +239,19 @@
                         <li>
                             <img src="assets/images/revenue.png" alt="{{'revenue12M' | translate}}" />
                             <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'revenue12M')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                            <h3>{{(fundamentalsData.Highlights.RevenueTTM && fundamentalsData.General.CurrencySymbol)?fundamentalsData.General.CurrencySymbol:''}}{{ getNumberInMillion(fundamentalsData.Highlights.RevenueTTM) }}</h3>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.RevenueTTM, fundamentalsData.General) }}</h3>
                             <h4>{{'revenue12M' | translate}}</h4>
                         </li>
                         <li>
                             <img src="assets/images/ebitda.png" alt="{{'EBITDA' | translate}}" />
                             <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'EBITDA')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                            <h3>{{(fundamentalsData.Highlights.EBITDA && fundamentalsData.General.CurrencySymbol)?fundamentalsData.General.CurrencySymbol:''}}{{ getNumberInMillion(fundamentalsData.Highlights.EBITDA) }}</h3>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.EBITDA, fundamentalsData.General) }}</h3>
                             <h4>{{ 'EBITDA' | translate }}</h4>
                         </li>
                         <li>
                             <img src="assets/images/grossprofit.png" alt="{{'grossProfit(12M)' | translate}}" />
                             <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'grossProfit(12M)')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                            <h3>{{(fundamentalsData.Highlights.GrossProfitTTM && fundamentalsData.General.CurrencySymbol)?fundamentalsData.General.CurrencySymbol:''}}{{ getNumberInMillion(fundamentalsData.Highlights.GrossProfitTTM) }}</h3>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.GrossProfitTTM, fundamentalsData.General) }}</h3>
 
                             <h4>{{ 'grossProfit(12M)' | translate }}</h4>
                         </li>
@@ -272,7 +277,7 @@
                         <li>
                             <img src="assets/images/earningspershare.png" alt="{{'earningsPerShare' | translate}}" />
                             <a href="javascript:" class="text-helper" (click)="showAlert(alertBox, 'earningsPerShare')"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                            <h3>{{ (fundamentalsData.Highlights.EarningsShare | number:'1.2-2') || '-'}}</h3>
+                            <h3>{{ getNumberInMillion(fundamentalsData.Highlights.EarningsShare, fundamentalsData.General, 2)}}</h3>
                             <h4>{{ 'earningsPerShare' | translate }}</h4>
                         </li>
                     </ul>
@@ -320,7 +325,7 @@
             <div class="form-group">
                 <label>{{ 'ExpiryDate' | translate }}</label>
                 <div class="input-group datepicker-input">
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate" ngbDatepicker #d="ngbDatepicker" readonly />
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate" [minDate]="priceAlertStartDateFrom" ngbDatepicker #d="ngbDatepicker" readonly />
                     <button class="input-group-addon" (click)="d.toggle()" type="button">
             <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
             <span class="fa fa-calendar"></span>
@@ -361,7 +366,7 @@
             </div>
             <div class="form-group">
                 <label>{{ 'predictedMarketPrice' | translate }}</label>
-                <input class="form-control amount" type="text" name="amount" [(ngModel)]="predictionForm.amount" #amount="ngModel" autocomplete="off" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" (keypress)="numberOnly($event)" />
+                <input class="form-control amount" type="text" name="amount" placeholder="0.000" [(ngModel)]="predictionForm.amount" #amount="ngModel" autocomplete="off" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" (keypress)="numberOnly($event)" />
                 <div class="error danger" *ngIf="predictionFormError.amount">{{ priceRequired }}</div>
             </div>
             <div class="form-group">

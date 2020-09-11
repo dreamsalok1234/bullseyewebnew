@@ -752,3 +752,44 @@ img.head-green {
     border-radius: 25px;
     width: 34px;
 }
+
+.locked_menu_btn {
+    &:before {
+      content: "\f023";
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: absolute;
+    //   width: 100%;
+    //   height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size:18px;
+      color: #111e36;
+    }
+}
+
+.locked_menu {
+    &:before {
+      content: "\f023";
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: absolute;
+      width: 37%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size:18px;
+      color: #111e36;
+    }
+}
+.pop_filters a.locked_menu {
+    background: #cccccc;
+}

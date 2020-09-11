@@ -107,6 +107,7 @@ export class TickerDetailsComponent implements OnInit {
 	shortingTab = '1D';
 	shortZone = 'GMT';
 	currentTime = new Date();
+	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
 	isPredictionLocked = 1;
 	predictionStartDate = new Date();
 	predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
@@ -138,12 +139,12 @@ export class TickerDetailsComponent implements OnInit {
 		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
 		this.predictionStartDateFrom = { year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate() };
 
-
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined || localStorage.getItem('tickerCurrency') == null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
 			this.router.navigate(['/login']);
 		}
 
 		this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
+		this.profileInfo.isProAccount = parseInt(this.profileInfo.isProAccount);
 		if (this.activeRoute.snapshot.queryParams) {
 
 			if (this.activeRoute.snapshot.params.pname !== undefined && this.activeRoute.snapshot.params.pname != null && this.activeRoute.snapshot.params.username !== undefined && this.activeRoute.snapshot.params.username != null) {
@@ -1033,6 +1034,7 @@ export class TickerDetailsComponent implements OnInit {
 			this.priceAlert.amount = '';
 			this.priceAlert.tickerId = this.tickerId;
 			this.priceAlert.tickerIcon = this.tickerNIcon;
+			this.priceAlert.currentCurrency=this.profileInfo.baseCurrency;
 			this.modalService.open(content).result.then((result) => {
 				this.closeResult = `Closed with: ${result}`;
 			}, (reason) => {
@@ -1481,14 +1483,32 @@ export class TickerDetailsComponent implements OnInit {
 		}
 	}
 
-	getNumberInMillion(finalPrice) {
+	getNumberInMillion(finalPrice, General?, fx?) {
 		finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
-		if (Math.abs(finalPrice) > 1000000) {
-			let douValue = finalPrice / 1000000;
-			return this.formatNumber(douValue.toFixed(2)) + 'm';
+		let apiCurrency = '';
+		if(General && finalPrice != 0){
+			if(General.CurrencyCode == 'GBX'){
+				apiCurrency = '£';
+				// finalPrice = parseFloat((finalPrice/100).toFixed(0));
+			}else{
+				apiCurrency = General.CurrencySymbol;
+			}
+
+		}
+		if (Math.abs(finalPrice) > 1000000000) {
+			let douValue = Math.abs(finalPrice) / 1000000000;
+			return (finalPrice < 0?'-':'')+apiCurrency + this.formatNumber(douValue.toFixed(2)) + 'b';
+		} else if (Math.abs(finalPrice) > 1000000) {
+			let douValue = Math.abs(finalPrice) / 1000000;
+			return (finalPrice < 0?'-':'')+apiCurrency + this.formatNumber(douValue.toFixed(2)) + 'm';
 		} else {
-			finalPrice = (finalPrice) ? parseInt(finalPrice) : '-';
-			return this.formatNumber(finalPrice);
+			if(finalPrice){
+				if(fx){
+					return (finalPrice < 0?'-':'')+apiCurrency + this.formatNumber(Math.abs(finalPrice).toFixed(fx));
+				}
+				return (finalPrice < 0?'-':'')+apiCurrency + this.formatNumber(Math.abs(finalPrice));
+			}
+			return '-';
 		}
 	}
 	getNumberInPercentage(finalPrice) {

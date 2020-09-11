@@ -72,7 +72,7 @@
             </div>
             <div class="form-group">
               <label>{{ 'predictedMarketPrice' | translate }}</label>
-              <input class="form-control amount" type="text" formControlName="amount" autocomplete="off"
+              <input class="form-control amount" type="text" formControlName="amount" placeholder="0.000" autocomplete="off"
                 (keypress)="numberOnly($event)" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" />
               <div *ngIf="submitted && i.amount.errors" class="alert alert-dange error">
                 <div *ngIf="i.amount.errors.required">{{ targetPriceisRequiredMsg }}</div>

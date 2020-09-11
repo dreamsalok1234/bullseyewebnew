@@ -63,6 +63,8 @@ export class SearchMarketComponent implements OnInit {
   Chooseyourdefaultcurrency = 'Choose your default currency';
   disabledCurrency = true;
   defaultMarket:any;
+	currentTime = new Date();
+	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,

@@ -302,6 +302,7 @@
     "Market": "Market",
     "Profile": "Profile",
     "Fundamentals": "Fundamentals",
-    "riskIndicators": "Risk Indicators"
+    "riskIndicators": "Risk Indicators",    
+    "Book": "Book"
 
 }

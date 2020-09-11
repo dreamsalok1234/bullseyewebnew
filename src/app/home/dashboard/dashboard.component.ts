@@ -62,7 +62,9 @@ export class DashboardComponent implements OnInit {
 	expiryDateisRequiredMsg="Expiry Date is required!";
 	PriceTo3DecimalPlacesMsg="Target Price should be to 3 decimal place";
 	criteriaFilter = [{'key': 'high', 'value' : 'Top 10 by 24 Hour Change'}, {'key': 'low', 'value' : 'Bottom 10 by 24 Hour Change'}, {'key': 'market_cap', 'value' : 'Top 10 by Market Capitalisation'}];
-    I;
+	
+	currentTime = new Date();
+	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
     ngOnInit() {		
 		 /* Check Token */
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) { 

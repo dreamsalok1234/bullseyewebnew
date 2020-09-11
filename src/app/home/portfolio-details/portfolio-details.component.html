@@ -411,7 +411,7 @@
           </div>
         </div>
         <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost' : ''">
-          <label for="Portfolio">{{ "BookingCost" | translate }}</label>
+          <label for="Portfolio">{{ "BookingCost" | translate }} <i class="fa fa-info-circle helper-text" aria-hidden="true" title="Book cost is how much the trade has ‘cost’ to execute. This is the cost of the units bought plus any trading fees."></i></label>
           <div class="span_input">
             <span class="symbol" *ngIf="showBookingSymbol">{{ symbol }}</span>
             <input type="text" matInput formControlName="bookingCost" class="form-control" autocomplete="off"
@@ -474,7 +474,7 @@
           </div>
         </div>
         <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost' : ''">
-          <label for="Portfolio">{{ "SellPrice" | translate }}</label>
+          <label for="Portfolio">{{ "SellPrice" | translate }} <i class="fa fa-info-circle helper-text" aria-hidden="true" title="Sell price is the price per unit that was sold."></i></label>
           <div class="span_input">
             <span class="symbol" *ngIf="showBookingSymbol">{{ symbol }}</span>
             <input type="text" matInput formControlName="bookingCost" class="form-control" maxlength="35"
@@ -572,7 +572,7 @@
         <div class="form-group">
           <label>{{ "ExpiryDate" | translate }}</label>
           <div class="input-group datepicker-input">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate"
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="priceAlertStartDateFrom" [(ngModel)]="priceAlert.expiryDate"
               ngbDatepicker #d="ngbDatepicker" readonly />
             <button class="input-group-addon" (click)="d.toggle()" type="button">
               <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
