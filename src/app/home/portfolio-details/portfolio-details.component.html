@@ -142,19 +142,7 @@
                       <li class="toggle_actions">
                         <ul class="submenus" id="collapseExample">
                           <li class="dropdown-item">
-                            <a href="javascript:void(0);" (click)="
-                                                          goToTickerDetails(
-                                                            valueItem.tickerId,
-                                                            portfolioCurrency,
-                                                            valueItem.type,
-                                                            valueItem.name,
-                                                            valueItem.symbol,
-                                                            0,
-                                                            i
-                                                          )
-                                                        " title="{{ 'View' | translate }}">
-                              <i class="fa fa-eye" aria-hidden="true"></i>
-                            </a>
+                            <a href="javascript:void(0);" (click)="goToTickerDetails( valueItem.tickerId, portfolioCurrency, valueItem.type, valueItem.name, valueItem.symbol, 0, i ) " title="{{ 'View' | translate }}"> <i class="fa fa-eye" aria-hidden="true"></i> </a>
                           </li>
                           <li class="dropdown-item">
                             <a href="javascript:void(0);" (click)="priceAlertPopup(pricealert, i)"
@@ -174,15 +162,7 @@
                               <i class="fa fa-minus-square" aria-hidden="true"></i></a>
                           </li>
                           <li class="dropdown-item">
-                            <a href="javascript:void(0);" (click)="
-                                                            deleteInvestmentItem(
-                                                              deleteInvestment,
-                                                              'Delete',
-                                                              i
-                                                            )
-                                                          " title="{{ 'Remove' | translate }}">
-                              <i class="fa fa-times" aria-hidden="true"></i>
-                            </a>
+                            <a href="javascript:void(0);" (click)="deleteInvestmentItem( deleteInvestment, 'Delete', i ) " title="{{ 'Remove' | translate }}"> <i class="fa fa-times" aria-hidden="true"></i> </a>
                           </li>
                         </ul>
                       </li>
@@ -411,7 +391,11 @@
           </div>
         </div>
         <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost' : ''">
-          <label for="Portfolio">{{ "BookingCost" | translate }} <i class="fa fa-info-circle helper-text" aria-hidden="true" title="Book cost is how much the trade has ‘cost’ to execute. This is the cost of the units bought plus any trading fees."></i></label>
+          <label for="Portfolio">
+            {{ "BookingCost" | translate }}
+            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+            <p>Book cost is how much the trade has ‘cost’ to execute. This is the cost of the units bought plus any trading fees. </p>
+          </label>
           <div class="span_input">
             <span class="symbol" *ngIf="showBookingSymbol">{{ symbol }}</span>
             <input type="text" matInput formControlName="bookingCost" class="form-control" autocomplete="off"
@@ -474,14 +458,15 @@
           </div>
         </div>
         <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost' : ''">
-          <label for="Portfolio">{{ "SellPrice" | translate }} <i class="fa fa-info-circle helper-text" aria-hidden="true" title="Sell price is the price per unit that was sold."></i></label>
+          <label for="Portfolio">
+            {{ "SellPrice" | translate }}
+            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+            <p>Sell price is the price per unit that was sold.</p>
+          </label>
           <div class="span_input">
             <span class="symbol" *ngIf="showBookingSymbol">{{ symbol }}</span>
-            <input type="text" matInput formControlName="bookingCost" class="form-control" maxlength="35"
-              autocomplete="off" placeholder="{{ 'SellPrice' | translate }}"
-              (keyup)="calculateMarketPrice(portfolioType)"
-              [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }" (blur)="calculateBookingCost('sell')"
-              (keypress)="numberOnly($event)" />
+            <input type="text" matInput formControlName="bookingCost" class="form-control" maxlength="35" autocomplete="off" placeholder="{{ 'SellPrice' | translate }}" (keyup)="calculateMarketPrice(portfolioType)" [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }" (blur)="calculateBookingCost('sell')" (keypress)="numberOnly($event)" />
+
           </div>
           <div *ngIf="submitted && f.bookingCost.errors" class="alert alert-dange">
             <div *ngIf="f.bookingCost.required">
@@ -559,12 +544,14 @@
             </option>
           </select>
         </div>
-        <div class="form-group target_price">
+        <div class="form-group">
           <label>{{ "TargetPrice" | translate }}</label>
-          <span>{{ returnCurrSymbol(priceAlertCurrency) }}</span>
-          <input class="form-control amount" type="text" name="amount" [(ngModel)]="priceAlert.amount" #amount="ngModel"
+					<div class="input-group">
+						<span class="input-group-addon">{{returnCurrSymbol(priceAlertCurrency)}}</span> 
+            <input class="form-control amount" type="text" placeholder="0.000" name="amount" [(ngModel)]="priceAlert.amount" #amount="ngModel"
             autocomplete="off" (keypress)="numberOnly($event)" maxlength="10" (blur)="setTagetValueWith3Digit()"
             (keyup)="checkTargetValidation()" />
+					</div>
           <div class="error danger" *ngIf="priceAlertError.amount">
             {{ targetPriceisRequiredMsg }}
           </div>

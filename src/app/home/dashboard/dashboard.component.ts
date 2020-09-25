@@ -65,6 +65,9 @@ export class DashboardComponent implements OnInit {
 	
 	currentTime = new Date();
 	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
+	
+	priceAlertCurrencySymbol = '$';
+
     ngOnInit() {		
 		 /* Check Token */
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) { 
@@ -152,8 +155,13 @@ export class DashboardComponent implements OnInit {
 		setTimeout(function() {
 			objectNType.getPageContent();
 		},1000);
-    	// this.getPageContent();
+		// this.getPageContent();
+		
+		this.priceAlertCurrencySymbol = this.returnCurrSymbol(this.watchListCurrency);
 
+	}
+	ChangePriceAlertCurrencySymbol(currency) {
+		this.priceAlertCurrencySymbol = this.returnCurrSymbol(currency);
 	}
     getPageContent() {
     	const objectType = this;

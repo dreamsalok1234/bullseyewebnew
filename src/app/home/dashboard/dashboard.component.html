@@ -221,7 +221,7 @@
 				</div>
 				<div class="form-group">
 					<label>{{ 'Currency' | translate }}</label>
-					<select class="form-control" name="currentCurrency" [(ngModel)]="priceAlert.currentCurrency"
+					<select class="form-control" name="currentCurrency" (change)="ChangePriceAlertCurrencySymbol($event.target.value)" [(ngModel)]="priceAlert.currentCurrency"
 						#currentCurrency="ngModel">
 						<option value="{{ currency.name }}" *ngFor="let currency of currencyItemList; let i = index">
 							{{ currency.name }} </option>
@@ -229,9 +229,10 @@
 				</div>
 				<div class="form-group">
 					<label>{{ 'TargetPrice' | translate }}</label>
-					<input class="form-control amount" type="text" name="amount" [(ngModel)]="priceAlert.amount"
-						#amount="ngModel" autocomplete="off" (keypress)="numberOnly($event)" maxlength="10"
-						(keyup)="checkTargetValidation()" (blur)="setTagetValueWith3Digit()" />
+					<div class="input-group">
+						<span class="input-group-addon">{{priceAlertCurrencySymbol}}</span> 
+						<input class="form-control amount" type="text" name="amount" placeholder="0.000" [(ngModel)]="priceAlert.amount" #amount="ngModel" autocomplete="off" (keypress)="numberOnly($event)" maxlength="10" (keyup)="checkTargetValidation()" (blur)="setTagetValueWith3Digit()" />
+					</div>
 					<div class="error danger" *ngIf="priceAlertError.amount">{{ targetPriceisRequiredMsg }}</div>
 				</div>
 				<div class="form-group">
@@ -259,12 +260,13 @@
 <!-- add_assets modal-->
 <div class="card-body">
 	<ng-template #editportfolio let-c="close" let-d="dismiss">
-		<div class="modal-header alert_header">
-			<h2 class="pop-head"><i class="fa fa-pencil head-icon" aria-hidden="true"></i> {{ 'UpdatePortfolio' | translate }}</h2>
+		<div class="modal-header alert_header title_div">
+			<h2 class="pop-head"><i class="fa fa-pencil head-icon-1 head-icon-2" aria-hidden="true"></i> {{ 'UpdatePortfolio' | translate }}</h2>
 			<button type="button" class="btn btn-secondary close" (click)="c('Close click')">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
+
 		<div class="modal-body">
 			<form class="form-inline form_price" (submit)="updatePortfolio()">
 				<div class="form-group">

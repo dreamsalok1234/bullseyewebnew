@@ -360,11 +360,11 @@ export class PortfolioHistoryComponent implements OnInit {
 		this.investmentForm.controls['bookingCost'].setValue(this.formatNumber((v === 'sell') ? parseFloat(bookCost).toFixed(3) : parseFloat(bookCost).toFixed(2)));
 		this.showBookingSymbol = true;
 	}
-	numberWithCommas(x) {
-		const parts = x.toString().split('.');
-		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-		return parts.join('.');
-	}
+	// numberWithCommas(x) {
+	// 	const parts = x.toString().split('.');
+	// 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	// 	return parts.join('.');
+	// }
 
 
 

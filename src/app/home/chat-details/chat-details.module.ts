@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChatDetailsRoutingModule } from './chat-details-routing.module';
 import { ChatDetailsComponent } from './chat-details.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
 @NgModule({
     imports: [
 		FormsModule,
@@ -14,7 +15,8 @@ import { NgxEditorModule } from 'ngx-editor';
 		TranslateModule, 
 		NgbModule,
 		ChatDetailsRoutingModule,
-		NgxEditorModule 
+		NgxEditorModule,
+		NgxLinkifyjsModule.forRoot()
 	],
     declarations: [ChatDetailsComponent]
 })

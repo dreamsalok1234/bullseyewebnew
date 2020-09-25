@@ -1057,7 +1057,7 @@ createAxisAndSeries(field,chart) {
 		series.riseFromOpenState.properties.fill = am4core.color('#00b050');
 		series.riseFromOpenState.properties.stroke = am4core.color('#00b050');
 		series.tooltipText =
-		this.dateText+`: {date}\n`+
+		this.dateText+`: {date}\n`+((this.shortingTab === '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 		this.currencyText+`: {currency}\n`+
 		this.openText+`: {open}\n`+
 		this.closeText+`: {close}\n`+
@@ -1313,6 +1313,19 @@ getSMAData(data, SMAType) {
 
   }
   return SMAData;
+}
+
+formateBERF(finalPrice) {
+	finalPrice = (finalPrice) ? parseFloat(finalPrice) : 0;
+	if (Math.abs(finalPrice) > 1000000) {
+		let douValue = finalPrice / 1000000;
+		return this.formatNumber(douValue.toFixed(1)) + 'm';
+	} else if (Math.abs(finalPrice) > 999) {
+		let douValue = finalPrice / 1000;
+		return this.formatNumber(douValue.toFixed(1)) + 'k';
+	} else {
+		return this.formatNumber(parseInt(finalPrice.toFixed(1)));
+	}
 }
 
 

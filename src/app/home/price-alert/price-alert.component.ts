@@ -63,6 +63,7 @@ export class PriceAlertComponent implements OnInit {
   title = 'BullsEye Investors | Price Alert';
   targetPriceisRequiredMsg = 'Target Price is required!';
   currentTime = new Date();
+  priceAlertCurrencySymbol ='$';
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -132,7 +133,13 @@ export class PriceAlertComponent implements OnInit {
     } catch (error) {}
     this._initForm();
     this.priceAlertList();
-  }
+
+    this.priceAlertCurrencySymbol = this.returnCurrSymbol(this.profileInfo.baseCurrency);
+    
+	}
+	ChangePriceAlertCurrencySymbol(currency) {
+		this.priceAlertCurrencySymbol = this.returnCurrSymbol(currency);
+	}
 
   private _initForm(): void {
     this.investmentForm = this._fb.group({
@@ -366,24 +373,25 @@ export class PriceAlertComponent implements OnInit {
   }
 
   editPriceAlert(addpricealert, keyIndex) {
-	this.tickerList = [];
-	this.tickerName = '';
-	this.investmentForm.reset();
+    this.tickerList = [];
+    this.tickerName = '';
+    this.investmentForm.reset();
     this.alertId = '';
     const priceAlert = this.itemList[keyIndex];
     this.tickerId = priceAlert.tickerId;
     this.stockType = priceAlert.tickerType;
-	this.toggleActive((this.stockType.toLowerCase() === 'stock') ? 1 : 2);
+    this.toggleActive((this.stockType.toLowerCase() === 'stock') ? 1 : 2);
     this.tickerName = priceAlert.name;
-	if (this.tickerName !== undefined && this.tickerName !== '') {
+    if (this.tickerName !== undefined && this.tickerName !== '') {
       this.investmentForm.controls['ticker'].setValue(this.tickerName + ' (' + priceAlert.symbol + ')');
-	}
-    this.investmentForm.controls['expiryDate'].setValue({ year: 2019, month: 10, day: 25 });
+    }
+    let expiryDate = new Date(priceAlert.expiryDate);
+    this.investmentForm.controls['expiryDate'].setValue({ year: expiryDate.getFullYear(), month: expiryDate.getMonth()+1, day: expiryDate.getDate() });
     this.investmentForm.controls['currency'].setValue(priceAlert.currency);
     this.investmentForm.controls['compare'].setValue(priceAlert.alertType);
     this.investmentForm.controls['amount'].setValue(priceAlert.alertAmount);
     this.alertId = priceAlert.alertId;
-	this.modalService.open(addpricealert).result.then(
+    this.modalService.open(addpricealert).result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
       },

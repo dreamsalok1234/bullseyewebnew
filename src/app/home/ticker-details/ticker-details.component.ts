@@ -119,6 +119,8 @@ export class TickerDetailsComponent implements OnInit {
 	fundamentalsOfficers = [];
 	alertHeading = '';
 	alertDesc = '';
+	predictionCurrencySymbol = '$';
+	priceAlertCurrencySymbol = '$';
 
 	
 	constructor(
@@ -136,7 +138,7 @@ export class TickerDetailsComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
+		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 5);
 		this.predictionStartDateFrom = { year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate() };
 
 		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined || localStorage.getItem('tickerCurrency') == null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
@@ -285,7 +287,7 @@ export class TickerDetailsComponent implements OnInit {
 			objectNtype.getChatboard();
 			objectNtype.getTickerFundamentals();
 		}, 1000);
-
+		this.predictionCurrencySymbol = this.priceAlertCurrencySymbol = this.returnCurrSymbol(this.watchListCurrency);
 
 
 	}
@@ -409,6 +411,12 @@ export class TickerDetailsComponent implements OnInit {
 		this.tickerListData = [];
 		this.tickerListData = tickerListDataData;
 		this.loadingBar.stop();
+	}
+	ChangePredictionCurrency(currency) {
+		this.predictionCurrencySymbol = this.returnCurrSymbol(currency);
+	}
+	ChangePriceAlertCurrencySymbol(currency) {
+		this.priceAlertCurrencySymbol = this.returnCurrSymbol(currency);
 	}
 	getCurrencyValue(price, currency, keyType) {
     	/* const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
@@ -1110,6 +1118,20 @@ export class TickerDetailsComponent implements OnInit {
 		if (this.priceAlert.amount !== '') {
 			const amt = parseFloat(this.priceAlert.amount);
 			this.priceAlert.amount = amt.toFixed(3);
+		}
+	}
+	checkTargetValidationPrediction() {
+		if (this.predictionForm.amount !== '') {
+			if (!(/^\d+[.,]?\d{0,3}$/g.test(this.predictionForm.amount))) {
+				const a = this.predictionForm.amount.split('.');
+				this.predictionForm.amount = a[0] + '.' + a[1].substring(0, 3);
+			}
+		}
+	}
+	setTagetValueWith3DigitPrediction() {
+		if (this.predictionForm.amount !== '') {
+			const amt = parseFloat(this.predictionForm.amount);
+			this.predictionForm.amount = amt.toFixed(3);
 		}
 	}
 	public getDismissReason(reason: any): string {

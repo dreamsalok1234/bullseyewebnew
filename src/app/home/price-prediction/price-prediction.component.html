@@ -65,15 +65,17 @@
             </div>
             <div class="form-group">
               <label>{{ 'Currency' | translate }}</label>
-              <select class="form-control" formControlName="currency">
+              <select class="form-control" formControlName="currency" (change)="ChangePredictionCurrency($event.target.value)">
                 <option value="{{ currency.name }}" *ngFor="let currency of currencyList; let i = index">
                   {{ currency.name }} </option>
               </select>
             </div>
             <div class="form-group">
               <label>{{ 'predictedMarketPrice' | translate }}</label>
-              <input class="form-control amount" type="text" formControlName="amount" placeholder="0.000" autocomplete="off"
-                (keypress)="numberOnly($event)" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" />
+              <div class="input-group">
+                <span class="input-group-addon">{{predictionCurrencySymbol}}</span> 
+                <input class="form-control amount" type="text" formControlName="amount" placeholder="0.000" autocomplete="off" (keypress)="numberOnly($event)" (blur)="setTagetValueWith3Digit()" (keyup)="checkTargetValidation()" />
+              </div>
               <div *ngIf="submitted && i.amount.errors" class="alert alert-dange error">
                 <div *ngIf="i.amount.errors.required">{{ targetPriceisRequiredMsg }}</div>
               </div>

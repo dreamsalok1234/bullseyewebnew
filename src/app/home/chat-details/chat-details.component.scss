@@ -8,6 +8,7 @@
   b {
     font-weight: normal;
     margin-right: auto;
+    min-width: 180px;
   }
 }
 .ngx-editor-textarea {
@@ -324,7 +325,7 @@ a.back_arrow {
 .pop_filters.book_cost {
   max-width: 100px;
   border-radius: 25px;
-  overflow: hidden;
+  overflow: inherit;
 }
 .checkbox-custom {
   + .checkbox-custom-label:before {
@@ -1242,3 +1243,7 @@ button.btn.tick-cross {
   float: right;
 }
 
+.pop_filters.book_cost.filter_modal_popup a {
+  padding: 5px 9px 10px 9px;
+  height: auto;
+}

@@ -70,7 +70,8 @@ export class PricePredictionComponent implements OnInit {
   sharingTicker = '';
   predictionStartDate = new Date();
   predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
-
+  predictionCurrencySymbol = '$';
+  
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -88,7 +89,7 @@ export class PricePredictionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
+    this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 5);
     this.predictionStartDateFrom = {
       year: this.predictionStartDate.getFullYear(),
       month: this.predictionStartDate.getMonth() + 1,
@@ -154,7 +155,8 @@ export class PricePredictionComponent implements OnInit {
     } catch (error) { }
     this._initForm();
     this.openPricePredictionList();
-    this.closedPricePredictionList();
+    this.closedPricePredictionList();    
+		this.predictionCurrencySymbol = this.returnCurrSymbol(this.profileInfo.baseCurrency);
   }
   private _initForm(): void {
     this.predictionForm = this._fb.group({
@@ -167,6 +169,11 @@ export class PricePredictionComponent implements OnInit {
   get i() {
     return this.predictionForm.controls;
   }
+
+  ChangePredictionCurrency(currency) {
+		this.predictionCurrencySymbol = this.returnCurrSymbol(currency);
+  }
+  
   valuechange($event) {
     const objectType = this;
     setTimeout(function () {

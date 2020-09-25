@@ -277,8 +277,7 @@ export class InvestmentComponent implements OnInit {
 		input=(input!=null && input!='' && input!=undefined)?input:0;
 		input=(input.toString().indexOf(",")>-1)?input.replace(/,/g, ""):input;
 		input=(v.toLowerCase()=='stock')?parseInt(input):parseFloat(input);
-		
-		this.investmentForm.controls["holding"].setValue((v.toLowerCase()=='stock')?(this.formatNumber(input)):(this.formatNumber(input.toFixed(6))));
+		this.investmentForm.controls["holding"].setValue((v.toLowerCase()=='stock')?(this.formatNumber(input)):(this.formatNumber(input.toFixed(4))));
 	}
 	formatNumber(num) {
 		var numNew=num.toString()

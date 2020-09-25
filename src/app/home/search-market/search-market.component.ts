@@ -65,6 +65,8 @@ export class SearchMarketComponent implements OnInit {
   defaultMarket:any;
 	currentTime = new Date();
 	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
+  priceAlertCurrencySymbol = '$';
+  
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -152,7 +154,12 @@ export class SearchMarketComponent implements OnInit {
       objectNType.searchMarketData();
     }, 1000);
 
-  }
+		this.priceAlertCurrencySymbol = this.returnCurrSymbol(this.profileInfo.baseCurrency);
+
+	}
+	ChangePriceAlertCurrencySymbol(currency) {
+		this.priceAlertCurrencySymbol = this.returnCurrSymbol(currency);
+	}
 
   toggleActive(i) {
     if(this.activeTab == i)

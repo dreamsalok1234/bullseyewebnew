@@ -488,6 +488,12 @@ export class PortfolioDetailsComponent implements OnInit {
 		this.investmentForm.controls["marketValue"].setValue(this.formatNumber(marketValue.toFixed(2)));
 		/* if(bookCost=="0")
 			this.investmentForm.controls["bookingCost"].setValue(this.formatNumber(bookCost.toFixed(2))); */
+		if(this.investmentForm.value.bookingCost !== '') {
+			if (!(/^\d+[.,]?\d{0,3}$/g.test(this.investmentForm.value.bookingCost))) {
+				const a = this.investmentForm.value.bookingCost.split('.');
+				this.investmentForm.controls["bookingCost"].setValue( a[0] + '.' + a[1].substring(0, 3));
+			}
+		}
 
 	}
 	addInvestmentAction() {

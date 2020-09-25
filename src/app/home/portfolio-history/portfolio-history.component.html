@@ -52,7 +52,8 @@
             <li>{{ portfolioItem.historyDate }}</li>
             <li *ngIf="portfolioItem.historyType.toLowerCase() == 'investment' || portfolioItem.historyType.toLowerCase() == 'buy'" class="color-box" style="padding: 5px !important"><span class="active">Buy</span></li>
             <li *ngIf="portfolioItem.historyType.toLowerCase() != 'investment' &&  portfolioItem.historyType.toLowerCase() != 'buy'" class="color-box" style="padding: 5px !important"><span class="zeroactive">{{portfolioItem.historyType}}</span></li>
-            <li>{{ numberWithCommas(portfolioItem.noOfUnits)}}</li>
+            <li *ngIf="portfolioItem.portfolioType == 'Cryptocurrency'">{{ portfolioItem.noOfUnits | number:'1.4-4'}}</li>
+            <li *ngIf="portfolioItem.portfolioType != 'Cryptocurrency'">{{ portfolioItem.noOfUnits | number:'1.6-6'}}</li>
             <li>
               {{ portfolioItem.bookCost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.2' }}
             </li>

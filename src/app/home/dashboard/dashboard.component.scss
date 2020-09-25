@@ -229,8 +229,7 @@ ul.stats_body.portfoliolist li {
     justify-content: center;
     text-align: left;
     font-family: 'SFProDisplay-Bold';
-    &.social_title {
-    }
+    
   }
   ul {
     display: flex;
@@ -762,4 +761,9 @@ button.btn.berps-btn.btn-danger {
   background-color: #00b050;
   color: white;
   padding: 5px 11px;
+}
+
+.head-icon-2 {
+  padding: 8px 10px !important;
+  font-size: 20px !important;
 }
