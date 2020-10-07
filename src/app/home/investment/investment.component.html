@@ -30,10 +30,14 @@
                     </div>
 				</div>
 				<div class="form-group" [ngClass]="showBookingSymbol ? 'BookingCost':''">
-					<label for="Portfolio">{{ 'BookingCost' | translate }}</label>
+					<label for="Portfolio">
+					  {{ "BookingCost" | translate }}
+					  <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+					  <p>Book cost is how much the trade has ‘cost’ to execute. This is the cost of the units bought plus any trading fees. </p>
+					</label>
 					<div class="span_input">
 					<span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span>
-					<input type="text"  formControlName="bookingCost" maxlength="35" class="form-control" autocomplete="off" placeholder="{{ 'BookingCost' | translate }}" [ngClass]="{ 'is-invalid': submitted && i.bookingCost.errors }" (keyup)="checkBookValue();" (blur)="calculateBookingCost()" (keypress)="numberOnly($event)" />
+					<input type="text"  formControlName="bookingCost" maxlength="35" class="form-control" autocomplete="off" placeholder="{{ 'BookingCost' | translate }}" [ngClass]="{ 'is-invalid': submitted && i.bookingCost.errors }" (keyup)="checkBookValue();" (blur)="calculateBookingCost()" (keyup)="checkTargetValidation()" (keypress)="numberOnly($event)" />
 					</div>
 					<div *ngIf="submitted && i.bookingCost.errors" class="alert alert-dange">
                         <div *ngIf="i.bookingCost.required">{{ 'BookingCostisrequired' | translate }}</div>

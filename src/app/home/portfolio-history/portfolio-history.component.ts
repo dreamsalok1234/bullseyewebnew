@@ -177,8 +177,9 @@ export class PortfolioHistoryComponent implements OnInit {
 			this.investmentForm.controls['holding'].setValue(this.portfolioList[keyIndex].noOfUnits);
 			this.holdingUnit = this.portfolioList[keyIndex].noOfUnits;
 			this.portfolioType = this.portfolioList[keyIndex].portfolioType;
+			let currentPrice = (this.portfolioList[keyIndex].tickerCurrency == "GBX" || this.portfolioList[keyIndex].tickerCurrency == "GBP")?this.portfolioList[keyIndex].currentTickerPrice/100:this.portfolioList[keyIndex].currentTickerPrice;
 			if (this.portfolioList[keyIndex].historyType.toLowerCase().trim() == 'buy')
-				this.investmentForm.controls['marketValue'].setValue((this.portfolioList[keyIndex].currentTickerPrice * this.portfolioList[keyIndex].noOfUnits).toFixed(2));
+				this.investmentForm.controls['marketValue'].setValue((currentPrice * this.portfolioList[keyIndex].noOfUnits).toFixed(2));
 			else
 				this.investmentForm.controls['marketValue'].setValue(parseFloat(this.portfolioList[keyIndex].bookCost).toFixed(2));
 			this.investmentForm.controls['bookingCost'].setValue(this.portfolioList[keyIndex].bookCost);

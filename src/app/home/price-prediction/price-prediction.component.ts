@@ -89,7 +89,7 @@ export class PricePredictionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 5);
+    this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 6);
     this.predictionStartDateFrom = {
       year: this.predictionStartDate.getFullYear(),
       month: this.predictionStartDate.getMonth() + 1,

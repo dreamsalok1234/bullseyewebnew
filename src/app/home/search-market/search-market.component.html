@@ -48,7 +48,7 @@
           </select>
         </div>
         <div class="pop_filters">
-          <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
+          <a href="javascript:" (click)="activeFilter = !activeFilter" title="Filters"><img
               src="assets/images/filter.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
@@ -206,7 +206,7 @@
         <div class="form-group">
           <label>{{ 'ExpiryDate' | translate }}</label>
           <div class="input-group datepicker-input">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="priceAlertStartDateFrom" [(ngModel)]="priceAlert.expiryDate"
+            <input class="form-control" placeholder="YYYY-MM-DD" name="dp" [minDate]="priceAlertStartDateFrom" [(ngModel)]="priceAlert.expiryDate"
               ngbDatepicker #d="ngbDatepicker" readonly />
             <button class="input-group-addon" (click)="d.toggle()" type="button">
               <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->

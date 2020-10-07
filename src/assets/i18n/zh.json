@@ -309,6 +309,7 @@
     "Profile": "個人資料",
     "Fundamentals": "基本原理",
     "riskIndicators": "風險指標",    
-    "Book": "書"
+    "Book": "書",
+    "AreyousuretoDeleteInvestment?": "您確定要從投資組合中刪除<ticker>嗎？"
 
 }

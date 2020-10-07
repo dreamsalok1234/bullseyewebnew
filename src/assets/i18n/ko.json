@@ -309,6 +309,7 @@
     "Profile": "프로필",
     "Fundamentals": "기초",
     "riskIndicators": "위험 지표",    
-    "Book": "책"
+    "Book": "책",
+    "AreyousuretoDeleteInvestment?": "포트폴리오에서 <ticker>을 (를) 삭제 하시겠습니까?"
 
 }

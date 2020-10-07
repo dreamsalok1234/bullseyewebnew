@@ -121,7 +121,7 @@
     "Message": "Message",
     "Messageisrequired": "Message is required!",
 
-    "Nochartdataavailable": "No chart data available.",
+    "Nochartdataavailable": "No portfolio data available yet. This will appear over time.",
     "DeleteInvestment": "Delete Investment",
     "Add": "Add",
     "PortfolioChange": "Portfolio Change",
@@ -303,6 +303,7 @@
     "Profile": "Profile",
     "Fundamentals": "Fundamentals",
     "riskIndicators": "Risk Indicators",    
-    "Book": "Book"
+    "Book": "Book",
+    "AreyousuretoDeleteInvestment?": "Are you sure you want to delete <ticker> from your portfolio?"
 
 }

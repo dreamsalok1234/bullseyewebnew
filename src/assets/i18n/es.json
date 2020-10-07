@@ -309,6 +309,7 @@
     "Profile": "Perfil",
     "Fundamentals": "Fundamentos",
     "riskIndicators": "Indicadores de riesgo",    
-    "Book": "Libro"
+    "Book": "Libro",
+    "AreyousuretoDeleteInvestment?": "¿Está seguro de que desea eliminar <ticker> de su cartera?"
 
 }

@@ -310,6 +310,7 @@
     "Profile": "प्रोफ़ाइल",
     "Fundamentals": "मूलभूत",
     "riskIndicators": "जोखिम संकेतक",    
-    "Book": "पुस्तक"
+    "Book": "पुस्तक",
+    "AreyousuretoDeleteInvestment?": "क्या आप वाकई अपने पोर्टफोलियो से <ticker> हटाना चाहते हैं?"
 
 }

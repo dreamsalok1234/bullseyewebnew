@@ -328,7 +328,7 @@
             <div class="form-group">
                 <label>{{ 'ExpiryDate' | translate }}</label>
                 <div class="input-group datepicker-input">
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="priceAlert.expiryDate" [minDate]="priceAlertStartDateFrom" ngbDatepicker #d="ngbDatepicker" readonly />
+                    <input class="form-control" placeholder="YYYY-MM-DD" name="dp" [(ngModel)]="priceAlert.expiryDate" [minDate]="priceAlertStartDateFrom" ngbDatepicker #d="ngbDatepicker" readonly />
                     <button class="input-group-addon" (click)="d.toggle()" type="button">
             <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
             <span class="fa fa-calendar"></span>
@@ -377,7 +377,7 @@
             <div class="form-group">
                 <label>{{ 'byWhen' | translate }}</label>
                 <div class="input-group datepicker-input">
-                    <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="predictionForm.predictionForDate" name="predictionForDate" [minDate]="predictionStartDateFrom" ngbDatepicker #d="ngbDatepicker" readonly />
+                    <input class="form-control" placeholder="YYYY-MM-DD" [(ngModel)]="predictionForm.predictionForDate" name="predictionForDate" [minDate]="predictionStartDateFrom" ngbDatepicker #d="ngbDatepicker" readonly />
                     <button class="input-group-addon" (click)="d.toggle()" type="button">
             <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
             <span class="fa fa-calendar"></span>

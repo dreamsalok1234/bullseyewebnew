@@ -48,6 +48,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	activeTab="";
 	closeResult = "";
 	modelHeading = "";
+	modelText = "";
 	investDetails :  any;
 	loading = false;
 	isCollapsed = true;
@@ -86,6 +87,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	Book = "Book";
 	currentTime = new Date();
 	priceAlertStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
+	deleteInvestmentText = "Are you sure you want to delete <investment name> from your portfolio?";
 
     constructor(private translate: TranslateService,private commonService: CommonService, private investmentService: InvestmentService, private modalService: NgbModal,private portfolioService: PortfolioService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute) {}
@@ -144,6 +146,9 @@ export class PortfolioDetailsComponent implements OnInit {
 		});
 		this.translate.get('Book').subscribe(value => {
 			this.Book=value;
+		});
+		this.translate.get('AreyousuretoDeleteInvestment?').subscribe(value => {
+			this.deleteInvestmentText = value;
 		});
     	this.investmentForm=this._fb.group({
 			'ticker':['',Validators.required],
@@ -392,7 +397,6 @@ export class PortfolioDetailsComponent implements OnInit {
 			  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			}
 			if (response.statusCode === 200 ) {
-
 				if (response.data[1].status === true) {
 					objectType.currencyPriceList = response.data[1].data;
 				}
@@ -405,7 +409,7 @@ export class PortfolioDetailsComponent implements OnInit {
 						let currentPrice=0;
 						if((response.data[0]["data"].close!=undefined && response.data[0]["data"].close!=null && response.data[0]["data"].close!="")) {
 							currentPrice=(response.data[0]["data"].close!=undefined && response.data[0]["data"].close!=null && response.data[0]["data"].close!="")?response.data[0]["data"].close:0;
-							currentPrice=objectType.getCurrencyValue(objectType.investDetails.currency,objectType.portfolioCurrency,'price');
+							currentPrice=objectType.getCurrencyValue(currentPrice, objectType.investDetails.currency,objectType.portfolioCurrency,'price');
 
 						}
 						objectType.investDetails.currentTickerPrice=currentPrice;
@@ -428,7 +432,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		this.modelHeading = type;
 		this.investDetails = this.valueList[keyIndex];
 		this.investDetails.keyIndex = keyIndex;
-
+		this.modelText = this.deleteInvestmentText.replace('<ticker>', this.investDetails.name);
 	    this.modalService.open(content).result.then((result) => {
 	      this.closeResult = `Closed with: ${result}`;
 	    }, (reason) => {
@@ -488,7 +492,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		this.investmentForm.controls["marketValue"].setValue(this.formatNumber(marketValue.toFixed(2)));
 		/* if(bookCost=="0")
 			this.investmentForm.controls["bookingCost"].setValue(this.formatNumber(bookCost.toFixed(2))); */
-		if(this.investmentForm.value.bookingCost !== '') {
+		if(this.investmentForm.value.bookingCost) {
 			if (!(/^\d+[.,]?\d{0,3}$/g.test(this.investmentForm.value.bookingCost))) {
 				const a = this.investmentForm.value.bookingCost.split('.');
 				this.investmentForm.controls["bookingCost"].setValue( a[0] + '.' + a[1].substring(0, 3));

@@ -258,6 +258,18 @@ export class InvestmentComponent implements OnInit {
 		this.investmentForm.controls['bookingCost'].setValue(this.formatNumber(parseFloat(bookCost).toFixed(2)));
 		this.showBookingSymbol=true;
 	}
+	checkTargetValidation() {
+		
+		let bookCost=this.investmentForm.controls.bookingCost.value.replace( /[^\d.]/g, '' );
+		bookCost=(bookCost=="")?0:bookCost;
+		if(bookCost !== '') {
+			if (!(/^\d+[.,]?\d{0,3}$/g.test(bookCost))) {
+				const a = bookCost.split('.');
+				bookCost = a[0] + '.' + a[1].substring(0, 3);
+			}
+		}
+		this.investmentForm.controls['bookingCost'].setValue(this.formatNumber(parseFloat(bookCost).toFixed(2)));
+	  }
 	/*Numeric value with decimal value*/
    numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;

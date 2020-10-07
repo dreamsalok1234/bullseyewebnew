@@ -16,6 +16,8 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { Title, Meta } from '@angular/platform-browser';
+import {NgxLinkifyjsService, Link, LinkType, NgxLinkifyOptions} from 'ngx-linkifyjs';
+
 @Component({
     selector: 'app-chat-details',
     templateUrl: './chat-details.component.html',
@@ -116,11 +118,32 @@ export class ChatDetailsComponent implements OnInit {
 	shortingTab = '1D';
 	shortZone = "GMT";
 	currencyPriceList = {};
+	options: NgxLinkifyOptions =
+	{
+	 className: 'linkifiedYES',
+	 target : {
+		 url : '_self'
+	   }
+	 };
 
 
-    constructor( private translate: TranslateService,private commonService: CommonService,
-		private tickerService: TickerService, private chatService: ChatService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager,private modalService: NgbModal, private loadingBar: LoadingBarService,private titleService: Title,
-	private meta: Meta,private activeRoute: ActivatedRoute,private sanitizer: DomSanitizer) { }
+    constructor(
+		private translate: TranslateService,
+		private commonService: CommonService,
+		private tickerService: TickerService,
+		private chatService: ChatService,
+		private _fb: FormBuilder,
+		vcr: ViewContainerRef,
+		private router: Router,
+		public toastr: ToastrManager,
+		private modalService: NgbModal,
+		private loadingBar: LoadingBarService,
+		private titleService: Title,
+		private meta: Meta,
+		private activeRoute: ActivatedRoute,
+		private sanitizer: DomSanitizer,
+		public linkifyService: NgxLinkifyjsService
+		) { }
 
     ngOnInit() {
 		/* Check Token */
@@ -312,6 +335,13 @@ export class ChatDetailsComponent implements OnInit {
     }
 	get c() {
 		return this.chatComplaintForm.controls;
+	}
+
+	getCurrencyValue(price, currency, keyType) {
+    	/* const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
+		const keyType = (key === 'price') ? false : true; */
+		// const currency = watchListData.currency;
+		return this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.chatCurrency, keyType);
 	}
 
 	getChatData() {

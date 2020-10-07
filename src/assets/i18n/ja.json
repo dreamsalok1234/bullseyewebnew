@@ -309,6 +309,7 @@
     "Profile": "プロフィール",
     "Fundamentals": "基礎",
     "riskIndicators": "リスク指標",    
-    "Book": "本"
+    "Book": "本",
+    "AreyousuretoDeleteInvestment?": "ポートフォリオから<ticker>を削除してもよろしいですか？"
 
 }

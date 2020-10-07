@@ -83,7 +83,7 @@
             <div class="form-group">
               <label>{{ 'byWhen' | translate }}</label>
               <div class="input-group datepicker-input">
-                <input class="form-control" placeholder="yyyy-mm-dd" formControlName="predictionForDate" ngbDatepicker
+                <input class="form-control" placeholder="YYYY-MM-DD" formControlName="predictionForDate" ngbDatepicker
                   #d="ngbDatepicker" [minDate]="predictionStartDateFrom" readonly />
                 <button class="input-group-addon" (click)="d.toggle()" type="button">
                   <span class="fa fa-calendar"></span>
@@ -230,7 +230,7 @@
     </div>
     
     
-    <div class="news-nav hidden-sm-down" *ngIf="isPagination">
+    <div class="news-nav hidden-sm-down mt-2" *ngIf="isPagination">
       <ngb-pagination
         [collectionSize]="totalRecords"
         [rotate]="true"

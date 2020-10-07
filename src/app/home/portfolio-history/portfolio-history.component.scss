@@ -477,3 +477,74 @@ li.clr-success {
   background: #00b050 !important;
   border-radius: 5px;
 }
+
+ul.stats_body li span.zeroactive {
+  color: #fff;
+  background: rgb(249, 190, 81);
+}
+
+
+// custom tabs
+.custom-tab-items {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: -5px;
+}
+
+.custom-tab-items p {
+  color: white;
+  margin: 5px 0 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 130px;
+  text-align: center;
+}
+.btn-rounded {
+  border-radius: 20px;
+}
+.custom-tab-content {
+  min-height: 375px;
+}
+.helper-text {
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.btn_info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #00b050;
+  font-size: 18px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  +p {
+      max-width: 300px;
+      width: 100%;
+      position: absolute;
+      right: 5px;
+      background: rgba(40, 167, 69, 0.9);
+      padding: 10px;
+      border-radius: 10px;
+      bottom: 60px;
+      transition: all 0.7s;
+      transform: scale(0) translate(0%);
+      transform-origin: right bottom;
+      color: #fff;
+      font-size: 12px;
+      margin: 0;
+      text-transform: capitalize;
+  }
+  &:hover+p {
+      transform: scale(1) translate(0%);
+  }
+}
+
+.head-icon {
+  padding: 4px 6px 5px 6px;
+}

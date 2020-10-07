@@ -1,5 +1,39 @@
 
 @import "../portfolio/portfolio.component.scss";
+.btn_info {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #00b050;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    top: 5px;
+    +p {
+        max-width: 300px;
+        width: 100%;
+        position: absolute;
+        right: 5px;
+        background: rgba(40, 167, 69, 0.9);
+        padding: 10px;
+        border-radius: 10px;
+        bottom: 60px;
+        transition: all 0.7s;
+        transform: scale(0) translate(0%);
+        transform-origin: right bottom;
+        color: #fff;
+        font-size: 12px;
+        margin: 5px;
+        text-transform: capitalize;
+    }
+    &:hover+p {
+        transform: scale(1) translate(0%);
+    }
+  }
 .title-investment a {
   float: right;
   color: #fff;
@@ -39,3 +73,4 @@ span.symbol{
         justify-content: center;
         }
 }
+

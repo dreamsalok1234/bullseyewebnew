@@ -354,8 +354,8 @@
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header alert_header title_div">
-      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-square head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
-      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-square head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-circle head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-circle head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -501,12 +501,12 @@
 <div class="card-body">
   <ng-template #deleteInvestment let-c="close" let-d="dismiss">
     <div class="modal-header alert_header title_div">
-      <h2 class="pop-head"><i class="fa fa-trash head-icon-1" aria-hidden="true"></i> {{ 'DeleteInvestment' | translate }}</h2>
+      <h2 class="pop-head"><i class="fa fa-trash head-icon-1" style="padding: 9px 11px;" aria-hidden="true"></i> {{ 'DeleteInvestment' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')"> <span
           aria-hidden="true">&times;</span> </button>
     </div>
     <div class="modal-body">
-      <p>{{ "AreyousuretoDelete?" | translate }}</p>
+      <p>{{ modelText }}</p>
       <div class="actions_to_pop">
         <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger" aria-hidden="true"></i></button>
         <button class="btn custom-btn" (click)="DeleteInvestment()"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
@@ -559,7 +559,7 @@
         <div class="form-group">
           <label>{{ "ExpiryDate" | translate }}</label>
           <div class="input-group datepicker-input">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [minDate]="priceAlertStartDateFrom" [(ngModel)]="priceAlert.expiryDate"
+            <input class="form-control" placeholder="YYYY-MM-DD" name="dp" [minDate]="priceAlertStartDateFrom" [(ngModel)]="priceAlert.expiryDate"
               ngbDatepicker #d="ngbDatepicker" readonly />
             <button class="input-group-addon" (click)="d.toggle()" type="button">
               <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->

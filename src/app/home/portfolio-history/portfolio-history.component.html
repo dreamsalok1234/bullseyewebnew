@@ -53,7 +53,7 @@
             <li *ngIf="portfolioItem.historyType.toLowerCase() == 'investment' || portfolioItem.historyType.toLowerCase() == 'buy'" class="color-box" style="padding: 5px !important"><span class="active">Buy</span></li>
             <li *ngIf="portfolioItem.historyType.toLowerCase() != 'investment' &&  portfolioItem.historyType.toLowerCase() != 'buy'" class="color-box" style="padding: 5px !important"><span class="zeroactive">{{portfolioItem.historyType}}</span></li>
             <li *ngIf="portfolioItem.portfolioType == 'Cryptocurrency'">{{ portfolioItem.noOfUnits | number:'1.4-4'}}</li>
-            <li *ngIf="portfolioItem.portfolioType != 'Cryptocurrency'">{{ portfolioItem.noOfUnits | number:'1.6-6'}}</li>
+            <li *ngIf="portfolioItem.portfolioType != 'Cryptocurrency'">{{ portfolioItem.noOfUnits | number:'1.0'}}</li>
             <li>
               {{ portfolioItem.bookCost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.2' }}
             </li>
@@ -83,15 +83,15 @@
 <!-- add_assets modal-->
 <div class="card-body">
   <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header alert_header">
-      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-square head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
-      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-square head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
+    <div class="modal-header alert_header title_div">
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'buy'"><i class="fa fa-plus-circle head-icon" aria-hidden="true"></i> {{ 'Buy' | translate }}</h2>
+      <h2 class="pop-head" *ngIf="modelHeading.toLowerCase() == 'sell'"><i class="fa fa-minus-circle head-icon" aria-hidden="true"></i> {{ 'Sell' | translate }}</h2>
       <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-  <!-- Buy Form-->
+      <!-- Buy Form-->
       <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price" *ngIf="modelHeading=='Buy'">
         <div class="form-group">
           <label for="Portfolio">{{ 'Ticker' | translate }}</label>
@@ -102,52 +102,23 @@
         </div>
         <div class="form-group">
           <label for="Portfolio">{{ 'UnitsBought' | translate }}</label>
-          <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsBought' | translate }}"
-            maxlength="28"
-            (keyup)="calculateMarketPrice('Stock')"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-      (blur)="setHoldingValue('Stock')"
-            (keypress)="numberOnlyForHold($event)"
-      *ngIf="portfolioType.toLowerCase()=='stock'"
-      value="{{holdingUnit | number:'1.0-0'}}"
-          />
-      <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsBought' | translate }}"
-            maxlength="28"
-      (keyup)="calculateMarketPrice('Cryptocurrency')"
-      (keypress)="numberOnly($event)"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-            (blur)="setHoldingValue('Cryptocurrency')" 
-      *ngIf="portfolioType.toLowerCase()=='cryptocurrency'"
-          />
+          <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsBought' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Stock')" [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Stock')" (keypress)="numberOnlyForHold($event)" *ngIf="portfolioType.toLowerCase()=='stock'" value="{{holdingUnit | number:'1.0-0'}}" />
+          <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsBought' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Cryptocurrency')" (keypress)="numberOnly($event)" [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Cryptocurrency')" *ngIf="portfolioType.toLowerCase()=='cryptocurrency'" />
           <div *ngIf="submitted && f.holding.errors" class="alert alert-dange">
             <div *ngIf="f.holding.errors.required">{{ 'UnitsBoughtisrequired' | translate }}</div>
           </div>
         </div>
         <div class="form-group"  [ngClass]="showBookingSymbol ? 'bookingCost':''">
-          <label for="Portfolio">{{ 'BookingCost' | translate }}</label>
-          <div class="span_input">
-      <span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span>
-          <input
-            type="text"
-            matInput
-            formControlName="bookingCost"
-            class="form-control"
-            autocomplete="off"
-      maxlength="35"
-            placeholder="{{ 'BookingCost' | translate }}"
-            (keyup)="calculateMarketPrice(portfolioType)"
-            [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }"
-      (blur)="calculateBookingCost('buy')"
-            (keypress)="numberOnly($event)"
-          />
+          <!-- <label for="Portfolio">{{ 'BookingCost' | translate }}</label> -->
+          <label for="Portfolio">
+            {{ "BookingCost" | translate }}
+            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+            <p>Book cost is how much the trade has ‘cost’ to execute. This is the cost of the units bought plus any trading fees. </p>
+          </label>
+					<div class="input-group">
+						<span class="input-group-addon" *ngIf="showBookingSymbol">{{symbol}}</span>
+            <!-- <span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span> -->
+            <input type="text" matInput formControlName="bookingCost" class="form-control" autocomplete="off" maxlength="35" placeholder="{{ 'BookingCost' | translate }}" (keyup)="calculateMarketPrice(portfolioType)" [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }" (blur)="calculateBookingCost('buy')" (keypress)="numberOnly($event)" />
           </div>
           <div *ngIf="submitted && f.bookingCost.errors" class="alert alert-dange">
             <div *ngIf="f.bookingCost.required">{{ 'BookingCostisrequired' | translate }}</div>
@@ -155,18 +126,9 @@
         </div>
         <div class="form-group" [ngClass]="showMarketSymbol ? 'marketValue':''">
           <label for="Portfolio">{{ 'MarketValue' | translate }}</label>
-          <div class="span_input">
-      <span class="symbol" *ngIf="showMarketSymbol">{{symbol}}</span>
-          <input
-            type="text"
-            formControlName="marketValue"
-            class="form-control"
-            placeholder="{{ 'MarketValue' | translate }}"
-            autocomplete="off"
-            [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }"
-            (keypress)="numberOnly($event)"
-            readonly
-          />
+					<div class="input-group">
+						<span class="input-group-addon" *ngIf="showBookingSymbol">{{symbol}}</span>
+            <input type="text" formControlName="marketValue" class="form-control" placeholder="{{ 'MarketValue' | translate }}" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }" (keypress)="numberOnly($event)" readonly />
           </div>
           <div *ngIf="submitted && f.marketValue.errors" class="alert alert-dange">
             <div *ngIf="f.marketValue.required">{{ 'MarketValueisrequired' | translate }}</div>
@@ -177,8 +139,8 @@
           <button class="btn custom-btn" type="submit" [disabled]="loading"><i class="fa fa-check-circle tick-cross-icon text-success" aria-hidden="true"></i></button>
         </div>
       </form>
-    <!-- Sell Form-->
-    <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price" *ngIf="modelHeading=='Sell'">
+      <!-- Sell Form-->
+      <form (ngSubmit)="addInvestmentAction()" [formGroup]="investmentForm" class="form-inline form_price" *ngIf="modelHeading=='Sell'">
         <div class="form-group">
           <label for="Portfolio">{{ 'Ticker' | translate }}</label>
           <input type="text" formControlName="ticker" class="form-control" placeholder="{{ 'Ticker' | translate }}" readonly />
@@ -188,52 +150,21 @@
         </div>
         <div class="form-group">
           <label for="Portfolio">{{ 'UnitsSold' | translate }}</label>
-          <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsSold' | translate }}"
-            maxlength="28"
-            (keyup)="calculateMarketPrice('Stock')"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-      (blur)="setHoldingValue('Stock')"
-            (keypress)="numberOnlyForHold($event)"
-      *ngIf="portfolioType.toLowerCase()=='stock'"
-      value="{{holdingUnit | number:'1.0-0'}}"
-          />
-      <input
-            type="text"
-            formControlName="holding"
-            class="form-control"
-            placeholder="{{ 'UnitsSold' | translate }}"
-            maxlength="28"
-      (keyup)="calculateMarketPrice('Cryptocurrency')"
-      (keypress)="numberOnly($event)"
-            [ngClass]="{ 'is-invalid': submitted && f.holding.errors }"
-            (blur)="setHoldingValue('Cryptocurrency')" 
-      *ngIf="portfolioType.toLowerCase()=='cryptocurrency'"
-          />
+          <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsSold' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Stock')" [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Stock')" (keypress)="numberOnlyForHold($event)" *ngIf="portfolioType.toLowerCase()=='stock'" value="{{holdingUnit | number:'1.0-0'}}" />
+          <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsSold' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Cryptocurrency')" (keypress)="numberOnly($event)" [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Cryptocurrency')" *ngIf="portfolioType.toLowerCase()=='cryptocurrency'" />
           <div *ngIf="submitted && f.holding.errors" class="alert alert-dange">
             <div *ngIf="f.holding.errors.required">{{ 'UnitsSoldisrequired' | translate }}</div>
           </div>
         </div>
          <div class="form-group" [ngClass]="showBookingSymbol ? 'bookingCost':''">
-          <label for="Portfolio">{{ 'SellPrice' | translate }}</label>
-          <div class="span_input"> 
-          <span class="symbol" *ngIf="showBookingSymbol">{{symbol}}</span>
-          <input
-            type="text"
-            matInput
-            formControlName="bookingCost"
-            class="form-control"
-      maxlength="35"
-            autocomplete="off"
-            placeholder="{{ 'SellPrice' | translate }}"
-            (keyup)="calculateMarketPrice(portfolioType)"
-            [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }"
-      (blur)="calculateBookingCost('sell')"
-            (keypress)="numberOnly($event)"
-          />
+          <label for="Portfolio">
+            {{ "SellPrice" | translate }}
+            <a href="javascript:" class="btn_info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+            <p>Sell price is the price per unit that was sold.</p>
+          </label>
+					<div class="input-group">
+						<span class="input-group-addon" *ngIf="showBookingSymbol">{{symbol}}</span>
+            <input type="text" matInput formControlName="bookingCost" class="form-control" maxlength="35" autocomplete="off" placeholder="{{ 'SellPrice' | translate }}" (keyup)="calculateMarketPrice(portfolioType)" [ngClass]="{ 'is-invalid': submitted && f.bookingCost.errors }" (blur)="calculateBookingCost('sell')" (keypress)="numberOnly($event)" />
           </div>
           <div *ngIf="submitted && f.bookingCost.errors" class="alert alert-dange">
             <div *ngIf="f.bookingCost.required">{{ 'SellPriceisrequired' | translate }}</div>
@@ -241,18 +172,9 @@
         </div>
          <div class="form-group" [ngClass]="showMarketSymbol ? 'marketValue':''">
           <label for="Portfolio">{{ 'SellValue' | translate }}</label>
-          <div class="span_input">
-      <span class="symbol" *ngIf="showMarketSymbol">{{symbol}}</span> 
-          <input
-            type="text"
-            formControlName="marketValue"
-            class="form-control"
-            placeholder="{{ 'SellValue' | translate }}"
-            autocomplete="off"
-            [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }"
-            (keypress)="numberOnly($event)"
-            readonly
-          />
+					<div class="input-group">
+						<span class="input-group-addon" *ngIf="showBookingSymbol">{{symbol}}</span>
+            <input type="text" formControlName="marketValue" class="form-control" placeholder="{{ 'SellValue' | translate }}" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.marketValue.errors }" (keypress)="numberOnly($event)" readonly />
           </div>
           <div *ngIf="submitted && f.marketValue.errors" class="alert alert-dange">
             <div *ngIf="f.marketValue.required">{{ 'SellValueisrequired' | translate }}</div>
