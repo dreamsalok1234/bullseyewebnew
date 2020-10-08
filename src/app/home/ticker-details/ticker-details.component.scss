@@ -202,13 +202,15 @@ ul.blurTdetails+.data_fatch {
         }
         i {
             font-size: 25px;
+			opacity: 0.2;
         }
         &:focus {
             outline: none;
             box-shadow: none;
         }
         &.alreadyAdded {
-            background: #ccc;
+            background: #9c95951c;
+			pointer-events: none;
         }
     }
     select {
@@ -769,7 +771,7 @@ img.head-green {
       align-items: center;
       justify-content: center;
       font-size:18px;
-      color: #111e36;
+      color: #ffffff;
     }
 }
 
