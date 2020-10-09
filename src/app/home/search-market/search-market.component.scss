@@ -429,6 +429,21 @@ li.gain_green b {
 }
 div#Performance .body_div {
   max-height: 231px;
+  display: flex;
+	overflow: auto;
+  .ticker {
+	ul{
+		width: 100%;
+	}
+  }
+  .ticker-bottom {
+	ul {
+		box-shadow: unset !important;
+		.color-box {
+			padding-left: 20px !important;
+		}
+	}
+  }
 }
 // .stats_table {
 //   margin-bottom: 10%;
@@ -490,6 +505,7 @@ ul {
       width: 100%;
       align-items: center;
       justify-content: center;
+	      height: 30px;
 
       i {
         margin-right: 5px;
