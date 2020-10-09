@@ -689,6 +689,8 @@ export class ChatDetailsComponent implements OnInit {
 				if (response.data[0].status === true && response.data[0].historyData.currentDayData !== undefined && Object.keys(response.data[0].historyData.currentDayData).length > 0) {
 
 					 objectType.tickerListData = response.data[0].historyData.currentDayData;
+					 objectType.chatPrice = objectType.tickerListData.price;
+					 objectType.chatCurrency = objectType.tickerListData.currency;
 					 if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 						 if(objectType.cryptoMaxValue != 0 ) {
 							 objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
@@ -1019,7 +1021,7 @@ createAxisAndSeries(field,chart) {
 	valueAxis.tooltip.disabled = true;
 	valueAxis.renderer.minWidth = 35;
 
-	const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab !== '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
+	const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab != '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria == 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria == 200) ? `200-day SMA: {SMA}` : '')));
 
 	const tooltipText =
 		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab === '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
@@ -1234,7 +1236,7 @@ filterExchangeItem() {
 	this.loadingBar.start();
   this.getChartData(this.num, this.type, this.indMap);
 
-  if (this.filterModel.graphDisplay) {
+  if (parseInt(this.filterModel.graphDisplay)) {
 	  document.getElementById('chartdiv').style.display = 'none';
 	  document.getElementById('smachart').style.display = 'none';
 	  if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
@@ -1328,7 +1330,7 @@ getSMAData(data, SMAType) {
 			  // }
 			  const chartItemVal = this.chartDataObject[count];
 			  if (this.chartDataObject[count] !== undefined && SMAType > 0) {
-				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
+				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(3);
 
 				  this.chartDataObject[count] = chartItemVal;
 				  SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});

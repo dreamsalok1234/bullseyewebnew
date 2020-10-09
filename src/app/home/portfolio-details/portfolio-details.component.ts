@@ -59,7 +59,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	hideme = {};
 	defaulterrSomethingMsg='Something went wrong';
 	processingTxt='Processing...';
-	noChartDataText="No chart data available.";
+	noChartDataText="No portfolio data available yet. This will appear over time.";
 	isChecked = false;
 	portfolioName="";
 	valueItemProcessing=true;
