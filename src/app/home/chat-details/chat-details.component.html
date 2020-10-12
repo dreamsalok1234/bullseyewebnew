@@ -168,7 +168,8 @@
             </div>
             <div class="msg_para">
               <h3>{{ chat.messageTitle }}</h3>
-			        <p [innerHTML]="linkifyService.linkify(chat.messageBody, options)"></p>
+			  <p [innerHTML]="toHTML(linkifyService.linkify(chat.messageBody, options))"></p>
+			        <!-- <p [innerHTML]="linkifyService.linkify(chat.messageBody, options)"></p> -->
             </div>
             <div class="post_By">
               <span class="user_img"><img src="{{placeholderImageUrl}}" style="max-width: 80px;" *ngIf="chat.img == undefined || chat.img.length == 0 || chat.img == ''" title="user image not found">
@@ -201,7 +202,7 @@
             <div class="form-group">
               <label for="msg">{{ 'Message' | translate }}</label>
               <div [ngClass]="{ 'is-invalid': submitted && postMessageError }">
-                <app-ngx-editor [config]="editorConfig" name="postMessage"
+                <app-ngx-editor [config]="editorConfig" name="postMessage2"
                 [(ngModel)]="postMessageArray.postMessage"
                 #postMessage="ngModel"></app-ngx-editor>
               </div>

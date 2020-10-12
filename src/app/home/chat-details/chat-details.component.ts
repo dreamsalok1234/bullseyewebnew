@@ -399,6 +399,17 @@ export class ChatDetailsComponent implements OnInit {
 			objectType.showAddPopup=true;
 	   }, 500); */
     }
+	
+	toHTML(input) : any {
+		//debugger;
+		var html = new DOMParser().parseFromString(input, "text/html").documentElement.textContent;
+		var txt = document.createElement("textarea");
+		txt.innerHTML = html;
+		
+		return txt.value.replace(/<[^>]*>/g, '');
+	}
+
+
 	/*Modal Popup for faviourite and delete faviourite*/
 	openFavPopup(favcontent, chatBoardId, favouriteId, updateFavtype) {
 		this.updateFavtype = updateFavtype;

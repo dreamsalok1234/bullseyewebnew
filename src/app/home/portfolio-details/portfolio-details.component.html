@@ -270,7 +270,7 @@
                 <br />
                 <div class="stats_table">
                   <div class="head_div">
-                    <ul class="stats_head">
+                    <ul class="stats_head 2">
                       <div class="ticker">
                         <li>{{ "Ticker" | translate }}</li>
                         <li>{{ "BenchMark" | translate }}</li>
@@ -287,30 +287,39 @@
                     </ul>
                   </div>
                   <div class="body_div">
-                    <ul class="stats_body" *ngFor="let riskItem of riskList; let i = index"
-                      (click)=" goToTickerDetails( riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0, i ) ">
-                      <li>
-                        {{ riskItem.symbol }}
-                      </li>
-                      <li>
-                        {{ riskItem.alphaMarketShortName != null ? riskItem.alphaMarketShortName : "N/A" }}
-                      </li>
-                      <li class="color-box">
-                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == '' ? 'nactive' : riskItem.alphaWChange > 0 ? 'active' : riskItem.alphaWChange == 0 ? 'zeroactive' : 'inactive' ">{{ riskItem.alphaWChange != "N/A" && riskItem.alphaWChange != "" ? formatNumber(math.round(riskItem.alphaWChange)) + "%" : riskItem.alphaWChange }}</span>
-                      </li>
-                      <li class="color-box">
-                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaChange == 'N/A' || riskItem.alphaChange == '' ? 'nactive' : riskItem.alphaChange > 0 ? 'active' : riskItem.alphaChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alphaChange != "N/A" && riskItem.alphaChange != "" ? formatNumber(math.round(riskItem.alphaChange)) + "%" : riskItem.alphaChange }}</span>
-                      </li>
-                      <li class="color-box">
-                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha6MChange == 'N/A' || riskItem.alpha6MChange == '' ? 'nactive' : riskItem.alpha6MChange > 0 ? 'active' : riskItem.alpha6MChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alpha6MChange != "N/A" && riskItem.alpha6MChange != "" ? formatNumber(math.round(riskItem.alpha6MChange)) + "%" : riskItem.alpha6MChange }}</span>
-                      </li>
-                      <li class="color-box">
-                        <span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha1YChange == 'N/A' || riskItem.alpha1YChange == 'nactive' ? 'nactive' : riskItem.alpha1YChange > 0 ? 'active' : riskItem.alpha1YChange == 0 ? 'zeroactive' : 'inactive' ">
-                        {{ riskItem.alpha1YChange != "N/A" && riskItem.alpha1YChange != "" ? formatNumber(math.round(riskItem.alpha1YChange)) + "%" : riskItem.alpha1YChange }}</span>
-                      </li>
-                    </ul>
+					<div class="ticker">
+						<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index"
+						  (click)=" goToTickerDetails( riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0, i ) ">
+						  <li>
+							{{ riskItem.symbol }}
+						  </li>
+						  <li>
+							{{ riskItem.alphaMarketShortName != null ? riskItem.alphaMarketShortName : "N/A" }}
+						  </li>
+						</ul>
+					</div>
+					<div class="ticker-bottom">
+						<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index"
+						  (click)=" goToTickerDetails( riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0, i ) ">
+						  <li class="color-box">
+							<span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaWChange == 'N/A' || riskItem.alphaWChange == '' ? 'nactive' : riskItem.alphaWChange > 0 ? 'active' : riskItem.alphaWChange == 0 ? 'zeroactive' : 'inactive' ">{{ riskItem.alphaWChange != "N/A" && riskItem.alphaWChange != "" ? formatNumber(math.round(riskItem.alphaWChange)) + "%" : riskItem.alphaWChange }}</span>
+						  </li>
+						  <li class="color-box">
+							<span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alphaChange == 'N/A' || riskItem.alphaChange == '' ? 'nactive' : riskItem.alphaChange > 0 ? 'active' : riskItem.alphaChange == 0 ? 'zeroactive' : 'inactive' ">
+							{{ riskItem.alphaChange != "N/A" && riskItem.alphaChange != "" ? formatNumber(math.round(riskItem.alphaChange)) + "%" : riskItem.alphaChange }}</span>
+						  </li>
+						  <li class="color-box">
+							<span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha6MChange == 'N/A' || riskItem.alpha6MChange == '' ? 'nactive' : riskItem.alpha6MChange > 0 ? 'active' : riskItem.alpha6MChange == 0 ? 'zeroactive' : 'inactive' ">
+							{{ riskItem.alpha6MChange != "N/A" && riskItem.alpha6MChange != "" ? formatNumber(math.round(riskItem.alpha6MChange)) + "%" : riskItem.alpha6MChange }}</span>
+						  </li>
+						  <li class="color-box">
+							<span [ngClass]=" riskItem.isTemp == '0' && riskItem.isTemp != undefined ? '' : riskItem.alpha1YChange == 'N/A' || riskItem.alpha1YChange == 'nactive' ? 'nactive' : riskItem.alpha1YChange > 0 ? 'active' : riskItem.alpha1YChange == 0 ? 'zeroactive' : 'inactive' ">
+							{{ riskItem.alpha1YChange != "N/A" && riskItem.alpha1YChange != "" ? formatNumber(math.round(riskItem.alpha1YChange)) + "%" : riskItem.alpha1YChange }}</span>
+						  </li>
+						</ul>
+					</div>
+					
+                    
                     <ul class="processing" *ngIf="riskItemProcessing">
                       <li>
                         <h4>{{ processingTxtOfList }}</h4>
