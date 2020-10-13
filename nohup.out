@@ -1,0 +1,90 @@
+
+> BullsEye@7.0.0 start /opt/bullseyewebnew
+> ng serve --ssl true --port 443 --host 0.0.0.0 --disableHostCheck true
+
+WARNING: This is a simple server for use in testing or debugging Angular applications
+locally. It hasn't been reviewed for security issues.
+
+Binding this server to an open connection can result in compromising your application or
+computer. Using a different host than the one passed to the "--host" flag might result in
+websocket connection issues. You might need to use "--disableHostCheck" if that's the
+case.
+WARNING: Running a server with --disable-host-check is a security risk. See https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a for more information.
+** Angular Live Development Server is listening on 0.0.0.0:443, open your browser on https://localhost:443/ **
+
+Date: 2020-02-12T17:34:33.148Z
+Hash: 31ee4997b01267d40141
+Time: 38520ms
+chunk {access-denied-access-denied-module} access-denied-access-denied-module.js, access-denied-access-denied-module.js.map (access-denied-access-denied-module) 7.37 kB  [rendered]
+chunk {account-settings-account-settings-module} account-settings-account-settings-module.js, account-settings-account-settings-module.js.map (account-settings-account-settings-module) 208 kB  [rendered]
+chunk {bullseye-pro-bullseye-pro-module} bullseye-pro-bullseye-pro-module.js, bullseye-pro-bullseye-pro-module.js.map (bullseye-pro-bullseye-pro-module) 58.8 kB  [rendered]
+chunk {canvg} canvg.js, canvg.js.map (canvg) 103 kB  [rendered]
+chunk {change-password-change-password-module} change-password-change-password-module.js, change-password-change-password-module.js.map (change-password-change-password-module) 47.2 kB  [rendered]
+chunk {change-user-password-change-user-password-module} change-user-password-change-user-password-module.js, change-user-password-change-user-password-module.js.map (change-user-password-change-user-password-module) 34.1 kB  [rendered]
+chunk {chat-chat-module} chat-chat-module.js, chat-chat-module.js.map (chat-chat-module) 76.9 kB  [rendered]
+chunk {chat-details-chat-details-module} chat-details-chat-details-module.js, chat-details-chat-details-module.js.map (chat-details-chat-details-module) 3.12 MB  [rendered]
+chunk {common} common.js, common.js.map (common) 11.7 kB  [rendered]
+chunk {dashboard-dashboard-module} dashboard-dashboard-module.js, dashboard-dashboard-module.js.map (dashboard-dashboard-module) 174 kB  [rendered]
+chunk {default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b} default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b.js, default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b.js.map (default~account-settings-account-settings-module~forgot-forgot-module~home-home-module~signup-signup~24d8234b) 573 kB  [rendered]
+chunk {default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4} default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4.js, default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4.js.map (default~chat-details-chat-details-module~home-home-module~portfolio-details-portfolio-details-module~79e27ca4) 3.92 MB  [rendered]
+chunk {default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2} default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2.js, default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2.js.map (default~dashboard-dashboard-module~home-home-module~portfolio-details-portfolio-details-module~portf~5039b7e2) 17.7 kB  [rendered]
+chunk {default~dashboard-dashboard-module~search-market-search-market-module} default~dashboard-dashboard-module~search-market-search-market-module.js, default~dashboard-dashboard-module~search-market-search-market-module.js.map (default~dashboard-dashboard-module~search-market-search-market-module) 168 kB  [rendered]
+chunk {default~home-home-module~portfolio-details-portfolio-details-module} default~home-home-module~portfolio-details-portfolio-details-module.js, default~home-home-module~portfolio-details-portfolio-details-module.js.map (default~home-home-module~portfolio-details-portfolio-details-module) 379 kB  [rendered]
+chunk {default~home-home-module~ticker-details-ticker-details-module} default~home-home-module~ticker-details-ticker-details-module.js, default~home-home-module~ticker-details-ticker-details-module.js.map (default~home-home-module~ticker-details-ticker-details-module) 467 kB  [rendered]
+chunk {default~investment-investment-module~price-alert-price-alert-module} default~investment-investment-module~price-alert-price-alert-module.js, default~investment-investment-module~price-alert-price-alert-module.js.map (default~investment-investment-module~price-alert-price-alert-module) 1.93 MB  [rendered]
+chunk {enquiry-enquiry-module} enquiry-enquiry-module.js, enquiry-enquiry-module.js.map (enquiry-enquiry-module) 24 kB  [rendered]
+chunk {forgot-forgot-module} forgot-forgot-module.js, forgot-forgot-module.js.map (forgot-forgot-module) 52.8 kB  [rendered]
+chunk {home-home-module} home-home-module.js, home-home-module.js.map (home-home-module) 121 kB  [rendered]
+chunk {investment-investment-module} investment-investment-module.js, investment-investment-module.js.map (investment-investment-module) 49.8 kB  [rendered]
+chunk {login-login-module} login-login-module.js, login-login-module.js.map (login-login-module) 53.7 kB  [rendered]
+chunk {main} main.js, main.js.map (main) 246 kB [initial] [rendered]
+chunk {news-news-module} news-news-module.js, news-news-module.js.map (news-news-module) 86.2 kB  [rendered]
+chunk {not-found-not-found-module} not-found-not-found-module.js, not-found-not-found-module.js.map (not-found-not-found-module) 9.52 kB  [rendered]
+chunk {pdfmake} pdfmake.js, pdfmake.js.map (pdfmake) 3.09 MB  [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 406 kB [initial] [rendered]
+chunk {portfolio-details-portfolio-details-module} portfolio-details-portfolio-details-module.js, portfolio-details-portfolio-details-module.js.map (portfolio-details-portfolio-details-module) 4.67 kB  [rendered]
+chunk {portfolio-history-portfolio-history-module} portfolio-history-portfolio-history-module.js, portfolio-history-portfolio-history-module.js.map (portfolio-history-portfolio-history-module) 151 kB  [rendered]
+chunk {portfolio-portfolio-module} portfolio-portfolio-module.js, portfolio-portfolio-module.js.map (portfolio-portfolio-module) 29.5 kB  [rendered]
+chunk {price-alert-price-alert-module} price-alert-price-alert-module.js, price-alert-price-alert-module.js.map (price-alert-price-alert-module) 170 kB  [rendered]
+chunk {privacy-policy-privacy-policy-module} privacy-policy-privacy-policy-module.js, privacy-policy-privacy-policy-module.js.map (privacy-policy-privacy-policy-module) 68.4 kB  [rendered]
+chunk {privacy-privacy-module} privacy-privacy-module.js, privacy-privacy-module.js.map (privacy-privacy-module) 55.4 kB  [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 11.8 kB [entry] [rendered]
+chunk {scripts} scripts.js, scripts.js.map (scripts) 393 kB [entry] [rendered]
+chunk {search-market-search-market-module} search-market-search-market-module.js, search-market-search-market-module.js.map (search-market-search-market-module) 128 kB  [rendered]
+chunk {server-error-server-error-module} server-error-server-error-module.js, server-error-server-error-module.js.map (server-error-server-error-module) 7.28 kB  [rendered]
+chunk {signup-signup-module} signup-signup-module.js, signup-signup-module.js.map (signup-signup-module) 58.3 kB  [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 1.33 MB [initial] [rendered]
+chunk {terms-service-terms-service-module} terms-service-terms-service-module.js, terms-service-terms-service-module.js.map (terms-service-terms-service-module) 68.8 kB  [rendered]
+chunk {terms-terms-module} terms-terms-module.js, terms-terms-module.js.map (terms-terms-module) 49.6 kB  [rendered]
+chunk {ticker-details-ticker-details-module} ticker-details-ticker-details-module.js, ticker-details-ticker-details-module.js.map (ticker-details-ticker-details-module) 7.94 kB  [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 6.3 MB [initial] [rendered]
+chunk {verification-verification-module} verification-verification-module.js, verification-verification-module.js.map (verification-verification-module) 55.7 kB  [rendered]
+chunk {xlsx} xlsx.js, xlsx.js.map (xlsx) 1.17 MB  [rendered]
+[34mℹ[39m [90m｢wdm｣[39m: Compiled successfully.
+
+> BullsEye@7.0.0 start /opt/bullseyewebnew
+> ng serve --ssl true --port 443 --host 0.0.0.0 --disableHostCheck true
+
+WARNING: This is a simple server for use in testing or debugging Angular applications
+locally. It hasn't been reviewed for security issues.
+
+Binding this server to an open connection can result in compromising your application or
+computer. Using a different host than the one passed to the "--host" flag might result in
+websocket connection issues. You might need to use "--disableHostCheck" if that's the
+case.
+WARNING: Running a server with --disable-host-check is a security risk. See https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a for more information.
+** Angular Live Development Server is listening on 0.0.0.0:443, open your browser on https://localhost:443/ **
+
+> BullsEye@7.0.0 start /opt/bullseyewebnew
+> ng serve --ssl true --port 443 --host 0.0.0.0 --disableHostCheck true
+
+WARNING: This is a simple server for use in testing or debugging Angular applications
+locally. It hasn't been reviewed for security issues.
+
+Binding this server to an open connection can result in compromising your application or
+computer. Using a different host than the one passed to the "--host" flag might result in
+websocket connection issues. You might need to use "--disableHostCheck" if that's the
+case.
+WARNING: Running a server with --disable-host-check is a security risk. See https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a for more information.
+** Angular Live Development Server is listening on 0.0.0.0:443, open your browser on https://localhost:443/ **
+panic: aborting due to terminal initialize failure

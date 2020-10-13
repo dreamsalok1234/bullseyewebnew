@@ -767,3 +767,17 @@ ul.stats_body.portfoliolist li {
     overflow: auto
   }
 }
+
+button.btn.berps-btn {
+  margin: 0px 20px;
+  font-weight: 600;
+  border-radius: 22px;
+  font-size: 20px;
+  color: white;
+  padding: 5px 23px;
+}
+
+button.btn.berps-btn.btn-danger {
+  background-color: red;
+  border-color: #ff0000;
+}

@@ -29,7 +29,14 @@ import { ProdialogComponent } from './prodialog/prodialog.component';
     Ng2TelInputModule,
     NgbModule
   ],
-  declarations: [HomeComponent, PortfolioDetailsComponent, TickerDetailsComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    HomeComponent,
+    PortfolioDetailsComponent,
+    TickerDetailsComponent,
+    HeaderComponent,
+    FooterComponent
+
+  ],
   providers: [PortfolioService, WatchlistService, InvestmentService, AuthService, NewsService, ChatService, TickerService, GlobalService]
 })
 export class HomeModule { }

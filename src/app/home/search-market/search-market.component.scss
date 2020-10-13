@@ -390,12 +390,14 @@ li.gain_green b {
     top: 0;
     border: 0;
     color: #fff;
-    padding: 5px 12px;
+    padding: 3px 12px;
     background-color: #6c757d;
     border-color: #666e76;
     cursor: pointer;
     outline: none;
     border-radius: 5px;
+    font-size: 18px;
+    font-weight: 900;
   }
 }
 
@@ -425,7 +427,7 @@ li.gain_green b {
 }
 
 .body_div {
-  max-height: 250px;
+  max-height: 500px;
   overflow-y: scroll;
 }
 div#Performance .body_div {
@@ -500,6 +502,7 @@ ul {
         font-size: 15px;
       }
     }
+    
     &.active {
       background: #00b050;
       justify-content: center;
@@ -598,9 +601,7 @@ ul {
   .body_div ul.stats_body .gain_green {
     a {
       color: #fff;
-      font-size: 10px;
-      width: 20px;
-      height: 20px;
+      font-size: 16px;
     }
   }
   ul.stats_head li {
@@ -618,12 +619,13 @@ ul {
     padding: 8px 3px;
     height: 40px;
 }
+ul.stats_body li.performance-item {
+  font-size: 13px!important;
+}
   .body_div ul.stats_body .gain_green {
     a {
       color: #fff;
-      font-size: 10px;
-      width: 20px;
-      height: 20px;
+      font-size: 16px;
     }
   }
   ul.stats_head li {

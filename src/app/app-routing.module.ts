@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 
 const routes: Routes = [
-    //{ path: '', loadChildren: './layout/layout.module#LayoutModule', canActivate: [AuthGuard] },
+    // { path: '', loadChildren: './layout/layout.module#LayoutModule', canActivate: [AuthGuard] },
 	{ path: '', redirectTo: '', pathMatch: 'prefix' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
     { path: '', loadChildren: './home/home.module#HomeModule'},
@@ -15,8 +15,8 @@ const routes: Routes = [
     { path: 'error', loadChildren: './server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: './access-denied/access-denied.module#AccessDeniedModule' },
     { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
-	{ path:'terms',loadChildren:'./terms/terms.module#TermsModule'},
-	{ path:'privacy',loadChildren:'./privacy/privacy.module#PrivacyModule'},
+	{ path: 'terms', loadChildren: './terms/terms.module#TermsModule'},
+	{ path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyModule'},
     { path: '**', redirectTo: 'not-found' }
 ];
 

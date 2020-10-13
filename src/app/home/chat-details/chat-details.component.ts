@@ -9,7 +9,7 @@ import { CommonService } from '../../_services/common.service';
 import { ChatService } from '../../_services/chat.service';
 import { TickerService } from '../../_services/ticker.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-//import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+// import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 /* Imports */
 import * as am4core from "@amcharts/amcharts4/core";
@@ -31,8 +31,9 @@ export class ChatDetailsComponent implements OnInit {
 	currentPage = 0;
 	totalPage=0;
     loading = false;
-	pageSize=10;
+	pageSize=5;
 	pageNo=1;
+	totalRecords = 0;
 	chatCurrency='USD';
 	chatDetailsCurrency='USD';
 	currencyItemList:any=[];
@@ -119,37 +120,36 @@ export class ChatDetailsComponent implements OnInit {
     constructor( private translate: TranslateService,private commonService: CommonService,
 		private tickerService: TickerService, private chatService: ChatService, private _fb: FormBuilder, vcr: ViewContainerRef, private router: Router, public toastr: ToastrManager,private modalService: NgbModal, private loadingBar: LoadingBarService,private titleService: Title,
 	private meta: Meta,private activeRoute: ActivatedRoute,private sanitizer: DomSanitizer) { }
-	
+
     ngOnInit() {
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
-		
+
 		/* Check Token */
     	if((localStorage.getItem("userProfileInfo") == '' || localStorage.getItem("userProfileInfo") == undefined || localStorage.getItem('userProfileInfo') === null) && (localStorage.getItem("userAccessToken") == '' || localStorage.getItem("userAccessToken") == undefined || localStorage.getItem('userAccessToken') === null) && (localStorage.getItem("chatBoardId") == '' || localStorage.getItem("chatBoardId") == undefined || localStorage.getItem("chatBoardId") == null) && (localStorage.getItem("chatPrice") == '' || localStorage.getItem("chatPrice") == undefined || localStorage.getItem("chatPrice") == null) && (localStorage.getItem("chatName") == '' || localStorage.getItem("chatName") == undefined || localStorage.getItem("chatName") == null) && (localStorage.getItem("chatSymbol") == '' || localStorage.getItem("chatSymbol") == undefined || localStorage.getItem("chatSymbol") == null) && (localStorage.getItem("favouriteId") == '' || localStorage.getItem("favouriteId") == undefined || localStorage.getItem("favouriteId") == null) && (localStorage.getItem("chatType") == '' || localStorage.getItem("chatType") == undefined || localStorage.getItem("chatType") == null) && (localStorage.getItem("chatCurrency") == '' || localStorage.getItem("chatCurrency") == undefined || localStorage.getItem("chatCurrency") == null)) {
     		this.router.navigate(['/chat']);
 					}
-		
-		if(this.activeRoute.snapshot.queryParams){
+
+		if(this.activeRoute.snapshot.queryParams) {
 			if(this.activeRoute.snapshot.params.ctsymbol!=undefined && this.activeRoute.snapshot.params.ctsymbol!=null && this.activeRoute.snapshot.params.ctname!=undefined && this.activeRoute.snapshot.params.ctname!=null){
-				if(this.activeRoute.snapshot.params.ctsymbol!=localStorage.getItem('chatSymbol') || this.activeRoute.snapshot.params.ctname!=localStorage.getItem('chatName'))
+				if(this.activeRoute.snapshot.params.ctsymbol!=localStorage.getItem('chatSymbol') || this.activeRoute.snapshot.params.ctname!=localStorage.getItem('chatName')) {
 					this.router.navigate(['/chat']);
-			}
-			else
+				}
+			} else {
 				this.router.navigate(['/chat']);
-		}
-		else {
+			}
+		} else {
 			this.router.navigate(['/chat']);
 		}
-		
-		
-		this.profileInfo = JSON.parse(localStorage.getItem("userProfileInfo"));
-		if (!this.profileInfo.isProAccount){
-			localStorage.setItem("proActive","false");
+
+
+		this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
+		if (!this.profileInfo.isProAccount) {
+			localStorage.setItem('proActive','false');
 			this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
 			this.router.navigate(['/account-settings']));
-		}
-		else {
-			localStorage.setItem("proActive","");
+		} else {
+			localStorage.setItem('proActive','');
 		}
 		 /* Set Language Translator */
 		this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
@@ -218,45 +218,45 @@ export class ChatDetailsComponent implements OnInit {
 		this.userId = this.profileInfo.userId;
 		this.btnText = this.sendText;
 		this.placeholderImageUrl = '../assets/images/user-not-found.png';
-		this.pageSize = 10;
+		this.pageSize = 5;
 		this.chatListCheck = true;
 
 		this.totalPage = this.currentPage = 0;
 		/* Set Mata Tag*/
-		//this.title=""+this.chatName+" Chat | "+this.chatSymbol+" | Live "+this.chatType+" Market Prices & Chat | Bullseye Investors";
+		// this.title=""+this.chatName+" Chat | "+this.chatSymbol+" | Live "+this.chatType+" Market Prices & Chat | BullsEye Investors";
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
-		this.title="BullsEye Investors | Chat"+" | "+localStorage.getItem("chatName")+" | "+localStorage.getItem("chatSymbol");
+		this.title='BullsEye Investors | Chat'+' | '+localStorage.getItem('chatName')+' | '+localStorage.getItem('chatSymbol');
 		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: ''+this.chatName+' chat for private investors. Share your views with other '+this.chatSymbol+' investors in the Bullseye Community using the Bullseye Investors web, iOS and Android platforms. Track live prices and set alerts directly to your device.'});
+		this.meta.addTag({name: 'description', content: ''+this.chatName+' chat for private investors. Share your views with other '+this.chatSymbol+' investors in the BullsEye Community using the BullsEye Investors web, iOS and Android platforms. Track live prices and set alerts directly to your device.'});
 		this.translate.get('Entermessagehere').subscribe(value => {
 
 			this.enterNewMessageText=value;
 			/*Set Editior Configuration*/
 			this.editorConfig= {
-				"editable": true,
-				"spellcheck": true,
-				"height": "100px",
-				"minHeight": "50px",
-				"width": "auto",
-				"minWidth": "0",
-				"translate": "yes",
-				"enableToolbar": true,
-				"showToolbar": true,
-				"placeholder": this.enterNewMessageText,
-				"imageEndPoint": "",
-				"toolbar": [
-					["bold", "italic", "underline", "strikeThrough",],
-					["fontName", "fontSize"],
-					["justifyLeft", "justifyCenter", "justifyRight", "justifyFull", "indent", "outdent"],
-					["cut", "copy", "delete", "removeFormat", "undo", "redo"],
-					["paragraph", "blockquote", "removeBlockquote", "horizontalLine", "orderedList", "unorderedList"],
-					["link", "unlink"]
+				'editable': true,
+				'spellcheck': true,
+				'height': '100px',
+				'minHeight': '50px',
+				'width': 'auto',
+				'minWidth': '0',
+				'translate': 'yes',
+				'enableToolbar': true,
+				'showToolbar': true,
+				'placeholder': this.enterNewMessageText,
+				'imageEndPoint': '',
+				'toolbar': [
+					['bold', 'italic', 'underline', 'strikeThrough',],
+					['fontName', 'fontSize'],
+					['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
+					['cut', 'copy', 'delete', 'removeFormat', 'undo', 'redo'],
+					['paragraph', 'blockquote', 'removeBlockquote', 'horizontalLine', 'orderedList', 'unorderedList'],
+					['link', 'unlink']
 				]
 			}
 		});
 
-		var objectNtype=this;
+		const objectNtype=this;
 		setTimeout(() => {
 			objectNtype.translate.get('Date').subscribe(value => {
 				objectNtype.dateText=value;
@@ -332,6 +332,7 @@ export class ChatDetailsComponent implements OnInit {
 				if (objectType.pageNo === 1) { objectType.totalPage = response.data.totalPage; }
 				objectType.chatList = response.data.data;
 				if (objectType.chatList.length > 0) {
+					objectType.totalRecords = response.data.totalRecords;
 					objectType.searchText = '';
 					objectType.chatListCheck = false;
 
@@ -458,9 +459,9 @@ export class ChatDetailsComponent implements OnInit {
 			this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
 			return false;
 		}
-		this.postTitleError=(this.postMessageArray.postTitle==undefined || this.postMessageArray.postTitle==null || this.postMessageArray.postTitle=="")?true:false;
-		this.postMessageError=(this.postMessageArray.postMessage==undefined || this.postMessageArray.postMessage==null || this.postMessageArray.postMessage=="")?true:false;
-		if(this.postMessageArray.postTitle==undefined || this.postMessageArray.postTitle==null || this.postMessageArray.postTitle=="" || this.postMessageArray.postMessage==undefined || this.postMessageArray.postMessage==null || this.postMessageArray.postMessage=="") {
+		this.postTitleError=(this.postMessageArray.postTitle==undefined || this.postMessageArray.postTitle==null || this.postMessageArray.postTitle=='')?true:false;
+		this.postMessageError=(this.postMessageArray.postMessage==undefined || this.postMessageArray.postMessage==null || this.postMessageArray.postMessage=='')?true:false;
+		if(this.postMessageArray.postTitle==undefined || this.postMessageArray.postTitle==null || this.postMessageArray.postTitle=='' || this.postMessageArray.postMessage==undefined || this.postMessageArray.postMessage==null || this.postMessageArray.postMessage=='') {
 			this.btnText = this.sendText;
 			return false;
 		}
@@ -621,17 +622,16 @@ export class ChatDetailsComponent implements OnInit {
 
 
 
-  getMinMax(arr, prop, type= "low") {
+  getMinMax(arr, prop, type= 'low') {
 	let max;
 
-	if(type == "low") {
+	if(type == 'low') {
 		for (let i=0 ; i<arr.length ; i++) {
 			if (!max || parseFloat(arr[i][prop]) < parseFloat(max.low)) {
 				max = arr[i];
 									}
 		}
-	}
-	else{
+	} else {
 		for (let i=0 ; i<arr.length ; i++) {
 			if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high)) {
 				max = arr[i];
@@ -647,7 +647,6 @@ export class ChatDetailsComponent implements OnInit {
 
 		objectType.searchSearchText = objectType.processingTxt;
 		objectType.loadingBar.start();
-		debugger;
 		this.tickerService.getTickerDetails(this.tickerId, function(err, response) {
 
 			if ( err ) {
@@ -700,9 +699,9 @@ export class ChatDetailsComponent implements OnInit {
 			objectType.tickerDataText = '';
 			const keys = [];
 			const candleStickData = [];
-			let data = [];
-			let max = objectType.getMinMax(response.data.Data, 'high', 'high');
-			let min = objectType.getMinMax(response.data.Data, 'low', 'low');
+			const data = [];
+			const max = objectType.getMinMax(response.data.Data, 'high', 'high');
+			const min = objectType.getMinMax(response.data.Data, 'low', 'low');
 
 			objectType.cryptoMaxValue = max.high;
 			objectType.cryptoMinValue = min.low;
@@ -720,36 +719,36 @@ export class ChatDetailsComponent implements OnInit {
 	});
 }
 
-getExtraSMA(){
-	// setting date range in sma case
-	let limit = 0;
-	if(this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200){
+getExtraSMA() {
+	// setting date range in sma case	
+	let limit = (this.filterModel.searchCriteria == 24)?24:0;
+	if(this.filterModel.searchCriteria == 50 || this.filterModel.searchCriteria == 100 || this.filterModel.searchCriteria == 200) {
 		if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 			switch (this.filterModel.searchCriteria) {
-				case "50": {
+				case '50': {
 					limit += 50
 					break;
 				}
-				case "100": {
+				case '100': {
 					limit += 100
 					break;
 				}
-				case "200": {
+				case '200': {
 					limit += 200
 					break;
 				}
 			}
 		} else {
 			switch (this.filterModel.searchCriteria) {
-				case "50": {
+				case '50': {
 					limit += 80
 					break;
 				}
-				case "100": {
+				case '100': {
 					limit += 150
 					break;
 				}
-				case "200": {
+				case '200': {
 					limit += 295
 					break;
 				}
@@ -808,16 +807,13 @@ getChartData(num, type, clickind) {
 							objectType.tickerDataText = objectType.noChartDataText;
 						}
 					} else if (objectType.tickerType.toLowerCase() === 'stock') {
-						if (response.data.intraday !== undefined && Object.keys(response.data.intraday).length > 0) {
-
-							data = response.data.intraday;
-							let dataTimeZone = response.data.timezone_name;
+						if (response.data !== undefined && Object.keys(response.data).length > 0) {
+							data = response.data.reduce((agg, val) => {	agg[val.time] = val;	return agg; }, {});
+							const dataTimeZone = response.data.timezone_name;
 							Object.keys(data).map(function (key) {
 								const currentDateTime = new Date(key);
-								let shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
-								keys.push({ date: new Date(key), shortZone: shortZone, currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
-
-								// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
+								// const shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
+								keys.push({ date: new Date(key), shortZone: 'GMT', currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
 
 							});
 
@@ -866,7 +862,7 @@ getChartData(num, type, clickind) {
 
 				const num = parseInt(this.num);
 				let limit = (this.type === 'M') ? (num * 30) : (num * 365);
-				let extraSMA   = this.getExtraSMA();
+				const extraSMA   = this.getExtraSMA();
 				limit = limit+extraSMA;
 
 				d.setDate(d.getDate() - limit);
@@ -895,13 +891,13 @@ getChartData(num, type, clickind) {
 								data = response.data.Data;
 
 								data.map(function(item) {
-									let currentDateTime = new Date(item.time * 1000);
-									let y = currentDateTime.getUTCFullYear();
+									const currentDateTime = new Date(item.time * 1000);
+									const y = currentDateTime.getUTCFullYear();
 									let m = currentDateTime.getUTCMonth();
-									let day = currentDateTime.getUTCDate();
+									const day = currentDateTime.getUTCDate();
 									m = m + 1;
-									let mm = (m <= 9 ) ? ('0' + m) : m;
-									let dd = (day <= 9 ) ? ('0' + day) : day;
+									const mm = (m <= 9 ) ? ('0' + m) : m;
+									const dd = (day <= 9 ) ? ('0' + day) : day;
 									keys.push({date: new Date(item.time * 1000), currentDateTime: y + '-' + mm + '-' + dd, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
 
 									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
@@ -922,16 +918,17 @@ getChartData(num, type, clickind) {
 								objectType.tickerDataText = objectType.noChartDataText;
 							}
 						} else if (objectType.tickerType.toLowerCase() === 'stock') {
-							if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
-								data = response.data.history;
+							if (response.data !== undefined && Object.keys(response.data).length > 0) {
+
+								data = response.data.reduce((agg, val) => {	agg[val.date] = val;	return agg; }, {});
 								Object.keys(data).map(function (key) {
-									let currentDateTime = new Date(key);
-									let y = currentDateTime.getUTCFullYear();
+									const currentDateTime = new Date(key);
+									const y = currentDateTime.getUTCFullYear();
 									let m = currentDateTime.getUTCMonth();
-									let day = currentDateTime.getUTCDate();
+									const day = currentDateTime.getUTCDate();
 									m = m + 1;
-									let mm = (m <= 9 ) ? ('0' + m) : m;
-									let dd = (day <= 9 ) ? ('0' + day) : day;
+									const mm = (m <= 9 ) ? ('0' + m) : m;
+									const dd = (day <= 9 ) ? ('0' + day) : day;
 									keys.push({date : new Date(key), currentDateTime: y + '-' + mm + '-' + dd, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0))});
 
 									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
@@ -980,7 +977,7 @@ getChartData(num, type, clickind) {
 
 createAxisAndSeries(field,chart) {
 
-	let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+	const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 	valueAxis.renderer.grid.template.location = 0;
 	valueAxis.renderer.grid.template.disabled = true;
 	valueAxis.renderer.ticks.template.disabled = true;
@@ -988,43 +985,43 @@ createAxisAndSeries(field,chart) {
 	valueAxis.tooltip.disabled = true;
 	valueAxis.renderer.minWidth = 35;
 
-	let extraParam = (this.filterModel.searchCriteria == 24) ? (`Volume: {volume}\n`):((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}`: ((this.filterModel.searchCriteria == 100)? `100-day SMA: {SMA}`:((this.filterModel.searchCriteria == 200)? `200-day SMA: {SMA}`: "")));
+	const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab !== '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
 
-	let tooltipText =
-		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
+	const tooltipText =
+		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab === '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 		this.currencyText + `: {currency}\n` +
-		this.priceText + `: {close}\n`+extraParam;
-	if(field=="value"){
-		let series = chart.series.push(new am4charts.LineSeries());
-		series.dataFields.dateX = "date";
-		series.dataFields.valueY = "close";
+		this.priceText + `: {close}\n` + extraParam;
+	if(field === 'value') {
+		const series = chart.series.push(new am4charts.LineSeries());
+		series.dataFields.dateX = 'date';
+		series.dataFields.valueY = 'close';
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color("#00b050");
+		series.stroke = am4core.color('#00b050');
 
 		// let currency=this.chatDetailsCurrency;
 		series.tooltipText = tooltipText;
 		/* Set Chart Tooltip Style */
 		series.tooltip.getFillFromObject = false;
-		series.tooltip.background.fill = am4core.color("#00b050");
-	} else if(field=="chartwithSma"){
-		let series = chart.series.push(new am4charts.LineSeries());
-		series.dataFields.dateX = "date";
-		series.dataFields.valueY = "close";
+		series.tooltip.background.fill = am4core.color('#00b050');
+	} else if(field === 'chartwithSma') {
+		const series = chart.series.push(new am4charts.LineSeries());
+		series.dataFields.dateX = 'date';
+		series.dataFields.valueY = 'close';
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color("#00b050");
+		series.stroke = am4core.color('#00b050');
 		series.tooltipText = tooltipText;
 
 		/* Set Chart Tooltip Style */
 		series.tooltip.getFillFromObject = false;
-		series.tooltip.background.fill = am4core.color("#00b050");
-	} else if(field=="sma"){
-		let series = chart.series.push(new am4charts.LineSeries());
-		series.dataFields.dateX = "date";
-		series.dataFields.valueY = "SMA";
+		series.tooltip.background.fill = am4core.color('#00b050');
+	} else if(field === 'sma') {
+		const series = chart.series.push(new am4charts.LineSeries());
+		series.dataFields.dateX = 'date';
+		series.dataFields.valueY = 'SMA';
 		series.strokeWidth = 1.5;
-		series.stroke = am4core.color("#add8e6");
+		series.stroke = am4core.color('#add8e6');
 
-	} else if(field == 'candle') {
+	} else if(field === 'candle') {
 		const series = chart.series.push(new am4charts.CandlestickSeries());
 		series.dataFields.dateX = 'date';
 		series.dataFields.openValueY = 'open';
@@ -1061,21 +1058,21 @@ createAxisAndSeries(field,chart) {
 		this.openText+`: {open}\n`+
 		this.closeText+`: {close}\n`+
 		this.highText + `: {high}\n` +
-		this.lowText + `: {low}\n`+extraParam;
+		this.lowText + `: {low}\n` + extraParam;
 
 	}
-	if(field == 'value' || field == 'chartwithSma' || field == 'sma') {
+	if(field === 'value' || field === 'chartwithSma' || field === 'sma') {
 		chart.cursor = new am4charts.XYCursor();
 		/* Set Chart Tooltip Dotted Line */
-		chart.cursor.lineX.stroke = am4core.color("#5a7e9e");
+		chart.cursor.lineX.stroke = am4core.color('#5a7e9e');
 		chart.cursor.lineX.strokeWidth = 1.5;
 		chart.cursor.lineX.strokeOpacity = 1;
-		chart.cursor.lineX.strokeDasharray = "";
+		chart.cursor.lineX.strokeDasharray = '';
 
-		chart.cursor.lineY.stroke = am4core.color("#5a7e9e");
+		chart.cursor.lineY.stroke = am4core.color('#5a7e9e');
 		chart.cursor.lineY.strokeWidth = 1;
 		chart.cursor.lineY.strokeOpacity = 1;
-		chart.cursor.lineY.strokeDasharray = "";
+		chart.cursor.lineY.strokeDasharray = '';
 	}
 }
 
@@ -1094,11 +1091,11 @@ renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
 	dateAxis.renderer.ticks.template.disabled = true;
 	dateAxis.renderer.labels.template.disabled = true;
 	dateAxis.tooltip.disabled = true;
-	if(chartType == 'chartdiv') {
-		this.createAxisAndSeries("value",chart);
+	if(chartType === 'chartdiv') {
+		this.createAxisAndSeries('value',chart);
 	} else {
-		this.createAxisAndSeries("chartwithSma",chart);
-		this.createAxisAndSeries("sma",chart);
+		this.createAxisAndSeries('chartwithSma',chart);
+		this.createAxisAndSeries('sma',chart);
 	}
 
 }
@@ -1109,15 +1106,15 @@ renderVolumeChart(data, dataType = 'normal') {
 	chart.paddingRight = 20;
 
 	chart.data = data;
-	let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-	categoryAxis.dataFields.category = "currentDateTime";
+	const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+	categoryAxis.dataFields.category = 'currentDateTime';
 	categoryAxis.renderer.grid.template.strokeOpacity = 0;
 	categoryAxis.renderer.labels.template.disabled = true;
 	categoryAxis.renderer.cellStartLocation = 0.2;
 	categoryAxis.renderer.cellEndLocation = 0.8;
 	categoryAxis.tooltip.disabled = true;
 
-	let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+	const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 	valueAxis.renderer.inside = true;
 	valueAxis.renderer.labels.template.fillOpacity = 0;
 	valueAxis.renderer.grid.template.strokeOpacity = 0;
@@ -1128,20 +1125,20 @@ renderVolumeChart(data, dataType = 'normal') {
 	valueAxis.renderer.grid.template.disabled = true;
 	valueAxis.renderer.ticks.template.disabled = true;
 	valueAxis.renderer.labels.template.disabled = true;
-	let series = chart.series.push(new am4charts.ColumnSeries);
-	series.dataFields.valueY = "volume";
-	series.dataFields.categoryX = "currentDateTime";
-	series.tooltipText = this.dateText + `:` + ` {date}`+`\n`+
+	const series = chart.series.push(new am4charts.ColumnSeries);
+	series.dataFields.valueY = 'volume';
+	series.dataFields.categoryX = 'currentDateTime';
+	series.tooltipText = this.dateText + `:` + ` {date}`+`\n` +
 		this.currencyText + `: {currency}\n` +
 		this.volumeText + `: {volume}`;
 	// series.tooltip.pointerOrientation = "vertical";
 	series.tooltip.dy = - 6;
 	series.columnsContainer.zIndex = 100;
 
-	let columnTemplate = series.columns.template;
+	const columnTemplate = series.columns.template;
 	columnTemplate.width = am4core.percent(50);
 	columnTemplate.height = am4core.percent(50);
-	columnTemplate.fill = am4core.color("#364451");
+	columnTemplate.fill = am4core.color('#364451');
 	columnTemplate.maxHeight = 100;
 	columnTemplate.maxWidth = 13;
 	// columnTemplate.column.cornerRadius(60, 60, 10, 10);
@@ -1168,7 +1165,7 @@ renderCandleStickChartData(data, dataType = 'normal', chartType = 'candleStick')
 	// Themes begin
 	am4core.useTheme(am4themes_animated);
 	// Themes end
-	const chart = am4core.create((chartType == 'candleStick') ? 'candlechart' : 'candleSma', am4charts.XYChart);
+	const chart = am4core.create((chartType === 'candleStick') ? 'candlechart' : 'candleSma', am4charts.XYChart);
 	chart.paddingRight = 10;
 	chart.data = data;
 	chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd';
@@ -1183,12 +1180,12 @@ renderCandleStickChartData(data, dataType = 'normal', chartType = 'candleStick')
 	valueAxis.renderer.grid.template.disabled = true;
 	valueAxis.renderer.labels.template.disabled = true;
 	valueAxis.tooltip.disabled = true;
-	if(chartType == 'candleStick') {
-		this.createAxisAndSeries("candle",chart);
+	if (chartType === 'candleStick') {
+		this.createAxisAndSeries('candle', chart);
 	} else {
 
-		this.createAxisAndSeries("sma",chart);
-		this.createAxisAndSeries("candle",chart);
+		this.createAxisAndSeries('sma', chart);
+		this.createAxisAndSeries('candle', chart);
 	}
 
 
@@ -1206,7 +1203,7 @@ filterExchangeItem() {
   if (this.filterModel.graphDisplay) {
 	  document.getElementById('chartdiv').style.display = 'none';
 	  document.getElementById('smachart').style.display = 'none';
-	  if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
+	  if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
 		  document.getElementById('candleSma').style.display = 'none';
 		  document.getElementById('candlechart').style.display = 'flex';
 	  } else {
@@ -1218,7 +1215,7 @@ filterExchangeItem() {
 	  document.getElementById('candlechart').style.display = 'none';
 	  document.getElementById('chartdiv').style.display = 'flex';
 	  document.getElementById('candleSma').style.display = 'none';
-	  if(this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
+	  if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
 		  document.getElementById('smachart').style.display = 'none';
 		  document.getElementById('chartdiv').style.display = 'flex';
 	  } else {
@@ -1226,19 +1223,19 @@ filterExchangeItem() {
 		  document.getElementById('smachart').style.display = 'flex';
 	  }
   }
-  if(this.filterModel.searchCriteria == 0) {
+  if (this.filterModel.searchCriteria === 0) {
 	  document.getElementById('volumechart').style.display = 'none';
 	  document.getElementById('smachart').style.display = 'none';
 	  document.getElementById('candleSma').style.display = 'none';
-  } else if(this.filterModel.searchCriteria == 24) {
+  } else if (this.filterModel.searchCriteria === 24) {
 	  document.getElementById('volumechart').style.display = 'flex';
 					  } else {
-	  const smaData =this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
+	  const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
 
 	  this.smaChartData = smaData;
-	  this.renderChart(this.chartDataObject, 'normal', "smachart");
-	  this.renderCandleStickChartData(this.chartDataObject, 'normal', "candleSma");
-	  if(!this.filterModel.graphDisplay) {
+	  this.renderChart(this.chartDataObject, 'normal', 'smachart');
+	  this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
+	  if (!this.filterModel.graphDisplay) {
 		  document.getElementById('candleSma').style.display = 'none';
 		  document.getElementById('smachart').style.display = 'flex';
 	  } else {
@@ -1264,7 +1261,7 @@ setChartActionType(actionType) {
 
 getSMAData(data, SMAType) {
 
-	let extraSMA   = this.getExtraSMA();
+	const extraSMA   = this.getExtraSMA();
   const SMAData = [];
   SMAType = parseInt(SMAType);
   SMAType = (data.length >= SMAType) ? SMAType : data.length;
@@ -1296,13 +1293,13 @@ getSMAData(data, SMAType) {
 			  // 	}
 			  // }
 			  const chartItemVal = this.chartDataObject[count];
-			  if(this.chartDataObject[count] != undefined && SMAType > 0){
+			  if (this.chartDataObject[count] !== undefined && SMAType > 0) {
 				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
 
 				  this.chartDataObject[count] = chartItemVal;
 				  SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
 			  }
-			  if(this.chartDataObject[count] === undefined) {
+			  if (this.chartDataObject[count] === undefined) {
 
 			  }
 		  }

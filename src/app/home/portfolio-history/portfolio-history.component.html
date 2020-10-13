@@ -50,8 +50,8 @@
           <ul class="stats_body" *ngFor="let portfolioItem of portfolioList; let i = index">
             <li>{{ portfolioItem.symbol }}</li>
             <li>{{ portfolioItem.historyDate }}</li>
-            <li *ngIf="portfolioItem.historyType.toLowerCase() == 'investment'">Buy</li>
-            <li *ngIf="portfolioItem.historyType.toLowerCase() != 'investment'">{{portfolioItem.historyType}}</li>
+            <li *ngIf="portfolioItem.historyType.toLowerCase() == 'investment' || portfolioItem.historyType.toLowerCase() == 'buy'" class="clr-success">Buy</li>
+            <li *ngIf="portfolioItem.historyType.toLowerCase() != 'investment' &&  portfolioItem.historyType.toLowerCase() != 'buy'" class="clr-warning">{{portfolioItem.historyType}}</li>
             <li>{{ numberWithCommas(portfolioItem.noOfUnits)}}</li>
             <li>
               {{ portfolioItem.bookCost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.2' }}
@@ -85,7 +85,7 @@
     <div class="modal-header alert_header">
       <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='buy'">{{ 'Buy' | translate }}</h4>
     <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='sell'">{{ 'Sell' | translate }}</h4>
-      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

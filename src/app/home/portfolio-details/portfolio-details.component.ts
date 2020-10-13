@@ -53,7 +53,7 @@ export class PortfolioDetailsComponent implements OnInit {
 	isCollapsed = true;
 	num="";
 	type="";
-	indMap=0;
+	indMap=2;
 	portGraphDataText="";
 	hideme = {};
 	defaulterrSomethingMsg='Something went wrong';
@@ -173,7 +173,7 @@ export class PortfolioDetailsComponent implements OnInit {
 			});
 			objectNtype.getPortfolioDetails();
 			/* Chart Call */
-			objectNtype.getChartData(1,'month',0);
+			objectNtype.getChartData(6,'month',2);
 		},500);
 	}
 	get f() { return this.investmentForm.controls; }
@@ -271,7 +271,8 @@ export class PortfolioDetailsComponent implements OnInit {
 								let check=false;
 								performanceArray.map(function(pitem){
 									if(pitem.tickerId==item.tickerId){
-										pitem.cryptoMarket = item.cryptoMarket;
+										if(item.type.toLowerCase() == 'cryptocurrency')
+											pitem.alphaMarketSymbol = item.cryptoMarket;
 										newDataArray.push(pitem);
 										check=true;
 									}
@@ -737,7 +738,7 @@ export class PortfolioDetailsComponent implements OnInit {
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
-		valueAxis.renderer.minWidth = 35;
+		valueAxis.renderer.minWidth = 5;
 		if(field=="value") {
 			let series = chart.series.push(new am4charts.LineSeries());
 			series.dataFields.dateX = "date";

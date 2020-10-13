@@ -1550,7 +1550,7 @@ th.mat-header-cell {
 }
 
 .modal {
-    z-index: 99999;
+    z-index: 999999;
 }
 
 .modal .pro-modal-content {
@@ -2495,7 +2495,7 @@ ul {
 .logo-centered {
   margin-bottom: 15px;
   img {
-    width: 100px;
+    width: 135px;
   }
 }
 .top-title {
@@ -3067,4 +3067,28 @@ ul.stats_body:hover {
 			text-decoration: underline;
 		}
 	}
+}
+
+button.close {
+  color: #fff!important;
+  background-color: #868e96!important;
+  border-color: #868e96!important;
+  opacity: 1!important;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: none;
+  border: 0;
+  padding: 5px 10px!important;
+  margin: 0px 0px 0px 0 !important;
+}
+button.close:hover {
+  color: white;
+}
+
+.modal-index .cdk-overlay-container {
+    z-index: 9999999 !important;
+}
+
+.prodialog-page .modal {
+  z-index: 9999999 !important;
 }

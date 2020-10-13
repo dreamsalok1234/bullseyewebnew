@@ -114,13 +114,13 @@
                       <li>{{ valueItem.currentPrice | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.3-3' }}</li>
                       <li>{{ valueItem.bookCostVal | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0-0' }}</li>
                       <li>{{ valueItem.investmentmarketcalcost | currency: returnCurrSymbol(portfolioCurrency):'symbol':'1.0-0' }}</li>
-                      <li [ngClass]="valueItem.performance == 0 ? 'zeroactive' : valueItem.performance > 0 ? 'active' : 'inactive'">
+                      <li class="performance-item" [ngClass]="valueItem.performance == 0 ? 'zeroactive' : valueItem.performance > 0 ? 'active' : 'inactive'">
                         <span>
                           <i class="fa fa-caret-up" aria-hidden="true" *ngIf="valueItem.performance > 0"></i>
                           <i class="fa fa-caret-down" aria-hidden="true" *ngIf="valueItem.performance < 0"></i>
                           <i class="fa fa-caret-left" aria-hidden="true" *ngIf="valueItem.performance == 0"></i>
                           <i class="fa fa-caret-right" aria-hidden="true" *ngIf="valueItem.performance == 0"></i>
-                          {{ math.round(valueItem.performance) }}%
+                          {{ formatNumber(math.round(valueItem.performance)) }}%
                         </span>
                       </li>
                       <li class="toggle_actions">
@@ -180,7 +180,7 @@
                   </div>
                   <div class="body_div">
                     <!--<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,riskItem.shortTerm,riskItem.mediumTerm,riskItem.longTerm,riskItem.voladility,riskItem.fundamentals,riskItem.alphaMarketId,riskItem.investmentId,riskItem.potentialId)">-->
-					<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,i)">
+					            <ul class="stats_body liquidity-section" *ngFor="let riskItem of riskList; let i = index" (click)="goToTickerDetails(riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0,i)">
                       <li>
                         {{ riskItem.symbol }}
                       </li>
@@ -225,10 +225,11 @@
                       </li>
 					            <!-- <li *ngIf="riskItem.opportunity=='N/A'">{{ riskItem.opportunity }}</li>
                       <li *ngIf="riskItem.opportunity!='N/A'">{{ math.round(riskItem.opportunity) }}%</li> -->
-                      <li>
+                      <li class="liquidity-box">
                         <img *ngIf="riskItem.liquidityFlag=='1'" class="liquidity-flag" src="assets/images/ic_green_exclamation.png">
                         <img *ngIf="riskItem.liquidityFlag=='2'" class="liquidity-flag" src="assets/images/ic_green_right.png">
                         <span *ngIf="riskItem.liquidityFlag !='1' && riskItem.liquidityFlag !='2'" >N/A</span>
+                        <span *ngIf="riskItem.liquidityFlag =='1' || riskItem.liquidityFlag =='2'" class="liquidity">{{ riskItem.liquidity | number:'1.0-3' }}%</span>
                       </li>
                     </ul>
                     <ul class="processing" *ngIf="riskItemProcessing">
@@ -264,7 +265,7 @@
                       <li>
                         {{ riskItem.symbol }}
                       </li>
-                      <li>{{ (riskItem.cryptoMarket != null)?riskItem.cryptoMarket:'N/A' }}</li>
+                      <li>{{ (riskItem.alphaMarketSymbol != null)?riskItem.alphaMarketSymbol:'N/A' }}</li>
 					  <!-- <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && riskItem.type == 'N/A'">{{ riskItem.alphaMarketSymbol }}</li>
 					  <li *ngIf="riskItem.type.toLowerCase() == 'cryptocurrency' && (riskItem.type == '' || riskItem.type != 'N/A')">BC10</li> -->
 					  <li
@@ -384,7 +385,7 @@
     <div class="modal-header alert_header">
       <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='buy'">{{ 'Buy' | translate }}</h4>
 	  <h4 class="modal-title" *ngIf="modelHeading.toLowerCase()=='sell'">{{ 'Sell' | translate }}</h4>
-      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -571,7 +572,7 @@
   <ng-template #deleteInvestment let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
       <h4 class="modal-title">{{ 'DeleteInvestment' | translate }}</h4>
-      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -589,7 +590,7 @@
   <ng-template #pricealert let-c="close" let-d="dismiss">
     <div class="modal-header alert_header">
       <h4 class="modal-title">{{ 'PriceAlert' | translate }}</h4>
-      <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      <button type="button" class="btn btn-secondary close" (click)="c('Close click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

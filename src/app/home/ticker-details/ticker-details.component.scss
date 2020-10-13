@@ -607,24 +607,56 @@ ul.blurTdetails + .data_fatch i {
 @media (min-width: 1024px) and (max-width: 1199px) {
 .stats_list li{min-height: 150px;}
 .buttons_grp select{
-  padding: 5px 15px;
-  font-size: 15px;
+  padding: 9px 15px;
+  font-size: 14px;
 }
 .stats_list li img {
     width: 60px;
 }
+.buttons_grp button{
+  padding: 7px 9px;
+}
+.buttons_grp button {
+  font-size: 13px;
+}
+
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
-.stats_list li{min-height: 175px;}
-.buttons_grp button img {height: 20px;}
-.candle_stick ul li{height: auto; padding: 5px 15px;  font-size: 15px;}
-.candle_stick ul li input{font-size: 15px;}
-.tabs_pills .nav-pills .nav-link{height: auto; padding: 5px 15px; font-size: 15px;}
-.buttons_grp button{height: auto; padding: 5px 15px;  font-size: 15px;}
-.buttons_grp button i{font-size: 20px;}
-.checkbox-custom-label{font-size: 15px;}
-.value_change ul li{padding: 5px}
-.value_change ul li h3{font-size: 15px;}
-div#chartdiv,div#bookchart,div#candlechart,div#volumechart,div#smachart, ,div#candleSma{height: 320px; padding-top: 35px;}
+  .stats_list li{min-height: 175px;}
+  .buttons_grp button img {height: 20px;}
+  .candle_stick ul li{height: auto; padding: 5px 15px;  font-size: 15px;}
+  .candle_stick ul li input{font-size: 15px;}
+  .tabs_pills .nav-pills .nav-link{height: auto; padding: 5px 15px; font-size: 15px;}
+  .buttons_grp button{height: auto; padding: 8px 10px; font-size: 14px;}
+  .buttons_grp button i{font-size: 20px;}
+  .checkbox-custom-label{font-size: 15px;}
+  .value_change ul li{padding: 5px}
+  .value_change ul li h3{font-size: 15px;}
+  div#chartdiv,div#bookchart,div#candlechart,div#volumechart,div#smachart, div#candleSma{height: 320px; padding-top: 35px;}
+  .buttons_grp select {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+}
+
+
+@media (min-width: 1401px) and (max-width: 1500px) {
+  .buttons_grp button img {
+    height: 22px;
+  }
+  .buttons_grp button i {
+    font-size: 22px;
+  }
+  .buttons_grp button {
+    padding: 7px 20px;
+  }
+  .buttons_grp[_ngcontent-c5] select[_ngcontent-c5] {
+    padding: 9px 20px;
+    font-size: 15px;
+  }
+  a.back_arrow[_ngcontent-c5] {
+    padding: 0px 8.5px;
+  }
 
 }

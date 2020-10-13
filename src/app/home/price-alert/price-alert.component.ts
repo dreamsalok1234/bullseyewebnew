@@ -61,7 +61,7 @@ export class PriceAlertComponent implements OnInit {
   processingTxt = 'Processing...';
   noPriceAlertText = 'No price alerts set.';
   title = 'BullsEye Investors | Price Alert';
-  targetPriceisRequiredMsg="Target Price is required!";
+  targetPriceisRequiredMsg = 'Target Price is required!';
   currentTime = new Date();
   constructor(
     private translate: TranslateService,
@@ -73,13 +73,13 @@ export class PriceAlertComponent implements OnInit {
     public toastr: ToastrManager,
     private modalService: NgbModal,
     private loadingBar: LoadingBarService,
-	private titleService: Title,
-	private meta: Meta
+    private titleService: Title,
+    private meta: Meta
   ) {}
   ngOnInit() {
-	this.meta.removeTag('name=title');
-	this.meta.removeTag('name=description');
-	this.titleService.setTitle(this.title);
+    this.meta.removeTag('name=title');
+    this.meta.removeTag('name=description');
+    this.titleService.setTitle(this.title);
     /* Check Token */
     if (
       (localStorage.getItem('userProfileInfo') === '' ||
@@ -93,20 +93,18 @@ export class PriceAlertComponent implements OnInit {
     }
 
     this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
-
-	if (!this.profileInfo.isProAccount){
-		localStorage.setItem("proActive","false");
-		this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(()=>
-		this.router.navigate(['/account-settings']));
-	}
-	else {
-		localStorage.setItem("proActive","");
-	}
+    if (!this.profileInfo.isProAccount) {
+      localStorage.setItem('proActive', 'false');
+      this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['/account-settings']));
+    } else {
+      localStorage.setItem('proActive', '');
+    }
     /* Set Language Translator */
     this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
     this.translate.setDefaultLang('en');
     const browserLang =
-      this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage != '' ? this.profileInfo.defaultLanguage : 'en';
+      this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '' ? this.profileInfo.defaultLanguage : 'en';
     this.translate.use(browserLang.match(/en|ko|hi|zh|es|ja/) ? browserLang : 'en');
     this.translate.get('Somethingwentwrong').subscribe(value => {
       this.defaulterrSomethingMsg = value;
@@ -126,12 +124,12 @@ export class PriceAlertComponent implements OnInit {
     this.translate.get('Nopricealertsset').subscribe(value => {
       this.noPriceAlertText = value;
     });
-	this.translate.get('TargetPriceisRequired').subscribe(value => {
-		this.targetPriceisRequiredMsg=value;
-	});
-	try {
+    this.translate.get('TargetPriceisRequired').subscribe(value => {
+      this.targetPriceisRequiredMsg = value;
+    });
+    try {
       this.currencyList = this.commonService.getCurrency();
-	  this.currencyItemList= this.currencyList;
+      this.currencyItemList = this.currencyList;
 
     } catch (error) {}
     this._initForm();
@@ -155,10 +153,10 @@ export class PriceAlertComponent implements OnInit {
   get i() {
     return this.investmentForm.controls;
   }
-  valuechange($event){
-	  const objectType = this;
-	  setTimeout(function() {
-		let term=objectType.investmentForm.controls['ticker'].value;
+  valuechange($event) {
+    const objectType = this;
+    setTimeout(function() {
+      const term = objectType.investmentForm.controls['ticker'].value;
         if (term !== '' && objectType.res === false && objectType.resTickerAutoComp === false) {
           objectType.loadingBar.start();
           objectType.res = true;
@@ -180,14 +178,14 @@ export class PriceAlertComponent implements OnInit {
       }, 500);
   }
   setTagetValueWith3Digit() {
-	  if(this.investmentForm.controls['amount'].value !== '') {
-		 const amt=parseFloat(this.investmentForm.controls['amount'].value);
-		 this.investmentForm.controls['amount'].setValue(amt.toFixed(3));
-	  }
+    if (this.investmentForm.controls['amount'].value !== '') {
+      const amt = parseFloat(this.investmentForm.controls['amount'].value);
+      this.investmentForm.controls['amount'].setValue(amt.toFixed(3));
+    }
   }
   priceAlertList() {
     const objectType = this;
-	objectType.itemList=[];
+    objectType.itemList = [];
     objectType.processingTxt = objectType.processingTxt;
     objectType.processing = true;
     this.watchlistService.priceAlertList(function(err, response) {
@@ -292,11 +290,11 @@ export class PriceAlertComponent implements OnInit {
   }
 
   /* Select Ticker */
-  selectTicker(id, amount = 0, symbol,name, currency) {
+  selectTicker( id, amount = 0, symbol, name, currency) {
     this.tickerId = id;
     this.tickerAmount = amount;
-    this.tickerName = name+' ('+symbol+')';
-	this.investmentForm.controls['ticker'].setValue(this.tickerName);
+    this.tickerName = name + ' (' + symbol + ')';
+    this.investmentForm.controls['ticker'].setValue(this.tickerName);
     this.tickerCurrency = currency;
     this.resTickerAutoComp = true;
   }
@@ -306,13 +304,13 @@ export class PriceAlertComponent implements OnInit {
   }
 
   toggleActive(i) {
-	this.tickerList=[];
-	this.activeTab=this.activeTab2='';
-	if(i===1) {
-		this.activeTab = 'active';
-	} else {
-		this.activeTab2 = 'active';
-	}
+    this.tickerList = [];
+    this.activeTab = this.activeTab2 = '';
+    if (i === 1) {
+      this.activeTab = 'active';
+    } else {
+      this.activeTab2 = 'active';
+    }
     // this.activeTab = !this.activeTab ? 'active' : '';
     this.stockType = i === 1 ? 'Stock' : 'Cryptocurrency';
   }
@@ -369,7 +367,7 @@ export class PriceAlertComponent implements OnInit {
     });
   }
 
-  editPriceAlert(addpricealert,keyIndex) {
+  editPriceAlert(addpricealert, keyIndex) {
 	this.tickerList = [];
 	this.tickerName = '';
 	this.investmentForm.reset();
@@ -377,10 +375,10 @@ export class PriceAlertComponent implements OnInit {
     const priceAlert = this.itemList[keyIndex];
     this.tickerId = priceAlert.tickerId;
     this.stockType = priceAlert.tickerType;
-	this.toggleActive((this.stockType.toLowerCase() === 'stock') ? 1 :2);
+	this.toggleActive((this.stockType.toLowerCase() === 'stock') ? 1 : 2);
     this.tickerName = priceAlert.name;
 	if (this.tickerName !== undefined && this.tickerName !== '') {
-      this.investmentForm.controls['ticker'].setValue(this.tickerName +' (' + priceAlert.symbol + ')');
+      this.investmentForm.controls['ticker'].setValue(this.tickerName + ' (' + priceAlert.symbol + ')');
 	}
     this.investmentForm.controls['expiryDate'].setValue({ year: 2019, month: 10, day: 25 });
     this.investmentForm.controls['currency'].setValue(priceAlert.currency);
@@ -397,10 +395,10 @@ export class PriceAlertComponent implements OnInit {
     );
   }
   addPriceAlert(addpricealert) {
-	this.tickerName = '';
-	this.investmentForm.reset();
-	this.investmentForm.controls['compare'].setValue('>');
-	this.investmentForm.controls['currency'].setValue(this.profileInfo.baseCurrency);
+    this.tickerName = '';
+    this.investmentForm.reset();
+    this.investmentForm.controls['compare'].setValue('>');
+    this.investmentForm.controls['currency'].setValue(this.profileInfo.baseCurrency);
     this.modalService.open(addpricealert).result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
@@ -411,22 +409,22 @@ export class PriceAlertComponent implements OnInit {
     );
   }
   checkTargetValidation() {
-	 const amt = this.investmentForm.controls['amount'].value;
-	 if (amt !== '') {
-		 if (!(/^\d+[.,]?\d{0,3}$/g.test(amt))) {
-		     const a = amt.split('.');
-			  this.investmentForm.controls['amount'].setValue(a[0] + '.' + a[1].substring(0, 3));
-		 }
-	 }
-   }
+    const amt = this.investmentForm.controls['amount'].value;
+    if (amt !== '') {
+      if (!(/^\d+[.,]?\d{0,3}$/g.test(amt))) {
+        const a = amt.split('.');
+        this.investmentForm.controls['amount'].setValue(a[0] + '.' + a[1].substring(0, 3));
+      }
+    }
+  }
   /*Return Currency Symbol*/
    returnCurrSymbol(v) {
-	  let cur = v;
-	  this.currencyItemList.map(function(item) {
-			if (item.name === v) {
-				cur = item.symbol;
-			}
-	  });
-	  return cur;
+     let cur = v;
+     this.currencyItemList.map(function(item) {
+       if (item.name === v) {
+         cur = item.symbol;
+        }
+      });
+      return cur;
    }
 }

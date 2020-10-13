@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
 		this.titleService.setTitle(this.title);
-		this.meta.addTag({name: 'description', content: 'Login to your Bullseye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
+		this.meta.addTag({name: 'description', content: 'Login to your BullsEye Investors account. BullsEye is the global stocks and cryptocurrency portfolio tracker. Build, track and analyse your portfolio on one platform across your desktop, iOS and Android devices.'});
 		this.showBtnText='Login';
         this.userName = (localStorage.getItem('cacheUserName')!='' && localStorage.getItem('cacheUserName') != undefined) ? localStorage.getItem('cacheUserName') : ''; 
         this.password = (localStorage.getItem('cachePassword')!='' && localStorage.getItem('cachePassword') != undefined) ? localStorage.getItem('cachePassword') : '';  
@@ -77,8 +77,9 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem("isRemember");
         }
         const formData = {"username" : this.loginForm.controls.userName.value, "password": this.loginForm.controls.password.value};
-		if(this.showBtnText =="Processing...")
+		if(this.showBtnText =="Processing...") {
 			return ;
+		}
         this.showBtnText="Processing...";
         var objectType = this;
         this.loading =true;
@@ -89,8 +90,9 @@ export class LoginComponent implements OnInit {
             objectType.loading = false;
 			objectType.showBtnText='Login';
 			objectType.loadingBar.stop();
-            if( err )
+            if( err ) {
               objectType.toastr.errorToastr("Something went wrong, please try again!",null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+            }
             if( response.statusCode == 200 ) {
                 localStorage.setItem("userAccessToken", response.data.token);
                 localStorage.setItem("userProfileInfo", JSON.stringify(response.data.userData));
@@ -103,13 +105,15 @@ export class LoginComponent implements OnInit {
 				  if(!response.data.isPhoneVerified && response.data.isPhoneVerified!=undefined) {
 					  objectType.toastr.errorToastr("Verify Phone",null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
 				  }
-				  else
-					objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?'Something went wrong, please try again!"':response.data.message),null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
+				  else {
+					objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?'Something went wrong, please try again!"':response.data.message),null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+						} 
 			  }
-			  else
-				objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?'Something went wrong, please try again!"':response.data.message),null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true}); 
+			  else {
+				objectType.toastr.errorToastr(((response.data.message==undefined || response.data.message=='')?'Something went wrong, please try again!"':response.data.message),null,{autoDismiss: true, maxOpened: 1,preventDuplicates: true});
+					}
             }
-			
+
         });
     }
 }

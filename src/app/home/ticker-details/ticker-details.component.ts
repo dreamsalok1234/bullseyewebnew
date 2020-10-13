@@ -1,11 +1,12 @@
-import { Component, OnInit, ElementRef,  ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewContainerRef } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { CommonService } from '../../_services/common.service';
 import { TickerService } from '../../_services/ticker.service';
+import { PredictionService } from '../../_services/prediction.service';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 /* Imports */
@@ -15,27 +16,27 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
-    selector: 'app-ticker-details',
-    templateUrl: './ticker-details.component.html',
-    styleUrls: ['./ticker-details.component.scss'],
-    animations: [routerTransition()]
+	selector: 'app-ticker-details',
+	templateUrl: './ticker-details.component.html',
+	styleUrls: ['./ticker-details.component.scss'],
+	animations: [routerTransition()]
 })
 export class TickerDetailsComponent implements OnInit {
-	
+
 	closeResult: string;
 	math = Math;
-	model: any = {'currentCurrency': 'USD'};
-	filterModel: any = { "searchCriteria": 24, "graphDisplay": 0 };
+	model: any = { 'currentCurrency': 'USD' };
+	filterModel: any = { 'searchCriteria': 24, 'graphDisplay': 0 };
 	profileInfo: any;
 	tickerId = 0;
 	searchSearchText = '';
 	tickerListData: any = [];
 	currencyList = [];
 	currencyItemList: any = [];
-	benkMarchList:any= [];
+	benkMarchList: any = [];
 	currencyPriceList = {};
 	watchListCurrency = 'USD';
-	formData:any={};
+	formData: any = {};
 	placeholderImageUrl: string;
 	currencyType = '';
 	marketCapData: any;
@@ -49,15 +50,20 @@ export class TickerDetailsComponent implements OnInit {
 	tickerDetailsCurrency = '';
 	isChecked = false;
 	watchListId = 0;
-	tickerMarketCapData = {};
+	tickerMarketCapData: any;
 	num = '';
 	type = '';
 	loading = false;
 	processingText = 'blurTdetails';
-	priceAlert: any = {'currentCurrency': 'USD', 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol' : '', 'compare' : '>', 'expiryDate' : '','tickerIcon':''};
-	riskPerformanceArray: any = {'tickerId': '', 'tickerName': '', 'symbol' : '', 'tickerIcon': '', 'potentialST': '1', 'potentialMT': '1', 'potentialLT': '1', 'riskVolality': '3', 'riskFundamentals': '1', 'benkMarchIndex': '0'};
-    priceAlertError: any = {'amount' : false, 'expiryDate' : false};
-    datepicker: any;
+	priceRequired = 'Price is required!';
+	dateisrequired = 'Price prediction already locked-in!';
+	predictionAlreadyLockedin = 'Date is required!';
+	predictionForm: any = { 'currentCurrency': 'USD', 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol': '', 'predictionForDate': '', 'tickerIcon': '' };
+	predictionFormError: any = { 'amount': false, 'predictionForDate': false };
+	priceAlert: any = { 'currentCurrency': 'USD', 'amount': '', 'tickerId': '', 'tickerName': '', 'symbol': '', 'compare': '>', 'expiryDate': '', 'tickerIcon': '' };
+	riskPerformanceArray: any = { 'tickerId': '', 'tickerName': '', 'symbol': '', 'tickerIcon': '', 'potentialST': '1', 'potentialMT': '1', 'potentialLT': '1', 'riskVolality': '3', 'riskFundamentals': '1', 'benkMarchIndex': '0' };
+	priceAlertError: any = { 'amount': false, 'expiryDate': false };
+	datepicker: any;
 	defaulterrSomethingMsg = 'Something went wrong';
 	processingTxt = 'Processing...';
 	CandlestickText = 'Candlestick';
@@ -99,27 +105,36 @@ export class TickerDetailsComponent implements OnInit {
 	smaChartData: any;
 	shortingTab = '1D';
 	shortZone = 'GMT';
-    constructor(
-			private translate: TranslateService,
-			private commonService: CommonService,
-			private tickerService: TickerService,
-            private _fb: FormBuilder, vcr: ViewContainerRef,
-            private router: Router, public toastr: ToastrManager,
-			private modalService: NgbModal,
-            private loadingBar: LoadingBarService,
-			private titleService: Title,
-			private meta: Meta,
-			private activeRoute: ActivatedRoute,
-	) {}
+	currentTime = new Date();
+	isPredictionLocked = 1;
+	predictionStartDate = new Date();
+	predictionStartDateFrom = { year: this.currentTime.getFullYear(), month: this.currentTime.getMonth() + 1, day: this.currentTime.getDate() };
+
+	constructor(
+		private translate: TranslateService,
+		private commonService: CommonService,
+		private tickerService: TickerService,
+		private predictionService: PredictionService,
+		private _fb: FormBuilder, vcr: ViewContainerRef,
+		private router: Router, public toastr: ToastrManager,
+		private modalService: NgbModal,
+		private loadingBar: LoadingBarService,
+		private titleService: Title,
+		private meta: Meta,
+		private activeRoute: ActivatedRoute,
+	) { }
 
 
-    ngOnInit() {
+	ngOnInit() {
+		this.predictionStartDate.setDate(this.predictionStartDate.getDate() + 7);
+		this.predictionStartDateFrom = { year: this.predictionStartDate.getFullYear(), month: this.predictionStartDate.getMonth() + 1, day: this.predictionStartDate.getDate() };
+
 		this.meta.removeTag('name=title');
 		this.meta.removeTag('name=description');
 
-    	if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined  || localStorage.getItem('tickerCurrency') == null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
-    		this.router.navigate(['/login']);
-					}
+		if ((localStorage.getItem('userProfileInfo') === '' || localStorage.getItem('userProfileInfo') === null || localStorage.getItem('userProfileInfo') === undefined) && (localStorage.getItem('userAccessToken') === '' || localStorage.getItem('userAccessToken') === null || localStorage.getItem('userAccessToken') === undefined) && (localStorage.getItem('tickerId') === '' || localStorage.getItem('tickerId') === undefined || localStorage.getItem('tickerId') === null) && (localStorage.getItem('tickerCurrency') === '' || localStorage.getItem('tickerCurrency') === undefined || localStorage.getItem('tickerCurrency') == null) && (localStorage.getItem('tickerType') === '' || localStorage.getItem('tickerType') === undefined || localStorage.getItem('tickerType') === null) && (localStorage.getItem('loginUserName') === '' || localStorage.getItem('loginUserName') === undefined || localStorage.getItem('loginUserName') === null)) {
+			this.router.navigate(['/login']);
+		}
 
 		this.profileInfo = JSON.parse(localStorage.getItem('userProfileInfo'));
 		if (this.activeRoute.snapshot.queryParams) {
@@ -155,7 +170,7 @@ export class TickerDetailsComponent implements OnInit {
 
 
 
-		 /* Set Language Translator */
+		/* Set Language Translator */
 		this.translate.addLangs(['en', 'ko', 'hi', 'zh', 'es', 'ja']);
 		this.translate.setDefaultLang('en');
 		const browserLang = (this.profileInfo.defaultLanguage !== undefined && this.profileInfo.defaultLanguage !== '') ? this.profileInfo.defaultLanguage : 'en';
@@ -181,11 +196,20 @@ export class TickerDetailsComponent implements OnInit {
 		this.translate.get('Priceto3decimalplaces').subscribe(value => {
 			this.PriceTo3DecimalPlacesMsg = value;
 		});
+		this.translate.get('priceRequired').subscribe(value => {
+			this.priceRequired = value;
+		});
+		this.translate.get('dateisrequired').subscribe(value => {
+			this.dateisrequired = value;
+		});
+		this.translate.get('predictionAlreadyLockedin').subscribe(value => {
+			this.predictionAlreadyLockedin = value;
+		});
 		/* Get All Static Currency*/
 		try {
 			this.currencyList = this.commonService.getCurrency();
 			this.currencyItemList = this.currencyList;
-		} catch (error) {}
+		} catch (error) { }
 		this.placeholderImageUrl = '../assets/images/not-found.png';
 
 
@@ -203,9 +227,9 @@ export class TickerDetailsComponent implements OnInit {
 		if (!this.profileInfo.isProAccount) {
 			const newKeys = [];
 			const objectType = this;
-			this.currencyList.map(function(item) {
+			this.currencyList.map(function (item) {
 				if (item.name === objectType.watchListCurrency) {
-					return newKeys.push({name: item.name, symbol: item.symbol});
+					return newKeys.push({ name: item.name, symbol: item.symbol });
 				}
 			});
 			this.currencyList = newKeys;
@@ -249,41 +273,41 @@ export class TickerDetailsComponent implements OnInit {
 			objectNtype.filterExchangeItem();
 		}, 1000);
 
-    }
+	}
 	getCurrencyMarketValueOld(finalPrice) {
-	  finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
-	  if (finalPrice > 1000000) {
-		    let douValue = finalPrice / 1000000;
-            let  sy = 'm';
-            if (douValue > 1000) {
-                sy = 'b';
-                douValue = douValue / 1000;
-            }
+		finalPrice = (finalPrice !== '' && finalPrice !== undefined) ? parseFloat(finalPrice) : 0;
+		if (finalPrice > 1000000) {
+			let douValue = finalPrice / 1000000;
+			let sy = 'm';
+			if (douValue > 1000) {
+				sy = 'b';
+				douValue = douValue / 1000;
+			}
 			const douValue1 = (this.tickerType.toLowerCase() === 'stock') ? douValue.toFixed(2) : douValue.toFixed(3);
 			return this.formatNumber(douValue1) + sy;
-       } else {
-		   finalPrice = parseInt(finalPrice);
-		   return this.formatNumber(finalPrice);
-	   }
-    }
-    getMinMax(arr, prop, type= 'low') {
-	    let max;
-
-	    if (type === 'low') {
-	    	for (let i = 0 ; i < arr.length ; i++) {
-	        	if (!max || parseFloat(arr[i][prop]) < parseFloat(max.low)) {
-	            	max = arr[i];
-										}
-	    	}
-	    } else {
-		    for (let i = 0 ; i < arr.length ; i++) {
-		        if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high)) {
-		            max = arr[i];
-										}
-
-		    }
+		} else {
+			finalPrice = parseInt(finalPrice);
+			return this.formatNumber(finalPrice);
 		}
-	    return max;
+	}
+	getMinMax(arr, prop, type = 'low') {
+		let max;
+
+		if (type === 'low') {
+			for (let i = 0; i < arr.length; i++) {
+				if (!max || parseFloat(arr[i][prop]) < parseFloat(max.low)) {
+					max = arr[i];
+				}
+			}
+		} else {
+			for (let i = 0; i < arr.length; i++) {
+				if (!max || parseFloat(arr[i][prop]) > parseFloat(max.high)) {
+					max = arr[i];
+				}
+
+			}
+		}
+		return max;
 	}
 	getTickerDetails() {
 		const objectType = this;
@@ -291,119 +315,110 @@ export class TickerDetailsComponent implements OnInit {
 
 			objectType.searchSearchText = objectType.processingTxt;
 			objectType.loadingBar.start();
-			this.tickerService.getTickerDetails(this.tickerId, function(err, response) {
+			this.tickerService.getTickerDetails(this.tickerId, function (err, response) {
 
-				if ( err ) {
-				  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-				  objectType.searchSearchText = objectType.defaulterrSomethingMsg;
+				if (err) {
+					objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+					objectType.searchSearchText = objectType.defaulterrSomethingMsg;
 				}
-				if ( response.statusCode === 200 ) {
+				if (response.statusCode === 200) {
 					if (response.data[1].status === true) {
 						objectType.currencyPriceList = response.data[1].data;
 					}
 					if (response.data[0].status === true && response.data[0].historyData.currentDayData !== undefined && Object.keys(response.data[0].historyData.currentDayData).length > 0) {
 
-					     objectType.tickerListData = response.data[0].historyData.currentDayData;
-					     if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
-					     	if (objectType.cryptoMaxValue !== 0 ) {
-					     		objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
-					     		objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
-					     	} else {
-					     		objectType.getCrypto1YearHighLow();
-											}
-					     }
-						 objectType.tickerDetailsCurrency = <any>response.data[0].historyData.currentDayData.currency;
-						 const icon = response.data[0].historyData.currentDayData.tickerUrl;
-						 if (icon !== '' && icon !== undefined) {
-							objectType.tickerNIcon = response.data[0].historyData.currentDayData.tickerUrl;
+						objectType.tickerListData = response.data[0].historyData.currentDayData;
+						objectType.isPredictionLocked = parseInt(objectType.tickerListData.isPredictionLocked);
+						objectType.watchListId = parseInt(objectType.tickerListData.isAddedToWatchList);
+						if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
+							if (objectType.cryptoMaxValue !== 0) {
+								objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
+								objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
+							} else {
+								objectType.getCrypto1YearHighLow();
 							}
+						}
+						objectType.tickerDetailsCurrency = <any>response.data[0].historyData.currentDayData.currency;
+						const icon = response.data[0].historyData.currentDayData.tickerUrl;
+						if (icon !== '' && icon !== undefined) {
+							objectType.tickerNIcon = response.data[0].historyData.currentDayData.tickerUrl;
+						}
 					}
 				} else {
-					objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+					objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 					objectType.searchSearchText = response.data.message;
 				}
 				objectType.processingText = '';
 				objectType.loadingBar.stop();
 			});
 		} else {
-			objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 			objectType.searchSearchText = objectType.defaulterrSomethingMsg;
 		}
-    }
+	}
 
-    getCrypto1YearHighLow() {
-    	const objectType = this;
-    	this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, 365, '', '', function(err, response) {
-			if ( err ) {
-				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+	getCrypto1YearHighLow() {
+		const objectType = this;
+		this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, 365, '', '', function (err, response) {
+			if (err) {
+				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 				objectType.tickerDataText = objectType.defaulterrSomethingMsg;
 			}
-			if ( response.statusCode === 200 ) {
+			if (response.statusCode === 200) {
 				objectType.tickerDataText = '';
 				const keys = [];
 				const candleStickData = [];
 				const data = [];
 				const max = objectType.getMinMax(response.data.Data, 'high', 'high');
-    			const min = objectType.getMinMax(response.data.Data, 'low', 'low');
+				const min = objectType.getMinMax(response.data.Data, 'low', 'low');
 
-    			objectType.cryptoMaxValue = max.high;
-    			objectType.cryptoMinValue = min.low;
+				objectType.cryptoMaxValue = max.high;
+				objectType.cryptoMinValue = min.low;
 
 				objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
 				objectType.tickerListData.WLow52 = objectType.cryptoMinValue;
 
 
 			} else {
-				objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+				objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 				objectType.tickerDataText = response.data.message;
 
 			}
 
 		});
-    }
+	}
 	ChangeCurrency() {
 		this.loadingBar.start();
 		this.watchListCurrency = this.model.currentCurrency;
-		const tickerListDataData = this.tickerListData ;
+		const tickerListDataData = this.tickerListData;
 		this.tickerListData = [];
 		this.tickerListData = tickerListDataData;
 		this.loadingBar.stop();
-   }
-   getCurrencyValue(price, currency, keyType) {
+	}
+	getCurrencyValue(price, currency, keyType) {
     	/* const price = (key === 'price') ? watchListData.price : watchListData.market_cap;
 		const keyType = (key === 'price') ? false : true; */
-    	// const currency = watchListData.currency;
-    	return this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency, keyType);
-   }
-   /* getCurrencyMarketValue(finalPrice, key = 'price') {
-      if (finalPrice >= 1000000 && finalPrice <= 999999999) {
-		  this.marketCapData = (finalPrice / 1000000).toFixed(3);
-		  this.currencyType = 'm';
-      } else if (finalPrice >= 1000000000 && finalPrice <= 999999999999) {
-		  this.marketCapData = (finalPrice / 1000000000).toFixed(3);
-		    this.currencyType = 'b';
-      } else {
-		   this.marketCapData = (finalPrice / 1000000000).toFixed(3);
-		    this.currencyType = '';
-	  }
-    } */
+		// const currency = watchListData.currency;
+		return this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency, keyType);
+	}
+
 	getCurrencyMarketValue(price, currency, key = 'price') {
-      /* const price = (key === 'price') ? itemData.price : itemData.marketCap;
-      const currency = itemData.currency; */
-	  const keyType = (key === 'price') ? false : true;
-	  const finalPrice =  this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency, keyType);
-	   if (finalPrice > 1000000) {
-		    let douValue = finalPrice / 1000000;
-            let  sy = 'm';
-            if (douValue > 1000) {
-                sy = 'b';
-                douValue = douValue / 1000;
-            }
-			this.tickerMarketCapData = {amount : (douValue), text : sy};
-       } else {
-		   this.tickerMarketCapData = {amount : (finalPrice), text : ''};
-				}
-    }
+		/* const price = (key === 'price') ? itemData.price : itemData.marketCap;
+		const currency = itemData.currency; */
+		const keyType = (key === 'price') ? false : true;
+		const finalPrice = this.commonService.getGlobalCurrencyConvertValue(this.currencyPriceList, price, currency, this.watchListCurrency, keyType);
+		if (finalPrice > 1000000) {
+			let douValue = finalPrice / 1000000;
+			let sy = 'm';
+			if (douValue > 1000) {
+				sy = 'b';
+				douValue = douValue / 1000;
+			}
+			this.tickerMarketCapData = { amount: (douValue), text: sy };
+		} else {
+			this.tickerMarketCapData = { amount: (finalPrice), text: '' };
+		}
+	}
 	showHideChart() {
 		this.loadingBar.start();
 		this.isChecked = (!this.isChecked) ? true : false;
@@ -421,7 +436,7 @@ export class TickerDetailsComponent implements OnInit {
 
 	getExtraSMA() {
 		// setting date range in sma case
-		let limit = 0;
+		let limit = (this.filterModel.searchCriteria == 24)?24:0;
 		if (this.filterModel.searchCriteria === 50 || this.filterModel.searchCriteria === 100 || this.filterModel.searchCriteria === 200) {
 			if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
 				switch (this.filterModel.searchCriteria) {
@@ -458,7 +473,7 @@ export class TickerDetailsComponent implements OnInit {
 		return limit;
 	}
 	getChartData(num, type, clickind) {
-		// debugger;
+		//
 		const objectType = this;
 		this.activeTab = 'active';
 		this.indMap = clickind;
@@ -469,7 +484,7 @@ export class TickerDetailsComponent implements OnInit {
 		objectType.loadingBar.start();
 		if (this.tickerType !== '' && this.tickerName !== '' && this.tickerSymbol !== '' && this.tickerDetailsCurrency !== '' && this.num !== '' && this.type !== '') {
 
-			if ( this.type === 'D' ) {
+			if (this.type === 'D') {
 				this.shortingTab = '1D';
 				// this.filterModel.searchCriteria = 0;
 				this.commonService.getTicker1DDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, this.limitsize, function (err, response) {
@@ -496,7 +511,7 @@ export class TickerDetailsComponent implements OnInit {
 								});
 								keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
-									});
+								});
 								objectType.chartDataObject = keys;
 								objectType.renderChart(keys, '1D');
 								objectType.renderVolumeChart(keys, '1D');
@@ -508,16 +523,14 @@ export class TickerDetailsComponent implements OnInit {
 								objectType.tickerDataText = objectType.noChartDataText;
 							}
 						} else if (objectType.tickerType.toLowerCase() === 'stock') {
-							if (response.data.intraday !== undefined && Object.keys(response.data.intraday).length > 0) {
 
-								data = response.data.intraday;
+							if (response.data !== undefined && Object.keys(response.data).length > 0) {
+								data = response.data.reduce((agg, val) => {	agg[val.time] = val;	return agg; }, {});
 								const dataTimeZone = response.data.timezone_name;
 								Object.keys(data).map(function (key) {
 									const currentDateTime = new Date(key);
-									const shortZone = currentDateTime.toLocaleTimeString('en-us', {timeZoneName: 'short', timeZone: dataTimeZone}).split(' ')[2];
-									keys.push({ date: new Date(key), shortZone: shortZone, currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
-
-									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
+									// const shortZone = currentDateTime.toLocaleTimeString('en-us',{timeZoneName:'short', timeZone: dataTimeZone}).split(' ')[2];
+									keys.push({ date: new Date(key), shortZone: 'GMT', currentDateTime: currentDateTime.getHours() + ':' + currentDateTime.getMinutes(), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
 
 								});
 
@@ -525,7 +538,7 @@ export class TickerDetailsComponent implements OnInit {
 									return <any>new Date(a.date) - <any>new Date(b.date);
 								});
 								/* candleStickData.sort((a, b) => {
-								  return <any>new Date(a.date) - <any>new Date(b.date);
+								return <any>new Date(a.date) - <any>new Date(b.date);
 								}); */
 								objectType.chartDataObject = keys;
 								objectType.renderChart(keys, '1D');
@@ -544,135 +557,137 @@ export class TickerDetailsComponent implements OnInit {
 						objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 						objectType.tickerDataText = response.data.message;
 						/*if(response.statusCode == 401) {
-							localStorage.removeItem("userAccessToken");
-							localStorage.removeItem("userProfileInfo");
-							objectType.router.navigate(['/login']);
+						localStorage.removeItem("userAccessToken");
+						localStorage.removeItem("userProfileInfo");
+						objectType.router.navigate(['/login']);
 						}*/
 
 					}
 					objectType.loadingBar.stop();
 				});
 			} else {
-					this.shortingTab = '1M';
-					/* Current Date */
-					const d = new Date();
-					const y = d.getUTCFullYear();
-					let m = d.getUTCMonth();
-					let day = d.getUTCDate();
-					m = m + 1;
-					let mm = (m <= 9 ) ? ('0' + m) : m;
-					let dd = (day <= 9 ) ? ('0' + day) : day;
-					const dateTo = y + '-' + mm + '-' + dd;
+				
+				this.shortingTab = '1M';
+				/* Current Date */
+				const d = new Date();
+				const y = d.getUTCFullYear();
+				let m = d.getUTCMonth();
+				let day = d.getUTCDate();
+				m = m + 1;
+				let mm = (m <= 9) ? ('0' + m) : m;
+				let dd = (day <= 9) ? ('0' + day) : day;
+				const dateTo = y + '-' + mm + '-' + dd;
 
-					const num = parseInt(this.num);
-					let limit = (this.type === 'M') ? (num * 30) : (num * 365);
-					const extraSMA   = this.getExtraSMA();
-					limit = limit + extraSMA;
+				const num = parseInt(this.num);
+				let limit = (this.type === 'M') ? (num * 30) : (num * 365);
+				const extraSMA = this.getExtraSMA();
+				limit = limit + extraSMA;
 
-					d.setDate(d.getDate() - limit);
-					m = d.getUTCMonth();
-					day = d.getUTCDate();
-					m = m + 1;
-					mm = (m <= 9 ) ? ('0' + m) : m;
-					dd = (day <= 9 ) ? ('0' + day) : day;
-					const dateFrom = d.getUTCFullYear() + '-' + mm + '-' + dd;
+				d.setDate(d.getDate() - limit);
+				m = d.getUTCMonth();
+				day = d.getUTCDate();
+				m = m + 1;
+				mm = (m <= 9) ? ('0' + m) : m;
+				dd = (day <= 9) ? ('0' + day) : day;
+				const dateFrom = d.getUTCFullYear() + '-' + mm + '-' + dd;
 
 
 
-					this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, limit, dateFrom, dateTo, function(err, response) {
-						if ( err ) {
-						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+				this.commonService.getTickerDataListByType(this.tickerSymbol, this.tickerType, this.tickerDetailsCurrency, limit, dateFrom, dateTo, function (err, response) {
+					if (err) {
+						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 						objectType.tickerDataText = objectType.defaulterrSomethingMsg;
-						}
-						if ( response.statusCode === 200 ) {
-							objectType.tickerDataText = '';
-							const keys = [];
-							const candleStickData = [];
-							let data = [];
-							let newData = [];
-							if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
-								if (response.data.Data !== undefined && response.data.Data.length > 0) {
-									data = response.data.Data;
+					}
+					if (response.statusCode === 200) {
+						objectType.tickerDataText = '';
+						const keys = [];
+						const candleStickData = [];
+						let data = [];
+						let newData = [];
+						if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
+							if (response.data.Data !== undefined && response.data.Data.length > 0) {
+								data = response.data.Data;
 
-									data.map(function(item) {
-										const getCurrentDateTime = new Date(item.time * 1000);
-										const y = getCurrentDateTime.getUTCFullYear();
-										let m = getCurrentDateTime.getUTCMonth();
-										const day = getCurrentDateTime.getUTCDate();
-										m = m + 1;
-										const mm = (m <= 9 ) ? ('0' + m) : m;
-										const dd = (day <= 9 ) ? ('0' + day) : day;
-										const currentDateTime = y + '-' + mm + '-' + dd;
-										keys.push({date: new Date(item.time * 1000), currentDateTime: currentDateTime, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4))});
+								data.map(function (item) {
+									const getCurrentDateTime = new Date(item.time * 1000);
+									const y = getCurrentDateTime.getUTCFullYear();
+									let m = getCurrentDateTime.getUTCMonth();
+									const day = getCurrentDateTime.getUTCDate();
+									m = m + 1;
+									const mm = (m <= 9) ? ('0' + m) : m;
+									const dd = (day <= 9) ? ('0' + day) : day;
+									const currentDateTime = y + '-' + mm + '-' + dd;
+									keys.push({ date: new Date(item.time * 1000), currentDateTime: currentDateTime, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(item.open).toFixed(4)), close: objectType.formatNumber(parseFloat(item.close).toFixed(4)), high: objectType.formatNumber(parseFloat(item.high).toFixed(4)), low: objectType.formatNumber(parseFloat(item.low).toFixed(4)), volume: objectType.formatNumber(parseFloat(item.volumefrom).toFixed(4)) });
 
-										// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
+									// candleStickData.push({date: new Date(item.time * 1000), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber((Math.round(item.open * 100) / 100).toFixed(4)), close: objectType.formatNumber((Math.round(item.close * 100) / 100).toFixed(4)), high: objectType.formatNumber((Math.round(item.high * 100) / 100).toFixed(4)), low: objectType.formatNumber((Math.round(item.low * 100) / 100).toFixed(4))});
 
-									});
-									keys.sort((a, b) => {
+								});
+								keys.sort((a, b) => {
 									return <any>new Date(a.date) - <any>new Date(b.date);
-									});
-									newData = keys.slice(extraSMA);
-									objectType.chartDataObject = newData;
-									objectType.renderChart(newData);
-									objectType.renderVolumeChart(newData);
-									objectType.renderCandleStickChartData(newData);
-									objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
-									objectType.renderCandleStickChartData(newData, 'normal', 'smachart');
-									objectType.renderChart(newData, 'normal', 'smachart');
-								} else {
-									objectType.tickerDataText = objectType.noChartDataText;
-								}
-							} else if (objectType.tickerType.toLowerCase() === 'stock') {
-								if (response.data.history !== undefined && Object.keys(response.data.history).length > 0) {
-									data = response.data.history;
-									Object.keys(data).map(function (key) {
-										const getCurrentDateTime = new Date(key);
-										const y = getCurrentDateTime.getUTCFullYear();
-										let m = getCurrentDateTime.getUTCMonth();
-										const day = getCurrentDateTime.getUTCDate();
-										m = m + 1;
-										const mm = (m <= 9 ) ? ('0' + m) : m;
-										const dd = (day <= 9 ) ? ('0' + day) : day;
-										const currentDateTime = y + '-' + mm + '-' + dd;
-										keys.push({date : new Date(key), currentDateTime: currentDateTime, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0))});
-
-										// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
-
-									});
-									keys.sort((a, b) => {
-									return <any>new Date(a.date) - <any>new Date(b.date);
-									});
-
-									newData = keys.slice(objectType.filterModel.searchCriteria);
-									/* candleStickData.sort((a, b) => {
-									return <any>new Date(a.date) - <any>new Date(b.date);
-									}); */
-
-									objectType.chartDataObject = newData;
-									objectType.renderChart(newData);
-									objectType.renderVolumeChart(newData);
-									objectType.renderCandleStickChartData(newData);
-									objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
-									objectType.renderCandleStickChartData(newData, 'normal', 'smachart');
-									objectType.renderChart(newData, 'normal', 'smachart');
-								} else {
-									objectType.tickerDataText = objectType.noChartDataText;
-								}
+								});
+								newData = keys.slice(extraSMA);
+								objectType.chartDataObject = newData;
+								objectType.renderChart(newData);
+								objectType.renderVolumeChart(newData);
+								objectType.renderCandleStickChartData(newData);
+								objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
+								objectType.renderCandleStickChartData(newData, 'normal', 'smachart');
+								objectType.renderChart(newData, 'normal', 'smachart');
 							} else {
 								objectType.tickerDataText = objectType.noChartDataText;
-												}
-						} else {
-							objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-							objectType.tickerDataText = response.data.message;
-							/*if(response.statusCode == 401) {
-								localStorage.removeItem("userAccessToken");
-								localStorage.removeItem("userProfileInfo");
-								objectType.router.navigate(['/login']);
-							}*/
+							}
+						} else if (objectType.tickerType.toLowerCase() === 'stock') {
 
+							if (response.data !== undefined && Object.keys(response.data).length > 0) {
+								data = response.data.reduce((agg, val) => {	agg[val.date] = val;	return agg; }, {});
+								Object.keys(data).map(function (key) {
+									const getCurrentDateTime = new Date(key);
+									const y = getCurrentDateTime.getUTCFullYear();
+									let m = getCurrentDateTime.getUTCMonth();
+									const day = getCurrentDateTime.getUTCDate();
+									m = m + 1;
+									const mm = (m <= 9) ? ('0' + m) : m;
+									const dd = (day <= 9) ? ('0' + day) : day;
+									const currentDateTime = y + '-' + mm + '-' + dd;
+									keys.push({ date: new Date(key), currentDateTime: currentDateTime, currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3)), volume: objectType.formatNumber(parseFloat(data[key].volume).toFixed(0)) });
+
+									// candleStickData.push({date : new Date(key), currency: objectType.tickerDetailsCurrency, open: objectType.formatNumber(parseFloat(data[key].open).toFixed(3)), close: objectType.formatNumber(parseFloat(data[key].close).toFixed(3)), high: objectType.formatNumber(parseFloat(data[key].high).toFixed(3)), low: objectType.formatNumber(parseFloat(data[key].low).toFixed(3))});
+
+								});
+								keys.sort((a, b) => {
+									return <any>new Date(a.date) - <any>new Date(b.date);
+								});
+
+								newData = keys.slice(objectType.filterModel.searchCriteria);
+								/* candleStickData.sort((a, b) => {
+								return <any>new Date(a.date) - <any>new Date(b.date);
+								}); */
+
+								objectType.chartDataObject = newData;
+								objectType.renderChart(newData);
+								objectType.renderVolumeChart(newData);
+								objectType.renderCandleStickChartData(newData);
+								objectType.getSMAData(keys, objectType.filterModel.searchCriteria);
+								objectType.renderCandleStickChartData(newData, 'normal', 'smachart');
+								objectType.renderChart(newData, 'normal', 'smachart');
+							} else {
+								objectType.tickerDataText = objectType.noChartDataText;
+							}
+						} else {
+							objectType.tickerDataText = objectType.noChartDataText;
 						}
-						objectType.loadingBar.stop();
-					});
+					} else {
+						objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+						objectType.tickerDataText = response.data.message;
+						/*if(response.statusCode == 401) {
+						localStorage.removeItem("userAccessToken");
+						localStorage.removeItem("userProfileInfo");
+						objectType.router.navigate(['/login']);
+						}*/
+
+					}
+					objectType.loadingBar.stop();
+				});
 			}
 		} else {
 			this.tickerDataText = this.noChartDataText;
@@ -688,9 +703,9 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
-		valueAxis.renderer.minWidth = 35;
+		valueAxis.renderer.minWidth = 5;
 
-		const extraParam = (this.filterModel.searchCriteria === 24) ? (`Volume: {volume}\n`) : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
+		const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab !== '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
 
 		const tooltipText =
 			this.dateText + `:` + ` {date}` + `\n` + ((this.shortingTab === '1D') ? this.timeText + `:` + ` {currentDateTime} {shortZone}` + `\n` : '') +
@@ -758,12 +773,12 @@ export class TickerDetailsComponent implements OnInit {
 			series.riseFromOpenState.properties.fill = am4core.color('#00b050');
 			series.riseFromOpenState.properties.stroke = am4core.color('#00b050');
 			series.tooltipText =
-			this.dateText + `: {date}\n` +
-			this.currencyText + `: {currency}\n` +
-			this.openText + `: {open}\n` +
-			this.closeText + `: {close}\n` +
-			this.highText + `: {high}\n` +
-			this.lowText + `: {low}\n` + extraParam;
+				this.dateText + `: {date}\n` +
+				this.currencyText + `: {currency}\n` +
+				this.openText + `: {open}\n` +
+				this.closeText + `: {close}\n` +
+				this.highText + `: {high}\n` +
+				this.lowText + `: {low}\n` + extraParam;
 
 		}
 		if (field === 'value' || field === 'chartwithSma' || field === 'sma') {
@@ -782,7 +797,7 @@ export class TickerDetailsComponent implements OnInit {
 	}
 
 	/* Render Chart Data */
-	renderChart(data, dataType = 'normal', chartType= 'chartdiv') {
+	renderChart(data, dataType = 'normal', chartType = 'chartdiv') {
 
 		am4core.useTheme(am4themes_animated);
 		const chart = am4core.create(chartType, am4charts.XYChart);
@@ -829,10 +844,10 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.cursorTooltipEnabled = false;
 		valueAxis.renderer.baseGrid.strokeOpacity = 0;
 		valueAxis.renderer.grid.template.location = 0;
-	    valueAxis.renderer.grid.template.disabled = true;
+		valueAxis.renderer.grid.template.disabled = true;
 		valueAxis.renderer.ticks.template.disabled = true;
 		valueAxis.renderer.labels.template.disabled = true;
-		// debugger;
+
 		const series = chart.series.push(new am4charts.ColumnSeries);
 		series.dataFields.valueY = 'volume';
 		series.dataFields.categoryX = 'currentDateTime';
@@ -912,87 +927,87 @@ export class TickerDetailsComponent implements OnInit {
 				}
 				const objectType = this;
 				this.loading = true;
-				this.commonService.addWatchList({'tickerId' : this.tickerId}, function(err, response) {
+				this.commonService.addWatchList({ 'tickerId': this.tickerId }, function (err, response) {
 					objectType.loading = false;
-					if ( err ) {
-					  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+					if (err) {
+						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 					}
-					if ( response.statusCode === 200 ) {
-					  if (response.data.status === true) {
-						objectType.watchListId = 1;
-							}
-					  objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+					if (response.statusCode === 200) {
+						if (response.data.status === true) {
+							objectType.watchListId = 1;
+						}
+						objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 					} else {
-					  objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-					  /*if(response.statusCode == 401) {
-						localStorage.removeItem("userAccessToken");
-						localStorage.removeItem("userProfileInfo");
-						objectType.router.navigate(['/login']);
-					  }*/
+						objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+						/*if(response.statusCode == 401) {
+						  localStorage.removeItem("userAccessToken");
+						  localStorage.removeItem("userProfileInfo");
+						  objectType.router.navigate(['/login']);
+						}*/
 
 					}
 				});
 			} else {
-				this.toastr.errorToastr(this.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+				this.toastr.errorToastr(this.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 				this.loading = false;
 			}
 		} else {
 			this.loading = false;
-			this.toastr.errorToastr(this.tickerAlreadyAddedToYourWatchlist, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			this.toastr.errorToastr(this.tickerAlreadyAddedToYourWatchlist, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 		}
 	}
 	setPriceAlert() {
 		this.priceAlertError.amount = (this.priceAlert.amount !== undefined && this.priceAlert.amount !== '') ? false : true;
 		this.priceAlertError.expiryDate = (this.priceAlert.expiryDate !== undefined && this.priceAlert.expiryDate !== '') ? false : true;
 		if (this.priceAlertError.amount) {
-			this.toastr.errorToastr(this.targetPriceisRequiredMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			this.toastr.errorToastr(this.targetPriceisRequiredMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 			return false;
 		} else {
 			if (!(/^\d+[.,]?\d{0,3}$/g).test(this.priceAlert.amount)) {
-			  this.toastr.errorToastr(this.PriceTo3DecimalPlacesMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-			  return false;
+				this.toastr.errorToastr(this.PriceTo3DecimalPlacesMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+				return false;
 			}
 		}
 		if (this.priceAlertError.expiryDate) {
-			this.toastr.errorToastr(this.expiryDateisRequiredMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			this.toastr.errorToastr(this.expiryDateisRequiredMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 			return false;
 		}
-		const month = (this.priceAlert.expiryDate.month < 10 ) ? '0' + this.priceAlert.expiryDate.month : this.priceAlert.expiryDate.month;
-		const day = (this.priceAlert.expiryDate.day < 10 ) ? '0' + this.priceAlert.expiryDate.day : this.priceAlert.expiryDate.day;
+		const month = (this.priceAlert.expiryDate.month < 10) ? '0' + this.priceAlert.expiryDate.month : this.priceAlert.expiryDate.month;
+		const day = (this.priceAlert.expiryDate.day < 10) ? '0' + this.priceAlert.expiryDate.day : this.priceAlert.expiryDate.day;
 		const expiryDatevalue = day + '/' + month + '/' + this.priceAlert.expiryDate.year;
 
-		const formData = {'tickerId': this.priceAlert.tickerId, 'alertPriceType' : this.priceAlert.compare, 'priceThreshold': this.priceAlert.amount, 'expiryDate': expiryDatevalue, 'currency': this.priceAlert.currentCurrency};
+		const formData = { 'tickerId': this.priceAlert.tickerId, 'alertPriceType': this.priceAlert.compare, 'priceThreshold': this.priceAlert.amount, 'expiryDate': expiryDatevalue, 'currency': this.priceAlert.currentCurrency };
 		const objectType = this;
 		this.loading = true;
 		this.loadingBar.start();
-		this.commonService.addPriceAlert(formData, function(err, response) {
-		  objectType.loading = false;
-		  objectType.loadingBar.stop();
-		  if ( err ) {
-			objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-				}
-		  if ( response.statusCode === 200 ) {
-			objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-			objectType.modalService.dismissAll();
-		  } else {
-			objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-				}
+		this.commonService.addPriceAlert(formData, function (err, response) {
+			objectType.loading = false;
+			objectType.loadingBar.stop();
+			if (err) {
+				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			}
+			if (response.statusCode === 200) {
+				objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+				objectType.modalService.dismissAll();
+			} else {
+				objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			}
 		});
-  }
-  /*Numeric value with decimal value*/
-  numberOnly(event): boolean {
-      const charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        } else {
+	}
+	/*Numeric value with decimal value*/
+	numberOnly(event): boolean {
+		const charCode = (event.which) ? event.which : event.keyCode;
+		if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+			return false;
+		} else {
 			return true;
-        }
-  }
-  open(content) {
-	   if (!this.profileInfo.isProAccount) {
+		}
+	}
+	open(content) {
+		if (!this.profileInfo.isProAccount) {
 			localStorage.setItem('proActive', 'false');
-			this.router.navigateByUrl('/check-pro', {skipLocationChange: true}).then(() =>
-			this.router.navigate(['/account-settings']));
+			this.router.navigateByUrl('/check-pro', { skipLocationChange: true }).then(() =>
+				this.router.navigate(['/account-settings']));
 		} else {
 			localStorage.setItem('proActive', '');
 			this.priceAlert.tickerName = this.tickerName;
@@ -1001,9 +1016,9 @@ export class TickerDetailsComponent implements OnInit {
 			this.priceAlert.tickerId = this.tickerId;
 			this.priceAlert.tickerIcon = this.tickerNIcon;
 			this.modalService.open(content).result.then((result) => {
-			  this.closeResult = `Closed with: ${result}`;
+				this.closeResult = `Closed with: ${result}`;
 			}, (reason) => {
-			  this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 			});
 		}
 	}
@@ -1021,7 +1036,7 @@ export class TickerDetailsComponent implements OnInit {
 		this.riskPerformanceArray.riskVolality = this.voladility;
 		this.riskPerformanceArray.riskFundamentals = this.fundamentals;
 		if (this.tickerType.toLowerCase() === 'crypto' || this.tickerType.toLowerCase() === 'cryptocurrency') {
-				this.alphaMarketId = '0';
+			this.alphaMarketId = '0';
 		}
 		this.riskPerformanceArray.benkMarchIndex = this.alphaMarketId;
 
@@ -1030,11 +1045,11 @@ export class TickerDetailsComponent implements OnInit {
 		if (!this.getBenchMark) {
 			if (this.tickerType.toLowerCase() === 'stock') {
 				objectType.loadingBar.start();
-				this.tickerService.getAlphaMarket(function(err, response) {
-					if ( err ) {
-					  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+				this.tickerService.getAlphaMarket(function (err, response) {
+					if (err) {
+						objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 					}
-					if ( response.statusCode === 200 ) {
+					if (response.statusCode === 200) {
 						if (response.data.status === true) {
 							objectType.benkMarchList = response.data.data;
 							objectType.getBenchMark = true;
@@ -1048,7 +1063,7 @@ export class TickerDetailsComponent implements OnInit {
 					objectType.loadingBar.stop();
 				});
 			} else {
-				objectType.benkMarchList.push({alphaMarketId: 0, tickerName: 'BullsEye Crypto10'});
+				objectType.benkMarchList.push({ alphaMarketId: 0, tickerName: 'BullsEye Crypto10' });
 				objectType.modalService.open(ic_risk).result.then((result) => {
 					objectType.closeResult = `Closed with: ${result}`;
 				}, (reason) => {
@@ -1062,42 +1077,42 @@ export class TickerDetailsComponent implements OnInit {
 				objectType.closeResult = `Dismissed ${objectType.getDismissReason(reason)}`;
 			});
 		}
-  }
-  checkTargetValidation() {
-	 if (this.priceAlert.amount !== '') {
-		 if (!(/^\d+[.,]?\d{0,3}$/g.test(this.priceAlert.amount))) {
-		     const a = this.priceAlert.amount.split('.');
-			 this.priceAlert.amount = a[0] + '.' + a[1].substring(0, 3);
-		 }
-	 }
-   }
-   setTagetValueWith3Digit() {
-	  if (this.priceAlert.amount !== '') {
-		 const amt = parseFloat(this.priceAlert.amount);
-		 this.priceAlert.amount = amt.toFixed(3);
-	  }
-   }
-  public getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-  /*Return Currency Symbol*/
-  returnCurrSymbol(v) {
-	  let cur = v;
-	  v = (v === 'GBX') ? 'GBP' : v;
-	  this.currencyItemList.map(function(item) {
+	}
+	checkTargetValidation() {
+		if (this.priceAlert.amount !== '') {
+			if (!(/^\d+[.,]?\d{0,3}$/g.test(this.priceAlert.amount))) {
+				const a = this.priceAlert.amount.split('.');
+				this.priceAlert.amount = a[0] + '.' + a[1].substring(0, 3);
+			}
+		}
+	}
+	setTagetValueWith3Digit() {
+		if (this.priceAlert.amount !== '') {
+			const amt = parseFloat(this.priceAlert.amount);
+			this.priceAlert.amount = amt.toFixed(3);
+		}
+	}
+	public getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
+	}
+	/*Return Currency Symbol*/
+	returnCurrSymbol(v) {
+		let cur = v;
+		v = (v === 'GBX') ? 'GBP' : v;
+		this.currencyItemList.map(function (item) {
 			if (item.name === v) {
 				cur = item.symbol;
 			}
-	  });
-	  return cur;
-  }
-  formatNumber(num) {
+		});
+		return cur;
+	}
+	formatNumber(num) {
 		const numNew = num.toString();
 		if (numNew.indexOf('.') > -1) {
 			const vSplitValue = numNew.split('.');
@@ -1106,12 +1121,12 @@ export class TickerDetailsComponent implements OnInit {
 		} else {
 			return numNew.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 		}
-  }
-  setRiskIndicators() {
+	}
+	setRiskIndicators() {
 
 		const objectType = this;
 		if (this.riskPerformanceArray.tickerId === '0' || this.riskPerformanceArray.tickerId == null || this.riskPerformanceArray.tickerId === '' || this.investmentId === '0' || this.investmentId == null || this.investmentId === '') {
-			objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
+			objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 			this.saveRiskBtnText = this.saveRiskText;
 			return false;
 		}
@@ -1123,173 +1138,247 @@ export class TickerDetailsComponent implements OnInit {
 		const pMedium = (this.riskPerformanceArray.potentialMT !== '') ? (parseInt(this.riskPerformanceArray.potentialMT) * 2) : 0;
 		const pLong = (this.riskPerformanceArray.potentialLT !== '') ? (parseInt(this.riskPerformanceArray.potentialLT) * 3) : 0;
 		if (this.potentialId !== '0' && this.potentialId != null && objectType.potentialId !== '') {
-			this.formData = {'short': this.riskPerformanceArray.potentialST, 'medium' : pMedium, 'long': pLong, 'voladility': this.riskPerformanceArray.riskVolality, 'fundamentals': this.riskPerformanceArray.riskFundamentals, 'alphaMarketId': this.riskPerformanceArray.benkMarchIndex, 'investmentId': this.investmentId, 'tickerId': this.riskPerformanceArray.tickerId, 'potentialId': this.potentialId};
+			this.formData = { 'short': this.riskPerformanceArray.potentialST, 'medium': pMedium, 'long': pLong, 'voladility': this.riskPerformanceArray.riskVolality, 'fundamentals': this.riskPerformanceArray.riskFundamentals, 'alphaMarketId': this.riskPerformanceArray.benkMarchIndex, 'investmentId': this.investmentId, 'tickerId': this.riskPerformanceArray.tickerId, 'potentialId': this.potentialId };
 		} else {
-			this.formData = {'short': this.riskPerformanceArray.potentialST, 'medium' : pMedium, 'long': pLong, 'voladility': this.riskPerformanceArray.riskVolality, 'fundamentals': this.riskPerformanceArray.riskFundamentals, 'alphaMarketId': this.riskPerformanceArray.benkMarchIndex, 'investmentId': this.investmentId, 'tickerId': this.riskPerformanceArray.tickerId};
+			this.formData = { 'short': this.riskPerformanceArray.potentialST, 'medium': pMedium, 'long': pLong, 'voladility': this.riskPerformanceArray.riskVolality, 'fundamentals': this.riskPerformanceArray.riskFundamentals, 'alphaMarketId': this.riskPerformanceArray.benkMarchIndex, 'investmentId': this.investmentId, 'tickerId': this.riskPerformanceArray.tickerId };
 		}
 
 
 		this.loading = true;
 		this.loadingBar.start();
-		this.tickerService.RiskIndicators(this.formData, function(err, response) {
+		this.tickerService.RiskIndicators(this.formData, function (err, response) {
 
-	      objectType.saveRiskBtnText = objectType.saveRiskText;
-		  objectType.loading = false;
-		  objectType.loadingBar.stop();
-		  if ( err ) {
-				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-		  }
-		  if ( response.statusCode === 200 ) {
-			objectType.toastr.successToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-			if (objectType.potentialId === '0' || objectType.potentialId == null || objectType.potentialId === '') {
-				objectType.loadingBar.start();
-				objectType.tickerService.getInvestmentPerformance(objectType.investmentId, function(err, responseData) {
+			objectType.saveRiskBtnText = objectType.saveRiskText;
+			objectType.loading = false;
+			objectType.loadingBar.stop();
+			if (err) {
+				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			}
+			if (response.statusCode === 200) {
+				objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+				if (objectType.potentialId === '0' || objectType.potentialId == null || objectType.potentialId === '') {
+					objectType.loadingBar.start();
+					objectType.tickerService.getInvestmentPerformance(objectType.investmentId, function (err, responseData) {
 
-					if ( err ) {
-					  objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-					}
-					if ( responseData.statusCode === 200 ) {
-						if (responseData.data.status === true) {
-							const potId = (responseData.data.data.potentialId != null && responseData.data.data.potentialId !== undefined && responseData.data.data.potentialId !== '') ? responseData.data.data.potentialId : '';
-							localStorage.setItem('potentialId', potId);
-							objectType.potentialId = potId;
+						if (err) {
+							objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
 						}
+						if (responseData.statusCode === 200) {
+							if (responseData.data.status === true) {
+								const potId = (responseData.data.data.potentialId != null && responseData.data.data.potentialId !== undefined && responseData.data.data.potentialId !== '') ? responseData.data.data.potentialId : '';
+								localStorage.setItem('potentialId', potId);
+								objectType.potentialId = potId;
+							}
+						}
+						objectType.loadingBar.stop();
+					});
+				}
+
+				objectType.shortTerm = objectType.riskPerformanceArray.potentialST;
+				objectType.mediumTerm = objectType.riskPerformanceArray.potentialMT;
+				objectType.longTerm = objectType.riskPerformanceArray.potentialLT;
+				objectType.voladility = objectType.riskPerformanceArray.riskVolality;
+				objectType.fundamentals = objectType.riskPerformanceArray.riskFundamentals;
+				const marketId = (objectType.riskPerformanceArray.benkMarchIndex != null && objectType.riskPerformanceArray.benkMarchIndex !== undefined && objectType.riskPerformanceArray.benkMarchIndex !== '') ? objectType.riskPerformanceArray.benkMarchIndex : '';
+				objectType.alphaMarketId = marketId;
+				objectType.modalService.dismissAll();
+			} else {
+				objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			}
+		});
+	}
+
+	filterExchangeItem() {
+
+		this.loadingBar.start();
+		this.getChartData(this.num, this.type, this.indMap);
+
+		if (this.filterModel.graphDisplay) {
+
+			document.getElementById('chartdiv').style.display = 'none';
+			document.getElementById('smachart').style.display = 'none';
+			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+
+				document.getElementById('candleSma').style.display = 'none';
+				document.getElementById('candlechart').style.display = 'flex';
+			} else {
+
+				document.getElementById('candlechart').style.display = 'none';
+				document.getElementById('candleSma').style.display = 'flex';
+			}
+
+		} else {
+
+			document.getElementById('candlechart').style.display = 'none';
+			document.getElementById('chartdiv').style.display = 'flex';
+			document.getElementById('candleSma').style.display = 'none';
+			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+				document.getElementById('smachart').style.display = 'none';
+				document.getElementById('chartdiv').style.display = 'flex';
+			} else {
+				document.getElementById('chartdiv').style.display = 'none';
+				document.getElementById('smachart').style.display = 'flex';
+			}
+		}
+		if (this.filterModel.searchCriteria === 0) {
+			document.getElementById('volumechart').style.display = 'none';
+			document.getElementById('smachart').style.display = 'none';
+			document.getElementById('candleSma').style.display = 'none';
+		} else if (this.filterModel.searchCriteria === 24) {
+			document.getElementById('volumechart').style.display = 'flex';
+		} else {
+			const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
+
+			this.smaChartData = smaData;
+			this.renderChart(this.chartDataObject, 'normal', 'smachart');
+			this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
+			if (!this.filterModel.graphDisplay) {
+				document.getElementById('candleSma').style.display = 'none';
+				document.getElementById('smachart').style.display = 'flex';
+			} else {
+				document.getElementById('smachart').style.display = 'none';
+				document.getElementById('candleSma').style.display = 'flex';
+			}
+			document.getElementById('candlechart').style.display = 'none';
+			document.getElementById('chartdiv').style.display = 'none';
+			document.getElementById('volumechart').style.display = 'none';
+		}
+
+		this.activeFilter = false;
+		this.loadingBar.stop();
+
+	}
+
+	setChartActionType(actionType) {
+		// this.chartActionType = actionType;
+	}
+
+
+	getSMAData(data, SMAType) {
+
+		const extraSMA = this.getExtraSMA();
+		const SMAData = [];
+		SMAType = parseInt(SMAType);
+		SMAType = (data.length >= SMAType) ? SMAType : data.length;
+
+
+
+		if (data.length >= SMAType) {
+			const loopcount = data.length - SMAType + 1;
+			let count = 0;
+			for (let i = 0; i <= loopcount; i++) {
+
+
+				let smaTotal = 0;
+				const nextLoop = SMAType + i;
+				for (let j = i; j <= nextLoop; j++) {
+
+
+					if (data[j] !== undefined) {
+						smaTotal = smaTotal + parseFloat(data[j].close.replace(',', ''));
 					}
-					objectType.loadingBar.stop();
+				}
+				if (data[nextLoop] !== undefined) {
+					// if (count === 0) {
+					// 	for (let k = 0; k < SMAType; k++) {
+					// 		const chartItemVal = this.chartDataObject[k];
+					// 		chartItemVal.SMA = 'N/A';
+					// 		this.chartDataObject[k] = chartItemVal;
+					// 		SMAData.push( {date: data[k].date, currency: data[k].currency, close: chartItemVal.SMA});
+					// 	}
+					// }
+					const chartItemVal = this.chartDataObject[count];
+					if (this.chartDataObject[count] !== undefined && SMAType > 0) {
+						chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
+
+						this.chartDataObject[count] = chartItemVal;
+						SMAData.push({ date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6) });
+					}
+					if (this.chartDataObject[count] === undefined) {
+
+					}
+				}
+				count++;
+
+			}
+
+		}
+		return SMAData;
+	}
+
+
+
+	addPricePrediction(template) {
+
+		if (this.isPredictionLocked) {
+			this.toastr.errorToastr(this.predictionAlreadyLockedin, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			return false;
+		}
+
+		this.tickerName = '';
+		this.currentTime = new Date();
+		this.predictionForm.tickerName = this.tickerName;
+		this.predictionForm.symbol = this.tickerSymbol;
+		this.predictionForm.amount = '';
+		this.predictionForm.tickerId = this.tickerId;
+		this.predictionForm.tickerIcon = this.tickerNIcon;
+		this.predictionForm.currentCurrency = this.profileInfo.baseCurrency;
+		this.modalService.open(template).result.then(
+			result => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			reason => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			}
+		);
+	}
+
+
+	setPricePrediction() {
+		this.predictionFormError.amount = (this.predictionForm.amount !== undefined && this.predictionForm.amount !== '') ? false : true;
+		this.predictionFormError.predictionForDate = (this.predictionForm.predictionForDate !== undefined && this.predictionForm.predictionForDate !== '') ? false : true;
+		if (this.predictionFormError.amount) {
+			this.toastr.errorToastr(this.priceRequired, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			return false;
+		} else {
+			if (!(/^\d+[.,]?\d{0,3}$/g).test(this.predictionForm.amount)) {
+				this.toastr.errorToastr(this.PriceTo3DecimalPlacesMsg, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+				return false;
+			}
+		}
+		if (this.predictionFormError.predictionForDate) {
+			this.toastr.errorToastr(this.dateisrequired, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			return false;
+		}
+		const month = (this.predictionForm.predictionForDate.month < 10) ? '0' + this.predictionForm.predictionForDate.month : this.predictionForm.predictionForDate.month;
+		const day = (this.predictionForm.predictionForDate.day < 10) ? '0' + this.predictionForm.predictionForDate.day : this.predictionForm.predictionForDate.day;
+		const predictionForDatevalue = day + '/' + month + '/' + this.predictionForm.predictionForDate.year;
+
+		const formData = { 'tickerId': this.predictionForm.tickerId, 'prediction': this.predictionForm.amount, 'predictionForDate': predictionForDatevalue, 'currency': this.predictionForm.currentCurrency };
+		const objectType = this;
+		this.loading = true;
+		this.loadingBar.start();
+		this.predictionService.add(formData, function (err, response) {
+			objectType.loading = false;
+			objectType.loadingBar.stop();
+			if (err) {
+				objectType.toastr.errorToastr(objectType.defaulterrSomethingMsg, null, {
+					autoDismiss: true,
+					maxOpened: 1,
+					preventDuplicates: true
 				});
 			}
+			if (response.statusCode === 200) {
+				objectType.isPredictionLocked = 1;
+				objectType.toastr.successToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+				objectType.modalService.dismissAll();
 
-			objectType.shortTerm = objectType.riskPerformanceArray.potentialST;
-			objectType.mediumTerm = objectType.riskPerformanceArray.potentialMT;
-			objectType.longTerm = objectType.riskPerformanceArray.potentialLT;
-			objectType.voladility = objectType.riskPerformanceArray.riskVolality;
-			objectType.fundamentals = objectType.riskPerformanceArray.riskFundamentals;
-			const marketId = (objectType.riskPerformanceArray.benkMarchIndex != null && objectType.riskPerformanceArray.benkMarchIndex !== undefined && objectType.riskPerformanceArray.benkMarchIndex !== '') ? objectType.riskPerformanceArray.benkMarchIndex : '';
-			objectType.alphaMarketId = marketId;
-			objectType.modalService.dismissAll();
-		  } else {
-			objectType.toastr.errorToastr(response.data.message, null, {autoDismiss: true, maxOpened: 1, preventDuplicates: true});
-		  }
+				/*------------------ ReLoad Page ---------------------*/
+			} else {
+				objectType.toastr.errorToastr(response.data.message, null, { autoDismiss: true, maxOpened: 1, preventDuplicates: true });
+			}
 		});
-  }
-
-  filterExchangeItem() {
-	 // debugger;
-  	this.loadingBar.start();
-	this.getChartData(this.num, this.type, this.indMap);
-
-	if (this.filterModel.graphDisplay) {
-		// debugger;
-		document.getElementById('chartdiv').style.display = 'none';
-		document.getElementById('smachart').style.display = 'none';
-		if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
-			// debugger;
-			document.getElementById('candleSma').style.display = 'none';
-			document.getElementById('candlechart').style.display = 'flex';
-		} else {
-			// debugger;
-			document.getElementById('candlechart').style.display = 'none';
-			document.getElementById('candleSma').style.display = 'flex';
-		}
-
-	} else {
-		// debugger;
-		document.getElementById('candlechart').style.display = 'none';
-		document.getElementById('chartdiv').style.display = 'flex';
-		document.getElementById('candleSma').style.display = 'none';
-		if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
-			document.getElementById('smachart').style.display = 'none';
-			document.getElementById('chartdiv').style.display = 'flex';
-		} else {
-			document.getElementById('chartdiv').style.display = 'none';
-			document.getElementById('smachart').style.display = 'flex';
-		}
 	}
-	if (this.filterModel.searchCriteria === 0) {
-		document.getElementById('volumechart').style.display = 'none';
-		document.getElementById('smachart').style.display = 'none';
-		document.getElementById('candleSma').style.display = 'none';
-	} else if (this.filterModel.searchCriteria === 24) {
-		document.getElementById('volumechart').style.display = 'flex';
-						} else {
-		const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
-
-		this.smaChartData = smaData;
-		this.renderChart(this.chartDataObject, 'normal', 'smachart');
-		this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
-		if (!this.filterModel.graphDisplay) {
-			document.getElementById('candleSma').style.display = 'none';
-			document.getElementById('smachart').style.display = 'flex';
-		} else {
-			document.getElementById('smachart').style.display = 'none';
-			document.getElementById('candleSma').style.display = 'flex';
-		}
-		document.getElementById('candlechart').style.display = 'none';
-		document.getElementById('chartdiv').style.display = 'none';
-		document.getElementById('volumechart').style.display = 'none';
-	}
-
-	this.activeFilter = false;
-	this.loadingBar.stop();
-
-  }
-
-  setChartActionType(actionType) {
-  		// this.chartActionType = actionType;
-  }
-
-
-  getSMAData(data, SMAType) {
-
-	  const extraSMA   = this.getExtraSMA();
-	const SMAData = [];
-	SMAType = parseInt(SMAType);
-	SMAType = (data.length >= SMAType) ? SMAType : data.length;
-
-
-
-	if ( data.length >= SMAType ) {
-		const loopcount = data.length - SMAType + 1;
-		let count = 0;
-		for ( let i = 0; i <= loopcount; i++) {
-
-
-			let smaTotal = 0;
-			const nextLoop = SMAType + i;
-			for ( let j = i; j <= nextLoop; j++ ) {
-
-
-				if (data[j] !== undefined) {
-					smaTotal = smaTotal + parseFloat(data[j].close.replace(',', ''));
-				}
-			}
-			if (data[nextLoop] !== undefined)	{
-				// if (count === 0) {
-				// 	for (let k = 0; k < SMAType; k++) {
-				// 		const chartItemVal = this.chartDataObject[k];
-				// 		chartItemVal.SMA = 'N/A';
-				// 		this.chartDataObject[k] = chartItemVal;
-				// 		SMAData.push( {date: data[k].date, currency: data[k].currency, close: chartItemVal.SMA});
-				// 	}
-				// }
-				const chartItemVal = this.chartDataObject[count];
-				if (this.chartDataObject[count] !== undefined && SMAType > 0) {
-					chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
-
-					this.chartDataObject[count] = chartItemVal;
-					SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});
-				}
-				if (this.chartDataObject[count] === undefined) {
-
-				}
-			}
-			count++;
-
-		}
-
-	}
-	return SMAData;
-  }
 
 
 }
