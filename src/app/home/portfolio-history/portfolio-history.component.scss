@@ -161,15 +161,16 @@ $border_color_2: #00b050;
     }
   }
 }
-.processing {
+.p-processing {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-image: linear-gradient(#0e243b, #234b6f, #0e243b);
+  justify-content: center;  
+  background-color: #234b6f;
+  // background-image: linear-gradient(#0e243b, #234b6f, #0e243b);
   h4 {
     color: #fff;
     font-size: 15px;
-    margin: 20px 0;
+    margin: 2px 0;
   }
 }
 .advr_big.history_ad {

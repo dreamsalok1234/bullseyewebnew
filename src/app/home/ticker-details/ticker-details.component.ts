@@ -1239,7 +1239,7 @@ export class TickerDetailsComponent implements OnInit {
 
 			document.getElementById('chartdiv').style.display = 'none';
 			document.getElementById('smachart').style.display = 'none';
-			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+			if (this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 
 				document.getElementById('candleSma').style.display = 'none';
 				document.getElementById('candlechart').style.display = 'flex';
@@ -1254,7 +1254,7 @@ export class TickerDetailsComponent implements OnInit {
 			document.getElementById('candlechart').style.display = 'none';
 			document.getElementById('chartdiv').style.display = 'flex';
 			document.getElementById('candleSma').style.display = 'none';
-			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+			if (this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 				document.getElementById('smachart').style.display = 'none';
 				document.getElementById('chartdiv').style.display = 'flex';
 			} else {
@@ -1262,11 +1262,11 @@ export class TickerDetailsComponent implements OnInit {
 				document.getElementById('smachart').style.display = 'flex';
 			}
 		}
-		if (this.filterModel.searchCriteria === 0) {
+		if (this.filterModel.searchCriteria == 0) {
 			document.getElementById('volumechart').style.display = 'none';
 			document.getElementById('smachart').style.display = 'none';
 			document.getElementById('candleSma').style.display = 'none';
-		} else if (this.filterModel.searchCriteria === 24) {
+		} else if (this.filterModel.searchCriteria == 24) {
 			document.getElementById('volumechart').style.display = 'flex';
 		} else {
 			const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
@@ -1274,7 +1274,7 @@ export class TickerDetailsComponent implements OnInit {
 			this.smaChartData = smaData;
 			this.renderChart(this.chartDataObject, 'normal', 'smachart');
 			this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
-			if (!this.filterModel.graphDisplay) {
+			if (!parseInt(this.filterModel.graphDisplay)) {
 				document.getElementById('candleSma').style.display = 'none';
 				document.getElementById('smachart').style.display = 'flex';
 			} else {

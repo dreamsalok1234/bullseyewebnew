@@ -412,7 +412,10 @@ export class PortfolioDetailsComponent implements OnInit {
 							currentPrice=objectType.getCurrencyValue(currentPrice, objectType.investDetails.currency,objectType.portfolioCurrency,'price');
 
 						}
-						objectType.investDetails.currentTickerPrice=currentPrice;
+						if(objectType.investDetails.currency == 'GBP')
+							currentPrice = parseFloat((currentPrice/100).toFixed(3));
+
+						objectType.investDetails.currentTickerPrice=currentPrice;	
 					}
 					objectType.modalService.open(content).result.then((result) => {
 						objectType.closeResult = `Closed with: ${result}`;
