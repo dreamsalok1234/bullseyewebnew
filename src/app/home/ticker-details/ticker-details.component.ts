@@ -730,8 +730,8 @@ export class TickerDetailsComponent implements OnInit {
 		valueAxis.renderer.labels.template.disabled = true;
 		valueAxis.tooltip.disabled = true;
 		valueAxis.renderer.minWidth = 5;
-
-		const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab !== '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
+		
+		const extraParam = (this.filterModel.searchCriteria == 24) ? (this.shortingTab != '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria == 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria == 200) ? `200-day SMA: {SMA}` : '')));
 
 		const tooltipText =
 			this.dateText + `:` + ` {date}` + `\n` + ((this.shortingTab === '1D') ? this.timeText + `:` + ` {currentDateTime} {shortZone}` + `\n` : '') +
@@ -1235,11 +1235,11 @@ export class TickerDetailsComponent implements OnInit {
 
 		this.loadingBar.start();
 		this.getChartData(this.num, this.type, this.indMap);
-		if (this.filterModel.graphDisplay) {
+		if (parseInt(this.filterModel.graphDisplay)) {
 
 			document.getElementById('chartdiv').style.display = 'none';
 			document.getElementById('smachart').style.display = 'none';
-			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+			if (this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 
 				document.getElementById('candleSma').style.display = 'none';
 				document.getElementById('candlechart').style.display = 'flex';
@@ -1254,7 +1254,7 @@ export class TickerDetailsComponent implements OnInit {
 			document.getElementById('candlechart').style.display = 'none';
 			document.getElementById('chartdiv').style.display = 'flex';
 			document.getElementById('candleSma').style.display = 'none';
-			if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
+			if (this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 				document.getElementById('smachart').style.display = 'none';
 				document.getElementById('chartdiv').style.display = 'flex';
 			} else {
@@ -1262,11 +1262,11 @@ export class TickerDetailsComponent implements OnInit {
 				document.getElementById('smachart').style.display = 'flex';
 			}
 		}
-		if (this.filterModel.searchCriteria === 0) {
+		if (this.filterModel.searchCriteria == 0) {
 			document.getElementById('volumechart').style.display = 'none';
 			document.getElementById('smachart').style.display = 'none';
 			document.getElementById('candleSma').style.display = 'none';
-		} else if (this.filterModel.searchCriteria === 24) {
+		} else if (this.filterModel.searchCriteria == 24) {
 			document.getElementById('volumechart').style.display = 'flex';
 		} else {
 			const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
@@ -1274,7 +1274,7 @@ export class TickerDetailsComponent implements OnInit {
 			this.smaChartData = smaData;
 			this.renderChart(this.chartDataObject, 'normal', 'smachart');
 			this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
-			if (!this.filterModel.graphDisplay) {
+			if (!parseInt(this.filterModel.graphDisplay)) {
 				document.getElementById('candleSma').style.display = 'none';
 				document.getElementById('smachart').style.display = 'flex';
 			} else {
@@ -1331,7 +1331,7 @@ export class TickerDetailsComponent implements OnInit {
 					// }
 					const chartItemVal = this.chartDataObject[count];
 					if (this.chartDataObject[count] !== undefined && SMAType > 0) {
-						chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
+						chartItemVal.SMA = (smaTotal / SMAType).toFixed(3);
 
 						this.chartDataObject[count] = chartItemVal;
 						SMAData.push({ date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6) });
@@ -1457,6 +1457,9 @@ export class TickerDetailsComponent implements OnInit {
 
 	
 	selectCustomTabs(sign) {
+		if(!parseInt(this.profileInfo.isProAccount))
+			return;
+
 		if (sign === '-'){
 			if (this.activeCustomTab > 0){
 				--this.activeCustomTab;

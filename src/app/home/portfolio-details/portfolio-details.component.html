@@ -54,7 +54,7 @@
           <input class="main-checkbox checkbox-custom" type="checkbox" id="graphCheckbox" name="graphCheckbox" (click)="showHideChart()" />
           <label for="graphCheckbox" class="checkbox-custom-label">{{ 'BookCost' | translate }}</label>
         </div> -->
-        <div class="pop_filters book_cost">
+        <div class="pop_filters book_cost pt-2">
           <a href="javascript:" (click)="activeFilter = !activeFilter" title="more filters"><img
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">

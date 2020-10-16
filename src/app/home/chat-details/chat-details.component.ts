@@ -700,6 +700,11 @@ export class ChatDetailsComponent implements OnInit {
 				if (response.data[0].status === true && response.data[0].historyData.currentDayData !== undefined && Object.keys(response.data[0].historyData.currentDayData).length > 0) {
 
 					 objectType.tickerListData = response.data[0].historyData.currentDayData;
+					 objectType.chatPrice = objectType.tickerListData.price;
+					 objectType.chatCurrency = objectType.tickerListData.currency;
+					 if(objectType.chatCurrency == 'GBX')
+					 	objectType.chatPrice = parseFloat((objectType.chatPrice/100).toFixed(3));
+
 					 if (objectType.tickerType.toLowerCase() === 'crypto' || objectType.tickerType.toLowerCase() === 'cryptocurrency') {
 						 if(objectType.cryptoMaxValue != 0 ) {
 							 objectType.tickerListData.WHigh52 = objectType.cryptoMaxValue;
@@ -1030,10 +1035,10 @@ createAxisAndSeries(field,chart) {
 	valueAxis.tooltip.disabled = true;
 	valueAxis.renderer.minWidth = 35;
 
-	const extraParam = (this.filterModel.searchCriteria === 24) ? (this.shortingTab !== '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria === 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria === 200) ? `200-day SMA: {SMA}` : '')));
+	const extraParam = (this.filterModel.searchCriteria == 24) ? (this.shortingTab != '1D' ? `Volume: {volume}\n` : '') : ((this.filterModel.searchCriteria == 50) ? `50-day SMA: {SMA}` : ((this.filterModel.searchCriteria == 100) ? `100-day SMA: {SMA}` : ((this.filterModel.searchCriteria == 200) ? `200-day SMA: {SMA}` : '')));
 
 	const tooltipText =
-		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab === '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
+		this.dateText + `:` + ` {date}`+`\n`+((this.shortingTab == '1D')?this.timeText + `:` + ` {currentDateTime} {shortZone}`+`\n`:'')+
 		this.currencyText + `: {currency}\n` +
 		this.priceText + `: {close}\n` + extraParam;
 	if(field === 'value') {
@@ -1242,60 +1247,62 @@ renderCandleStickChartData(data, dataType = 'normal', chartType = 'candleStick')
 }
 
 filterExchangeItem() {
+
 	this.loadingBar.start();
-  this.getChartData(this.num, this.type, this.indMap);
+	this.getChartData(this.num, this.type, this.indMap);
+	if (parseInt(this.filterModel.graphDisplay)) {
 
-  if (this.filterModel.graphDisplay) {
-	  document.getElementById('chartdiv').style.display = 'none';
-	  document.getElementById('smachart').style.display = 'none';
-	  if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
-		  document.getElementById('candleSma').style.display = 'none';
-		  document.getElementById('candlechart').style.display = 'flex';
-	  } else {
-		  document.getElementById('candlechart').style.display = 'none';
-		  document.getElementById('candleSma').style.display = 'flex';
-	  }
+		document.getElementById('chartdiv').style.display = 'none';
+		document.getElementById('smachart').style.display = 'none';
+		if (this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
 
-  } else {
-	  document.getElementById('candlechart').style.display = 'none';
-	  document.getElementById('chartdiv').style.display = 'flex';
-	  document.getElementById('candleSma').style.display = 'none';
-	  if (this.filterModel.searchCriteria === 0 || this.filterModel.searchCriteria === 24) {
-		  document.getElementById('smachart').style.display = 'none';
-		  document.getElementById('chartdiv').style.display = 'flex';
-	  } else {
-		  document.getElementById('chartdiv').style.display = 'none';
-		  document.getElementById('smachart').style.display = 'flex';
-	  }
-  }
-  if (this.filterModel.searchCriteria === 0) {
-	  document.getElementById('volumechart').style.display = 'none';
-	  document.getElementById('smachart').style.display = 'none';
-	  document.getElementById('candleSma').style.display = 'none';
-  } else if (this.filterModel.searchCriteria === 24) {
-	  document.getElementById('volumechart').style.display = 'flex';
-					  } else {
-	  const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
+			document.getElementById('candleSma').style.display = 'none';
+			document.getElementById('candlechart').style.display = 'flex';
+		} else {
 
-	  this.smaChartData = smaData;
-	  this.renderChart(this.chartDataObject, 'normal', 'smachart');
-	  this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
-	  if (!this.filterModel.graphDisplay) {
-		  document.getElementById('candleSma').style.display = 'none';
-		  document.getElementById('smachart').style.display = 'flex';
-	  } else {
-		  document.getElementById('smachart').style.display = 'none';
-		  document.getElementById('candleSma').style.display = 'flex';
-	  }
-	  document.getElementById('candlechart').style.display = 'none';
-	  document.getElementById('chartdiv').style.display = 'none';
-	  document.getElementById('volumechart').style.display = 'none';
-  }
+			document.getElementById('candlechart').style.display = 'none';
+			document.getElementById('candleSma').style.display = 'flex';
+		}
 
-  this.activeFilter = false;
-  this.loadingBar.stop();
+	} else {
 
+		document.getElementById('candlechart').style.display = 'none';
+		document.getElementById('chartdiv').style.display = 'flex';
+		document.getElementById('candleSma').style.display = 'none';
+		if (this.filterModel.searchCriteria == 0 || this.filterModel.searchCriteria == 24) {
+			document.getElementById('smachart').style.display = 'none';
+			document.getElementById('chartdiv').style.display = 'flex';
+		} else {
+			document.getElementById('chartdiv').style.display = 'none';
+			document.getElementById('smachart').style.display = 'flex';
+		}
+	}
+	if (this.filterModel.searchCriteria == 0) {
+		document.getElementById('volumechart').style.display = 'none';
+		document.getElementById('smachart').style.display = 'none';
+		document.getElementById('candleSma').style.display = 'none';
+	} else if (this.filterModel.searchCriteria == 24) {
+		document.getElementById('volumechart').style.display = 'flex';
+	} else {
+		const smaData = this.getSMAData(this.chartDataObject, this.filterModel.searchCriteria);
 
+		this.smaChartData = smaData;
+		this.renderChart(this.chartDataObject, 'normal', 'smachart');
+		this.renderCandleStickChartData(this.chartDataObject, 'normal', 'candleSma');
+		if (!parseInt(this.filterModel.graphDisplay)) {
+			document.getElementById('candleSma').style.display = 'none';
+			document.getElementById('smachart').style.display = 'flex';
+		} else {
+			document.getElementById('smachart').style.display = 'none';
+			document.getElementById('candleSma').style.display = 'flex';
+		}
+		document.getElementById('candlechart').style.display = 'none';
+		document.getElementById('chartdiv').style.display = 'none';
+		document.getElementById('volumechart').style.display = 'none';
+	}
+
+	this.activeFilter = false;
+	this.loadingBar.stop();
 
 }
 
@@ -1339,7 +1346,7 @@ getSMAData(data, SMAType) {
 			  // }
 			  const chartItemVal = this.chartDataObject[count];
 			  if (this.chartDataObject[count] !== undefined && SMAType > 0) {
-				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(6);
+				  chartItemVal.SMA = (smaTotal / SMAType).toFixed(3);
 
 				  this.chartDataObject[count] = chartItemVal;
 				  SMAData.push( {date: data[nextLoop].date, currency: data[nextLoop].currency, close: (smaTotal / SMAType).toFixed(6)});

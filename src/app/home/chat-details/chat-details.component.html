@@ -7,7 +7,6 @@
         <img  src="{{chatImage}}" style="max-width: 80px;" *ngIf="chatImage != undefined && chatImage.length > 0">
         </span>
         <b>{{ chatName}}</b>
-        <strong style=" font-size: 25px; color: #00b050; ">{{(getCurrencyValue(tickerListData.price,tickerListData.currency,false)=='' || getCurrencyValue(tickerListData.price,tickerListData.currency,false)==0 || getCurrencyValue(tickerListData.price,tickerListData.currency,false)==null)? 'N/A' : (getCurrencyValue(tickerListData.price,tickerListData.currency,false) | currency : returnCurrSymbol(chatCurrency):'symbol':'1.3-3')}}</strong>
         <div class="stock_list">
           <div class="tab-pane favourite">
             <ul>
@@ -107,7 +106,7 @@
               src="assets/images/search-market-icon.png" /></a>
           <div class="more_filters" [ngClass]="{ showFilter: activeFilter, hideFilter: !activeFilter }">
             <div class="title_div">
-              <h2 class="modal-title-analytics">
+              <h2 class="modal-title-analytics mb-3">
                   <img class="head-img" src="../../assets/images/graph-analytics.png">
                   {{ 'GraphAnaTitle' | translate }}
               </h2>
@@ -169,8 +168,8 @@
             </div>
             <div class="msg_para">
               <h3>{{ chat.messageTitle }}</h3>
-			  <p [innerHTML]="toHTML(linkifyService.linkify(chat.messageBody, options))"></p>
-			        <!-- <p [innerHTML]="linkifyService.linkify(chat.messageBody, options)"></p> -->
+			        <!-- <p [innerHTML]="toHTML(linkifyService.linkify(chat.messageBody, options))"></p> -->
+			        <p [innerHTML]="linkifyService.linkify(chat.messageBody, options)"></p>
             </div>
             <div class="post_By">
               <span class="user_img"><img src="{{placeholderImageUrl}}" style="max-width: 80px;" *ngIf="chat.img == undefined || chat.img.length == 0 || chat.img == ''" title="user image not found">
@@ -203,9 +202,12 @@
             <div class="form-group">
               <label for="msg">{{ 'Message' | translate }}</label>
               <div [ngClass]="{ 'is-invalid': submitted && postMessageError }">
-                <app-ngx-editor [config]="editorConfig" name="postMessage2"
+                <textarea class="form-control"  name="postMessage2"
                 [(ngModel)]="postMessageArray.postMessage"
-                #postMessage="ngModel"></app-ngx-editor>
+                #postMessage="ngModel"> </textarea>
+                <!-- <app-ngx-editor [config]="editorConfig" name="postMessage2"
+                [(ngModel)]="postMessageArray.postMessage"
+                #postMessage="ngModel"></app-ngx-editor> -->
               </div>
               <div *ngIf="submitted && postMessageError" class="alert alert-dange">
                 <div>{{ 'Messageisrequired' | translate }}</div>
@@ -214,8 +216,12 @@
           </form>
         </div>
         <div class="modal_footer">
-          <button type="button" (click)="addMessage()" class="btn btn-success tick-cross"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
-          <button type="button" class="btn btn-danger tick-cross" (click)="c('Close click')"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+          <div class="actions_to_pop">
+            <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger"
+                aria-hidden="true"></i></button>
+            <button class="btn custom-btn" (click)="addMessage()"><i class="fa fa-check-circle tick-cross-icon text-success"
+                aria-hidden="true"></i></button>
+          </div>
         </div>
       </ng-template>
     </div>
@@ -233,10 +239,14 @@
             </div>
           </form>
         </div>
-		 <div class="modal_footer" style="padding:15px; padding-top:0">
-			<button type="button" class="btn btn-close btn-danger" style="margin-right: 5px" (click)="c('Close click')">Close</button>
-			<button type="button" (click)="addComplain()" class="btn btn-send btn-success">{{ btnText }}</button>
-		</div>
+        <div class="modal_footer" style="padding:15px; padding-top:0">        
+          <div class="actions_to_pop">
+            <button class="btn custom-btn" (click)="c('Close click')"><i class="fa fa-times-circle tick-cross-icon text-danger"
+                aria-hidden="true"></i></button>
+            <button class="btn custom-btn" (click)="addComplain()"><i class="fa fa-check-circle tick-cross-icon text-success"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
       </ng-template>
     </div>
     <!-- The Favourite Modal & Delete Comment -->

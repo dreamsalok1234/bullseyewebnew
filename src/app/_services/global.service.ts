@@ -12,9 +12,10 @@ import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Injectable()
 export class GlobalService {
-
+    //apiBaseUrl used in prodialog component
+    apiBaseUrl = 'https://bullseyeinvestors.live/tester';
+    apiUrl = this.apiBaseUrl+'/apis/v3/';
     // apiUrl = 'https://bullseyeinvestors.live/apis/v3/';
-    apiUrl = 'https://bullseyeinvestors.live/tester/apis/v3/';
     // apiUrl = 'http://localhost/bullseye/apis/v3/';
     responseItem: { data: any, statusCode: Number };
     unauthorizedReqMsg = 'Unauthorized Request!';
