@@ -202,7 +202,6 @@ ul.blurTdetails+.data_fatch {
         }
         i {
             font-size: 25px;
-			opacity: 0.2;
         }
         &:focus {
             outline: none;
@@ -213,6 +212,11 @@ ul.blurTdetails+.data_fatch {
 			pointer-events: none;
         }
     }
+	.locked_menu_btn {
+		i {
+			opacity: 0.2;
+		}
+	}
     select {
         &:focus {
             outline: none;
