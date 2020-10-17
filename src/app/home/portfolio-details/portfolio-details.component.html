@@ -266,7 +266,7 @@
                   </div>
                 </div>
               </div>
-              <div id="Performance" *ngIf="activeCustomTab === 2">
+              <div id="Performance" class="sss" *ngIf="activeCustomTab === 2">
                 <br />
                 <div class="stats_table">
                   <div class="head_div">
@@ -287,7 +287,7 @@
                     </ul>
                   </div>
                   <div class="body_div">
-					<div class="ticker">
+					<div class="ticker flex-column">
 						<ul class="stats_body" *ngFor="let riskItem of riskList; let i = index"
 						  (click)=" goToTickerDetails( riskItem.tickerId, portfolioCurrency, riskItem.type, riskItem.name, riskItem.symbol, 0, i ) ">
 						  <li>

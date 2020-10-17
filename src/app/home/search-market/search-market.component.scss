@@ -427,6 +427,7 @@ li.gain_green b {
 .body_div {
   max-height: 500px;
   overflow-y: scroll;
+      margin-right: -5px;
 }
 div#Performance .body_div {
   max-height: 231px;
@@ -440,9 +441,7 @@ div#Performance .body_div {
   .ticker-bottom {
 	ul {
 		box-shadow: unset !important;
-		.color-box {
-			padding-left: 20px !important;
-		}
+		
 	}
   }
 }
@@ -501,6 +500,7 @@ ul {
     align-items: center;
     justify-content: center;
     word-break: break-word;
+	width: 110px;
     span {
       display: flex;
       width: 100%;
