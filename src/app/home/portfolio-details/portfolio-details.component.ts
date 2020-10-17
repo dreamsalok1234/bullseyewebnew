@@ -383,7 +383,6 @@ export class PortfolioDetailsComponent implements OnInit {
 	}
 
 	setUpPopupItem(content,type, keyIndex) {
-
 		const objectType = this;
 		objectType.loadingBar.start();
 		this.showMarketSymbol=this.showBookingSymbol=false;
@@ -496,9 +495,9 @@ export class PortfolioDetailsComponent implements OnInit {
 		/* if(bookCost=="0")
 			this.investmentForm.controls["bookingCost"].setValue(this.formatNumber(bookCost.toFixed(2))); */
 		if(this.investmentForm.value.bookingCost) {
-			if (!(/^\d+[.,]?\d{0,3}$/g.test(this.investmentForm.value.bookingCost))) {
+			if (!(/^\d+[.,]?\d{0,2}$/g.test(this.investmentForm.value.bookingCost))) {
 				const a = this.investmentForm.value.bookingCost.split('.');
-				this.investmentForm.controls["bookingCost"].setValue( a[0] + '.' + a[1].substring(0, 3));
+				this.investmentForm.controls["bookingCost"].setValue( a[0] + '.' + a[1].substring(0, 2));
 			}
 		}
 

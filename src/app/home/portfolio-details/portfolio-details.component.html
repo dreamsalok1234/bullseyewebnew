@@ -387,7 +387,8 @@
             placeholder="{{ 'UnitsBought' | translate }}" maxlength="28" (keyup)="calculateMarketPrice('Stock')"
             [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Stock')"
             (keypress)="numberOnlyForHold($event)" *ngIf="portfolioType.toLowerCase() == 'stock'"
-            value="{{ holdingUnit | number: '1.0-0' }}" />
+             />
+             <!-- value="{{ holdingUnit | number: '1.0-0' }}" -->
           <input type="text" formControlName="holding" class="form-control"
             placeholder="{{ 'UnitsBought' | translate }}" maxlength="28"
             (keyup)="calculateMarketPrice('Cryptocurrency')" (keypress)="numberOnly($event)"
@@ -455,7 +456,8 @@
             maxlength="28" (keyup)="calculateMarketPrice('Stock')"
             [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Stock')"
             (keypress)="numberOnlyForHold($event)" *ngIf="portfolioType.toLowerCase() == 'stock'"
-            value="{{ holdingUnit | number: '1.0-0' }}" />
+             />
+             <!-- value="{{ holdingUnit | number: '1.0-0' }}" -->
           <input type="text" formControlName="holding" class="form-control" placeholder="{{ 'UnitsSold' | translate }}"
             maxlength="28" (keyup)="calculateMarketPrice('Cryptocurrency')" (keypress)="numberOnly($event)"
             [ngClass]="{ 'is-invalid': submitted && f.holding.errors }" (blur)="setHoldingValue('Cryptocurrency')"
