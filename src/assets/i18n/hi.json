@@ -311,6 +311,7 @@
     "Fundamentals": "मूलभूत",
     "riskIndicators": "जोखिम संकेतक",    
     "Book": "पुस्तक",
-    "AreyousuretoDeleteInvestment?": "क्या आप वाकई अपने पोर्टफोलियो से <ticker> हटाना चाहते हैं?"
+    "AreyousuretoDeleteInvestment?": "क्या आप वाकई अपने पोर्टफोलियो से <ticker> हटाना चाहते हैं?",
+    "fundamentalNotFound": "मौलिक विवरण उपलब्ध नहीं हैं।"
 
 }

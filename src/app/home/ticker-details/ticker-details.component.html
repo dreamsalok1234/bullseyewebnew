@@ -178,8 +178,11 @@
                             <h4>{{ '52W LOW' | translate }}</h4>
                         </li>
                     </ul>
-                    <div class="stats_list profile-desc text-center" *ngIf="!fundamentalsData && (activeCustomTab === 1 || activeCustomTab === 2)">
+                    <div class="stats_list profile-desc text-center" *ngIf="fundamentalsDataLoading && (activeCustomTab === 1 || activeCustomTab === 2)">
                         <img src="assets/images/spinner.gif" style="width: 50px;">
+                    </div>
+                    <div class="stats_list profile-desc text-center" *ngIf="!fundamentalsDataLoading && !fundamentalsData && (activeCustomTab === 1 || activeCustomTab === 2)">
+                        <p>{{'fundamentalNotFound'|translate}}</p>
                     </div>
                     <div class="stats_list profile-desc" *ngIf="activeCustomTab === 1 && fundamentalsData">
                         <div class="row p-3">

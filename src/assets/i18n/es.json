@@ -310,6 +310,7 @@
     "Fundamentals": "Fundamentos",
     "riskIndicators": "Indicadores de riesgo",    
     "Book": "Libro",
-    "AreyousuretoDeleteInvestment?": "¿Está seguro de que desea eliminar <ticker> de su cartera?"
+    "AreyousuretoDeleteInvestment?": "¿Está seguro de que desea eliminar <ticker> de su cartera?",
+    "fundamentalNotFound": "Los detalles fundamentales no están disponibles."
 
 }

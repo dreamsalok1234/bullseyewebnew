@@ -310,6 +310,7 @@
     "Fundamentals": "기초",
     "riskIndicators": "위험 지표",    
     "Book": "책",
-    "AreyousuretoDeleteInvestment?": "포트폴리오에서 <ticker>을 (를) 삭제 하시겠습니까?"
+    "AreyousuretoDeleteInvestment?": "포트폴리오에서 <ticker>을 (를) 삭제 하시겠습니까?",
+    "fundamentalNotFound": "기본 세부 정보를 사용할 수 없습니다."
 
 }

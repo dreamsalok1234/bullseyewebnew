@@ -310,6 +310,7 @@
     "Fundamentals": "基本原理",
     "riskIndicators": "風險指標",    
     "Book": "書",
-    "AreyousuretoDeleteInvestment?": "您確定要從投資組合中刪除<ticker>嗎？"
+    "AreyousuretoDeleteInvestment?": "您確定要從投資組合中刪除<ticker>嗎？",
+    "fundamentalNotFound": "基本细节不可用。"
 
 }

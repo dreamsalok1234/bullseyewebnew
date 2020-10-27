@@ -114,7 +114,8 @@ export class TickerDetailsComponent implements OnInit {
 	chatboardData: any;
 	activeCustomTab = 0;
 	fundamentalsData: any;
-	paasValueOn_SeeMoreBtn =false;
+	fundamentalsDataLoading = true;
+	paasValueOn_SeeMoreBtn = false;
 	fundamentalDesc = '';
 	fundamentalsOfficers = [];
 	alertHeading = '';
@@ -1482,7 +1483,7 @@ export class TickerDetailsComponent implements OnInit {
 			this.commonService.getTickerFundamentals(this.tickerSymbol, function (err, response) {
 				if (response.statusCode === 200) {
 					objectType.fundamentalsData = response.data.data;
-					if (objectType.fundamentalsData.General.Officers){
+					if (objectType.fundamentalsData && objectType.fundamentalsData.General.Officers){
 						if (objectType.fundamentalsData.General.Officers[0]){
 							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[0]);
 						}
@@ -1499,11 +1500,12 @@ export class TickerDetailsComponent implements OnInit {
 							objectType.fundamentalsOfficers.push(objectType.fundamentalsData.General.Officers[4]);
 						}
 					}
-					if (objectType.fundamentalsData.General.Description.length>50){
+					if (objectType.fundamentalsData && objectType.fundamentalsData.General.Description.length>50){
 						objectType.paasValueOn_SeeMoreBtn = true;
 						objectType.fundamentalDesc = objectType.fundamentalsData.General.Description.slice(0, 50) + '...';
 					}
 				}
+				objectType.fundamentalsDataLoading = false;
 			});
 		}
 	}
