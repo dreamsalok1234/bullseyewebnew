@@ -522,3 +522,24 @@ ul.stats_body.price-alert-box li:last-child {
 .stats_body.price-alert-box li:last-child {
   max-width: 10%;
 }
+
+.custom-select-dropdown {
+    height: 180px;
+    overflow: hidden;
+    position: absolute;
+    top: 60px;
+    background-color: #fff;
+    z-index: 99999;
+    border: 1px solid #eee;
+    overflow-y: auto;
+}
+
+.custom-select-dropdown > div {
+    padding: 6px 15px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.custom-select-dropdown > div:hover {
+    background-color: #eee;
+}

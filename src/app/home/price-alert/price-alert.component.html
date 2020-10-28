@@ -46,17 +46,22 @@
               <!--<input type="text" formControlName="ticker" [formGroup]="investmentForm" (click)="resetTickerTxt()"
                 [formControl]="ticker" class="form-control" placeholder="Ticker" [matAutocomplete]="auto" />-->
 			          <input type="text" formControlName="ticker" (click)="resetTickerTxt()"
-                class="form-control" placeholder="Ticker" (input)="valuechange($event)" [matAutocomplete]="auto" />
+                class="form-control" placeholder="Ticker" (input)="valuechange($event)" />
               <div [ngClass]="(tickerError=='')?'':'alert alert-dange'" class="error">
                 <div>{{tickerError}}</div>
               </div>
+			  <div class="custom-select-dropdown" *ngIf="tickeDropdown">
+				  <div (click)="selectTicker(tic.id,tic.price,tic.symbol,tic.tickerName,tic.currency)" *ngFor="let tic of tickerList">
+					{{tic.tickerName}} ({{tic.symbol}} )
+				  </div>
+			  </div>
               <!-- CREATE AUTO COMPLETE PANEL WITH OPTIONS. -->
-              <mat-autocomplete #auto="matAutocomplete">
+              <!-- <mat-autocomplete #auto="matAutocomplete">
                 <mat-option (click)="selectTicker(tic.id,tic.price,tic.symbol,tic.tickerName,tic.currency)"
                   *ngFor="let tic of tickerList" [value]="tickerName">
                   {{tic.tickerName}} ({{tic.symbol}} )
                 </mat-option>
-              </mat-autocomplete>
+              </mat-autocomplete> -->
             </div>
             <div class="form-group">
               <label>{{ 'Condition' | translate }}</label>

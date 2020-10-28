@@ -64,6 +64,7 @@ export class PriceAlertComponent implements OnInit {
   targetPriceisRequiredMsg = 'Target Price is required!';
   currentTime = new Date();
   priceAlertCurrencySymbol ='$';
+  tickeDropdown: boolean;
   constructor(
     private translate: TranslateService,
     private commonService: CommonService,
@@ -160,6 +161,7 @@ export class PriceAlertComponent implements OnInit {
   }
   valuechange($event) {
     const objectType = this;
+	
     setTimeout(function() {
       const term = objectType.investmentForm.controls['ticker'].value;
         if (term !== '' && objectType.res === false && objectType.resTickerAutoComp === false) {
@@ -170,8 +172,11 @@ export class PriceAlertComponent implements OnInit {
             if (err) {
             }
             if (response.statusCode === 200) {
+				//debugger;
+				objectType.tickeDropdown = true;
               if (response.data.data.exchangeList.stockList !== undefined) {
                 objectType.tickerList = response.data.data.exchangeList.stockList;
+				
               }
             }
             objectType.loadingBar.stop();
@@ -302,6 +307,7 @@ export class PriceAlertComponent implements OnInit {
     this.investmentForm.controls['ticker'].setValue(this.tickerName);
     this.tickerCurrency = currency;
     this.resTickerAutoComp = true;
+	this.tickeDropdown = false;
   }
   resetTickerTxt() {
     this.tickerId = this.tickerAmount = 0;
