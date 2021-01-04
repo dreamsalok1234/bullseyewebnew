@@ -680,6 +680,8 @@ export class AccountSettingsComponent implements OnInit {
         dialogConfig.width = '650px';
         dialogConfig.maxWidth = '100%';
         dialogConfig.maxHeight = 'none';
+        dialogConfig.height = 'auto';
+        dialogConfig.minHeight= 'calc(100vh - 90px)';
         dialogConfig.panelClass = 'custom-modalbox';
         const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);
 
@@ -701,6 +703,8 @@ export class AccountSettingsComponent implements OnInit {
         dialogConfig.width = '1100px';
         dialogConfig.maxWidth = '100%';
         dialogConfig.maxHeight = 'none';
+        dialogConfig.height = 'auto';
+        dialogConfig.minHeight= 'calc(100vh - 90px)';
         const dialogRef = objectType.matDialog.open(ProdialogComponent, dialogConfig);
 
 

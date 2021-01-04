@@ -230,13 +230,14 @@ ul.stats_body.portfoliolist li {
     justify-content: center;
     text-align: left;
     font-family: 'SFProDisplay-Bold';
+    margin-left: 30px;
     
   }
   ul {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-right: 60px;
+    margin-right: 0px;
     padding: 10px 0;
     li {
       margin: 5px;
@@ -321,7 +322,7 @@ ul.stats_body.portfoliolist li {
     ul {
       justify-content: center;
       // flex-direction: row;
-      margin-right: 60px;
+      margin-right: 0px;
       align-items: center;
       li {
         margin: 5px;
@@ -575,7 +576,7 @@ ul.stats_body.portfoliolist li {
       }
     }
     ul {
-      margin-right: 35px;
+      margin-right: 0px;
       padding: 0;
       li {
         margin: 0;
